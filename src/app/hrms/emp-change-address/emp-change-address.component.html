@@ -1,0 +1,248 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <!-- <button class="btn btn-primary pull-right" [routerLink]="['/home/serviceregister/address-details']">Back</button> -->
+    <span class="clearfix"></span>
+  </div>
+
+
+  <form (ngSubmit)="mode=='edit'?UpdateEmplAddress(EmplDetails):SaveEmplAddress(EmplDetails)" #EmplDetails="ngForm"
+    name="form1">
+
+    <div class="container-fluid">
+      <div class="row">        
+        <div class="col-md-4">
+          <label for="">Employee Id :</label> &nbsp; <span class="name"> {{b.EMP_EMPLOYEE_CODE}} </span>
+        </div>
+        <div class="col-md-4">
+          <label for=""> Name :</label> &nbsp; <span class="name"> {{b.EMP_FIRST_NAME}} </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 ">
+          <label for="">Division : </label> &nbsp; <span class="name">{{b.District_Name}} </span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Department : </label> &nbsp; <span class="name">{{b.Emp_Department_NAME}} </span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Designation : </label> &nbsp; <span class="name">{{b.EMP_APPNT_DESIGNATION_NAME}}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <label for="">Employee Category : </label> &nbsp; <span class="name">{{b.EMP_CATEGORY_NAME}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Employee Group : </label> &nbsp; <span class="name">{{b.EMP_GROUP_NAME}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Employee Type : </label> &nbsp; <span class="name">{{b.EMP_TYPE_NAME}}</span>
+        </div>
+      </div>
+      <!--  -->
+
+
+
+      <div class="title themeheading rowmarginfix">
+        {{title2}}
+
+        <!-- <button class="btn btn-primary pull-right" *ngIf="mode=='view' || mode=='edit'" style="margin-top: -3px;" (click)="gotoAdd(EmployeeId)" >Add</button> -->
+        <span class="clearfix"></span>
+
+      </div>
+      <div class="row" *ngIf="mode=='edit' || mode=='view'">
+        <div class="col-md-6 col-sm-6">
+          <div class="input-group">
+            <label>Building No/Cross/Road
+              <span class="mandatory">*</span>
+            </label>
+            <br>
+            <input class="custom-field" type="text" [(ngModel)]="a.EMP_ADDR_LN1" #EMP_ADDR_LN1="ngModel"
+              name="EMP_ADDR_LN1" [disabled]="mode=='view'" maxlength="50" required>
+          </div>
+          <div class="error-msg pull-right"  *ngIf="EMP_ADDR_LN1.invalid && (EMP_ADDR_LN1.dirty || EMP_ADDR_LN1.touched || formInvalid)">
+            <span  *ngIf="EMP_ADDR_LN1.errors.required">Feild is required</span>                      
+        </div>
+        </div>
+        <div class=" col-md-6  col-sm-6">
+          <div class="input-group">
+            <label>Street</label>
+            <br>
+            <input class="custom-field" type="text" [(ngModel)]="a.EMP_ADDR_LN2" #EMP_ADDR_LN2="ngModel"
+              name="EMP_ADDR_LN2" [disabled]="mode=='view'" maxlength="50">
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="mode=='edit' || mode=='view'">
+        <div class=" col-md-6  col-sm-6">
+          <div class="input-group">
+            <label>State
+              <span class="mandatory">*</span>
+            </label>
+            <br>
+            <select class="custom-field" [(ngModel)]="a.EMP_ADDR_STATE" #EMP_ADDR_STATE="ngModel" name="EMP_ADDR_STATE"
+              [disabled]="mode=='view'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="e.fix_code_id" *ngFor="let e of stateList;">
+                {{e.code_value}}
+              </option>
+            </select>
+          </div>
+          <div class="error-msg pull-right"  *ngIf="EMP_ADDR_STATE.invalid && (EMP_ADDR_STATE.dirty || EMP_ADDR_STATE.touched || formInvalid)">
+            <span  *ngIf="EMP_ADDR_STATE.errors.required">State is required</span>                      
+        </div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <div class="input-group">
+            <label>District
+              <span class="mandatory">*</span>
+            </label>
+            <select class="custom-field" [(ngModel)]="a.EMP_ADDR_DISTRICT" #EMP_ADDR_DISTRICT="ngModel"
+              name="EMP_ADDR_DISTRICT" [disabled]="mode=='view'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="d.DI_Id" *ngFor="let d of DistrictsList;">
+                {{d.DI_District}}
+              </option>
+            </select>
+          </div>
+          <div class="error-msg pull-right"  *ngIf="EMP_ADDR_DISTRICT.invalid && (EMP_ADDR_DISTRICT.dirty || EMP_ADDR_DISTRICT.touched || formInvalid)">
+            <span  *ngIf="EMP_ADDR_DISTRICT.errors.required">District is required</span>                      
+        </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="mode=='edit' || mode=='view'">
+        <div class=" col-md-6  col-sm-6">
+          <div class="input-group">
+            <label>Taluk</label>
+            <br>
+            <input class="custom-field" type="text" [(ngModel)]="a.EMP_ADDR_TALUK" #EMP_ADDR_TALUK="ngModel"
+              name="EMP_ADDR_TALUK" [disabled]="mode=='view'" maxlength="50">
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <div class="input-group">
+            <label>Village</label>
+            <input class="custom-field" type="text" [(ngModel)]="a.EMP_ADDR_VILLAGE" #EMP_ADDR_VILLAGE="ngModel"
+              name="EMP_ADDR_VILLAGE" [disabled]="mode=='view'" maxlength="50">
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="mode=='edit' || mode=='view'">
+        <div class="col-md-6 col-sm-6">
+          <div class="input-group">
+            <label>Pin Code</label>
+            <br>
+            <input type="text" pattern="\d*" maxlength="6" class="custom-field" [(ngModel)]="a.EMP_ADDR_PINCODE" #EMP_ADDR_PINCODE="ngModel"
+              name="EMP_ADDR_PINCODE" [disabled]="mode=='view'">
+          </div>
+          <div class="error-msg pull-right"  *ngIf="EMP_ADDR_PINCODE.invalid && (EMP_ADDR_PINCODE.dirty || EMP_ADDR_PINCODE.touched || formInvalid)">
+            <span  *ngIf="EMP_ADDR_PINCODE.errors.pattern">Pincode pattern is not matching</span>                      
+        </div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <div class="input-group">
+            <label>Address Type
+              <span class="mandatory">*</span>
+            </label>
+            <br>
+            <select class="custom-field" [(ngModel)]="a.EMP_ADDR_TYPE" #EMP_ADDR_TYPE="ngModel" name="EMP_ADDR_TYPE"
+              [disabled]="mode=='view'" required>
+              <option value="">--Select--</option>
+              <option value="1">Permanent Address</option>
+              <option value="2">Present Address</option>
+            </select>
+          </div>
+          <div class="error-msg pull-right"  *ngIf="EMP_ADDR_TYPE.invalid && (EMP_ADDR_TYPE.dirty || EMP_ADDR_TYPE.touched || formInvalid)">
+            <span  *ngIf="EMP_ADDR_TYPE.errors.required">Address type is required</span>                      
+        </div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="mode=='edit' || mode=='view'">
+        <div class="input-group">
+          <div class="col-md-6 col-sm-6">
+            <span  style="font-size:15px;margin-top: 6px;">
+              <input type="checkbox" [(ngModel)]="a.EMP_ADDR_STATUS" #EMP_ADDR_STATUS="ngModel" name="EMP_ADDR_STATUS"
+                [disabled]="mode=='view'" value="Y"> &nbsp; to be Treated for Communication</span>
+            <span class="clearfix"></span>
+          </div>
+        </div>
+      </div>
+
+      <br>
+      <div class="text-center" *ngIf="mode=='edit' || mode=='view'">
+        <button [disabled]="mode=='view'" class="btn btn-primary">{{mode=='edit'?'Edit':'Save'}}</button> &nbsp;
+        <button [disabled]="mode=='view'" type="button" (click)="Cancel()" class="btn btn-primary">Cancel</button>
+      </div>
+
+
+      <!--  -->
+
+      <br>
+      <div class="float-right">
+        Items per page:
+        <select name="SearchRows" #SearchRows="ngModel" [(ngModel)]="itemsPerPage" class="noofpage"
+          (change)="itemsPerPageChanged(itemsPerPage, 1)">
+          <option [ngValue]="5">5</option>
+          <option [ngValue]="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="40">40</option>
+          <option value="50">50</option>
+        </select>
+        <!-- <button class="btn btn-primary" [routerLink]="['baselineboq-form']">Add</button> -->
+      </div>
+      <div class="table-responsive">
+        <table class="table table-stripped table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <td>Sl No.</td>
+              <!-- <td>Address Id</td>               -->
+              <td>Address Type</td>
+              <td>Address</td>
+              <td class="text-center">View</td>
+              <td class="text-center">Edit</td>
+              <td class="text-center">Delete</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let e of AddressEmployeeDetails | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index" 
+            [ngStyle]="{'color':e.EMP_ADDR_STATUSForActive === 'A' ? 'green' : 'black' }">
+              <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+              <!-- <td>{{e.EMP_ADDR_ID}}</td>               -->
+              <td *ngIf="e.EMP_ADDR_TYPE == 1">Permanent</td>
+              <td *ngIf="e.EMP_ADDR_TYPE == 2">Present</td>
+              <td>{{e.EMP_ADDR_LN1}}&nbsp;{{e.EMP_ADDR_LN2}}</td>
+              <td class="text-center">
+                <a href="#"
+                 [routerLink]="['/home/emp-change-address',e.EMP_ADDR_ID,'view',e.EMP_ID_FK]">
+                  <i class="fa fa-lg fa-eye themecolor"></i>
+                </a>
+              </td>
+              <td class="text-center">
+                <a 
+                 href="#" [routerLink]="['/home/emp-change-address',e.EMP_ADDR_ID,'edit',e.EMP_ID_FK]">
+                  <i class="fa fa-lg fa-edit themecolor"></i>
+                </a>
+              </td>
+              <td class="text-center">
+                <a (click)="delete(e.EMP_ADDR_ID,e.EMP_ADDR_ID)">
+                  <i class="fa fa-lg fa-trash themecolor"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+    </div>
+    <br>
+    <!-- <div class="text-center">
+      <button [disabled]="mode=='view'" class="btn btn-primary">Save</button> &nbsp;
+      <button [disabled]="mode=='view'" (click)="Cancel()" class="btn btn-primary">Cancel</button>
+    </div> -->
+
+  </form>
+</div>

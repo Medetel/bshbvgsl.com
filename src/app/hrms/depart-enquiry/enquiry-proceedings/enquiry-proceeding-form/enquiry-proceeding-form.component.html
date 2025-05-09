@@ -1,0 +1,334 @@
+<div class="wrapper">
+  <div class="container-fluid">
+      <!-- <form (ngSubmit)="mode=='Edit'?UpdateProc(Proc):SaveProc(Proc)" #Proc="ngForm" name="Proc"> -->
+    <div class="title rowmarginfix themeheading">
+      Complaint Details
+      <button class="btn btn-primary float-right" [routerLink]="['/home/dept-enquiry/enquiry-proceeding']">Back</button>
+      <span class="clearfix"></span>
+    </div>
+
+    <!--  -->
+    <div class="border-view">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <td class="text-center">Sl No.</td>
+              <td class="text-center">Complaint No</td>
+              <td class="text-center">Date</td>
+              <td class="text-center">Complaint Type</td>
+              <td class="text-center"> DGO's Name </td>
+              <td class="text-center"> View </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let c of Complist;let i=index;"> 
+              <td>{{i+1}}</td>
+              <td>{{c.DOC_CODE1}}</td>
+              <td>{{c.COMPLAINT_INITIATED_DATE | date:"dd/MM/yyyy"}}</td>
+              <td>{{c.COMPLAINT_TYPE}}</td>
+              <td>{{c.DGO_NAME}}</td>
+          <!-- <td class="text-center">
+              <a href="javascript:void(0);" (click)="addcomp()" [routerLink]="['/home/dept-enquiry/complaint-reg-auth/complaint-reg-auth-form',c.COMPLAINT_ID,'prcoc','View']">
+                <i class="fa fa-lg fa-eye themecolor"></i>
+              </a>
+          </td> -->
+          <td class="text-center">
+            <a href="javascript:void(0)" (click)="addcomp()" [routerLink]="['/home/dept-enquiry/complaints-reg-form/',c.COMPLAINT_ID,'prcoc','View']"  >
+                
+              <i class=" fa fa-lg fa-eye themecolor"></i>
+            </a>
+          </td>
+        </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="title rowmarginfix themeheading">
+      SCN Details
+      <span class="clearfix"></span>
+    </div>
+
+    <div class="border-view">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <td class="text-center">Sl No.</td>
+              <td class="text-center">SCN No</td>
+              <td class="text-center">Date</td>
+              <td class="text-center">Due Date to Reply</td>
+              <td class="text-center"> Mode of Reply </td>
+              <td class="text-center"> View </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let sc of SClist;let i=index;"> 
+              <td>{{i+1}}</td>             
+              <td>{{sc.DOC_CODE2}}</td>
+              <td>{{sc.DOC_DATE | date:"dd/MM/yyyy"}}</td>
+              <td>{{sc.SCN_REPLY_DUE_DATE | date:"dd/MM/yyyy"}}</td>
+              <td>{{sc.SCN_MODE_REPLY}}</td>
+              <td class="text-center">
+                <a href="#" (click)="addcomp()" [routerLink]="['/home/dept-enquiry/show-cause-form',sc.COMPLAINT_ID,sc.SCN_ID,'IDESCN1','View']">
+                    <i class="fa fa-lg fa-eye themecolor"></i>
+                </a>
+            </td>
+        </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="title rowmarginfix themeheading">
+      SCN Acknowledgement & DGO's Reply
+      <span class="clearfix"></span>
+    </div>
+
+    <div class="border-view">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <td class="text-center">Sl No.</td>
+              <td class="text-center"> DGO's Name </td>
+              <td class="text-center">Date</td>
+              <td class="text-center">Reply Recieved Date </td>
+              <td class="text-center"> Mode of Reply </td>
+              <td class="text-center"> Reply Period </td>
+              <td class="text-center"> View </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let sck of SCklist;let i=index;"> 
+              <td>{{i+1}}</td>             
+              <td>{{sck.DGO_NAME}}</td>
+              <td>{{sck.DOC_DATE | date:"dd/MM/yyyy"}}</td>
+              <td>{{sck.SCNREPLY_RECVD_DATE | date:"dd/MM/yyyy"}}</td>
+              <td>{{sck.SCNREPLY_MODE}}</td>
+              <td>{{sck.SCNREPLY_MODE}}</td>
+              <td class="text-center">
+                <a href="#" (click)="addcomp()" [routerLink]="['/home/dept-enquiry/show-cause-ack-form',sck.COMPLAINT_ID,sck.SCN_ID,'idesck1','View']">
+                    <i class="fa fa-lg fa-eye themecolor"></i>
+                </a>
+            </td>
+        </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="title rowmarginfix themeheading">
+      Initiate Departmental Enquiry
+      <span class="clearfix"></span>
+    </div>
+
+    <div class="border-view">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <td class="text-center">Sl.No.</td>
+              <td class="text-center"> Enquiry No. </td>
+              <td class="text-center">Date</td>
+              <td class="text-center">Enquiry Officer </td>
+              <td class="text-center"> Presenting Officer </td>
+              <td class="text-center"> Enquiry Period </td>
+              <td class="text-center"> View </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let aa of enqplist;let i=index;"> 
+              <td>{{i+1}}</td>             
+              <td>{{aa.DOC_CODE}}</td>
+              <td>{{aa.DOC_DATE | date:"dd/MM/yyyy"}}</td>              
+              <td>{{aa.ENQ_OFFICER1}}</td>
+              <td>{{aa.Remarks}}</td>
+              <td>{{aa.ENQ_START_DATE | date:"dd/MM/yyyy"}}</td>
+          <td class="text-center">
+              <a href="#" (click)="addcomp()" [routerLink]="['/home/dept-enquiry/initiative-depart-form',aa.COMPLAINT_ID,aa.SCN_ID,enq,'View']">
+                <i class="fa fa-lg fa-eye themecolor"></i>
+            </a>
+          </td>
+        </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!--  -->
+    <form (ngSubmit)="mode=='Edit'?UpdateProc(Proc):SaveProc(Proc)" #Proc="ngForm" name="Proc">
+    <div class="title rowmarginfix themeheading" >
+      Enquiry Proceedings
+      <span class="clearfix"></span>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label for=""> Proceeding No. :</label> &nbsp;<span> {{e.DOC_CODE}} </span>
+      </div>
+      <div class="col-md-4">
+        <label for=""> Date :</label> &nbsp;<span> {{e.DOC_DATE  | date:"dd/MM/yyyy"}} </span>
+      </div>
+      <div class="col-md-4">
+        <label for=""> Status : </label> &nbsp;<span> {{e.DOC_STATUS}} </span>
+      </div>
+    </div>
+    <!-- <div class="row">
+      <div class="col-md-10">
+        <div class="input-group">
+          <label for=""> Points of Discussion / Subject of Enquiry </label>
+          <input type="text" name="POINT_OF_DISCUSSION" maxlength="50" [(ngModel)]="p.POINT_OF_DISCUSSION"
+          #POINT_OF_DISCUSSION="ngModel" class="form-control" [disabled]="mode=='View'">
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="input-group">
+          <label for=""> Raised By </label>
+          <input type="text" name="RAISED_BY" maxlength="50" [(ngModel)]="p.RAISED_BY"
+            #RAISED_BY="ngModel" class="form-control" [disabled]="mode=='View'">
+        </div>
+      </div>
+    </div> -->
+    <!-- <div class="row">
+      <div class="col-md-10">
+        <div class="input-group">
+          <label for=""> Reply Details </label>
+          <input type="text" name="REPLY_DETAILS" maxlength="50" [(ngModel)]="p.REPLY_DETAILS"
+            #REPLY_DETAILS="ngModel" class="form-control" [disabled]="mode=='View'">
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="input-group">
+          <label for=""> Replied By </label>
+          <input type="text" name="REPLIED_BY" maxlength="50" [(ngModel)]="p.REPLIED_BY"
+          #REPLIED_BY="ngModel" class="form-control" [disabled]="mode=='View'">
+        </div>
+      </div>
+    </div> -->
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for=""> Recommendation of Enquiry Officer </label>
+          <input type="text" name="RECOMM_ENQ_OFF" maxlength="50" [(ngModel)]="p.RECOMM_ENQ_OFF"
+          #RECOMM_ENQ_OFF="ngModel" class="form-control" [disabled]="mode=='View'">
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for=""> Date </label>
+          <input type="date" name="PROC_Date" maxlength="50" [(ngModel)]="p.PROC_Date"
+          #PROC_Date="ngModel" class="form-control" [disabled]="mode=='View'">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="input-group">
+          <label for=""> Remarks </label>
+          <textarea name="PROC_REMARKS" maxlength="50" [(ngModel)]="p.PROC_REMARKS"
+          #PROC_REMARKS="ngModel" [disabled]="mode=='View'" class="custom-field"></textarea>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="row">
+      <div class="col-md-12">
+        <div class="input-group">
+          <label for=""> Recommendation of Presenting Officer </label>
+          <input type="text" name="RECOMM_PRES_OFF" maxlength="50" [(ngModel)]="p.RECOMM_PRES_OFF"
+          #RECOMM_PRES_OFF="ngModel" class="form-control" [disabled]="mode=='View'">
+        </div>
+      </div>
+    </div> -->
+  <!-- <div class="row">
+    <div class="col-md-2">
+      <label for="" style="color:blue;"> OM Upload Document </label>
+    </div>
+    <div class="col-md-4">
+      <input type="file">
+    </div>
+  
+    <div class="col-md-2">
+      <label for="" style="color:blue;"> Revocation Order Document </label>
+    </div>
+    <div class="col-md-4">
+      <input type="file">
+    </div>
+  
+  
+    <div class="col-md-2">
+      <label for="" style="color:blue;"> ENQ Proceeding Document </label>
+    </div>
+    <div class="col-md-4">
+      <input type="file">
+      <a *ngIf="p.DGO_Upload" [href]="p.DGO_Upload" target="_blank" [class.disabled]="!p.DGO_Upload" tabindex="-1"
+        aria-disabled="true">
+        View
+      </a>
+  
+     
+      <a *ngIf="!p.DGO_Upload" class="disabled" tabindex="-1" aria-disabled="true">
+        View
+      </a>
+    </div>
+  </div> -->
+
+    <br>
+    <div class="d-flex justify-content-center">
+        <button [disabled]="mode=='View'" class="btn btn-primary" type="submit">{{mode=='Edit'?'Update':'Save'}}</button> &nbsp;
+        <button [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button>&nbsp;
+      </div>
+
+  </form>
+  
+
+    <div class="table-responsive">
+      <table class="table table-striped grid">
+        <thead>
+          
+          <tr>
+            <td>Sl No.</td>
+            <td>Enquiry No</td>
+            <td>Enquiry Date</td>           
+            <td>Proceeding No</td>           
+            <td>Remarks</td>
+            <td class="text-center">View</td>
+            <td class="text-center">Edit</td>
+            <td class="text-center">Delete</td>
+           
+          </tr>
+          <tr>
+
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let P of ProcList;let i=index;"> 
+                <td>{{(i+1)}}.</td>
+                <td>{{P.DOC_CODE}}</td>
+                <td>{{P.ENQ_START_DATE  | date:'dd/MM/yyyy'}}</td>           
+                 <td>{{P.DOC_CODE1}}</td>               
+                <td>{{P.PROC_REMARKS}}</td> 
+                <td class="text-center">
+                  <a href="#" [routerLink]="['/home/dept-enquiry/enquiry-proceeding-form',P.PROCEEDING_ID,'View']">
+                      <i class="fa fa-lg fa-eye themecolor"></i>
+                  </a>
+              </td>
+              <td class="text-center">
+                  <a href="#" [routerLink]="['/home/dept-enquiry/enquiry-proceeding-form',P.PROCEEDING_ID,'Edit']">
+                      <i class="fa fa-lg fa-edit themecolor"></i>
+                  </a>
+              </td>
+              <td class="text-center">
+                  <a href="javascript:void(0);" (click)="delete(P.PROCEEDING_ID)">
+                      <i class="fa fa-lg fa-trash themecolor"></i>
+                  </a>
+              </td>
+          </tr>
+        </tbody>
+      </table>
+    </div> 
+   
+    <br>
+
+  </div>
+</div>

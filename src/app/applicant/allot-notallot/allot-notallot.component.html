@@ -1,0 +1,96 @@
+<div class="wrapper">
+
+    <div class="title themeheading">Notification wise Applicant Lis
+        <!-- <button class="btn btn-primary pull-right">Back</button> -->
+        <span class="clearfix"></span>
+    </div>
+    <div class="container-fluid">
+        <div class="row holder1">
+            <div class="col-md-3">
+                <div class="input-group">
+                    <select [(ngModel)]="s.S_NotificationID" required #S_NotificationID="ngModel" name="S_NotificationID" class="custom-field"
+                    (change)="GetNotificationProjects(s.S_NotificationID,null)">
+                        <option [ngValue]="undefined" selected>---Select---</option>
+                        <option [ngValue]="n.DSWOId_NO_Id" *ngFor="let n of Notifications;">
+                            {{n.DSWOId_NO_Number}}-{{n.DSWOId_NO_Id}}-{{n.PD_Project_Name}}-{{n.PD_Project_Code}}</option>
+                    </select>
+                    <label>Notification No.</label>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group">
+                <select [(ngModel)]="s.S_ProjectID" required #S_ProjectID="ngModel" name="S_ProjectID" class="custom-field"
+                (change)=" GetReservation(s.S_ProjectID)">
+                <option [ngValue]="undefined" selected>---Select---</option>
+                <option [ngValue]="p.PD_Id" *ngFor="let p of Projects;">
+                {{p.PD_Project_Code}}-{{p.PD_Project_Name}}</option>
+                </select>
+                <label>Project</label>
+                </div>
+                </div>
+                <div class="col-md-3">
+                <div class="input-group">
+                <select [(ngModel)]="s.RES_Id" required #RES_Id="ngModel" name="RES_Id" class="custom-field">
+                <option [ngValue]="undefined" selected>---Select---</option>
+                <option [ngValue]="r.RES_Id" *ngFor="let r of reservation;">
+                {{r.RES_Name}}</option>
+                </select>
+                <label>Reservation</label>
+                </div>
+                </div>
+
+            <div class="col-md-3">
+                <div class="input-group">
+                    <select [(ngModel)]="s.Status" required #Status="ngModel" name="Status" class="custom-field">
+                        <option [ngValue]="undefined" selected>---Select---</option>
+                        <option value="1" >Allotted</option>
+                        <option value="2" >Not Allotted</option>
+                    </select>
+                    <label>Status</label>
+                </div>
+            </div>
+
+          
+        </div>
+        <div class="row" style="margin-left: 45%;">
+            <div class="col-md-2">
+            <button type="button" class="btn btn-primary" (click)="GetApplicantsStatus(s.S_NotificationID,s.S_ProjectID,s.RES_Id,s.Status)">Go </button>
+            </div>
+           </div>
+        
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <td>Sl No.</td>
+                        <td>Application No.</td>
+                        <td>Registration No.</td>
+                        <td>Applicant Name</td>
+                        <td>Project Name</td>
+                        <td>Reservation</td>
+                        <td>Category</td>
+                        <td>Property Type</td>
+                        <td>Applied Date</td>
+                        <td>Property No</td>
+                        <td>Status</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let p of Applicants;let i=index;">
+                        <td>{{i+1}}.</td>
+                        <td>{{p.APP_No}}</td>
+                        <td>{{p.APP_Reg_No}}</td>
+                        <td>{{p.APP_PA_Name}}</td>
+                        <td>{{p.PD_Project_Name}}</td>
+                       <td>{{p.APP_Reservation}}</td>
+                       <td>{{p.APP_Category}}</td>
+                       <td>{{p.APP_PropertyType}}</td>
+                       <td>{{p.APP_AppliedDate | date:'dd-MM-yyyy'}}</td>
+                       <td>{{p.Property_No}}</td>
+                       <td>{{p.APP_Status}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>

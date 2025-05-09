@@ -1,0 +1,183 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button  *ngIf="!fromUtility" class="btn btn-primary float-right" [routerLink]="['/home/advocate-pay',AdvId,CaseId]">Back</button>    
+    <button  *ngIf="fromUtility" class="btn btn-primary pull-right" [routerLink]="['/home/log-view/reroute','reroute']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+
+  <form (ngSubmit)="mode=='edit'?UpdateAdvocateBill(AdvocateBill):SaveAdvcateBills(AdvocateBill)" #AdvocateBill="ngForm" name="form1">
+  <div class="container-fluid">  
+    <div class="font">
+    <div class="row">
+      <div class="col-md-1">
+        &nbsp;
+      </div>
+      <div class="col-md-3">
+        <label for="">Enrollment No.. <span>:{{advocatedetails.Adv_Id}}</span></label>
+      </div>
+      <div class="col-md-4">
+        <label for="">Advocate Name <span>:{{advocatedetails.Adv_Name}}</span></label>
+      </div>
+      <div class="col-md-3">
+          <label for="">Case Number<span>: {{casedetails.Case_No}}</span></label>
+        </div>
+      </div>
+      <div class="row">
+      <div class="col-md-3">
+        <label for="">Bank Name
+          <span>: {{advocatedetails.Adv_BankName}}</span>
+        </label>
+      </div>
+      <div class="col-md-3">
+        <label for="">Bank Branch
+          <span>: {{advocatedetails.Adv_Branch}}</span>
+        </label>
+      </div>
+      <div class="col-md-3">
+        <label for="">IFSC Code
+          <span>: {{advocatedetails.Adv_IFSCCode}}</span>
+        </label>
+      </div>
+      <div class="col-md-3">
+        <label for="">Acc No.
+          <span>: {{advocatedetails.Adv_Acc_No}}</span>
+        </label>
+      </div>
+    </div>
+  </div> 
+    <br>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="input-group">
+            <input type="date" placeholder=" " name="AP_Date" [(ngModel)]="ap.AP_Date"   #AP_Date="ngModel" class="custom-field"
+            [disabled]="mode=='view'" required>
+          <label for="">Date
+              <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="AP_Date.invalid && (AP_Date.dirty || AP_Date.touched || formInvalid)">
+              <span *ngIf="AP_Date.errors.required">Date is required.</span>             
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="input-group">
+          <input type="text" placeholder=" " name="AP_Amount" [(ngModel)]="ap.AP_Amount" maxlength="18" pattern="^[0-9.]*$" #AP_Amount="ngModel" class="custom-field"
+                            [disabled]="mode=='view'" required>
+          <label for="">Request Bill Amount
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="AP_Amount.invalid && (AP_Amount.dirty || AP_Amount.touched || formInvalid)">
+              <span *ngIf="AP_Amount.errors.required">Ammount is required</span>
+              <span *ngIf="AP_Amount.errors?.pattern">Enter Valid ammount</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="input-group">
+          <textarea type="text" placeholder=" " name="AP_Purpose" [(ngModel)]="ap.AP_Purpose" maxlength="100"  #AP_Purpose="ngModel" class="custom-field"
+          [disabled]="mode=='view'" class="custom-field" required></textarea>
+          <label for="">Purpose
+              <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="AP_Purpose.invalid && (AP_Purpose.dirty || AP_Purpose.touched || formInvalid)">
+              <span *ngIf="AP_Purpose.errors.required">Purpose is required</span>             
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+          <!-- <div class="col-md-4"> -->
+              <label for="">Pay Type
+                  
+              </label> <span class="mandatory">*</span>
+            <!-- </div> -->
+          <div class="form-check-inline">
+              <label class="form-check-label">       
+                <input class="form-check-input" name="AP_PayType" #AP_PayType="ngModel" [(ngModel)]="ap.AP_PayType" type="radio" id="inlineRadio1" value="Normal" >
+                Normal 
+              </label>
+            </div>
+            <div class="form-check-inline">
+              <label class="form-check-label">
+                  <input class="form-check-input" name="AP_PayType" #AP_PayType="ngModel" [(ngModel)]="ap.AP_PayType" type="radio" id="inlineRadio1" value="Special" >
+                Special
+              </label>
+            </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+            <input type="text" placeholder=" " name="AP_Particulars" [(ngModel)]="ap.AP_Particulars" maxlength="100" #AP_Particulars="ngModel" class="custom-field"
+            [disabled]="mode=='view'">
+          <label for="">Particulars</label>
+        </div>
+      </div>      
+      <div class="col-md-2">
+        <label for="">Document</label>
+      </div>
+      <div class="col-md-4">
+          <input  type="file" *ngIf="mode!='view'" #Image accept="application/pdf/png/jpeg/gif" (change)="imageUpload($event.target.files)" id="AP_DocPath" name="AP_DocPath"
+          [(ngModel)]="ap.AP_DocPath" #AP_DocPath="ngModel">
+          <a class="" *ngIf="ap.AP_DocPath!=null" target="_blank" href="{{ap.AP_DocPath}}">view</a>
+      </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="input-group">
+              <select class="custom-field" [(ngModel)]="ap.AP_ToUser" #AP_ToUser="ngModel" name="AP_ToUser" 
+              [disabled]="mode=='view'" required>
+                <option [value]="undefined" selected>---Select---</option>
+                <option [value]="l.KHB_UserId" *ngFor="let l of userslist;">
+                  {{l.FirstName}} &nbsp; {{l.LastName}}
+                </option>
+            </select>
+              <label for="">Approver
+                <span class="mandatory">*</span>
+              </label>
+              <div class="error-msg" *ngIf="AP_ToUser.invalid && (AP_ToUser.dirty || AP_ToUser.touched || formInvalid)">
+                <span *ngIf="AP_ToUser.errors.required">To User is required</span>
+            </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+              <div class="input-group">
+                <select class="custom-field" [(ngModel)]="ap.AP_BillStatus" #AP_BillStatus="ngModel" name="AP_BillStatus" 
+                [disabled]="mode=='view'" required>
+                  <option [value]="undefined" selected>---Select---</option>
+                  <option value="Paid">Paid</option>
+                  <option value="Pending">Pending</option>
+              </select>
+                <label for="">Bill Status
+                  <span class="mandatory">*</span>
+                </label>
+                <div class="error-msg" *ngIf="AP_BillStatus.invalid && (AP_BillStatus.dirty || AP_BillStatus.touched || formInvalid)">
+                  <span *ngIf="AP_BillStatus.errors.required">Bill Status required.</span>
+              </div>
+              </div>
+            </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input class="custom-field" [(ngModel)]="ap.BillPassAmount" #BillPassAmount="ngModel" name="BillPassAmount" 
+          [disabled]="mode=='view'">           
+          <label for="">Bill Pass Amount          
+          </label>          
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="text-center">
+    <button type="submit" class="btn btn-primary" [disabled]="mode=='view'">Save</button>
+    <!-- <button class="btn btn-primary">Save as Draft</button> -->
+    <button (click)="Cancel()" class="btn btn-primary">Cancel</button>
+  </div>
+</form>
+</div>

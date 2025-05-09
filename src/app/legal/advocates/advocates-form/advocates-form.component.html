@@ -1,0 +1,397 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button *ngIf="!fromUtility" class="btn btn-primary pull-right" [routerLink]="['/home/employedadvocates']">Back</button>    
+    <button  *ngIf="fromUtility" class="btn btn-primary pull-right" [routerLink]="['/home/log-view/reroute','reroute']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  
+  <form  #Advocate="ngForm" (ngSubmit)="CalculateAge(Advocate)" name="form1" novalidate>
+
+    <div class="container-fluid">
+      <div class="row">
+
+        <div class="col-md-4">
+          <div class="input-group">
+            <input type="text" name="Adv_Id_Number"  maxlength="50" #Adv_Id_Number="ngModel" [(ngModel)]="a.Adv_Id_Number" class="custom-field"
+            [disabled]="mode=='View'" required>
+            <label for="">Enrollment No.
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg pull-right"  *ngIf="Adv_Id_Number.invalid && (Adv_Id_Number.dirty || Adv_Id_Number.touched || formInvalid)">
+              <span  *ngIf="Adv_Id_Number.errors.required">Advocate No is required</span>
+              <span *ngIf="Adv_Id_Number.errors?.pattern">AlphaNumeric should enter</span>
+          </div>
+          </div>             
+        </div>  
+        <div class="col-md-4">
+          <div class="input-group">
+            <input type="text" name="Adv_Name"  maxlength="80" #Adv_Name="ngModel" [(ngModel)]="a.Adv_Name" class="custom-field"
+            [disabled]="mode=='View'" required pattern="^[a-zA-Z]+$">
+            <label for="">Advocate Name
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg pull-right"  *ngIf="Adv_Name.invalid && (Adv_Name.dirty || Adv_Name.touched || formInvalid)">
+              <span  *ngIf="Adv_Name.errors.required">Advocate Name is required</span>
+              <span *ngIf="Adv_Name.errors?.pattern">Only Alphabets should enter</span>
+          </div>
+          </div>             
+        </div>         
+
+        <div class="col-md-4">
+          <div class="input-group">
+            <input type="text" name="Adv_FatherName" maxlength="80" #Adv_FatherName="ngModel" [(ngModel)]="a.Adv_FatherName" class="custom-field"
+            [disabled]="mode=='View'" pattern="^[a-zA-Z]+$">
+            <label for="">Father's Name           
+            </label>
+             <div class="error-msg" *ngIf="Adv_FatherName.invalid && (Adv_FatherName.dirty || Adv_FatherName.touched || formInvalid)">
+              <!-- <span *ngIf="Adv_FatherName.errors.required">Father Name is required</span> -->
+              <span *ngIf="Adv_FatherName.errors?.pattern">Only Alphabets should enter</span>
+            </div>           
+          </div>
+        </div> 
+      </div> 
+  
+  
+      <div class="title themeheading">
+        Advocate Address & Other Details
+      </div>  
+  
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group"><input type="text" name="Adv_DoorNo" maxlength="10" #Adv_DoorNo="ngModel" [(ngModel)]="a.Adv_DoorNo" class="custom-field"
+          [disabled]="mode=='View'"><label for="">Door No.
+          <!-- <span class="mandatory">*</span> -->
+        </label>
+        <!-- <div class="error-msg" *ngIf="Adv_DoorNo.invalid && (Adv_DoorNo.dirty || Adv_DoorNo.touched || formInvalid)">
+          <span *ngIf="Adv_DoorNo.errors.required">Door no is required</span>
+        </div> -->
+      </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group"><input type="text" name="Adv_StreetName" maxlength="100" #Adv_StreetName="ngModel" [(ngModel)]="a.Adv_StreetName"  class="custom-field"
+          [disabled]="mode=='View'"><label for="">Street</label>
+          <!-- <div class="error-msg" *ngIf="Adv_StreetName.invalid && (Adv_StreetName.dirty || Adv_StreetName.touched || formInvalid)">
+            <span *ngIf="Adv_StreetName.errors.required">street name is required</span>
+          </div> -->
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <!-- <div class="input-group"><input type="text" name="Adv_District_Id_FK" #Adv_Name="ngModel" [(ngModel)]="a.Adv_District_Id_FK" class="custom-field"><label for="">District</label></div> -->
+        <div class="input-group">
+          <select class="custom-field" [(ngModel)]="a.Adv_District_Id_FK"  #Adv_District_Id_FK="ngModel" name="Adv_District_Id_FK" (change)="GetTaluks(a.Adv_District_Id_FK)"
+          [disabled]="mode=='View'">
+                <option [value]="undefined" selected>---Select---</option>
+                <option [value]="d.DI_Id" *ngFor="let d of Districts;">
+                  {{d.DI_District}} </option>
+            </select>
+            <label for="">District
+              <!-- <span class="mandatory">*</span> -->
+            </label>
+          </div>
+      </div>
+
+
+        <div class="col-md-6">          
+          <div class="input-group">
+                <select class="custom-field" [(ngModel)]="a.Adv_Taluk_Id_FK" #Adv_Taluk_Id_FK="ngModel" name="Adv_Taluk_Id_FK" (change)="GetVillages(a.Adv_Taluk_Id_FK)"
+                [disabled]="mode=='View'">
+                  <option [value]="undefined" selected>---Select---</option>
+                  <option [value]="t.TA_Id" *ngFor="let t of Taluks;">
+                    {{t.TA_Taluk}} 
+                  </option>
+              </select>
+          <label for="">Taluk
+            <!-- <span class="mandatory">*</span> -->
+          </label>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-6">       
+        <div class="input-group">
+                <!-- <select class="custom-field" [(ngModel)]="a.Adv_Village_Id_FK" #Adv_Village_Id_FK="ngModel" name="Adv_Village_Id_FK" 
+                [disabled]="mode=='View'" required>
+                  <option [value]="undefined" selected>---Select---</option>
+                  <option [value]="v.HO_Id" *ngFor="let v of Villages;">
+                    {{v.VI_Village}} </option>
+                </select> -->
+          <input type="text"  [disabled]="mode=='View'" [(ngModel)]="a.Adv_Village_Id_FK" pattern="^[a-zA-Z ]*$" maxlength="80" #Adv_Village_Id_FK="ngModel" name="Adv_Village_Id_FK" class="custom-field">
+          <label for="">Village
+            <!-- <span class="mandatory">*</span> -->
+          </label>
+          <div class="error-msg" *ngIf="Adv_Village_Id_FK.invalid && (Adv_Village_Id_FK.dirty || Adv_Village_Id_FK.touched || formInvalid)">
+            <!-- <span *ngIf="Adv_Village_Id_FK.errors.required">Village is required</span> -->
+            <span *ngIf="Adv_Village_Id_FK.errors?.pattern">Enter valid Village</span>
+          </div>
+        </div>
+      </div>     
+
+
+      <div class="col-md-6">
+        <div class="input-group"><input type="text" pattern="^[0-9]{6}$" maxlength="6" name="Adv_Pincode" #Adv_Pincode="ngModel" [(ngModel)]="a.Adv_Pincode" class="custom-field"
+          [disabled]="mode=='View'"><label for="">Pincode
+          <!-- <span class="mandatory">*</span> -->
+        </label>
+        <div class="error-msg" *ngIf="Adv_Pincode.invalid && (Adv_Pincode.dirty || Adv_Pincode.touched || formInvalid)">
+          <!-- <span *ngIf="Adv_Pincode.errors.required">Pincode is required</span> -->
+          <span *ngIf="Adv_Pincode.errors?.pattern">Enter valid pincode</span>
+        </div>
+      </div>
+      </div>
+    </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" name="Adv_Adhaar_No" pattern="^[0-9]{12}$" minlength="12"  maxlength="12" #Adv_Adhaar_No="ngModel" [(ngModel)]="a.Adv_Adhaar_No" class="custom-field"
+            [disabled]="mode=='View'">
+            <label for="">Aadhaar No.
+              <!-- <span class="mandatory">*</span> -->
+            </label>
+            <div class="error-msg" *ngIf="Adv_Adhaar_No.invalid && (Adv_Adhaar_No.dirty || Adv_Adhaar_No.touched || formInvalid)">
+              <!-- <span *ngIf="Adv_Adhaar_No.errors.required">Adhaar No is required</span> -->
+              <span *ngIf="Adv_Adhaar_No.errors?.pattern">Adhaar No is not valid </span>
+              <span *ngIf="Adv_Adhaar_No.errors?.minlength">Adhaar No is not valid </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" name="Adv_Mobile" pattern="^[0-9]{10}$" maxlength="15" #Adv_Mobile="ngModel" [(ngModel)]="a.Adv_Mobile" class="custom-field"
+            [disabled]="mode=='View'" required>
+            <label for="">Mobile number
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Adv_Mobile.invalid && (Adv_Mobile.dirty || Adv_Mobile.touched || formInvalid)">
+              <span *ngIf="Adv_Mobile.errors.required">Mobile number is required</span>
+              <span *ngIf="Adv_Mobile.errors?.pattern">Enter Valid Mobile No.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="date" name="Adv_DOB" #Adv_DOB="ngModel" [(ngModel)]="a.Adv_DOB" class="custom-field"
+            [disabled]="mode=='View'">
+            <label for="">Date of Birth
+              <!-- <span class="mandatory">*</span> -->
+            </label>
+            <!-- <div class="error-msg" *ngIf="Adv_DOB.invalid && (Adv_DOB.dirty || Adv_DOB.touched || formInvalid)">
+              <span *ngIf="Adv_DOB.errors.required">DOB is required</span>
+            </div> -->
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" name="Adv_Email" [pattern]="emailpattern" maxlength="100" #Adv_Email="ngModel" [(ngModel)]="a.Adv_Email" class="custom-field"
+            [disabled]="mode=='View'">
+            <label for="">Email
+              <!-- <span class="mandatory">*</span> -->
+            </label>
+            <div class="error-msg" *ngIf="Adv_Email.invalid && (Adv_Email.dirty || Adv_Email.touched || formInvalid)">
+              <!-- <span *ngIf="Adv_Email.errors.required">Email is required</span> -->
+              <span *ngIf="Adv_Email.errors.pattern">Email pattern mismatch</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" name="Adv_GSTRegNo"  #Adv_GSTRegNo="ngModel" [(ngModel)]="a.Adv_GSTRegNo" class="custom-field"
+            [disabled]="mode=='View'" placeholder="22AAAAA0000A1Z5" pattern="^([0][1-9]|[1-2][0-9]|[3][0-7])([A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[Z]{1}[0-9A-Z]{1})+$" maxlength="15" minlength="15">
+            <label for="">GST Regn No
+              <!-- <span class="mandatory">*</span> -->
+            </label>
+            <div class="error-msg" *ngIf="Adv_GSTRegNo.invalid && (Adv_GSTRegNo.dirty || Adv_GSTRegNo.touched || formInvalid)">
+              <span *ngIf="Adv_GSTRegNo.errors.pattern">GST Registraction Number is Invalid</span>
+ <span *ngIf="Adv_GSTRegNo.errors.maxlength">GST Registraction Number maxlength is 15 digits</span>
+ <span *ngIf="Adv_GSTRegNo.errors.minlength">GST Registraction Number minimum length is 15 digits</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" name="Adv_MICR"  maxlength="50" #Adv_MICR="ngModel" [(ngModel)]="a.Adv_MICR" class="custom-field"
+            [disabled]="mode=='View'" pattern="^[0-9]*$">
+            <label for="">MICR
+              <!-- <span class="mandatory">*</span> -->
+            </label>
+            <div class="error-msg" *ngIf="Adv_MICR.invalid && (Adv_MICR.dirty || Adv_MICR.touched || formInvalid)">
+              <span *ngIf="Adv_MICR.errors.pattern">MICR pattern mismatch</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" name="Adv_PAN" #Adv_PAN="ngModel" pattern="^[A-Z]{5}[0-9]{4}[A-Z]$" placeholder="ABCTY1234D" maxlength="10" [(ngModel)]="a.Adv_PAN" class="custom-field"
+            [disabled]="mode=='View'">
+            <label for="">PAN No.
+              <!-- <span class="mandatory">*</span> -->
+            </label>
+            <div class="error-msg" *ngIf="Adv_PAN.invalid && (Adv_PAN.dirty || Adv_PAN.touched || formInvalid)">
+              <span *ngIf="Adv_PAN.errors.pattern">PAN no.is incorret</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" name="Adv_TIN"  maxlength="50" #Adv_TIN="ngModel" [(ngModel)]="a.Adv_TIN" class="custom-field"
+            [disabled]="mode=='View'">
+            <label for="">TIN
+              <!-- <span class="mandatory">*</span> -->
+            </label>
+            <!-- <div class="error-msg" *ngIf="Adv_Email.invalid && (Adv_Email.dirty || Adv_Email.touched || formInvalid)">
+              <span *ngIf="Adv_Email.errors.required">Email is required</span>
+              <span *ngIf="Adv_Email.errors.pattern">Email pattern mismatch</span>
+            </div> -->
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+      <div class="row">
+        
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" name="Adv_ServiceTaxRegNo" #Adv_ServiceTaxRegNo="ngModel" maxlength="15" [(ngModel)]="a.Adv_ServiceTaxRegNo" class="custom-field"
+            [disabled]="mode=='View'">
+            <label for="">ServiceTax RegNo
+              <!-- <span class="mandatory">*</span> -->
+            </label>
+            <!-- <div class="error-msg" *ngIf="Adv_AppointmentDate.invalid && (Adv_AppointmentDate.dirty || Adv_AppointmentDate.touched || formInvalid)">
+              <span *ngIf="Adv_AppointmentDate.errors.required">AppointmentDate is required</span>
+            </div> -->
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="date" name="Adv_AppointmentDate" #Adv_AppointmentDate="ngModel" [(ngModel)]="a.Adv_AppointmentDate" class="custom-field"
+            [disabled]="mode=='View'">
+            <label for="">Empanelment in BSHB
+              <!-- <span class="mandatory">*</span> -->
+            </label>
+            <!-- <div class="error-msg" *ngIf="Adv_AppointmentDate.invalid && (Adv_AppointmentDate.dirty || Adv_AppointmentDate.touched || formInvalid)">
+              <span *ngIf="Adv_AppointmentDate.errors.required">AppointmentDate is required</span>
+            </div> -->
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <label for="">Gender</label>
+      </div>
+      <div class="col-md-4">
+          <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                  <input class="form-check-input" name="Adv_Gender" #Adv_Gender="ngModel" [(ngModel)]="a.Adv_Gender" type="radio" id="inlineRadio1" value="M" > Male
+              </label>
+          </div>
+          <div class="form-check form-check-inline">
+              <label class="form-check-label">
+                  <input class="form-check-input" name="Adv_Gender" #Adv_Gender="ngModel" [(ngModel)]="a.Adv_Gender" type="radio" id="inlineRadio1" value="F"> Female
+              </label>
+          </div>
+      </div>
+      </div>
+    </div>
+    <div class="title themeheading">
+        Bank Details
+      </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+              <div class="input-group">
+                <input type="text" maxlength="50" name="Adv_BankName" [pattern]="alphabetpattern" #Adv_BankName="ngModel" [(ngModel)]="a.Adv_BankName" class="custom-field"
+                [disabled]="mode=='View'">
+                <label for="">a. Bank Name
+                  <!-- <span class="mandatory">*</span> -->
+                </label>
+                <div class="error-msg" *ngIf="Adv_BankName.invalid && (Adv_BankName.dirty || Adv_BankName.touched || formInvalid)">
+                  <!-- <span *ngIf="Adv_BankName.errors.required">BankName is required</span> -->
+                  <span *ngIf="Adv_BankName.errors.pattern">Enter Valid Bank Name</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-group">
+                <input type="text" name="Adv_Branch" [pattern]="alphabetpattern" maxlength="50" #Adv_Branch="ngModel" [(ngModel)]="a.Adv_Branch" class="custom-field"
+                [disabled]="mode=='View'">
+                <label for="">b. Branch
+                  <!-- <span class="mandatory">*</span> -->
+                </label>
+                <div class="error-msg" *ngIf="Adv_Branch.invalid && (Adv_Branch.dirty || Adv_Branch.touched || formInvalid)">
+                  <!-- <span *ngIf="Adv_Branch.errors.required">Branch is required</span> -->
+                  <span *ngIf="Adv_Branch.errors.pattern">Enter Branch</span>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+              <div class="input-group">
+                <input type="text" name="Adv_Acc_No" #Adv_Acc_No="ngModel" [pattern]="numericpattern" [(ngModel)]="a.Adv_Acc_No" class="custom-field"
+                [disabled]="mode=='View'">
+                <label for="">c. Acc No.
+                  <!-- <span class="mandatory">*</span> -->
+                </label>
+                <div class="error-msg" *ngIf="Adv_Acc_No.invalid && (Adv_Acc_No.dirty || Adv_Acc_No.touched || formInvalid)">
+                  <!-- <span *ngIf="Adv_Acc_No.errors.required">Acco No is required</span> -->
+                  <span *ngIf="Adv_Acc_No.errors?.pattern">Enter valid Account No</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-group">
+                <input type="text" name="Adv_IFSCCode" pattern="^[A-Z]{4}0\d{6}$"  maxlength="11" minlength="11" placeholder="AAAA0111111" #Adv_IFSCCode="ngModel" [(ngModel)]="a.Adv_IFSCCode" class="custom-field"
+                [disabled]="mode=='View'">
+                <label for="">d. IFSC Code
+                  <!-- <span class="mandatory">*</span> -->
+                </label>
+                <div class="error-msg" *ngIf="Adv_IFSCCode.invalid && (Adv_IFSCCode.dirty || Adv_IFSCCode.touched || formInvalid)">
+                  <!-- <span *ngIf="Adv_IFSCCode.errors.required">IFSC Code is required</span> -->
+                  <span *ngIf="Adv_IFSCCode.errors?.pattern">Enter valid IFSC Code</span>
+                  <span *ngIf="Adv_IFSCCode.errors?.minlength">Enter 11 characters </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        <div class="row">
+            <div class="col-md-6">
+              <div class="input-group">
+                <input type="text" name="Adv_Acc_HolderName" [pattern]="alphabetpattern" maxlength="80" #Adv_Acc_HolderName="ngModel" [(ngModel)]="a.Adv_Acc_HolderName" class="custom-field"
+                [disabled]="mode=='View'">
+                <label for="">e. Account holder name
+                  <!-- <span class="mandatory">*</span> -->
+                </label>
+                <div class="error-msg" *ngIf="Adv_Acc_HolderName.invalid && (Adv_Acc_HolderName.dirty || Adv_Acc_HolderName.touched || formInvalid)">
+                  <!-- <span *ngIf="Adv_Acc_HolderName.errors.required">Account Holder Name is required</span> -->
+                  <span *ngIf="Adv_Acc_HolderName.errors?.pattern">Enter valid Name</span>
+                </div>
+              </div>
+            </div>
+          </div>        
+        <div class="container-fluid text-center">
+          <button  type="submit" [disabled]="mode=='View'" class="btn btn-primary">Save</button> &nbsp; <button class="btn btn-primary" (click)="cancel()">Cancel</button>
+        </div>
+      </div>
+    </div>    
+  </form> 
+    
+</div>

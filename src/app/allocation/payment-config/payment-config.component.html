@@ -1,0 +1,306 @@
+<div class="wrapper notify">
+    <div class="title themeheading space">
+        {{title}}
+        <button class="btn btn-primary pull-right" [routerLink]="['/home/paymentconfig']">Back</button>
+        <!-- <button class="btn btn-primary float-right" data-target="#cost-popup" data-toggle="modal">Add Finance Details</button> -->
+    </div>
+    <form #PaymentConfig="ngForm" (ngSubmit)="Save(PaymentConfig)" autocomplete="off">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- <div class="col-md-4">
+                    <div class="input-group">
+                        <select [disabled]="mode=='View'" [(ngModel)]="pc.PC_TypeofNot_Id_Fk" required #PC_TypeofNot_Id_Fk="ngModel" name="PC_TypeofNot_Id_Fk"
+                            class="custom-field" required [disabled]="mode=='view'">
+                            <option [ngValue]="undefined" selected>---Select---</option>
+                            <option [ngValue]="ton.TON_Id" *ngFor="let ton of TypesofNotifications;">
+                                {{ton.TON_Name}}</option>
+                        </select>
+                        <label for="">Types of Notification</label>
+                        <div class="error-msg" *ngIf="PC_TypeofNot_Id_Fk.invalid && (PC_TypeofNot_Id_Fk.dirty || PC_TypeofNot_Id_Fk.touched || formSubmitted)">
+                            <span *ngIf="PC_TypeofNot_Id_Fk.errors.required">Types of Notification is required</span>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <select [disabled]="mode=='View'" [(ngModel)]="pc.PC_NO_Id_FK" required #PC_NO_Id_FK="ngModel"
+                            name="PC_NO_Id_FK" class="custom-field" (change)="GetProjects(pc.PC_NO_Id_FK)" disabled>
+                            <option [ngValue]="undefined" selected>---Select---</option>
+                            <option [ngValue]="n.DSWOId_NO_Id" *ngFor="let n of Notifications;">
+                                {{n.DSWOId_NO_Number}}-{{n.DSWOId_NO_Id}}-{{n.PD_Project_Name}}-{{n.PD_Project_Code}}</option>
+                        </select>
+                        <label for="">Notification</label>
+                        <!-- <div class="error-msg" *ngIf="PC_NO_Id_FK.invalid && (PC_NO_Id_FK.dirty || PC_NO_Id_FK.touched || formSubmitted)">
+                            <span *ngIf="PC_NO_Id_FK.errors.required">Notification is required</span>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <select [disabled]="mode=='View'" [(ngModel)]="pc.PC_PD_Id_FK" required #PC_PD_Id_FK="ngModel"
+                            name="PC_PD_Id_FK" class="custom-field" disabled>
+                            <option [ngValue]="undefined" selected>---Select---</option>
+                            <option [ngValue]="p.PD_Id" *ngFor="let p of Projects;">
+                                {{p.PD_Project_Code}}-{{p.PD_Project_Name}}</option>
+                        </select>
+                        <label for="">Project</label>
+                        <!-- <div class="error-msg" *ngIf="PC_PD_Id_FK.invalid && (PC_PD_Id_FK.dirty || PC_PD_Id_FK.touched || formSubmitted)">
+                            <span *ngIf="PC_PD_Id_FK.errors.required">Project is required</span>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="input-group">
+                        <select [disabled]="mode=='View'" [(ngModel)]="pc.PC_Cat_Id_Fk" required #PC_Cat_Id_Fk="ngModel"
+                            name="PC_Cat_Id_Fk" class="custom-field" disabled>
+                            <option [ngValue]="undefined" selected>---Select---</option>
+                            <option [value]="ca.CA_Id" *ngFor="let ca of Categories;">
+                                {{ca.CA_CategoryName}}</option>
+                        </select>
+                        <label>Category</label>
+                        <!-- <div class="error-msg" *ngIf="PC_Cat_Id_Fk.invalid && (PC_Cat_Id_Fk.dirty || PC_Cat_Id_Fk.touched || formSubmitted)">
+                            <span *ngIf="PC_Cat_Id_Fk.errors.required">Category is required</span>
+                        </div> -->
+                    </div>
+                </div>
+
+            </div>
+            <!-- <div class="row">
+
+                
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <select [disabled]="mode=='View'" [(ngModel)]="pc.PC_Res_Id_Fk" required #PC_Res_Id_Fk="ngModel" name="PC_Res_Id_Fk" class="custom-field" required [disabled]="mode=='view'">
+                            <option [ngValue]="undefined" selected>---Select---</option>
+                            <option [value]="r.RES_Id" *ngFor="let r of Reservations;">
+                                {{r.RES_Name}}</option>
+                        </select>
+                        <label>Reservations</label>
+                        <div class="error-msg" *ngIf="PC_Res_Id_Fk.invalid && (PC_Res_Id_Fk.dirty || PC_Res_Id_Fk.touched || formSubmitted)">
+                                <span *ngIf="PC_Res_Id_Fk.errors.required">Reservations is required</span>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <select [disabled]="mode=='View'" [(ngModel)]="pc.PC_PT_Id_Fk" required #PC_PT_Id_Fk="ngModel" name="PC_PT_Id_Fk" class="custom-field" required [disabled]="mode=='view'">
+                            <option [ngValue]="undefined" selected>---Select---</option>
+                            <option [value]="pt.PT_Id" *ngFor="let pt of proprtytype;">
+                                {{pt.PT_Property_Type}}</option>
+                        </select>
+                        <label>Property type</label>
+                        <div class="error-msg" *ngIf="PC_PT_Id_Fk.invalid && (PC_PT_Id_Fk.dirty || PC_PT_Id_Fk.touched || formSubmitted)">
+                                <span *ngIf="PC_PT_Id_Fk.errors.required">Property type is required</span>
+                            </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+
+        <div class="container-fluid">
+            <div class="row" style="background:white !important;padding-top:5px !important;">
+
+                <div class="col-md-12">
+                    <!-- 
+                    <div class="pre-allotment">
+                        <div class="container-fluid">
+                            <div class="row" style="padding: 0 !important;background: none;">
+                                <div class="col-md-12">
+                                    <div class="title themeheading">Installment</div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <h6>Pre-Allotment</h6>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <input type="text" [(ngModel)]="pc.PC_RegFee" #PC_RegFee="ngModel" name="PC_RegFee" placeholder=" " class="custom-field text-right" [disabled]="mode=='view'" required>
+                                        <label for="">Registration fee</label>
+                                        <div class="error-msg" *ngIf="PC_RegFee.invalid && (PC_RegFee.dirty || PC_RegFee.touched || formSubmitted)">
+                                                <span *ngIf="PC_RegFee.errors.required">Registration fee is required</span>
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <input type="text" [(ngModel)]="pc.PC_AppFee" #PC_AppFee="ngModel" name="PC_AppFee" placeholder=" " [disabled]="mode=='view'" class="custom-field text-right" required>
+                                        <label for="">Application fee</label>
+                                        <div class="error-msg" *ngIf="PC_AppFee.invalid && (PC_AppFee.dirty || PC_AppFee.touched || formSubmitted)">
+                                                <span *ngIf="PC_AppFee.errors.required">Application fee is required</span>
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <input type="text" [(ngModel)]="pc.PC_InitialDeposit" #PC_InitialDeposit="ngModel" name="PC_InitialDeposit" placeholder=" "
+                                            class="custom-field text-right" required [disabled]="mode=='view'">
+                                        <label for="">Initial Deposit</label>
+                                        <div class="error-msg" *ngIf="PC_InitialDeposit.invalid && (PC_InitialDeposit.dirty || PC_InitialDeposit.touched || formSubmitted)">
+                                                <span *ngIf="PC_InitialDeposit.errors.required">Initial Deposit is required</span>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="title">
+                                <!-- <h5>Installment Cost Fixation</h5> -->
+                                <div class="float-right">
+                                    <button class="btn btn-primary" type="button" (click)="showInstallment()"  [hidden]="mode=='view'" >Add
+                                        Installment Cost</button>
+                                </div>
+
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <td>Sl No.</td>
+                                            <td>Property Type</td>
+                                            <td>Total Amount(in Rs)</td>
+                                            <td>Default Penalty Amount(in Rs)</td>
+                                            <td>Penalty Percentage(%)</td>
+                                            <td [hidden]="mode=='view' || x.isNew">Delete</td>
+                                            <td [hidden]="mode=='view' || !x.isNew">Remove</td>
+                                            <!-- [hidden]="Installments != '' || Installments != 'undefined' || Installments!= 'null'" -->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let x of Installments;let i=index;" [class.new-installment]="x.isNew">
+                                            <td>{{i+1}}.</td>
+                                            <td>{{x.PT_Property_Type}}</td>
+                                            <td>{{x.PCA_Tot_Amt | number}}</td>
+                                            <td>{{x.PCA_Penalty}}</td>
+                                            <td>{{x.PCA_Perc_deduct}}</td>
+                                            
+                                            <td [hidden]="mode == 'view' || x.isNew">
+                                                <a href="javascript:void(0);" (click)="delete(x.PCA_Id)">
+                                                    <i class="fa fa-lg fa-trash themecolor"></i>
+                                                </a>
+                                            </td>
+                                            <td [hidden]="mode == 'view' || !x.isNew" >
+                                                <!-- Show the Remove button only for new installments -->
+                                                <a *ngIf="x.isNew" (click)="RemoveInstallments(i)" class="fa fa-minus-circle"></a>
+                                            </td>
+                                            <!-- [hidden]="Installments != '' || Installments != 'undefined' || Installments!= 'null'" -->
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-wrapper" [hidden]="mode=='view'">
+                <button class="btn btn-primary" type="submit" [disabled]="Installments.length === 0">Update</button>
+                <!-- [disabled]="Installments != '' || Installments != 'undefined' || Installme!= 'null'" -->
+                <!-- <button class="btn btn-primary" [disabled]="Installments == '' || Installments == 'undefined' || Installments == 'null'">Cancel</button> -->
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<div class="modal" id="installment">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Installment </h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="container-fluid">
+
+                    <div class="row" style="background:#fff !important;">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <select [disabled]="mode=='View'" [(ngModel)]="installmentpay.PCA_PT_Id_Fk" required
+                                    #PCA_PT_Id_Fk="ngModel" name="PCA_PT_Id_Fk" class="custom-field" (change)="clear()">
+                                    <option [ngValue]="undefined" selected>---Select---</option>
+                                    <option [value]="pt.PT_Id" *ngFor="let pt of proprtytype;">
+                                        {{pt.PT_Property_Type}}</option>
+                                </select>
+                                <label>Property type</label>
+                                <!-- <div class="error-msg" *ngIf="PC_PT_Id_Fk.invalid && (PC_PT_Id_Fk.dirty || PC_PT_Id_Fk.touched || formSubmitted)">
+                                    <span *ngIf="PC_PT_Id_Fk.errors.required">Property type is required</span>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="background:#fff !important;" *ngIf="installmentpay.PCA_PT_Id_Fk=='1'">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <input type="text" class="custom-field" [(ngModel)]="installmentpay.PCA_Sqmt" #PCA_Sqmt="ngModel"
+                                    name="PCA_Sqmt" readonly>
+
+                                <label for="">Sqmt</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="background:#fff !important;" *ngIf="installmentpay.PCA_PT_Id_Fk=='1'">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <input type="text" class="custom-field" [(ngModel)]="installmentpay.PCA_Sqft" #PCA_Sqft="ngModel"
+                                    name="PCA_Sqft" readonly>
+                                <label for="">Sqft</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="background:#fff !important;" *ngIf="installmentpay.PCA_PT_Id_Fk=='1'">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <input type="text" class="custom-field" [(ngModel)]="installmentpay.PCA_Cost_per_Sqft"
+                                    #PCA_Cost_per_Sqft="ngModel" name="PCA_Cost_per_Sqft" (keyup)="GetTotal(installmentpay.PCA_Cost_per_Sqft)">
+                                <label for="">Cost per Sqmt</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="background:#fff !important;">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <input type="text" class="custom-field" [(ngModel)]="installmentpay.PCA_Tot_Amt"
+                                    #PCA_Tot_Amt="ngModel" name="PCA_Tot_Amt" [readonly]="pc.PC_PT_Id_Fk=='1'">
+                                <label for="">Total Amount</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="background:#fff !important;">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <input type="text" class="custom-field" [(ngModel)]="installmentpay.PCA_Penalty"
+                                    #PCA_Penalty="ngModel" name="PCA_Penalty">
+                                <label for="">Default Penalty Amount</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="background:#fff !important;">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <input type="text" class="custom-field" maxlength="5" pattern="^([0-9]\.[0-9]{1}|[0-9]\.[0-9]{2}|\.[0-9]{2}|[1-9][0-9]\.[0-9]{1}|[1-9][0-9]\.[0-9]{2}|[0-9][0-9]|[1-9][0-9]\.[0-9]{2})$|^([0-9]|[0-9][0-9]|[0-99])$|^100$"
+                                    [(ngModel)]="installmentpay.PCA_Perc_deduct" #PCA_Perc_deduct="ngModel" name="PCA_Perc_deduct">
+                                <label for="">Total Percentage Deduct</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center" [hidden]="mode=='view'">
+                        <button class="btn btn-primary" type="button" (click)="AddInstallments(installmentpay)"
+                            [disabled]="mode=='view'">Save</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,133 @@
+<div class="wrapper">
+
+    <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm,itemsPerPage,1)">
+        <div class="title themeheading">{{title}}
+            <div class="float-right">
+                Items per page:
+                <select name="SearchRows" #SearchRows="ngModel" [(ngModel)]="itemsPerPage" class="noofpage"
+                    (change)="itemsPerPageChanged(itemsPerPage, 1)">
+                    <option [ngValue]="5">5</option>
+                    <option [ngValue]="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                </select>
+                <!-- <a class="btn btn-primary " [routerLink]="['/home/transfer/transferin-form']" >Add</a> -->
+            </div>
+            <span class="clearfix"></span>
+        </div>
+        <div class="searchbar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label>Search</label>
+                    </div>
+                    <div class="col-md-4">
+                        <select name="SearchCriteria" #SearchCriteria="ngModel" [(ngModel)]="s.SearchCriteria"
+                            class="form-control" required>
+                            <option [ngValue]="undefined" selected>---Select---</option>
+                            <option value="DOC_CODE">Transfer.No</option>
+                            <option value="tranfr_relv_date"> Date</option>
+                            <option value="EMP_EMPLOYEE_CODE">Employee Id</option>
+                            <option value="EMP_FIRST_NAME">Employee Name</option>
+                            <option value="tranfr_locs">Transfer Location</option>
+                            <!-- <option value="Department_Name">Department Name</option>
+                            <option value="District">District</option> -->
+                        </select>
+                        <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)"
+                            class="error-msg">
+                            <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="SearchText" #SearchText="ngModel" [(ngModel)]="s.SearchText"
+                            class="form-control" placeholder="Search.." required>
+                        <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+                            <div *ngIf="SearchText.errors.required">Search text is required</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-default" type="submit">Search</button>
+                        <button class="btn btn-default" type="reset"
+                            (click)="GetAllReportingDetails(itemsPerPage, 1)">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped grid">
+                <thead>
+                    <tr>
+                        <td>Sl No.</td>
+                        <td>Transfer Order Number</td>
+                        <td>Employee Id</td>
+                        <td>Employee Name</td>                     
+                        <td>Transfer Date</td>
+                        <td>Transfer Location</td>
+                        <td>Status</td>
+                        <td class="text-center">View</td>
+                        <td class="text-center">Edit</td>
+                        <!-- <td class="text-center">Delete</td> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let D of Reportinglist | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems}; let i=index"
+                    [ngClass]="{'inactive':D.INACTIVE=='Y'}"
+                    [class.Blue]="D.doc_status == 'A' || D.doc_status =='a'"
+                    [class.Red]="D.doc_status == 'R' || D.doc_status =='r'"
+                    [class.DGreen]="D.doc_status == 'S' || D.doc_status =='s'"
+                    [class.Green]="D.doc_status == 'G' || D.doc_status =='g'">            
+                    <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+                    <td>{{D.DOC_CODE}}</td>
+                    <td>{{D.EMP_EMPLOYEE_CODE}}</td>
+                    <td>{{D.EMP_FIRST_NAME}}</td>                   
+                    <td>{{D.tranfr_relv_date | date:'dd-MM-yyyy'}}</td>
+                    <td>{{D.tranfr_locs}}</td>
+                    <td *ngIf="D.doc_status =='S' || D.doc_status =='s' ">Sanctioned</td>
+                    
+
+                 
+                  
+                  
+                    <td class="text-center">
+                            <!-- <a href="javascript:void(0);" [routerLink]="['/home/transfer/transferin-form']">
+                                <i class="fa fa-lg fa-eye themecolor"></i>
+                            </a> -->
+                            <a href="javascript:void(0);" [routerLink]="['/home/transfer/transferin-form',D.transfer_id,'View']">
+                                <i class="fa fa-lg fa-eye themecolor"></i>
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <a href="javascript:void(0);" [routerLink]="['/home/transfer/transferin-form',D.transfer_id,'Edit']">
+                                <i class="fa fa-lg fa-edit themecolor"></i>
+                            </a>
+                        </td>                       
+                    </tr>
+                </tbody>
+            </table>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-11">
+                        <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)"
+                            maxSize="9" directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+                            screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                            screenReaderCurrentLabel="You're on page">
+                        </pagination-controls>
+                    </div>
+                    <div class="col-md-1">
+                        Total:
+                        <span>{{totalItems}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+
+    <!--  -->
+   
+
+    <!--  -->
+</div>

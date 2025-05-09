@@ -1,0 +1,398 @@
+<div class="title themeheading">
+  {{title}}
+  <span style="display: inline-block;margin-left:30px;font-weight: bold;">Status - Move to Scruntiny</span>
+  <button class="btn btn-primary float-right" [routerLink]="['/home/appstatus']">Back</button>
+  <span class="clearfix"></span>
+</div>
+<br>
+<div class="appview" style="border:1px solid #ccc;width:70%;margin:0px auto;">
+    <div class="wrapper">
+        <form action="">
+    
+            <div class="applicationview">
+                <div class="container-fluid">
+    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Application No.</span> {{AFD.APP_No}}</label>
+                        </div>
+    
+                            <div class="col-md-6" >
+                                <div class="row">
+                                    <div class="col-md-6" *ngIf="AFD.APP_PA_Photo!=null">
+                                        <img src="{{AFD.APP_PA_Photo}}" class="img-responsive" style="width:200px;height:130px;">
+                                    </div>
+                                    <div class="col-md-6" *ngIf="AFD.APP_PA_Signature!=null">
+                                        <img src="{{AFD.APP_PA_Signature}}" class="img-responsive" style="width:200px;height:130px;">
+                                    </div>
+                                </div> 
+                            </div>
+                            <div class="col-md-3" >
+                                <div class="row" *ngIf="AFD.APP_IsJoint=='Y'">
+                                    <div class="col-md-4" *ngIf="AFD.APP_SA_Photo!=null">
+                                        <label>
+                                            <span class="field-title">Secondary Applicant Photo</span>
+                                            <img src="{{AFD.APP_SA_Photo}}" style="width:200px;height:130px;"> </label>
+                                    </div>
+                                    <div class="col-md-4" *ngIf="AFD.APP_SA_Signature!=null">
+                                        <label>
+                                            <span class="field-title"> Secondary Applicant Signature</span>
+                                            <img src="{{AFD.APP_SA_Signature}}" style="width:200px;height:130px;"> </label>
+                                    </div>
+                                    <div class="col-md-4" *ngIf="AFD.APP_SA_AdharCard!=null">
+                                        <label>
+                                            <span class="field-title"> Secondary Aadhaar Card copy upload</span>
+                                            <img src="{{AFD.APP_SA_AdharCard}}" style="width:200px;height:130px;"> </label>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <!-- <div class="col-md-4" *ngIf="AFD.APP_PA_AdharCard!=null">
+                                <label>
+                                    <span class="field-title">Aadhaar Card copy upload</span>
+                                    <img src="{{AFD.APP_PA_AdharCard}}" style="width:200px;height:130px;"> </label>
+                            </div> -->
+                        <!-- <div class="col-md-6">
+                  <label><span class="field-title">Joint Application ? </span> {{AFD.APP_IsJoint}} </label>
+              </div> -->
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Joint Application ? </span> {{AFD.APP_IsJoint}} </label>
+                        </div>
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Project Name</span> {{PD.PD_Project_Name}}</label>
+                        </div>
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Project place</span> {{PD.NO_AuctionPlace}}</label>
+                        </div>
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Property Type</span> {{AFD.APP_PropertyType}}</label>
+                        </div>
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title"> Category</span> {{AFD.Categories.CA_CategoryName}}</label>
+                        </div>
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">District</span> {{PD.DI_District}}</label>
+                        </div>
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">District Code</span> {{PD.DI_Code}}</label>
+                        </div>
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Notification No.</span> {{PD.NO_Number}}</label>
+                        </div>
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Notification Date</span> {{PD.NO_Date| date:'dd-MM-yyyy'}}</label>
+                        </div>
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Applicant Name</span> {{AFD.APP_PA_Name}}</label>
+                        </div>
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Father/Mother/Husband/Wife</span> {{AFD.APP_PA_Relation_Name}}</label>
+                        </div>
+    
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Date of Birth</span> {{AFD.APP_PA_DOB| date:'dd-MM-yyyy'}}</label>
+                        </div>
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Age</span> {{AFD.APP_PA_Age}}</label>
+                        </div>
+    
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Gender</span> {{AFD.APP_PA_Gender}}</label>
+                        </div>
+    
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Alternate Mobile Number</span>{{AFD.APP_PA_MobileNo}}</label>
+                        </div>
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Primary Mobile Number</span> {{AFD.APP_PA_AlternateNo}}</label>
+                        </div>
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Email</span>{{AFD.APP_PA_Email}}</label>
+                        </div>
+                    </div>
+    
+                    <div class="row" *ngIf="AFD.APP_IsJoint=='Y'">
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Secondary Applicant Name</span> {{AFD.APP_SA_Name}}</label>
+                        </div>
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Secondary Applicant Relationship </span> {{AFD.APP_SA_Relation_Name}}</label>
+                        </div>
+                    </div>
+    
+                    <div class="row" *ngIf="AFD.APP_IsJoint=='Y'">
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Secondary Applicant Date of Birth</span>{{AFD.APP_SA_DOB | date:'dd-MM-yyyy'}}</label>
+                        </div>
+                        <div class="col-md-3">
+                            <label>
+                                <span class="field-title">Secondary Applicant Age</span> {{AFD.APP_SA_Age}}</label>
+                        </div>
+                        <div class="col-md-3">
+                            <label>
+                                <span class="field-title">Secondary Applicant Gender</span> {{AFD.APP_SA_Gender}}</label>
+                        </div>
+                    </div>
+    
+                    <div class="row" *ngIf="AFD.APP_IsJoint=='Y'">
+    
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Secondary Applicant Mobile Number</span>{{AFD.APP_SA_MobileNo}}</label>
+                        </div>
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Secondary Applicant Email</span>{{AFD.APP_SA_Email}}</label>
+                        </div>
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">PAN No.</span> {{AFD.APP_PA_PanNo}}</label>
+                        </div>
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Adhar Card No</span> {{AFD.APP_PA_PanNo}}</label>
+                        </div>
+                    </div>
+    
+                    <div class="row" *ngIf="AFD.APP_IsJoint=='Y'">
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Secondary Applicant PAN No.</span>{{AFD.APP_SA_PanNo}}</label>
+                        </div>
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Secondary Applicant Adhar No</span>{{AFD.APP_SA_PanNo}} </label>
+                        </div>
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Religion</span>{{AFD.Relegions.Relegion_Name}}</label>
+                        </div>
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Reservation</span> {{AFD.Reservations.RES_Name}}</label>
+                        </div>
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Annual Income</span> {{AFD.APP_AnnualIncome}}</label>
+                        </div>
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Address</span> {{AFD.APP_Address}}
+                                <br>{{AFD.APP_Address2}}
+                                <br> {{AFD.DistrictandTaluks.VI_Village}}
+                                <br>{{AFD.DistrictandTaluks.HO_Name}}
+                                <br> {{AFD.DistrictandTaluks.TA_Taluk}} {{AFD.DistrictandTaluks.DI_District}}
+                            </label>
+                        </div>
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Bank</span> {{AFD.APP_BankName}}</label>
+                        </div>
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Branch</span> {{AFD.APP_BankBranch}}</label>
+                        </div>
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Account Number</span>{{AFD.APP_AccountNo}} </label>
+                        </div>
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">IFSC Code</span> {{AFD.APP_IFSC}}</label>
+                        </div>
+                    </div>
+    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Name of the Nominee</span> {{AFD.APP_NomineeName}}</label>
+                        </div>
+                        <div class="col-md-6">
+                            <label>
+                                <span class="field-title">Relationship of the nominee</span> {{AFD.APP_Nominee_Relation_Name}}</label>
+                        </div>
+                    </div>
+    
+                    <!-- <div class="row">
+                    <div class="col-md-4" *ngIf="AFD.APP_PA_Photo!=null">
+                        <label><span class="field-title">Applicant Photo</span> <img src="{{AFD.APP_PA_Photo}}" style="width:200px;height:130px;"> </label>
+                    </div>
+                    <div class="col-md-4" *ngIf="AFD.APP_PA_Signature!=null">
+                            <label><span class="field-title">Applicant Signature</span><img src="{{AFD.APP_PA_Signature}}" style="width:200px;height:130px;"> </label>
+                        </div>
+                        <div class="col-md-4" *ngIf="AFD.APP_PA_AdharCard!=null">
+                                <label><span class="field-title">Aadhaar Card copy upload</span> <img src="{{AFD.APP_PA_AdharCard}}" style="width:200px;height:130px;"> </label>
+                            </div>
+                    </div> -->
+    
+                    <!-- <div class="row" *ngIf="AFD.APP_IsJoint=='Y'">
+                        <div class="col-md-4" *ngIf="AFD.APP_SA_Photo!=null">
+                            <label>
+                                <span class="field-title">Secondary Applicant Photo</span>
+                                <img src="{{AFD.APP_SA_Photo}}" style="width:200px;height:130px;"> </label>
+                        </div>
+                        <div class="col-md-4" *ngIf="AFD.APP_SA_Signature!=null">
+                            <label>
+                                <span class="field-title"> Secondary Applicant Signature</span>
+                                <img src="{{AFD.APP_SA_Signature}}" style="width:200px;height:130px;"> </label>
+                        </div>
+                        <div class="col-md-4" *ngIf="AFD.APP_SA_AdharCard!=null">
+                            <label>
+                                <span class="field-title"> Secondary Aadhaar Card copy upload</span>
+                                <img src="{{AFD.APP_SA_AdharCard}}" style="width:200px;height:130px;"> </label>
+                        </div>
+                    </div> -->
+    
+    
+                    <div class="row">
+                        <div class="col-md-6" *ngIf="AFD.APP_ESW_Certificate!=null">
+                            <label>
+                                <span class="field-title">ESW Cerficate</span>
+                                <a href="{{AFD.APP_ESW_Certificate}}">View</a>
+                            </label>
+                        </div>
+                        <div class="col-md-6" *ngIf="AFD.APP_Caste_Certificate!=null">
+                            <label>
+                                <span class="field-title">Caste Cerficate</span>
+                                <a href="{{AFD.APP_Caste_Certificate}}">View</a>
+                            </label>
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<br>
+<div class="container-fluid" id="">
+  <div class="row">
+    <div class="col-md-3">
+      <label for="">Property No. <span>: KEC-1234</span></label>
+    </div>
+    <div class="col-md-3">
+      <label for="">Intermediate / Corner ? <span>: Corner</span></label>
+    </div>
+    <div class="col-md-3">
+      <label for="">Odd / Regular ? <span>: Regular</span></label>
+    </div>
+    <div class="col-md-3">
+      <label for="">Measurement <span>: 40EW - 30NS</span></label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2">Boundary</div>
+    <div class="col-md-2">North <span>: Road</span></div>
+    <div class="col-md-2">South <span>: Road</span></div>
+    <div class="col-md-2">East <span>: Site</span></div>
+    <div class="col-md-2">West <span>: Site</span></div>
+  </div>
+</div>
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3">
+      <label for="">Reg No. <span>: KEC-12345</span></label>
+    </div>
+    <div class="col-md-3">
+      <label for="">Amount to be paid <span>: 3000000</span></label>
+    </div>
+    <div class="col-md-3">
+      <label for="">Name <span>: Vikram Kumar</span></label>
+    </div>    
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="input-group">
+        <input type="text" class="custom-field">
+        <label for="">Bank Name</label>
+      </div>
+    </div>
+    <div class="col-md-3">
+        <div class="input-group">
+            <input type="text" class="custom-field">
+            <label for="">Bank Branch</label>
+          </div>
+    </div>
+    <div class="col-md-3">
+        <div class="input-group">
+            <input type="text" class="custom-field">
+            <label for="">IFSC Code</label>
+          </div>
+    </div>
+    <div class="col-md-3">
+        <div class="input-group">
+            <input type="text" class="custom-field">
+            <label for="">Acc No.</label>
+          </div>
+    </div>
+  </div>
+  <div class="text-center">
+    <button class="btn btn-primary">Save</button><button class="btn btn-primary">Cancel</button>
+  </div>
+</div>

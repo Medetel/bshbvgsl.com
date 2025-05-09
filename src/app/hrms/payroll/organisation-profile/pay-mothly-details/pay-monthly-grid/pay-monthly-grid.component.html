@@ -1,0 +1,89 @@
+<div class="wrapper">
+  <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm,itemsPerPage,1)">
+  <div class="title themeheading">
+    Pay Months Details
+    <div class="float-right">
+      <!-- <button class="btn btn-primary" routerLink="/home/payroll/payroll-compliance/pay-monthly/pay-view">Add</button> -->
+      <span class="clearfix"></span>
+    </div>
+  </div>
+  <div class="searchbar">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-1">
+          <label>Search</label>
+        </div>
+        <div class="col-md-4">
+          <select name="SearchCriteria" #SearchCriteria="ngModel" [(ngModel)]="s.SearchCriteria" class="form-control"  required>
+            <option [ngValue]="undefined" selected>---Select---</option>
+            <option value="MonthCode">Month Code</option>
+            <option value="month_desc">Month Name</option>
+          </select>
+          <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)" class="error-msg">
+            <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+        </div>
+        </div>
+        <div class="col-md-4">
+          <input type="text" class="form-control" placeholder="Search.." name="SearchText" #SearchText="ngModel" [(ngModel)]="s.SearchText"
+              required>
+          <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+              <div *ngIf="SearchText.errors.required">Search text is required</div>
+          </div>
+      </div>
+        <div class="col-md-3">
+          <button class="btn btn-default" type="submit" >Search</button>
+          <button class="btn btn-default" type="reset" (click)=" GetAllPaymonthfinalized(itemsPerPage, 1)">Clear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="table-responsive">
+    <table class="table table-striped grid table-sm">
+      <thead>
+        <tr>
+          <td>Sl No.</td>
+          <td>Month Code</td>
+          <td>Pay Month</td>
+          <td>Calendar Year</td>
+          <td style="width:100px;">Fiscal Year</td>
+          <td> Working Days</td>
+          <td>Status</td>
+          <td>Data Locked</td>
+          <td>Is Incrementh Month</td>
+          <td>Is Promotion Month</td>
+          <td class="text-center">View</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of Paymonthfinalizedlist; let i=index">
+          <td>{{i+1}}.</td>
+          <td>{{p.MonthCode}}</td>
+          <td>{{p.month_desc}}</td>
+          <td>{{p.calendar_year}}</td>
+          <td>{{p.fiscal_year}}</td>
+          <td>{{p.Working_Days}} </td>
+          <td>{{p.status}} </td>
+          <td>Yes </td>
+          <td>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">             
+            </div>
+          </td>
+          <td>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option1">              
+            </div>
+          </td>
+          <td class="text-center">
+            <a href="javascript:void(0);" (click)="view(p.MonthCode)">
+              <i class="fa fa-lg fa-eye tdemecolor"></i>
+          </a>
+          </td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+</form>
+</div>

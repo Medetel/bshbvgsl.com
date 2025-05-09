@@ -1,0 +1,43 @@
+<body>
+  <form #rf="ngForm" (ngSubmit)="Login(rf)">
+    <div class="login-wrapper">
+      <h2>Login</h2>
+      
+      <div class="field-wrapper">
+        <label for="username">Username</label>
+        <input id="username" type="text" class="form-control md-custom" name="UserName" ngModel #UserName="ngModel"
+          placeholder="Enter your username" required />
+        <div class="error-msg" *ngIf="UserName.invalid && (UserName.dirty || UserName.touched || formSubmitted)">
+          <div *ngIf="UserName.errors.required">Username is required</div>
+        </div>
+      </div>
+
+      <div class="field-wrapper">
+        <label for="password">Password</label>
+        <input id="password" type="password" class="form-control md-custom" name="Password" ngModel #Password="ngModel"
+          placeholder="Enter your password" required />
+        <div *ngIf="Password.invalid && (Password.dirty || Password.touched || formSubmitted)" class="error-msg">
+          <div *ngIf="Password.errors.required">Password is required</div>
+        </div>
+      </div>
+      
+      <button class="btn btn-primary" type="submit" [disabled]="showLodingSpinner">Login
+        <i *ngIf="showLodingSpinner" style="margin-left:10px;" class="fa fa-circle-o-notch fa-spin"></i>
+      </button>
+      <div class="text-center" style="margin-top: 1rem;">
+        <a [routerLink]="'/auth/forgot-password'" class="text-primary" style="cursor: pointer;">Forgot password?</a>
+      </div>
+
+      <!-- Back to home page as text -->
+      <!-- <div class="justify-content-center" style="margin-top: 1rem;">
+        <a href="https://onlinebshb.esdinfra.com" class="text-success" style="cursor: pointer;">Back to home page</a>
+      </div> -->
+         
+      <!-- <button class="btn btn-primary" type="submit" [disabled]="showLodingSpinner" [routerLink]="'/auth/forgot-password'">Forgot Password
+        <i *ngIf="showLodingSpinner" style="margin-left:10px;" class="fa fa-circle-o-notch fa-spin"></i>
+      </button> -->
+      
+     
+    </div>
+  </form>
+</body>

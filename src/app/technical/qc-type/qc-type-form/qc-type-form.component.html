@@ -1,0 +1,99 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary float-right" [routerLink]="['/home/qc-type']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group"><select class="custom-field"></select><label for="">QC test category</label></div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group"><input type="text" class="custom-field"><label for="">Test type code</label></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group"><input type="text" class="custom-field"><label for="">Test name</label></div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group"><input type="text" class="custom-field"><label for="">Test place</label></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group"><textarea class="custom-field"></textarea><label for="">Description</label></div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group"><input type="text" class="custom-field"><label for="">Test standard</label></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group"><select class="custom-field">
+          <option value="">Daily</option>
+          <option value="">Weekly</option>
+          <option value="">Quaterly</option>
+          <option value="">Monthly</option>
+          <option value="">Yearly</option>
+        </select><label for="">Test frequency</label></div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group"><select class="custom-field">
+          <option value="">Repetitive</option>
+          <option value="">Once</option>
+        </select><label for="">Test Run Type</label></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group"><input type="text" class="custom-field"><label for="">No of Repetitions</label></div>
+      </div>
+      <div class="col-md-3">
+        <label for="">Statutory or Contractual</label>
+      </div>
+      <div class="col-md-3">
+        <div class="form-check-inline">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="optradio">Statutory
+          </label>
+        </div>
+        <div class="form-check-inline">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="optradio">Contractual
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-1">
+        <label for="">Status</label>
+      </div>
+      <div class="col-md-5">
+        <div class="form-check-inline">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="optradio">Approved
+          </label>
+        </div>
+        <div class="form-check-inline">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="optradio">Active
+          </label>
+        </div>
+        <div class="form-check-inline">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="optradio">Inactive
+          </label>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="text-center">
+      <button class="btn btn-primary">Save</button><button class="btn btn-primary">Cancel</button>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,168 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary float-right" [routerLink]="['/home/staffmob']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <form (ngSubmit)="mode=='edit'? UpdateStaff(Staffform):Savestaff(Staffform)" #Staffform="ngForm" autocomplete="off">
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <!-- <select class="custom-field" > -->
+            <select class="custom-field" #Area_Dist="ngModel" name="Area_Dist" [(ngModel)]="i.Area_Dist"
+              list="dynmicUserIds" [disabled]="mode=='view'" required>
+              <!-- <datalist id="dynmicUserIds"> -->
+              <option [value]="undefined" selected>---Select Area/District Name---</option>
+              <option [value]="c.DI_Id" *ngFor="let c of Areacode;">
+                {{c.DI_Code}} - {{c.DI_District}}
+              </option>
+              <!-- </datalist> -->
+            </select>
+            <label for="">Area/District Name
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Area_Dist.invalid && (Area_Dist.dirty || Area_Dist.touched || formInvalid)">
+              <span *ngIf="Area_Dist.errors.required">Area/District Name is required</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <!-- <select class="custom-field" > -->
+            <select class="custom-field" #Project_Code="ngModel" name="Project_Code" [(ngModel)]="i.Project_Code"
+              list="dynmicUserIds" [disabled]="mode=='view'" required>
+              <!-- <datalist id="dynmicUserIds"> -->
+              <option [value]="undefined" selected>---Select Project Name---</option>
+              <option [value]="c.PD_Id" *ngFor="let c of projectcode;">
+                {{c.PD_Project_Code}} - {{c.PD_Project_Name}}
+              </option>
+              <!-- </datalist> -->
+            </select>
+            <label for="">Project Name
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="Project_Code.invalid && (Project_Code.dirty || Project_Code.touched || formInvalid)">
+              <span *ngIf="Project_Code.errors.required">Project Name is required</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #Staff_Name="ngModel" name="Staff_Name" [disabled]="mode=='view'"
+              pattern="^[a-zA-Z ]*$" [(ngModel)]="i.Staff_Name" required maxlength="20">
+            <label for="">Staff Name
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="Staff_Name.invalid && (Staff_Name.dirty || Staff_Name.touched || formInvalid)">
+              <span *ngIf="Staff_Name.errors.required">Staff Name is required</span>
+              <span *ngIf="Staff_Name.errors?.pattern">Only Alphabets should enter</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #Staff_Pos="ngModel" name="Staff_Pos" [disabled]="mode=='view'"
+              pattern="^[a-zA-Z ]*$" [(ngModel)]="i.Staff_Pos" required maxlength="30">
+            <label for="">Staff Position
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Staff_Pos.invalid && (Staff_Pos.dirty || Staff_Pos.touched || formInvalid)">
+              <span *ngIf="Staff_Pos.errors.required">Staff Position is required</span>
+              <span *ngIf="Staff_Pos.errors?.pattern">Only Alphabets should enter</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #mobile="ngModel" name="mobile" [disabled]="mode=='view'"
+              pattern="^[0-9]*$" maxlength="10" minlength="10" [(ngModel)]="i.mobile" required>
+            <label for="">Mobile
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="mobile.invalid && (mobile.dirty || mobile.touched || formInvalid)">
+              <span *ngIf="mobile.errors.required">Mobile is required</span>
+              <span *ngIf="mobile.errors?.pattern">Please enter 10 digits Number</span>
+              <span *ngIf="mobile.errors.maxlength">Mobile Number should be 10 digits</span>
+              <span *ngIf="mobile.errors.minlength">Mobile Number should be 10 digits </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #email="ngModel" name="email" [disabled]="mode=='view'"
+              pattern="^[a-zA-Z0-9._%-+]+@[a-z0-9.-]+\.[a-z]{2,3}$" maxlength="30" [(ngModel)]="i.email" required>
+            <label for="">Email
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="email.invalid && (email.dirty || email.touched || formInvalid)">
+              <span *ngIf="email.errors.required">Email is required</span>
+              <span *ngIf="email.errors?.pattern">Please Enter valid Email</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="date" class="custom-field" #Working_Start_Date="ngModel" name="Working_Start_Date"
+              [disabled]="mode=='view'" [(ngModel)]="i.Working_Start_Date" required>
+            <label for="">Working Start date
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="Working_Start_Date.invalid && (Working_Start_Date.dirty || Working_Start_Date.touched || formInvalid)">
+              <span *ngIf="Working_Start_Date.errors.required">Working Start Date is required</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="date" class="custom-field" #Working_End_Date="ngModel" name="Working_End_Date"
+              [disabled]="mode=='view'" [(ngModel)]="i.Working_End_Date" required>
+            <label for="">Working End date
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="Working_End_Date.invalid && (Working_End_Date.dirty || Working_End_Date.touched || formInvalid)">
+              <span *ngIf="Working_End_Date.errors.required">Working End Date is required</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="i.Status" #Status="ngModel" name="Status"
+              [disabled]="mode=='view'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option value=3>Active</option>
+              <option value=4>Inactive</option>
+            </select>
+            <label for="">Status
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Status.invalid && (Status.dirty || Status.touched || formInvalid)">
+              <span *ngIf="Status.errors.required">Status is required</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="text-center">
+        <button class="btn btn-primary" type="submit" [disabled]="mode=='view'">Save</button>&nbsp;
+        <button class="btn btn-primary" type="reset" [disabled]="mode=='view'">Cancel</button>
+      </div>
+
+    </div>
+  </form>
+</div>

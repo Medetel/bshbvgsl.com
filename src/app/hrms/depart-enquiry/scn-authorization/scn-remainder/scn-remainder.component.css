@@ -1,0 +1,6 @@
+.row{
+    padding:20px 0px 0px;
+}
+.content-in .row:nth-child(odd){
+    background: #f3f3f3;
+}

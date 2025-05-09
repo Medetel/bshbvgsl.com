@@ -1,0 +1,152 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary pull-right" [routerLink]="['/home/masters/hospital'] ">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <form (ngSubmit)="mode=='Edit'?UpdateCasteDetails(Caste):SaveCaste(Caste)" #Caste="ngForm" name="Caste">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6" *ngIf="mode=='View'">
+        <div class="input-group">
+          <label>Hospital Code</label><br>
+          <input  class="custom-field" type="text"
+          maxlength="100" name="hsptl_code" [(ngModel)]="h.hsptl_code" #hsptl_code="ngModel"
+          disabled required>
+        </div>
+      </div>
+      <!-- <div class="col-md-6">
+        <div class="input-group">
+          <label> Status </label><br>
+          <select name="" id="" class="form-control">
+            <option value="">--Select--</option>
+            <option value="">Active</option>
+            <option value="">Inactive</option>
+          </select>
+        </div>
+      </div> -->
+      <div class="col-md-6">
+          <div class="input-group"> 
+            <label> Hospital Name 
+                <span class="mandatory">*</span>
+            </label><br>
+            <input class="custom-field" type="text" style="text-transform: capitalize;"
+             maxlength="50" name="hsptl_name" [(ngModel)]="h.hsptl_name" #hsptl_name="ngModel"
+             [disabled]="mode=='View'" required pattern= "[A-Za-z]+">
+             <div class="error-msg" *ngIf="hsptl_name.invalid && (hsptl_name.dirty || hsptl_name.touched || formInvalid)">
+                <span *ngIf="hsptl_name.errors.required">Hospital Name is required</span>
+                <span *ngIf="hsptl_name.errors?.pattern">Hospital name should only be alphabets</span>
+                <!-- <span *ngIf="Case_File_No.errors?.pattern">Only AlphaNumeric should enter</span> -->
+            </div>
+          </div>
+        </div>
+    
+    </div>
+    <div class="row ">     
+      <div class="col-md-6">
+        <div class="input-group">
+          <label> Address
+            <span class="mandatory">*</span>
+             </label><br>
+          <textarea class="custom-field" type="text" [(ngModel)]="h.Address" #Address="ngModel"
+           name="Address"  maxlength="50" [disabled]="mode=='View'"></textarea>
+           <div class="error-msg" *ngIf="Address.invalid && (Address.dirty || Address.touched || formInvalid)">
+              <span *ngIf="Address.errors.required">Address is required</span>
+              <!-- <span *ngIf="Case_File_No.errors?.pattern">Only AlphaNumeric should enter</span> -->
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+          <div class="input-group">
+            <label>City <span class="mandatory">*</span> </label><br>
+            <select class="custom-field" [(ngModel)]="h.hsptl_add_city" #hsptl_add_city="ngModel" name="hsptl_add_city"
+              [disabled]="mode=='View'">
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="r.code_value" *ngFor="let r of CasteCategoryList;">
+                {{r.code_value}}
+              </option>
+            </select>
+            <div class="error-msg" *ngIf="hsptl_add_city.invalid && (hsptl_add_city.dirty || hsptl_add_city.touched || formInvalid)">
+                <span *ngIf="hsptl_add_city.errors.required">city is required</span>
+                <!-- <span *ngIf="Case_File_No.errors?.pattern">Only AlphaNumeric should enter</span> -->
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="row">      
+      <div class="col-md-6">
+        <div class="input-group">
+          <label>State <span class="mandatory">*</span></label><br>
+          <select class="custom-field" [(ngModel)]="h.hsptl_add_state" #hsptl_add_state="ngModel" name="hsptl_add_state"
+              [disabled]="mode=='View'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="r.code_value" *ngFor="let r of StateList;">
+                {{r.code_value}}
+              </option>
+            </select>
+            <div class="error-msg" *ngIf="hsptl_add_state.invalid && (hsptl_add_state.dirty || hsptl_add_state.touched || formInvalid)">
+                <span *ngIf="hsptl_add_state.errors.required">State is required</span>
+                <!-- <span *ngIf="Case_File_No.errors?.pattern">Only AlphaNumeric should enter</span> -->
+            </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+          <div class="input-group">
+            <label>Contact Person  <span class="mandatory">*</span></label><br>
+            <input class="custom-field"  maxlength="50" type="text" maxlength="20" [(ngModel)]="h.hsptl_contact_p" #hsptl_contact_p="ngModel"
+           name="hsptl_contact_p" [disabled]="mode=='View'" required  pattern="[A-Za-z]+" >
+           <div class="error-msg" *ngIf="hsptl_contact_p.invalid && (hsptl_contact_p.dirty || hsptl_contact_p.touched || formInvalid)">
+              <span *ngIf="hsptl_contact_p.errors.required">Contact Person is required</span>
+              <span *ngIf="hsptl_contact_p.errors.pattern">Contact Person should contain only alphabets</span>
+              <!-- <span *ngIf="Case_File_No.errors?.pattern">Only AlphaNumeric should enter</span> -->
+          </div>
+          </div>
+        </div>
+    </div>
+    <div class="row ">      
+      <div class="col-md-6">
+        <div class="radio-inline">
+          <label style="color: blue;">MOU/A.H
+            <span class="mandatory">*</span>
+          </label> &nbsp;
+          <input  type="radio"   name="Mouh" value="Y" [(ngModel)]="h.Mouh" #Mouh="ngModel"
+           [disabled]="mode=='View'" required > Yes
+
+           <input  type="radio"   name="Mouh" value="N" [(ngModel)]="h.Mouh" #Mouh="ngModel"
+           [disabled]="mode=='View'" required > No
+        </div>
+      </div>
+      <div class="col-md-6" *ngIf="h.Mouh == 'Y'">
+          <div class="input-group">
+            <label>Contract Start Date </label><br>
+            <input class="custom-field" type="date" [(ngModel)]="h.cntr_start_date" #cntr_start_date="ngModel"
+            name="cntr_start_date" [disabled]="mode=='View'" required>
+          </div>
+        </div>
+    </div>
+    <div class="row">
+     
+      <div class="col-md-6" *ngIf="h.Mouh == 'Y'">
+        <div class="input-group">
+          <label>End Date</label><br>
+          <input class="custom-field" type="date" [(ngModel)]="h.cntr_end_date" #cntr_end_date="ngModel"
+            name="cntr_end_date"  (change)="GetDate(h.cntr_start_date,h.cntr_end_date)" [disabled]="mode=='View'" required>
+        </div>
+      </div>
+      <div class=" col-md-6" *ngIf="h.Mouh == 'Y'">
+        <div class="form-inline">
+          <label style="color:blue;">Agreement Period : </label>
+          &nbsp;
+          &nbsp;
+          <span>Month - {{monthCount}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="text-center">
+    <button [disabled]="mode=='View'" class="btn btn-primary" type="submit">{{mode=='Edit'?'Edit':'Save'}}</button>
+    <button [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button>
+  </div>
+</form>
+</div>

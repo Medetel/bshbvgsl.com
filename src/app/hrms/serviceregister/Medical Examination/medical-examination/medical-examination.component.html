@@ -1,0 +1,111 @@
+
+<div class="wrapper">
+  <div class="title themeheading">
+    Employee Medical Examination
+    <button class="btn btn-primary float-right" [routerLink]="['/home/serviceregister/medicalverifcation']">Back</button>
+        <span class="clearfix"></span>
+    
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="input-group">
+          <select name="" id="" class="custom-field"></select>
+          <label for="">Employee Id</label>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <label for="">Employee Name : <span>Akash</span></label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+      </div>
+      <div class="col-md-3">
+        <label for=""> Designation : </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+      </div>
+      <div class="col-md-3">
+        <label for=""> Division </label>
+      </div>
+    </div>
+    <div class="title themeheading rowmarginfix">
+      Medical Examination Details
+    </div>
+
+    <br>
+
+    <div class="justify-content-end d-flex"><button class="btn btn-primary">Add</button></div>
+
+    <div class="table-responsive">
+      <table class="table table-striped grid">
+        <thead>
+          <tr>
+            <th>Sl.No</th>
+            <th>Medical Test</th>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Upload Document</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td> 1 </td>
+            <td>
+              <div class="form-group">                
+                <select name="" id="" class="form-control">
+                  <option value=""> -- Select -- </option>
+                  <option value=""> Blood Test </option>
+                  <option value=""> Urine Test </option>
+                  <option value=""> Eye Check Up </option>
+                  <option value=""> Ear Test </option>
+                  <option value=""> ECG </option>
+                  <option value=""> Spiro Test </option>
+                  <option value=""> Others </option>
+                </select>
+              </div>
+            </td>
+            <td> <input type="date" class="form-control"> </td>
+            <td> <input type="text" class="form-control"> </td>
+            <td> <input type="file"> </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+    <!-- <div class="row">
+      <div class="col-md-6">
+          <div class="input-group">
+              <input type="text" class="custom-field">
+              <label for="">Medical Fitness No.</label>        
+            </div>
+      </div>
+      <div class="col-md-6">
+          <div class="input-group">
+              <input type="text" class="custom-field">
+              <label for="">Identification Mark</label>        
+            </div>
+      </div>
+    </div> -->
+    <!-- <div class="row">
+        <div class="col-md-6">
+            <div class="input-group">
+                <textarea class="custom-field"></textarea>
+                <label for="">Remarks</label>        
+              </div>
+        </div>
+    </div> -->
+    <br>
+
+    <div class="text-center">
+      <button class="btn btn-primary">Save</button><button class="btn btn-primary">Cancel</button>
+    </div>
+
+    <br>
+
+  </div>
+</div>

@@ -1,0 +1,71 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <!-- <button class="btn btn-primary float-right" [routerLink]="['/home/serviceregister/joiningdetails']">Back</button> -->
+    <span class="clearfix"></span>
+  </div>
+  <form #Application="ngForm" (ngSubmit)="GetAllFreeholddetailsBySearch(searchText)">
+    <div class="add-click class=container-fluid">
+      <div class="selector" id="app-filter">
+        <div class="row justify-content-center">
+          <div class="col-md-4">
+            <div class="form-group input-group">
+              <input type="text" class="form-control custom-field" id="txtAppNo" name="APP_No"  #APP_No="ngModel"
+                [(ngModel)]="searchText">
+              <label for="txtAppNo">Applicant No.</label>
+            </div>
+          </div>
+          <!-- <div class="col-md-4">
+            <div class="input-group">
+              <input type="text" class="custom-field" required>
+              <label for="">Name of Applicant
+                <span class="mandatory">*</span>
+              </label>
+            </div>
+          </div> -->
+          <div class="col-md-4">
+            <button class="btn btn-primary" type="submit">Go</button>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="table-responsive">
+            <table class="table table-striped grid table-bordered">
+              <thead>
+                <tr>
+                  <th rowspan="2"> Applicant Name</th>
+                  <th rowspan="2"> Market Value of Land ⟨₹⟩</th>
+                  <th rowspan="2"> Market Value of House ⟨₹⟩</th>
+                  <th rowspan="2"> Current Market Value of Land ⟨₹⟩</th>
+                  <th rowspan="2"> Current Market Value of House ⟨₹⟩</th>
+                  <th rowspan="2"> Current Market Value of Land Including ⟨₹⟩</th>
+                  <th rowspan="2"> Conversation fee 10% of market Value ⟨₹⟩</th>
+                  <th rowspan="2"> Online deposit on Account of Conversion fee ⟨₹⟩</th>
+                  <th rowspan="2"> Revised charge fee of balance amount ⟨₹⟩</th>
+      
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let v of freeholdList">
+                  <td>{{v.APP_PA_Name}}</td>
+                  <td>{{v.RF_Val_asper_MarketRate}} ⟨₹⟩</td>
+                  <td>{{v.mvforhouse}} ⟨₹⟩</td>
+                  <td>{{v.RF_Val_asper_MarketRate}} ⟨₹⟩</td>
+                  <td>{{v.Currentmarketvalueofhouse}} ⟨₹⟩</td>
+                  <td>{{v.curmarketvaloflandincludinghouse}} ⟨₹⟩</td>
+                  <td>{{v.conversionfeeofmarketvalue}} ⟨₹⟩</td>
+                  <td>{{v.onlinedeposit}} ⟨₹⟩</td>
+                  <td>{{v.revisedchargefee}} ⟨₹⟩</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      
+      </div>
+      
+
+    </div>
+  </form>
+</div>

@@ -1,0 +1,91 @@
+<div class="wrapper">
+    <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm,itemsPerPage,1)">
+        <div class="title themeheading">
+            Land Possession
+            <div class="float-right">
+                <a class="btn btn-primary" [routerLink]="['/home/landacquisition/landacquisition-form']">Add</a>
+            </div>
+            <span class="clearfix"></span>
+        </div>
+        <div class="searchbar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label>Search</label>
+                    </div>
+                    <div class="col-md-4">
+                        <select name="SearchCriteria" #SearchCriteria="ngModel" [(ngModel)]="s.SearchCriteria" class="form-control"
+                            required>
+                            <option [ngValue]="undefined" selected>---Select---</option>
+                            <option value="projectname">Project Name</option>
+                        </select>
+                        <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)" class="error-msg">
+                            <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="SearchText" #SearchText="ngModel" [(ngModel)]="s.SearchText" class="form-control"
+                            placeholder="Search.." required>
+                        <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+                            <div *ngIf="SearchText.errors.required">Search text is required</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-default" type="submit">Search</button>
+                        <button class="btn btn-default" type="reset" (click)="GetAllLandAcquisition(itemsPerPage, 1)">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped grid table-bordered">
+                <thead>
+                    <tr>
+                        <td class="padding-top" rowspan="2">Sl No.</td>
+                        <td class="padding-top" rowspan="2">4(1) Notification Number</td>
+                        <td class="padding-top" rowspan="2">6(1) Notification Number</td>
+                        <td class="padding-top" rowspan="2">Project Name</td>
+                        <td class="padding-top" rowspan="2">Proposal Id</td>
+                     
+                        <td class="padding-top" rowspan="2">View</td>
+                        <td class="padding-top" rowspan="2">Edit</td>
+                        <td class="padding-top" rowspan="2">Delete</td>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    <tr *ngFor="let Laqu of LandAquisitionList;let i=index">
+                        <td>{{i+1}}</td>
+                        <td>{{Laqu.LA_Noti4_Number}}</td>
+                        <td>{{Laqu.LA_Noti6_Number}}</td>
+                        <td>{{Laqu.PD_Project_Name}}</td>
+                        <td>{{Laqu.PR_Id}}</td>
+                    
+
+                        <td>
+                            <a href="#" [routerLink]="['/home/land-procurement-details/landacquisition-form',Laqu.LA_Id_PK,'view','LA']">
+                                <i class="fa fa-lg fa-eye themecolor"></i>
+                            </a>
+                        </td>
+                     
+                        <td>
+                            <a href="#" [routerLink]="['/home/land-procurement-details/landacquisition-form',Laqu.LA_Id_PK,'edit','LA']">
+                                <i class="fa fa-lg fa-edit themecolor"></i>
+                            </a>
+                        </td>
+                      
+                        <td>
+                            <a href="javascript:void(0);">
+                                <i class="fa fa-lg fa-trash themecolor" (click)="delete(Laqu.LA_Id_PK)"></i>
+                            </a>
+                        </td>
+                        
+                    </tr>
+
+                </tbody>
+            </table>           
+        </div>
+
+    </form>
+</div>

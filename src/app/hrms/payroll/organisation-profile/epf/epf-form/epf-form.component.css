@@ -1,0 +1,10 @@
+
+.row{
+    padding: 20px 0px 0px ;
+}
+.row:nth-child(odd){
+    background: #f3f3f3;
+}
+.margin-top{
+    margin-top: 20px;
+}

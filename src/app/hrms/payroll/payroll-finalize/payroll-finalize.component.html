@@ -1,0 +1,95 @@
+<div class="wrapper">
+  <div class="title themeheading">Payroll Finalization
+    <div class="float-right">
+      Items per page:
+      <select name="SearchRows" class="noofpage"
+        >
+        <option [ngValue]="5">5</option>
+        <option [ngValue]="10">10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+        <option value="40">40</option>
+        <option value="50">50</option>
+      </select>
+    </div>
+    <span class="clearfix"></span>
+  </div>
+  <div class="searchbar">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-1">
+          <label>Search</label>
+        </div>
+        <div class="col-md-4">
+          <select name="SearchCriteria" class="form-control" required>
+            <option [ngValue]="undefined" selected>---Select---</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <input type="text" name="SearchText" class="form-control" placeholder="Search.." required>
+        </div>
+        <div class="col-md-3">
+          <button class="btn btn-default" type="submit">Search</button>
+          <button class="btn btn-default" type="reset">Clear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="table-responsive">
+    <table class="table table-striped grid">
+      <thead>
+        <tr>
+          <td>Sl No.</td>
+          <td>Month</td>
+          <td>Year</td>
+          <td>Division</td>
+          <td>Payroll Process</td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td> 1 </td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td> <button class="btn btn-change" data-toggle="modal" data-target="#exampleModal1">Finalize</button> </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <br>
+  <!-- Models -->
+  <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Payroll Finalization</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="">Remarks</label>
+                  <textarea name="" id="" cols="30" rows="10" class="form-control"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary">Save</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

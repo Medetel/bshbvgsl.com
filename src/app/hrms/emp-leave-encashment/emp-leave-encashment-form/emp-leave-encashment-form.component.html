@@ -1,0 +1,62 @@
+<div class="wrapper">
+  <div class="themeheading title">
+   {{title}}
+    <button class="btn btn-primary float-right" [routerLink]="['/home/leaveencashment']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <div class="container-fluid">
+    <!-- <div class="row">
+      <div class="col-md-4">
+        <label>Encashment No :</label>
+      </div>
+      <div class="col-md-4">
+        <label for="">Date : <span>12-11-2019</span></label>
+      </div>
+      <div class="col-md-4">
+        <label for="">Status : <span>Pending</span></label>
+      </div>
+    </div> -->
+    <div class="title rowmarginfix themeheading">
+      Employee Details
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+       
+          <label for=""> Employee Name :</label> &nbsp; <span class="name">{{t.emp_name}}</span>
+        
+      </div>
+      <div class="col-md-3">
+
+          <label for="">Leave Name:</label> &nbsp; <span class="name">{{t.Leavename}}</span>
+         
+      </div>
+      <div class="col-md-3">
+        <label for="">No.of Days Applied for Encashment : </label> &nbsp; <span class="name">{{t.LeaveBalance}}</span>
+      </div>
+      <div class="col-md-3">
+        <label for="">Submitted Date : </label> &nbsp; <span class="name">{{t.submitteddate}}</span>
+      </div>
+    </div>
+    <div class="row">
+      <!-- <div class="col-md-3" *ngIf="t.status =='S' || t.status =='R' ">
+        <label for="">Status : </label> &nbsp; <span class="name">{{t.status}}</span>
+      </div> -->
+      <div class=" col-md-4">
+        <div class="row">
+          <div class="col-md-5">
+            <label for="">Status : </label>
+          </div>
+          <div class="col-md-7">
+            <span *ngIf="t.status=='G'"> Generated</span> 
+            <span *ngIf="t.status=='A'">Approved</span>
+            <span *ngIf="t.status=='R'">Rejected</span>
+            <span *ngIf="t.status=='S'">Sanctioned</span>
+            </div>
+        </div>
+      </div>
+    </div>
+   
+    <!-- </div> -->
+
+  </div>
+</div>

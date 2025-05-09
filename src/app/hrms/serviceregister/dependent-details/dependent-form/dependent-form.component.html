@@ -1,0 +1,290 @@
+<div class="wrapper">
+    <div class="title themeheading">
+        {{title}}
+        <button class="btn btn-primary float-right"
+            [routerLink]="['/home/serviceregister/dependentdetails']">Back</button>
+        <span class="clearfix"></span>
+    </div>
+
+    <form (ngSubmit)="mode=='edit'?UpdateEmpldependentDetails(EmplDetails):SaveEmpldependentDetails(EmplDetails)"
+        #EmplDetails="ngForm" name="form1">
+        <div class="container-fluid">
+
+
+            <div class="row">
+                <!-- <div class="col-md-4" *ngIf="!((mode=='view')||(mode=='edit'))">
+                    <div class="input-group">
+                        <label for=""> Division code </label>
+                        <select class="custom-field" [(ngModel)]="d.EMP_DIVISION_ID" #EMP_DIVISION_ID="ngModel"
+                            name="EMP_DIVISION_ID" (change)="ChangeOfDivision(d.EMP_DIVISION_ID)">
+                            <option [value]="undefined" selected>---Select---</option>
+                            <option [value]="d.DI_Id" *ngFor="let d of DistrictsList;">
+                                {{d.DI_District}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <label for="">Emp Code </label>
+                        <select select class="custom-field" [(ngModel)]="d.EMP_ID" #EMP_ID="ngModel" name="EMP_ID"
+                            [disabled]="(mode=='view') || (mode=='edit')" (change)="ChangeOfEmployee(d.EMP_ID)">
+                            <option [value]="" selected>--Select--</option>
+                            <option [value]="emp.EMP_EMPLOYEE_ID" *ngFor="let emp of AllEmployeeList;">
+                                {{emp.EMP_EMPLOYEE_CODE}} &nbsp; {{emp.EMP_FIRST_NAME}}
+                            </option>
+                        </select>
+                    </div>
+                </div> -->
+                <div class="col-md-4">
+                    <label for=""> Employee Id :</label> &nbsp; <span class="name">
+                        {{detailsEmployee.EMP_EMPLOYEE_CODE}} </span>
+                </div>
+                <div class="col-md-4">
+                    <label for=""> Name :</label> &nbsp; <span class="name"> {{detailsEmployee.EmpName}} </span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 ">
+                    <label for="">Division : </label> &nbsp; <span class="name">{{detailsEmployee.DI_District}} </span>
+                </div>
+                <div class="col-md-4">
+                    <label for="">Department : </label> &nbsp; <span class="name">{{detailsEmployee.Department_Name}}
+                    </span>
+                </div>
+                <div class="col-md-4">
+                    <label for="">Designation : </label> &nbsp; <span class="name">{{detailsEmployee.desg_name}}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="">Employee Category : </label> &nbsp; <span
+                        class="name">{{detailsEmployee.Category}}</span>
+                </div>
+                <div class="col-md-4">
+                    <label for="">Employee Group : </label> &nbsp; <span
+                        class="name">{{detailsEmployee.EmpGroup}}</span>
+                </div>
+                <div class="col-md-4">
+                    <label for="">Employee Type : </label> &nbsp; <span class="name">{{detailsEmployee.EmpType}}</span>
+                </div>
+            </div>
+
+            <!--  -->
+
+            <div class="title rowmarginfix themeheading">
+                {{title2}}
+                <!-- <button class="btn btn-primary pull-right" *ngIf="mode=='view' || mode=='edit'"
+                    style="margin-top: -3px;" (click)="gotoAdd(EmployeeId)">Add</button> -->
+
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="input-group">
+                        <label>Name
+                            <span class="mandatory">*</span>
+                        </label>
+                        <br>
+                        <input class="custom-field " type="text" [(ngModel)]="d.DEPND_NAME" #DEPND_NAME="ngModel"
+                            name="DEPND_NAME" [disabled]="mode=='view'" required pattern ="[A-Za-z]+">
+                    </div>
+                    <div class="error-msg pull-right"
+                        *ngIf="DEPND_NAME.invalid && (DEPND_NAME.dirty || DEPND_NAME.touched || formInvalid)">
+                        <span *ngIf="DEPND_NAME.errors.required">Name is required</span>
+                        <span *ngIf="DEPND_NAME.errors?.pattern">Name should contain only alphabets.</span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="input-group">
+                        <label>Dependent</label>
+                        <br>
+                        <select class="custom-field" [(ngModel)]="d.DEPND_IND" #DEPND_IND="ngModel" name="DEPND_IND"
+                            [disabled]="mode=='view'">
+                            <option [value]="undefined" selected>---Select---</option>
+                            <option [value]="0">Yes</option>
+                            <option [value]="1">No</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="input-group">
+                        <label>Date of Birth</label>
+                        <br>
+                        <input class="custom-field" type="date" [(ngModel)]="d.DEPND_DOB" #DEPND_DOB="ngModel"
+                            name="DEPND_DOB" [disabled]="mode=='view'">
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="input-group">
+                        <label>Relationship
+                            <span class="mandatory">*</span>
+                        </label>
+                        <select class="custom-field" [(ngModel)]="d.DEPND_EMP_REL" #DEPND_EMP_REL="ngModel"
+                            name="DEPND_EMP_REL" [disabled]="mode=='view'" required>
+                            <option [value]="undefined" selected>---Select---</option>
+                            <option [value]="r.Relation_Id" *ngFor="let r of relagionlist;">
+                                {{r.Relation_Name}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="error-msg pull-right"  *ngIf="DEPND_EMP_REL.invalid && (DEPND_EMP_REL.dirty || DEPND_EMP_REL.touched || formInvalid)">
+                        <span  *ngIf="DEPND_EMP_REL.errors.required">Employee Relation is required</span>                      
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <label style="color: blue;">Gender</label> &nbsp;
+                    <div class="form-check form-check-inline">
+                        <label class="form-check-label">
+                            <input class="form-check-input" name="DEPND_GENDER" #DEPND_GENDER="ngModel"
+                                [(ngModel)]="d.DEPND_GENDER" type="radio" id="inlineRadio1" value="M"> Male
+                        </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <label class="form-check-label">
+                            <input class="form-check-input" name="DEPND_GENDER" #DEPND_GENDER="ngModel"
+                                [(ngModel)]="d.DEPND_GENDER" type="radio" id="inlineRadio1" value="F"> Female
+                        </label>
+                    </div>
+                </div>
+
+                <div class=" col-md-6 col-sm-6">
+                    <div class="input-group">
+                        <label>Aadhar card Number</label>
+                        <br>
+                        <input class="custom-field" type="text" maxlength="12" minlength="12" [(ngModel)]="d.DEPND_AC_NO" #DEPND_AC_NO="ngModel"
+                            name="DEPND_AC_NO" [disabled]="mode=='view'" pattern="^[0-9]*$">
+                            <div class="error-msg"
+                            *ngIf="DEPND_AC_NO.invalid && (DEPND_AC_NO.dirty || DEPND_AC_NO.touched || formInvalid)">
+                            <span *ngIf="DEPND_AC_NO.errors.pattern">Aadhar card Number is invalid</span>
+                            <span *ngIf="DEPND_AC_NO.errors.minlength">Aadhar card Number must be 12 digits</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <!-- <div class="col-md-6 col-sm-6">                    
+                    <div class="input-group">
+                        <label>Email</label>
+                        <br>
+                        <input class="custom-field" type="text" maxlength=20 [(ngModel)]="d.DEPND_MAIL" #DEPND_MAIL="ngModel"
+                            name="DEPND_MAIL" [disabled]="mode=='view'">
+                    </div>
+                </div> -->
+
+                <div class=" col-md-4  col-sm-6">
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <br>
+                        <input type="text" class="custom-field" name="DEPND_MAIL" [(ngModel)]="d.DEPND_MAIL"
+                            #DEPND_MAIL="ngModel" pattern="^[a-zA-Z0-9._%-+]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                            [disabled]="mode=='view'">
+
+                        <div class="error-msg"
+                            *ngIf="DEPND_MAIL.invalid && (DEPND_MAIL.dirty || DEPND_MAIL.touched || formInvalid)">
+                            <span *ngIf="DEPND_MAIL.errors.pattern">Email pattern mismatch</span>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-6 col-sm-6">
+                    <div class="input-group">
+                        <label>Educational qualification</label>
+                        <br>
+                        <select class="custom-field" [(ngModel)]="d.DEPND_QLNF" #DEPND_QLNF="ngModel" name="DEPND_QLNF"
+                            [disabled]="mode=='view'">
+                            <option [value]="undefined" selected>---Select---</option>
+                            <option [value]="m.fix_code_id" *ngFor="let m of qualificationlist;">
+                                {{m.code_value}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="input-group">
+                        <label>Contact number</label>
+                        <br>
+                        <input class="custom-field" maxlength="10" type="text" [(ngModel)]="d.DEPND_CELL_NO" #DEPND_CELL_NO="ngModel"
+                            name="DEPND_CELL_NO" [disabled]="mode=='view'">
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="input-group">
+                        <label>Martial Status</label>
+                        <br>
+                        <select class="custom-field" [(ngModel)]="d.MARITAL_STATUS" #MARITAL_STATUS="ngModel"
+                            name="MARITAL_STATUS" [disabled]="mode=='view'">
+                            <option [value]="undefined" selected>---Select---</option>
+                            <option [value]="m.fix_code_id" *ngFor="let m of maritalStatuslist;">
+                                {{m.code_value}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+            <br>
+
+            <div class="text-center">
+                <button [disabled]="mode=='view'" class="btn btn-primary">{{mode=='Edit'?'Edit':'Save'}}</button> &nbsp;
+                <button [disabled]="mode=='view'" (click)="Cancel()" class="btn btn-primary">Cancel</button>
+            </div>
+
+            <br>
+
+            <div class="table-responsive">
+                <table class="table table-stripped table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <td>Sl No.</td>
+                            <td>Name</td>
+                            <td>Relationship</td>
+                            <td>Aadhar card number</td>
+                            <td class="text-center">View</td>
+                            <td class="text-center">Edit</td>
+                            <td class="text-center">Delete</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            *ngFor="let e of EmployeefamilyDetails | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index">
+                            <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+                            <td>{{e.DEPND_NAME}}</td>
+                            <td>{{e.Relation_Name}}</td>
+                            <td>{{e.DEPND_AC_NO}}</td>
+                            <td class="text-center">
+                                <a href="#"
+                                    [routerLink]="['/home/serviceregister/dependentdetails-form',e.DEPND_ID,'view',e.EMP_ID]">
+                                    <i class="fa fa-lg fa-eye themecolor"></i>
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a href="#"
+                                    [routerLink]="['/home/serviceregister/dependentdetails-form',e.DEPND_ID,'edit',e.EMP_ID]">
+                                    <i class="fa fa-lg fa-edit themecolor"></i>
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a (click)="delete(e.DEPND_ID)">
+                                    <i class="fa fa-lg fa-trash themecolor"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <br>
+
+    </form>
+</div>

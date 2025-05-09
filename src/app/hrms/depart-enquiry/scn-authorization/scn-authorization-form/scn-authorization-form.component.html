@@ -1,0 +1,107 @@
+<div class="wrapper">
+    <form (ngSubmit)="mode=='Edit'?UpdateSCNAuth(SCNAuth):SaveSCNAuth(SCNAuth)" #SCNAuth="ngForm" name="SCNAuth">
+  <div class="container-fluid">
+    <div class="title rowmarginfix themeheading">
+      Show Cause Notice Details
+      <button class="btn btn-primary float-right" [routerLink]="['/home/dept-enquiry/scn-auth']">Back</button>
+      <span class="clearfix"></span>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-4">
+        <label for=""> SCN No : </label> &nbsp;<span> {{SCNDetails.DOC_CODE}} </span>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group ">
+          <span for="">Date : </span>  &nbsp;<span> {{SCNDetails.DOC_DATE  | date:'dd/MM/yyyy'}} </span>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group ">
+          <span for="" *ngIf="sa.DOC_STATUS=='G'">Status : Generated</span>  
+          <span for="" *ngIf="sa.DOC_STATUS=='A'">Status : Approved</span> 
+          <span for="" *ngIf="sa.DOC_STATUS=='R'">Status : Rejected</span>   
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label for="">Due Date to Reply :</label>  &nbsp;<span> {{SCNDetails.SCN_REPLY_DUE_DATE | date:'dd/MM/yyyy'}} </span>
+      </div>
+      <div class="col-md-6">
+        <label for="">Mode of Reply :</label>  &nbsp;<span> {{SCNDetails.SCN_MODE_REPLY}} </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label for=""> Additional Details : </label>  &nbsp;<span> {{SCNDetails.SCN_ADDL_DTL}} </span>
+      </div>
+      <div class="col-md-6">
+        <label for=""> Remarks :</label>  &nbsp;<span> {{SCNDetails.SCN_REMARKS}} </span>
+      </div>
+    </div>
+    <!-- <div class="row">
+      <div class="col-md-6">
+        <a href=""> View OM Document </a>  &nbsp;<span> {{ComplaintDetails.COMPLAINT_TYPE}} </span>
+      </div>
+    </div> -->
+    <br>
+
+    <div class="title themeheading rowmarginfix">
+       Authorization Details
+       </div>  
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Authorized ? <span style="color:red;">*</span> </label>
+          <select class="custom-field" [(ngModel)]="sa.AUTH_BY" #AUTH_BY="ngModel" name="AUTH_BY" [disabled]="mode=='View'">
+            <option value="undefined">--Select--</option>
+            <option value="1">Yes</option>
+            <option value="2">No</option>
+          </select>
+        </div>
+        <div class="error-msg" *ngIf="AUTH_BY.invalid && (AUTH_BY.dirty || AUTH_BY.touched || formInvalid)">
+          <span *ngIf="AUTH_BY.errors.required">Authorized is required</span>
+        </div>
+      </div>
+      <div class="col-md-6">
+          <label for=""> Authorization Date:</label>
+          &nbsp;<span> {{sa.AUTH_DATE | date:'dd/MM/yyyy'}} </span>
+        </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Cancel ? </label>
+          <select class="custom-field" [(ngModel)]="sa.MODIFIED_BY" #MODIFIED_BY="ngModel" name="MODIFIED_BY"[disabled]="mode=='View'|| sa.AUTH_BY==1"
+          >
+            <option value="undefined">--Select--</option>
+            <option value="1">Yes</option>
+            <option value="2">No</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-6">
+          <label for=""> Cancellation Date :</label>  
+          &nbsp;<span> {{sa.MODIFIED_DATE | date:'dd/MM/yyyy'}} </span>     
+        </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+          <div class="input-group">
+              <label for=""> Remarks :</label>
+              <textarea name="AUTH_REMARKS" maxlength="50" [(ngModel)]="sa.AUTH_REMARKS"
+              #AUTH_REMARKS="ngModel" [disabled]="mode=='View'" class="custom-field"></textarea>
+            </div>
+      </div>
+    </div>
+
+    <br>
+    <div class="d-flex justify-content-center">
+        <button [disabled]="mode=='View'" class="btn btn-primary" type="submit">{{mode=='Edit'?'Update':'Save'}}</button> &nbsp;
+        <button [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button>&nbsp;
+      </div>
+    <br>
+  </div>
+  </form>
+</div>

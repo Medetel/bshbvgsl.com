@@ -1,0 +1,55 @@
+<div class="wrapper">
+    <div class="title themeheading">
+        {{title}}
+        <span class="clearfix"></span>
+    </div>
+    <div class="container-fluid">
+
+        <form (ngSubmit)="mode=='edit'?update(roleForm):onSubmit(roleForm)" #roleForm="ngForm">
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <select name="KM_Id" class="form-control custom-field " [(ngModel)]="log.KM_Id"
+                            #KM_Id="ngModel" style="width:100%;height: 35px;border-radius: 4px;" [disabled]="mode=='view' || mode=='edit'"
+                            [ngClass]="{'view-font-color':mode=='view'}" required (change)="GetLastLoginDate(log.KM_Id)">
+                            <option [ngValue]="undefined" selected>--Select--</option>
+                            <option [value]="ML.KM_Id" *ngFor="let ML of MenuList">{{ML.KM_MenuName}}</option>
+                        </select>
+                        <label for="office" class="custom-label ">Menu Name
+                            <div *ngIf="KM_Id.invalid && (KM_Id.dirty || KM_Id.touched || formSubmitted)"
+                                class="error-msg float-right">
+                                <div *ngIf="KM_Id.errors.required">Menu Name is required</div>
+                            </div>
+                            <span class="clearfix"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <input type="datetime-local" class="custom-field" id="role" name="Log_LockDateTime" [(ngModel)]="login.Log_LockDateTime"
+                            #Log_LockDateTime="ngModel" required [disabled]="mode=='view'" [ngClass]="{'view-font-color':mode=='view'}">
+                        <label for="">Login Date time
+                            <div *ngIf="Log_LockDateTime.invalid && (Log_LockDateTime.dirty || Log_LockDateTime.touched || formSubmitted)"
+                                class="error-msg float-right">
+                                <div *ngIf="Log_LockDateTime.errors.required">Login Date Time is required</div>
+                            </div>
+                            <span class="clearfix"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="padding:10px 0px;" *ngIf="!(mode=='view')">
+                <div class="col-md-4 mx-auto text-center">
+                    <button class="btn btn-primary btn-custom" type="submit">
+                        {{mode=='edit'?'Update':'Save'}}
+                    </button>
+                    <button class="btn btn-primary btn-custom" (click)="GetLastLoginDate(1)" type="reset">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

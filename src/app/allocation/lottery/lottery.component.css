@@ -1,0 +1,78 @@
+.lottery-wrapper{
+    padding:10px;
+    background: #ececec;
+}
+
+.lottery-wrapper .heading{
+    text-align:center;
+    padding:5px 0px;
+}
+
+.lottery-wrapper .num{
+    text-align:center;
+    padding:5px 0px;
+    font-size:20px;
+    height: 63px;
+}
+
+.lottery-form-view{
+    padding:20px;
+}
+
+.lottery-form-view .view-btn{
+    padding: 3px 6px;
+    margin-top: -2px;
+}
+
+.applicant-details{
+    width:100%;
+    margin-top:20px;
+}
+
+.applicant-details tbody{
+    font-size:23px;
+    font-style: italic;
+    color:#0000ff;    
+}
+
+.applicant-details tbody td{
+    padding:10px;
+}
+
+.lottery-form-view .input-group{
+    margin-bottom:0px;
+}
+
+.lottery-form-view .col-md-2,.lottery-form-view .col-md-1{
+    padding:0px 2px;
+}
+
+
+.lottery-form-view .go{
+    padding:4px 9px;
+}
+
+.lot-type{
+    margin-left: 35px;
+    font-size: 15px;
+    margin-top: 4px;
+    position: relative;
+}
+
+/* .lot-type .form-check-input{
+    position: absolute;
+    top: 7px;
+    left: -17px;
+}
+
+.lot-type .form-check-input:nth-child(2){
+    left: 30px !important;
+} */
+
+
+.lot-type .form-check-inline .form-check-input {
+    position: absolute !important;
+    margin-top: 7px !important;
+    margin-right: 0 !important;
+    margin-left: -15px !important;
+}

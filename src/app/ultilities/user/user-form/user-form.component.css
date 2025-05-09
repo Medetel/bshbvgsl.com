@@ -1,0 +1,90 @@
+.row:nth-child(odd){
+    background: #ececec;   
+}
+
+.row{
+    padding: 9px 0px 0px 0px !important;
+}
+
+.mat-form-field-wrapper{
+    padding-bottom:0px !important;
+}
+
+.error-msg{
+    margin-top:-4px;
+}
+
+.input-group label{
+    width:100%;
+}
+.input-group{
+    margin-top: 5px;
+    border-radius: 5px;
+}
+.table td {
+    padding: 0.40rem;
+}
+
+
+.led-box {
+    height: 30px;
+    width: 25%;
+    margin: 10px 0;
+    float: left;
+  }
+  
+  .led-box p {
+    font-size: 12px;
+    text-align: center;
+    margin: 1em;
+  }
+  
+  
+  .led-yellow {
+    margin: 0 auto;
+    text-align: center;
+    font-size: 10px;
+    vertical-align: middle;
+    padding: 10px;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    background-color: #FF0;
+    border-radius: 20%;
+    box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, #FF0 0 2px 12px;
+    -webkit-animation: blinkYellow 1s infinite;
+    -moz-animation: blinkYellow 1s infinite;
+    -ms-animation: blinkYellow 1s infinite;
+    -o-animation: blinkYellow 1s infinite;
+    animation: blinkYellow 1s infinite;
+  }
+  
+  @-webkit-keyframes blinkYellow {
+      from { background-color: #FF0; }
+      50% { background-color: #AA0; box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, #FF0 0 2px 0; }
+      to { background-color: #FF0; }
+  }
+  @-moz-keyframes blinkYellow {
+      from { background-color: #FF0; }
+      50% { background-color: #AA0; box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, #FF0 0 2px 0; }
+      to { background-color: #FF0; }
+  }
+  @-ms-keyframes blinkYellow {
+      from { background-color: #FF0; }
+      50% { background-color: #AA0; box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, #FF0 0 2px 0; }
+      to { background-color: #FF0; }
+  }
+  @-o-keyframes blinkYellow {
+      from { background-color: #FF0; }
+      50% { background-color: #AA0; box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, #FF0 0 2px 0; }
+      to { background-color: #FF0; }
+  }
+  @keyframes blinkYellow {
+      from { background-color: #FF0; }
+      50% { background-color: #AA0; box-shadow: rgba(0, 0, 0, 0.2) 0 -1px 7px 1px, inset #808002 0 -1px 9px, #FF0 0 2px 0; }
+      to { background-color: #FF0; }
+  }
+  
+  
+  
+  

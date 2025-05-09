@@ -1,0 +1,85 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    Transaction Details
+    <!-- <button class="btn btn-primary float-right" [routerLink]="['/home/transactiondetails']">Back</button> -->
+    <span class="clearfix"></span>
+  </div>
+  <div class="container-fluid">
+    <div class="row" style="margin-top: 1.3%;">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="form-control custom-field" id="txtAppNo" name="APP_No" value="" #APP_No="ngModel"
+          [(ngModel)]="t.APP_No">
+          <!-- <select class="custom-field" (change)="GetApplicationnumbers($event.target.value)"
+            [disabled]="mode =='view'" required>
+            <option [value]="undefined" selected>---Select---</option>
+            <option [value]="u.APP_Id" *ngFor="let u of u;">
+              {{u.APP_No}} </option>
+          </select> -->
+          <label for="txtAppNo">Search</label>
+        </div>
+      </div>
+      <div class="col-md-1">
+        <button class="btn btn-primary" (click)="GetByIdApplicant(t.APP_No)" >
+          Go
+        </button>
+      </div>
+
+    </div>
+    <div class="table-responsive">
+      <div id="print-section" class="table table-striped">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <td>Sl No.</td>
+              <td>Transaction date</td>
+              <td colspan="3">Particulars</td>
+              <td class="text-center">Debit Amt</td>
+              <td class="text-center">Credit Amt</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let t of GetApplicantTransactionDetails | paginate: { id: 'pagination', itemsPerPage: itemsPerPage,
+                        currentPage: currentPage, totalItems: totalItems }; let i=index">
+              <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+              <td>{{t.Transaction_Date}}</td>
+              <td colspan="3">{{t.Amount_type}}</td>
+              <td align="center">{{t.Debit}}</td>
+              <td align="center">{{t.Credit}}</td>
+            </tr>
+            <tr>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="5" class="text-right">Total</td>
+              <td align="center">{{DebitTotal}}</td>
+              <td align="center">{{CreditTotal}}</td>
+            </tr>
+            <tr>
+              <td colspan="6" class="text-right">Closing Balance</td>
+              <td align="center">{{ClosingBalance}}</td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-11">
+            <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)" maxSize="10"
+              directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+              screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+            </pagination-controls>
+          </div>
+          <div class="col-md-1">
+            Total:
+            <span>{{totalItems}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="text-center">
+      <button class="btn btn-primary" (click)="print()">Print Statement</button>
+    </div> -->
+  </div>
+</div>

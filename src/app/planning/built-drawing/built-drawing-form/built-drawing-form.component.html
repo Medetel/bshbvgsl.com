@@ -1,0 +1,679 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <a class="btn btn-primary float-right" [routerLink]="['/home/builtdrawing/']">Back</a>
+    <span class="clearfix"></span>
+  </div>
+
+  <!-- <form (ngSubmit)="mode=='edit'?update(CD):onSubmit(CD)" #CD="ngForm" autocomplete="off"> -->
+  <form (ngSubmit)="update(CD)" #CD="ngForm" autocomplete="off">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #LP_PD_ID_FK="ngModel" name="LP_PD_ID_FK" [(ngModel)]="projects.LP_PD_ID_FK"
+              list="dynmicUserIds" />
+            <datalist id="dynmicUserIds">
+              <option *ngFor="let item of projectlist" [value]="item.PD_Id" style="height:150px; width:150px;margin-bottom:50px;">
+                {{item.PD_Project_Code}} - {{item.PD_Project_Name}} - {{item.Phase_Name}}
+              </option>
+            </datalist>
+            <label>Project</label>
+            <div class="error-msg" *ngIf="LP_PD_ID_FK.invalid && (LP_PD_ID_FK.dirty || LP_PD_ID_FK.touched || formSubmitted)">
+              <span *ngIf="LP_PD_ID_FK.errors.required">Project is required</span>
+            </div>
+          </div>
+
+          <!-- <div class="input-group">
+            <select #LP_PD_ID_FK="ngModel" [disabled]="mode=='view'" name="LP_PD_ID_FK" [(ngModel)]="projects.LP_PD_ID_FK"
+              class="custom-field" required>
+              <option value="undefined">---Select---</option>
+              <option *ngFor="let project of projectlist" [value]="project.PD_Id">
+                {{project.PD_Project_Code}} - {{project.PD_Project_Name}} - {{project.Phase_Name}}
+              </option>
+            </select>
+            <label>Project
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="LP_PD_ID_FK.invalid && (LP_PD_ID_FK.dirty || LP_PD_ID_FK.touched || formSubmitted)">
+              <span *ngIf="LP_PD_ID_FK.errors.required">Project is required</span>
+            </div>
+          </div> -->
+        </div>
+        <div class="col-md-1">
+
+          <button class="btn btn-primary" type="button" [disabled]="mode=='view'" (click)="GetAllforApprovedrawing(projects.LP_PD_ID_FK)">Go</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <label>
+            <span class="field-title">Project</span>: {{projectDetails.PD_Project_Name}}</label>
+        </div>
+
+        <div class="col-md-6">
+          <label>
+            <span class="field-title">Scheme</span>: {{projectDetails.Sch_Name}}</label>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label>
+            <span class="field-title">District</span>: {{projectDetails.DI_District}}</label>
+        </div>
+        <div class="col-md-6">
+          <label>
+            <span class="field-title">Taluk</span>: {{projectDetails.TA_Taluk}}</label>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label>
+            <span class="field-title">Hobli</span>: {{projectDetails.HO_Name}}</label>
+        </div>
+        <div class="col-md-6">
+          <label>
+            <span class="field-title">Village</span>: {{projectDetails.PD_Village}}</label>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label>
+            <span class="field-title">Phase</span>: {{projectDetails.Phase_Name}}</label>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" [disabled]="mode=='view'" maxlength="100" name="LP_Drawing_No"
+              [(ngModel)]="Layout.LP_Drawing_No" #LP_Drawing_No="ngModel" required>
+            <label for="">Drawing No.<span class="mandatory">*</span></label>
+            <div class="error-msg" *ngIf="LP_Drawing_No.invalid && (LP_Drawing_No.dirty || LP_Drawing_No.touched || formSubmitted)">
+              <span *ngIf="LP_Drawing_No.errors.required">Drawing Number is required</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="date" class="custom-field" [disabled]="mode=='view'" name="LP_Drawing_Date" [(ngModel)]="Layout.LP_Drawing_Date"
+              #LP_Drawing_Date="ngModel" required>
+            <label for="">Drawing Date<span class="mandatory">*</span></label>
+            <div class="error-msg" *ngIf="LP_Drawing_Date.invalid && (LP_Drawing_Date.dirty || LP_Drawing_Date.touched || formSubmitted)">
+              <span *ngIf="LP_Drawing_Date.errors.required">Drawing Date is required</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2">
+          <h6>Total extent in</h6>
+        </div>
+        <div class="col-md-5">
+          <div class="input-group">
+            <input type="text" class="custom-field" name="LP_Id" [(ngModel)]="Layout.LP_Id" #LP_Id="ngModel" hidden>
+
+            <input type="text" class="custom-field text-right" style="background: rgb(218, 216, 216)" name="LP_Total_Extent_in_Acres"
+              [(ngModel)]="Layout.LP_Total_Extent_in_Acres" #LP_Total_Extent_in_Acres="ngModel" readonly>
+            <label for="">Acres</label>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="input-group">
+            <input type="text" class="custom-field text-right" style="background: rgb(218, 216, 216)" name="LP_Total_Extent_in_Hectors"
+              [(ngModel)]="Layout.LP_Total_Extent_in_Hectors" #LP_Total_Extent_in_Hectors="ngModel" readonly>
+            <label for="">Guntas</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <h6>Deduct future development</h6>
+        </div>
+        <div class="col-md-5">
+          <div class="input-group">
+            <input type="text" class="custom-field text-right" (keyup)="getNetTotal()" [disabled]="mode=='view'" name="LP_DeductFuture_Dev_Acres"
+              [(ngModel)]="Layout.LP_DeductFuture_Dev_Acres" #LP_DeductFuture_Dev_Acres="ngModel">
+            <label for=""> Acres</label>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="input-group">
+            <input type="text" class="custom-field text-right" (keyup)="getNetTotal()" [disabled]="mode=='view'" name="LP_DeductFuture_Dev_Hectors"
+              [(ngModel)]="Layout.LP_DeductFuture_Dev_Hectors" #LP_DeductFuture_Dev_Hectors="ngModel">
+            <label for="">Guntas</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <h6>Deduct "B" Kharab in</h6>
+        </div>
+        <div class="col-md-5">
+          <div class="input-group">
+            <input type="text" class="custom-field text-right" (keyup)="getNetTotal()" [disabled]="mode=='view'" name="LP_DeductBkharab_in_Acres"
+              [(ngModel)]="Layout.LP_DeductBkharab_in_Acres" #LP_DeductBkharab_in_Acres="ngModel">
+            <label for=""> Acres</label>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="input-group">
+            <input type="text" class="custom-field text-right" (keyup)="getNetTotal()" [disabled]="mode=='view'" name="LP_DeductBkharab_in_Hectors"
+              [(ngModel)]="Layout.LP_DeductBkharab_in_Hectors" #LP_DeductBkharab_in_Hectors="ngModel">
+            <label for="">Guntas</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <h6>Deduct litigation Land</h6>
+        </div>
+        <div class="col-md-5">
+          <div class="input-group">
+            <input type="text" class="custom-field text-right" (keyup)="getNetTotal()" [disabled]="mode=='view'" name="LP_deduct_litigation_Land_Acres"
+              [(ngModel)]="Layout.LP_deduct_litigation_Land_Acres" #LP_deduct_litigation_Land_Acres="ngModel">
+            <label for="">Acres</label>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="input-group">
+            <input type="text" class="custom-field text-right" (keyup)="getNetTotal()" [disabled]="mode=='view'" name="LP_deduct_litigation_Land_Hectors"
+              [(ngModel)]="Layout.LP_deduct_litigation_Land_Hectors" #LP_deduct_litigation_Land_Hectors="ngModel">
+            <label for="">Guntas</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <h6>Deduct-Others</h6>
+        </div>
+        <div class="col-md-5">
+          <div class="input-group">
+            <input type="text" class="custom-field text-right" (keyup)="getNetTotal()" [disabled]="mode=='view'" name="LP_deduct_other_Land_Acres"
+              [(ngModel)]="Layout.LP_deduct_other_Land_Acres" #LP_deduct_other_Land_Acres="ngModel">
+            <label for="">Acres</label>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="input-group">
+            <input type="text" class="custom-field text-right" (keyup)="getNetTotal()" [disabled]="mode=='view'" name="LP_deduct_other_Land_Hectors"
+              [(ngModel)]="Layout.LP_deduct_other_Land_Hectors" #LP_deduct_other_Land_Hectors="ngModel">
+            <label for="">Guntas</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <h6>Net Extent: </h6>
+        </div>
+        <div class="col-md-5" style="color: navy;margin-bottom: 10px;font-size: 19px;">
+          {{Total | number}}
+          <!-- <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LP_Net_Extent_in_Acres" [(ngModel)]="Layout.LP_Net_Extent_in_Acres" #LP_Net_Extent_in_Acres="ngModel">
+                <label for="">Acres</label>
+              </div> -->
+        </div>
+        <!-- <div class="col-md-5">
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LP_Net_Extent_in_Hectors" [(ngModel)]="Layout.LP_Net_Extent_in_Hectors" #LP_Net_Extent_in_Hectors="ngModel">
+                <label for="">Hectare</label>
+              </div>
+            </div> -->
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <label for="">As Built Drawing Plan by BSHB</label>
+          <input type="file" #Image accept="image/*" [disabled]="mode=='view'" (change)="LayoutFileInput($event.target.files)"
+            id="LP_LayoutPlan_Doc">
+        </div>
+        <div class="col-md-2">
+          <!-- <img [src]="LayoutPDFUrl" style="width:200px;height:130px;"> -->
+          <a class="float-right" target="_blank" href="{{Layout.LP_LayoutPlan_Doc}}">view</a>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="title themeheading">
+      Land Use Analysis
+    </div>
+
+    <div class="table-responsive grid">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td>Sl No.</td>
+            <td>Description</td>
+            <td>Area in sqm</td>
+            <td>% achieved</td>
+            <td>Permissible % as per ZR</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1.</td>
+            <td>Residential
+              <!-- <input type="text" class="custom-field" name="LUA_Name" #LUA_Name="ngModel" [(ngModel)]="Residential.LUA_Name"> -->
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUA_Area_in_Sqmtr"
+                  [(ngModel)]="Residential.LUA_Area_in_Sqmt" #LUA_Area_in_Sqmt="ngModel" (keyup)="getAreaTotal()">
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUA_Percentage_achievedr"
+                  [(ngModel)]="Residential.LUA_Percentage_achieved" #LUA_Percentage_achieved="ngModel" (keyup)="getPercentageTotal()">
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUA_Permissible_Perc_PerZRr"
+                  [(ngModel)]="Residential.LUA_Permissible_Perc_PerZR" #LUA_Permissible_Perc_PerZR="ngModel">
+              </div>
+            </td>
+          </tr>
+
+
+
+
+          <tr>
+            <td>2.</td>
+            <td>Commercial
+              <!-- <input type="text" class="custom-field" name="LUA_Name" #LUA_Name="ngModel" [(ngModel)]="Commercial.LUA_Name" value="Commercial" readonly> -->
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUA_Area_in_Sqmtc"
+                  [(ngModel)]="Commercial.LUA_Area_in_Sqmt" #LUA_Area_in_Sqmt="ngModel" (keyup)="getAreaTotal()">
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUA_Percentage_achievedc"
+                  [(ngModel)]="Commercial.LUA_Percentage_achieved" #LUA_Percentage_achieved="ngModel" (keyup)="getPercentageTotal()">
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUA_Permissible_Perc_PerZRc"
+                  [(ngModel)]="Commercial.LUA_Permissible_Perc_PerZR" #LUA_Permissible_Perc_PerZR="ngModel">
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>3.</td>
+            <td>Civic Amenities
+              <!-- <input type="text" class="custom-field" name="LUA_Name" #LUA_Name="ngModel" [(ngModel)]="Civic.LUA_Name" value="Civic Amenities" readonly> -->
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUA_Area_in_Sqmtci"
+                  [(ngModel)]="Civic.LUA_Area_in_Sqmt" #LUA_Area_in_Sqmt="ngModel" (keyup)="getAreaTotal()">
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUA_Percentage_achievedci"
+                  [(ngModel)]="Civic.LUA_Percentage_achieved" #LUA_Percentage_achieved="ngModel" (keyup)="getPercentageTotal()">
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUA_Permissible_Perc_PerZRci"
+                  [(ngModel)]="Civic.LUA_Permissible_Perc_PerZR" #LUA_Permissible_Perc_PerZR="ngModel">
+              </div>
+            </td>
+          </tr>
+          <tr>
+
+
+
+
+            <td>4.</td>
+            <td>Park and Open Space
+              <!-- <input type="text" class="custom-field" name="LUA_Name" #LUA_Name="ngModel" [(ngModel)]="Park.LUA_Name" value="Park and Open Space" readonly> -->
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUA_Area_in_Sqmtp"
+                  [(ngModel)]="Park.LUA_Area_in_Sqmt" #LUA_Area_in_Sqmt="ngModel" (keyup)="getAreaTotal()">
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUA_Percentage_achievedp"
+                  [(ngModel)]="Park.LUA_Percentage_achieved" #LUA_Percentage_achieved="ngModel" (keyup)="getPercentageTotal()">
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUA_Permissible_Perc_PerZRp"
+                  [(ngModel)]="Park.LUA_Permissible_Perc_PerZR" #LUA_Permissible_Perc_PerZR="ngModel">
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>5.</td>
+            <td>Road
+              <!-- <input type="text" class="custom-field" name="LUA_Name" #LUA_Name="ngModel" [(ngModel)]="Road.LUA_Name" value="Road" readonly> -->
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [readonly]="mode=='view'" name="LUA_Area_in_Sqmtr"
+                  [(ngModel)]="Road.LUA_Area_in_Sqmt" #LUA_Area_in_Sqmt="ngModel" (keyup)="getAreaTotal()">
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [readonly]="mode=='view'" name="LUA_Percentage_achievedr"
+                  [(ngModel)]="Road.LUA_Percentage_achieved" #LUA_Percentage_achieved="ngModel" (keyup)="getPercentageTotal()">
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [readonly]="mode=='view'" name="LUA_Permissible_Perc_PerZRr"
+                  [(ngModel)]="Road.LUA_Permissible_Perc_PerZR" #LUA_Permissible_Perc_PerZR="ngModel">
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td></td>
+            <td colspan="1" class="text-center">Total</td>
+            <td style="text-align: right;">
+              <!-- <div class="input-group">
+                <input type="text" class="custom-field text-right" name="TotalAreaCalculation" [(ngModel)]="TotalArea.TotalAreaCalculation" #TotalAreaCalculation="ngModel" disabled>
+              </div> -->
+              {{TotalArea.TotalAreaCalculation | number}}
+            </td>
+            <td style="text-align: right;">
+              {{TotalArea.PercentageTotal | number}}
+
+              <!-- <div class="input-group">
+                <input type="text" class="custom-field text-right" name="PercentageTotal" [(ngModel)]="TotalArea.PercentageTotal" #PercentageTotal="ngModel" disabled>
+              </div> -->
+            </td>
+            <td></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="title themeheading">
+      Schedule of Plots
+    </div>
+    <div class="table-responsive grid">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td rowspan="2">Sl No.</td>
+            <td rowspan="2">Category</td>
+            <td rowspan="2">Plot size in mts</td>
+            <td colspan="2" class="text-center">Intermediate</td>
+            <td rowspan="2">Corner(c)</td>
+            <td rowspan="2">Total</td>
+            <td rowspan="2">% age</td>
+          </tr>
+          <tr class="text-center">
+            <td>Regular</td>
+            <td>Odd(.)</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1.</td>
+            <td>EWS
+              <!-- <input type="text" class="custom-field" name="LUD_CA_ID_FK" #LUD_CA_ID_FK="ngModel" [(ngModel)]="EWS.LUD_CA_ID_FK" value="1" readonly> -->
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUD_Sizeews"
+                  [(ngModel)]="EWS.LUD_Size" #LUD_Size="ngModel">
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUD_Inter_Regularews"
+                  [(ngModel)]="EWS.LUD_Inter_Regular" #LUD_Inter_Regular="ngModel" (keyup)="getEWSTotal()">
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUD_Inter_Oddews"
+                  [(ngModel)]="EWS.LUD_Inter_Odd" #LUD_Inter_Odd="ngModel" (keyup)="getEWSTotal()">
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUD_Cornerews"
+                  [(ngModel)]="EWS.LUD_Corner" #LUD_Corner="ngModel" (keyup)="getEWSTotal()">
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" name="LUD_TotalEWS" [(ngModel)]="EWS.LUD_Total"
+                  #LUD_Total="ngModel" disabled>
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUD_PercentageEWS"
+                  [(ngModel)]="EWS.LUD_Percentage" #LUD_Percentage="ngModel" (keyup)="gettotalpercent()">
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>2.</td>
+
+            <td>LIG
+              <!-- <input type="text" class="custom-field" name="LUD_CA_ID_FK" #LUD_CA_ID_FK="ngModel" [(ngModel)]="LIG.LUD_CA_ID_FK" value="2" readonly> -->
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUD_SizeLIG"
+                  [(ngModel)]="LIG.LUD_Size" #LUD_Size="ngModel">
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUD_Inter_RegularLIG"
+                  [(ngModel)]="LIG.LUD_Inter_Regular" #LUD_Inter_Regular="ngModel" (keyup)="getLIGTotal()">
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUD_Inter_OddLIG"
+                  [(ngModel)]="LIG.LUD_Inter_Odd" #LUD_Inter_Odd="ngModel" (keyup)="getLIGTotal()">
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUD_CornerLIG"
+                  [(ngModel)]="LIG.LUD_Corner" #LUD_Corner="ngModel" (keyup)="getLIGTotal()">
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" name="LUD_TotalLIG" [(ngModel)]="LIG.LUD_Total"
+                  #LUD_Total="ngModel" disabled>
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUD_PercentageLIG"
+                  [(ngModel)]="LIG.LUD_Percentage" #LUD_Percentage="ngModel" (keyup)="gettotalpercent()">
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>3.</td>
+
+            <td>MIG
+              <!-- <input type="text" class="custom-field" name="LUD_CA_ID_FK" #LUD_CA_ID_FK="ngModel" [(ngModel)]="MIG.LUD_CA_ID_FK" value="3" readonly> -->
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUD_SizeMIG"
+                  [(ngModel)]="MIG.LUD_Size" #LUD_Size="ngModel">
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUD_Inter_RegularMIG"
+                  [(ngModel)]="MIG.LUD_Inter_Regular" #LUD_Inter_Regular="ngModel" (keyup)="getMIGTotal()">
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUD_Inter_OddMIG"
+                  [(ngModel)]="MIG.LUD_Inter_Odd" #LUD_Inter_Odd="ngModel" (keyup)="getMIGTotal()">
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUD_CornerMIG"
+                  [(ngModel)]="MIG.LUD_Corner" #LUD_Corner="ngModel" (keyup)="getMIGTotal()">
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" name="LUD_TotalMIG" [(ngModel)]="MIG.LUD_Total"
+                  #LUD_Total="ngModel" disabled>
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUD_PercentageMIG"
+                  [(ngModel)]="MIG.LUD_Percentage" #LUD_Percentage="ngModel" (keyup)="gettotalpercent()">
+              </div>
+            </td>
+          </tr>
+          <tr>
+
+            <td>4.</td>
+            <td>HIG I
+              <!-- <input type="text" class="custom-field" name="LUD_CA_ID_FK" #LUD_CA_ID_FK="ngModel" [(ngModel)]="HIG.LUD_CA_ID_FK" value="4" readonly> -->
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUD_SizeHIG"
+                  [(ngModel)]="HIG.LUD_Size" #LUD_Size="ngModel">
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUD_Inter_RegularHIG"
+                  [(ngModel)]="HIG.LUD_Inter_Regular" #LUD_Inter_Regular="ngModel" (keyup)="getHIGTotal()">
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUD_Inter_OddHIG"
+                  [(ngModel)]="HIG.LUD_Inter_Odd" #LUD_Inter_Odd="ngModel" (keyup)="getHIGTotal()">
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUD_CornerHIG"
+                  [(ngModel)]="HIG.LUD_Corner" #LUD_Corner="ngModel" (keyup)="getHIGTotal()">
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" name="LUD_TotalHIG" [(ngModel)]="HIG.LUD_Total"
+                  #LUD_Total="ngModel" disabled>
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUD_PercentageHIG"
+                  [(ngModel)]="HIG.LUD_Percentage" #LUD_Percentage="ngModel" (keyup)="gettotalpercent()">
+              </div>
+            </td>
+          </tr>
+          <tr>
+
+            <td>5.</td>
+            <td>HIG II
+              <!-- <input type="text" class="custom-field" name="LUD_CA_ID_FK" #LUD_CA_ID_FK="ngModel" [(ngModel)]="HIGG.LUD_CA_ID_FK" value="5" readonly> -->
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUD_SizesHIGG"
+                  [(ngModel)]="HIGG.LUD_Size" #LUD_Size="ngModel">
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUD_Inter_RegularHIGG"
+                  [(ngModel)]="HIGG.LUD_Inter_Regular" #LUD_Inter_Regular="ngModel" (keyup)="getHIGGTotal()">
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUD_Inter_OddHIGG"
+                  [(ngModel)]="HIGG.LUD_Inter_Odd" #LUD_Inter_Odd="ngModel" (keyup)="getHIGGTotal()">
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUD_CornerHIGG"
+                  [(ngModel)]="HIGG.LUD_Corner" #LUD_Corner="ngModel" (keyup)="getHIGGTotal()">
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" name="LUD_TotalHIGG" [(ngModel)]="HIGG.LUD_Total"
+                  #LUD_Total="ngModel" disabled>
+              </div>
+            </td>
+            <td>
+              <div class="input-group">
+                <input type="text" class="custom-field text-right" [disabled]="mode=='view'" name="LUD_PercentageHIGG"
+                  [(ngModel)]="HIGG.LUD_Percentage" #LUD_Percentage="ngModel" (keyup)="gettotalpercent()">
+              </div>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="5"></td>
+            <td colspan="1" class="text-center">Total</td>
+            <td style="text-align: right;">
+              {{TotalArea.totalshare}}
+
+              <!-- <div class="input-group">
+                <input type="text" class="custom-field text-right" name="totalshare" [(ngModel)]="TotalArea.totalshare" #totalshare="ngModel" disabled>
+              </div> -->
+            </td>
+            <td style="text-align: right;">
+              {{TotalArea.totalpercent | number}}
+              <!-- <div class="input-group">
+                <input type="text" class="custom-field text-right" name="totalpercent" [(ngModel)]="TotalArea.totalpercent" #totalpercent="ngModel" disabled>
+              </div> -->
+            </td>
+            <!-- <td></td> -->
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+
+
+    <div class="btn-wrapper" *ngIf="!(mode=='view')">
+      <button class="btn btn-primary" type="submit">Update</button>
+      <!-- <button class="btn btn-primary" type="submit">{{mode=='edit'?'Update':'Save'}}</button> -->
+      <button class="btn btn-primary">Cancel</button>
+    </div>
+  </form>
+</div>

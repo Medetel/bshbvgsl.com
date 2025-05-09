@@ -1,0 +1,54 @@
+.row{
+    padding:14px 0px 0px;
+}
+
+.row:nth-child(odd){
+    background: #f3f3f3;
+}
+
+
+.border-photo{
+    height: 140px;
+    width: 140px;
+    border: 1px solid gray;
+    margin-top: -27px;   
+    margin-bottom: 5px;
+}
+.margin-top{
+    margin-top: 24px;
+}
+.dispay-inline .custom-field{
+    display: inline-block;
+    width:260px;
+}
+
+.billmenu-new li a:hover{
+    text-decoration: none;
+}
+.billmenu-new li{
+    display: inline-block;
+    list-style-type: none;
+    margin-left: 35px;    
+    margin-top: 15px;
+    cursor: pointer;
+    color: #0062cc;     
+}
+.active{
+    padding-bottom: 5px;
+    border-bottom: 5px solid #007bff;   
+}
+.active a{    
+    color: black;
+}
+
+.header {
+    padding: 9px 0px 15px 0px;
+    overflow: visible;
+    border-bottom: 1px solid #ededed;
+    height: 65px;
+    font-size: 20px;
+    font-weight: 500;
+}
+.fa-lg {
+    color:red;
+}

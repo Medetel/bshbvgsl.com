@@ -1,0 +1,16 @@
+.row{
+    padding:20px 0px 0px;
+}
+
+.row:nth-child(odd){
+    background: #f3f3f3;
+}
+
+.scale-border {
+    padding: 15px;
+    border: 1px solid gray;
+    margin-top: 4px;
+}
+.rowmargin{
+   margin:  -15px -15px 10px -15px
+}

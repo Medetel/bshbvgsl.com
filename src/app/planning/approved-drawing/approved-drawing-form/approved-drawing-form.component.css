@@ -1,0 +1,31 @@
+.row:nth-child(odd){
+    background: #ececec;   
+}
+
+.row{
+    padding: 1em 0px 0px 0px !important;
+}
+
+.mat-form-field-wrapper{
+    padding-bottom:0px !important;
+}
+
+.field-title{
+    width:113px;
+    display:inline-block;
+    color:#807f7f;
+}
+td{
+    border: 1px solid #ddd;
+}
+.rowmarginfix{
+    margin: 0px -14px;
+}
+.border-box{
+    border: 1px solid gray;
+    padding: 5px 15px 0px 15px;
+    margin: 7px 1px 10px 1px;
+}
+.mandatory{
+    color:red;
+}

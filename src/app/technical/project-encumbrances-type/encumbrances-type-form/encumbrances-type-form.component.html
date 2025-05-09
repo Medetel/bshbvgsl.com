@@ -1,0 +1,70 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary float-right" [routerLink]="['/home/projectencumbrancetype']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <form (ngSubmit)="mode=='edit'? UpdateProjectEncumbranceType(EncumbranceTypeForm):SaveEncumbranceType(EncumbranceTypeForm)" #EncumbranceTypeForm="ngForm" autocomplete="off">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="custom-field"  #encumb_code="ngModel" name="encumb_code" [(ngModel)]="i.encumb_code" [disabled]="mode=='view'" required>
+          <label for="">Encumbrane code
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="encumb_code.invalid && (encumb_code.dirty || encumb_code.touched || formInvalid)">
+            <span *ngIf="encumb_code.errors.required">Encumbrance code is required</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <textarea class="custom-field"  #Description="ngModel" name="Description" [(ngModel)]="i.Description" [disabled]="mode=='view'" required></textarea>
+          <label for="">Description
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Description.invalid && (Description.dirty || Description.touched || formInvalid)">
+            <span *ngIf="Description.errors.required">Description is required</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="custom-field"  #Class="ngModel" name="Class" [(ngModel)]="i.Class" [disabled]="mode=='view'" required>
+          <label for="">Class/Type
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Class.invalid && (Class.dirty || Class.touched || formInvalid)">
+            <span *ngIf="Class.errors.required">Class is required</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <select class="custom-field" [(ngModel)]="i.Status" #Status="ngModel" name="Status"
+            [disabled]="mode=='view'" required>
+            <option [value]="undefined" selected>---Select---</option>
+            <option value=3>Active</option>
+            <option value=4>Inactive</option>
+          </select>
+          <label for="">Status
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Status.invalid && (Status.dirty || Status.touched || formInvalid)">
+            <span *ngIf="Status.errors.required">Status is required</span>
+          </div>
+        </div>
+      </div>
+    </div>
+<br>
+    <div class="text-center">
+      <button class="btn btn-primary" [disabled]="mode=='view'" type="submit">Save</button>&nbsp;
+      <button class="btn btn-primary" [disabled]="mode=='view'" type="reset">Cancel</button>
+    </div>
+
+  </div>
+</form>
+</div>

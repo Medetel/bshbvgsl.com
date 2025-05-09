@@ -1,0 +1,80 @@
+<div class="wrapper">
+  <div class="title themeheading">
+   Daily Attendance (Out)
+    <button class="btn btn-primary float-right" [routerLink]="['/home/leaveapp/daily-attendance-out']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+
+ <form  #EmplDetails="ngForm" name="form1">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="input-group">
+          <label for=""> Division code </label>
+          <select class="custom-field" [(ngModel)]="p.DIVISION_CODE" #DIVISION_CODE="ngModel"
+          name="DIVISION_CODE" disabled (change)="ChangeOfDivision(p.DIVISION_CODE)">
+          <option [value]="undefined" selected>---Select---</option>
+          <option [value]="d.DI_Id" *ngFor="let d of DistrictsList;">
+            {{d.DI_District}}
+          </option>
+        </select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group">
+          <label for="">Emp Code</label>          
+          <!-- <input type="text" class="custom-field" name="EmpCode" maxlength="50" [(ngModel)]="p.EmpCode"
+          #EmpCode="ngModel" [disabled]="mode=='view'" (keydown.enter)="mydata(p.EmpCode)"> -->
+
+          <input type="text" class="custom-field"  name="EmpCode" [(ngModel)]="p.EmpCode"
+          #EmpCode="ngModel" (keyup)="GetEmployeeCode(p.EmpCode,p.DIVISION_CODE)">
+          
+          <table class="table table-striped absolute">
+            <tbody>
+              <tr *ngFor="let app of employeeSpeedSearchlist">
+                <td>{{app.EMP_EMPLOYEE_CODE}}</td>
+                <td>{{app.EMP_FIRST_NAME}}</td>
+                <td><button type="button" class="btn btn-primary" (click)="mydata(app.EMP_EMPLOYEE_CODE)">Select</button></td>
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+      <div class="col-md-4">
+        <label for=""> Name : {{EmployeeName}}</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 ">
+        <label for="">Attendance Date :  {{DateValues}}</label>
+      </div>
+      <!-- <div class="col-md-4">
+        <label for="">In Time : {{Intimevalue}} </label>
+      </div> -->
+      <div class="col-md-4">
+        <label for="">Out Time : {{timevalue}} </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label for="">Created By : {{userName}}</label>
+      </div>
+      <div class="col-md-4">
+        <label for="">Created Date : {{DateValues}}</label>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="container-fluid">
+    <div class="text-center">
+      <button class="btn btn-primary" type="button" (click)="SaveEmplAttendance(EmplDetails)">Save</button>
+      <button class="btn btn-primary" type="button">Cancel</button>
+    </div>
+    <br>
+  </div>
+</form>
+ 
+</div>

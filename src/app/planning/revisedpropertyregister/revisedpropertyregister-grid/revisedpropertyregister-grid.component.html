@@ -1,0 +1,237 @@
+<div class="wrapper">
+
+    <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm,itemsPerPage,1,Pro.PD_Id)">
+        <div class="title themeheading">Property details
+            <div class="float-right">
+                Items per page:
+                <select name="SearchRows" #SearchRows="ngModel" [(ngModel)]="itemsPerPage" class="noofpage" (change)="itemsPerPageChanged(itemsPerPage, 1)">
+                    <option [ngValue]="5">5</option>
+                    <option [ngValue]="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                </select>
+                <!-- <span style="font-size: 16px;margin-left: 30px;">Project Code&nbsp;:&nbsp;
+                                <span style="font-size: 15px;">MYS-11</span>&nbsp; || Project Name&nbsp;:&nbsp;</span>
+                            <span style="font-size: 15px;">Sri Nagar</span> -->
+
+                <!-- <a class="btn btn-primary float-right" routerLink="/home/property-register/propertiesregister-form">Add Property</a> -->
+
+            </div>
+            <span class="clearfix"></span>
+        </div>
+
+
+        <div class="container-fluid upload" style="background-color:#d2cce9;font-size: 0px;padding: 10px 15px;">
+            <div class="row justify-content-center">
+                <div class="col-md-2">
+                    <span style="color: #fff;display: block;text-align: right;font-size:17px;margin-top: 6px;">Select
+                        Project</span>
+                </div>
+                <div class="col-md-4">
+                    <div class="">
+                        <input type="text" class="custom-field" #PD_Id="ngModel" name="PD_Id" [(ngModel)]="Pro.PD_Id"
+                            list="dynmicUserIds" style="background:#fff;" />
+                        <datalist id="dynmicUserIds">
+                            <option *ngFor="let item of projectlist" [value]="item.PD_Id" style="height:150px; width:150px;margin-bottom:50px;">
+                                {{item.PD_Project_Code}} - {{item.PD_Project_Name}} - {{item.Phase_Name}}
+                            </option>
+                        </datalist>
+
+                        <!-- <select #PD_Id="ngModel" name="PD_Id" [(ngModel)]="Pro.PD_Id" class="custom-field" required style="background:#fff;">
+                            <option [ngValue]="undefined" selected>---Select---</option>
+                            <option *ngFor="let project of projectlist" [value]="project.PD_Id">
+                                {{project.PD_Project_Code}} - {{project.PD_Project_Name}} - {{project.Phase_Name}}
+                            </option>
+                        </select> -->
+
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-primary" [disabled]="Pro.PD_Id==null || Pro.PD_Id==undefined || Pro.PD_Id==''"
+                        type="button" (click)="SearchProjects(Pro.PD_Id,itemsPerPage,1)">Go</button>
+                    <button class="btn btn-primary" type="button" [routerLink]="['/home/revised-property/pre-allotment-prop','Planning']">View
+                        Property List</button>
+                </div>
+                <!-- <div class="col-md-5 text-right">
+                        <a class="btn btn-primary float-right" href="..\assets\images\icons\KHBProperty.csv" style="margin-right:10px;display:inline-block;" download="format.csv">Download Format</a> 
+                        <a class="btn btn-danger" style="color:#fff;margin:0px 5px;" data-target="#landrecord" data-toggle="modal">Upload Property</a>&nbsp;
+                    </div> -->
+
+            </div>
+
+        </div>
+
+        <div class="searchbar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label>Search</label>
+                    </div>
+                    <div class="col-md-4">
+                        <select name="SearchCriteria" #SearchCriteria="ngModel" [(ngModel)]="s.SearchCriteria" class="form-control"
+                            required>
+                            <option [ngValue]="undefined" selected>---Select---</option>
+                            <option value="propertyNo">Property No</option>
+                            <option value="propertytype">Property Type</option>
+                        </select>
+                        <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)" class="error-msg">
+                            <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="SearchText" #SearchText="ngModel" [(ngModel)]="s.SearchText" class="form-control"
+                            required>
+                        <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+                            <div *ngIf="SearchText.errors.required">Search text is required</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-default" type="submit">Search</button>
+                        <button class="btn btn-default" type="reset" (click)="clear()">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- (click)="SendLrId(info.LR_Id,info.LR_Owner)" -->
+
+
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <td rowspan="2">Sl No.</td>
+                        <td rowspan="2">Site / House</td>
+                        <td rowspan="2">Property No.</td>
+                        <td rowspan="2">Category</td>
+                        <td rowspan="2">Intermediate / Corner</td>
+                        <td rowspan="2">Odd / Regular</td>
+                        <td colspan="2" class="text-center">Measurement</td>
+                        <td rowspan="2">Plot area in sqm</td>
+                        <td rowspan="2">Plinth area in sqm</td>
+                        <td colspan="4" class="text-center">Boundary schedule</td>
+                        <td rowspan="2" class="text-center">Status</td>
+                        <!-- <td rowspan="2" class="text-center">Change Status</td> -->
+                        <td rowspan="2" class="text-center">Remarks</td>
+                        <td rowspan="2" class="text-center">Edit</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">East to West</td>
+                        <td class="text-center">North to South</td>
+                        <td>North</td>
+                        <td>South</td>
+                        <td>East</td>
+                        <td>West</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let p of revpropertylist | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index">
+                        <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+                        <td>{{p.PT_Property_Type}}</td>
+                        <td>{{p.PR_Property_No}}</td>
+                        <td>{{p.CA_CategoryName}}</td>
+                        <td>{{p.IC_Name}}</td>
+                        <td>{{p.OR_Name}}</td>
+                        <td>{{p.PR_M_East_west}}</td>
+                        <td>{{p.PR_M_North_South}}</td>
+                        <td>{{p.PR_Plot_Area}}</td>
+                        <td>{{p.PR_Plinth_Area}}</td>
+                        <td>{{p.PR_B_North}}</td>
+                        <td>{{p.PR_B_South}}</td>
+                        <td>{{p.PR_B_East}}</td>
+                        <td>{{p.PR_B_West}}</td>
+                        <td>{{p.PR_Status}}</td>
+                        <!-- <td>
+                            <button class="btn btn-primary" type="button" style="width:90px;" (click)=changestatus(p.PR_Id,p.PR_Status)>{{p.PR_Status=='Available'?'Block':'Unblock'}}</button>
+                        </td> -->
+                        <td>{{p.PR_Remarks}}</td>
+
+                        <td class="text-center">
+                            <a href="#" [routerLink]="['/home/revised-property/revised-property-form', p.PR_Id, 'edit']">
+                                <i class="fa fa-lg fa-edit themecolor"></i>
+                            </a>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-11">
+                        <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)"
+                            maxSize="9" directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+                            screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                            screenReaderCurrentLabel="You're on page">
+                        </pagination-controls>
+                    </div>
+                    <div class="col-md-1">
+                        Total:
+                        <span>{{totalItems}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<div class="modal fade" role="dialog" id="landrecord">
+    <div class="modal-dialog modal-lg">
+        <!-- <form (ngSubmit)="mode=='edit'?update(landdetails):SaveLandDetails(landdetails)" #landdetails="ngForm" autocomplete="off"> -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Import Property Register(.CSV File)</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row justify-content-center" style="margin-top:10px">
+                        <div class="col-md-3">
+                            <h6>Select Project</h6>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="input-group">
+                                <select #PD_Id="ngModel" name="PD_Id" [(ngModel)]="EXProj.PD_Id" class="custom-field"
+                                    required>
+                                    <option [ngValue]="undefined" selected>---Select---</option>
+                                    <option *ngFor="let projectprop of projectlist" [value]="projectprop.PD_Id">
+                                        {{projectprop.PD_Project_Code}} - {{projectprop.PD_Project_Name}} -
+                                        {{projectprop.PD_Phase}}
+                                    </option>
+                                </select>
+                                <!-- <label for="">Project
+                                            <span class="mandatory">*</span>
+                                        </label> -->
+                                <!-- <div class="error-msg" *ngIf="PD_Id.invalid && (PD_Id.dirty || PD_Id.touched || formSubmitted)">
+                                        <span *ngIf="PD_Id.errors.required">Project is required</span>
+                                    </div> -->
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-1">
+                                    <button class="btn btn-primary" type="button" (click)="GetProjectDetailsforSA(SA.PD_Id)">Go</button>
+                                </div> -->
+                    </div>
+                    <div class="row justify-content-center" style="margin-top:10px;">
+                        <div class="col-md-3">
+                            <h6>Import Property</h6>
+                        </div>
+                        <div class="col-md-5">
+                            <input type="file" accept=".csv" (change)="FilePropertyExcel($event.target.files)" id="Property_Excel"
+                                #PR_Excel="ngModel" name="PR_Excel" [(ngModel)]="EXProj.PR_Excel">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="button">Upload Property</button>
+                <!-- <button class="btn btn-danger" type="submit">{{mode=='edit'?'Update':'Save'}}</button> -->
+                <!-- <button class="btn btn-danger" type="button" (click)="updated(Land)">{{mode=='edit'?'Update':'Save'}}</button> -->
+                <button class="btn btn-danger" data-dismiss="modal" type="button">Cancel</button>
+            </div>
+        </div>
+        <!-- </form> -->
+    </div>
+</div>

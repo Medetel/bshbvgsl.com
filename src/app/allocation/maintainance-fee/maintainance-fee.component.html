@@ -1,0 +1,256 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+  </div>
+  <form #SearchProject_MF="ngForm" autocomplete="off">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Application No
+              <span class="mandatory">*</span>
+            </label>
+            <input type="text" class="custom-field" id="txtAppNo" maxlength="30" name="app_no" value=""
+              #app_no="ngModel" [(ngModel)]="sp.app_no" required>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Property No
+              <span class="mandatory">*</span>
+            </label>
+            <input type="text" class="custom-field" id="txtPropertyNo" maxlength="20" name="property_no" value=""
+              #property_no="ngModel" [(ngModel)]="sp.property_no" required>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <label><span class="field-title">Project Name</span>: {{SearchResult.Project_Name}} </label>
+        </div>
+        <div class="col-md-6">
+          <label><span class="field-title">District Name</span>: {{SearchResult.District_Name}}</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label><span class="field-title">Phase Name</span>: {{SearchResult.Phase_Name}}</label>
+        </div>
+        <div class="col-md-6">
+          <label><span class="field-title">Scheme Name</span>: {{SearchResult.Scheme_Name}}</label>
+        </div>
+      </div>
+
+      <!-- </div> -->
+      <div class="btn-wrapper text-center">
+        <button class="btn btn-primary" (click)="SearchProject(SearchProject_MF)">Go</button>
+      </div>
+
+    </div>
+  </form>
+
+  <div class="title themeheading" style="padding: 5px;">{{title2}}
+    <div class="float-right">
+      Items per page:
+      <select>
+        <option [ngValue]="5">5</option>
+        <option [ngValue]="10">10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+        <option value="40">40</option>
+        <option value="50">50</option>
+      </select>
+      <a class="btn btn-primary" (click)="showInstallment()">Add</a>
+    </div>
+    <span class="clearfix"></span>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped grid">
+      <thead>
+        <tr>
+          <td>Sl No.</td>
+          <td>Property Number</td>
+          <td>Payment Mode</td>
+          <td>Date</td>
+          <td>Amount</td>
+          <td>Name</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of Installments;let i=index;">
+          <td>{{i+1}}.</td>
+          <td>{{p.MF_Property_No}}</td>
+          <td>{{p.MF_PaymentMode}}</td>
+          <td>{{p.MF_App_Pay_Date}}</td>
+          <td>{{p.MF_Amount}}</td>
+          <td>{{p.MF_Name}}</td>
+          <!-- <td>
+          <a href="#">
+              <i class="fa fa-lg fa-edit themecolor"></i>
+          </a>
+      </td>
+      <td>
+          <a href="javascript:void(0);">
+              <i class="fa fa-lg fa-trash themecolor"></i>
+          </a>
+          
+      </td> -->
+        </tr>
+
+      </tbody>
+    </table>
+    <div class="btn-wrapper text-center">
+      <button class="btn btn-primary">Print Receipt</button> <!-- <button class="btn btn-primary">Cancel</button> -->
+    </div>
+  </div>
+</div>
+<div class="modal" id="installment">
+
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Payment Details</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form #pay="ngForm" (ngSubmit)="Save(pay)" autocomplete="off">
+          <div class="container-fluid">
+
+            <div class="row" style="background:#fff !important;">
+              <div class="col-md-12">
+                <div class="input-group">
+                  <select class="custom-field" [(ngModel)]="installmentpay.MF_PaymentMode" name="MF_PaymentMode"
+                    #MF_PaymentMode="ngModel">
+                    <option [value]="undefined" selected>---Select---</option>
+                    <option value="Challan">Challan</option>
+                    <option value="Online">Online </option>
+                  </select>
+                  <label>Payment Mode</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row" style="background:#fff !important;" *ngIf="installmentpay.MF_PaymentMode === 'Challan'">
+              <div class="col-md-12">
+                <div class="input-group">
+                  <input type="text" class="custom-field" [(ngModel)]="installmentpay.MF_Bank_Name" name="MF_Bank_Name"
+                    pattern="[A-Za-z]+" maxlength="20" #MF_Bank_Name="ngModel" required>
+
+                  <label for="">Bank Name
+                    <span class="mandatory">*</span>
+                    <div class="error-msg"
+                      *ngIf="MF_Bank_Name.invalid && (MF_Bank_Name.dirty || MF_Bank_Name.touched || formInvalid)">
+                      <span *ngIf="MF_Bank_Name.errors.required"> Bank Name is required</span>
+                      <span *ngIf="MF_Bank_Name.errors.pattern"> Branch Name it should contain only characters.</span>
+                    </div>
+
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="row" style="background:#fff !important;" *ngIf="installmentpay.MF_PaymentMode === 'Challan'">
+              <div class="col-md-12">
+                <div class="input-group">
+                  <input type="text" class="custom-field" [(ngModel)]="installmentpay.MF_Bank_Challan_No"
+                    name="MF_Bank_Challan_No" #MF_Bank_Challan_No="ngModel" pattern="^[0-9]*$" required>
+                  <label for="">Bank challan Number
+
+                    <span class="mandatory">*</span>
+                    <div class="error-msg"
+                      *ngIf="MF_Bank_Challan_No.invalid && (MF_Bank_Challan_No.dirty || MF_Bank_Challan_No.touched || formInvalid)">
+                      <span *ngIf="MF_Bank_Challan_No.errors.required">Bank Challan Number is required</span>
+                      <span *ngIf="MF_Bank_Challan_No.errors.pattern">Bank Challan Number is invalid</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="row" style="background:#fff !important;" *ngIf="installmentpay.MF_PaymentMode === 'Online'">
+              <div class="col-md-12">
+                <div class="input-group">
+                  <input type="text" class="custom-field" pattern="^[0-9]*$">
+                  <label for="">Transaction Number
+
+
+                  </label>
+                </div>
+              </div>
+            </div> -->
+            <div class="row" style="background:#fff !important;" *ngIf="installmentpay.MF_PaymentMode === 'Online'">
+              <div class="col-md-12">
+                <div class="input-group">
+                  <select class="custom-field">
+                    <option selected>Select</option>
+                    <option value="Net">Net Banking</option>
+                    <option value="Credit">Credit card</option>
+                    <option value="Debit">Debit card</option>
+                    <option value="UPI">UPI</option>
+                  </select>
+                  <label>Payment Mode</label>
+                </div>
+              </div>
+            </div>
+            <div class="row" style="background:#fff !important;">
+              <div class="col-md-12">
+                <div class="input-group">
+                  <input type="text" class="custom-field" [(ngModel)]="installmentpay.MF_Name" name="MF_Name"
+                    #MF_Name="ngModel" pattern="[A-Za-z]+" required>
+                  <label for="">Name
+                    <span class="mandatory">*</span>
+                    <div class="error-msg" *ngIf="MF_Name.invalid && (MF_Name.dirty || MF_Name.touched || formInvalid)">
+                      <span *ngIf="MF_Name.errors.required">Name is required</span>
+                      <span *ngIf="MF_Name.errors.pattern">Name must be characters </span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="row" style="background:#fff !important;">
+              <div class="col-md-12">
+                <div class="input-group">
+                  <input type="datetime-local" class="custom-field" [(ngModel)]="installmentpay.MF_App_Pay_Date"
+                    name="MF_App_Pay_Date" #MF_App_Pay_Date="ngModel" required>
+                  <label for="">Date
+                    <span class="mandatory">*</span>
+                    <div class="error-msg"
+                      *ngIf="MF_App_Pay_Date.invalid && (MF_App_Pay_Date.dirty || MF_App_Pay_Date.touched || formInvalid)">
+                      <span *ngIf="MF_App_Pay_Date.errors.required">Date is required</span>
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="row" style="background:#fff !important;">
+              <div class="col-md-12">
+                <div class="input-group">
+                  <input type="text" class="custom-field" [(ngModel)]="installmentpay.MF_Amount" name="MF_Amount"
+                    pattern="^[0-9]*$" #MF_Amount="ngModel" maxlength="10" required>
+                  <label for="">Amount
+                    <span class="mandatory">*</span>
+                    <div class="error-msg"
+                      *ngIf="MF_Amount.invalid && (MF_Amount.dirty || MF_Amount.touched || formInvalid)">
+                      <span *ngIf="MF_Amount.errors.required">Amount is required</span>
+                      <span *ngIf="MF_Amount.errors.pattern"> Amount must be characters</span>
+
+                    </div>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="text-center" [hidden]="mode=='view'">
+              <button class="btn btn-primary" type="button" [disabled]="mode=='view'" (click)="Save(pay)">Save</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>

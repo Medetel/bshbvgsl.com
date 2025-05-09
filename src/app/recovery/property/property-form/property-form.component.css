@@ -1,0 +1,10 @@
+.row{
+    padding:20px 0px 0px;
+}
+
+.row:nth-child(odd){
+    background: #f2f2f2;
+}
+.form-control{
+    width: 180px;
+}

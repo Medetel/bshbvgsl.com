@@ -1,0 +1,45 @@
+.searchbar{
+    padding:10px;
+    background: #212121;
+}
+
+label{
+    color:#fff;
+    margin-top:8px;
+}
+
+.form-control{
+    padding:4px;
+}
+
+select.form-control:not([size]):not([multiple]) {
+    height: calc(2rem + 2px);
+}
+
+button{
+    width:100px;
+    margin-right: 5px;
+}
+
+.menu{
+    width: 250px;
+}
+
+.notify.mat-tab-labels {
+    background: #babb93 !important;
+    margin-top: 27px;
+}
+
+.notify.mat-ink-bar{
+    height: 6px;
+}
+
+.notify.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: rgba(66, 24, 142, 0.3);
+}
+
+.notify.mat-tab-label, .mat-tab-link {
+  color: #000000;
+  font-size: 18px;
+  font-weight: 500;
+}

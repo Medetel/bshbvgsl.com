@@ -1,0 +1,94 @@
+<div class="wrapper">
+  <div class="title themeheading">
+  {{title}}
+    <button class="btn btn-primary float-right" [routerLink]="['/home/Jobs']">Back</button>
+  </div>
+  <form (ngSubmit)="mode=='edit'? UpdateJob(JobForm):SaveJob(JobForm)" #JobForm="ngForm"
+  autocomplete="off">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="custom-field" #job_code="ngModel" name="job_code" [(ngModel)]="i.job_code" pattern="^[a-zA-Z0-9 ]*$"  [disabled]="mode=='view'" required>
+          <label for="">Job Code
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="job_code.invalid && (job_code.dirty || job_code.touched || formInvalid)">
+            <span *ngIf="job_code.errors.required">Job Code is required</span>
+            <span *ngIf="job_code.errors?.pattern">Only AlphaNumeric should enter</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <!-- <select class="custom-field" > -->
+          <select class="custom-field" #Group_Code="ngModel" name="Group_Code" [(ngModel)]="i.Group_Code"
+            list="dynmicUserIds" [disabled]="mode=='view'" required>
+            <!-- <datalist id="dynmicUserIds"> -->
+            <option [value]="undefined" selected>---Select Group Code---</option>
+            <option [value]="c.jobgroup_id" *ngFor="let c of Groupcode;">
+              {{c.Group_code}} - {{c.Group_name}}
+            </option>
+            <!-- </datalist> -->
+          </select>
+          <label for="">Group Code
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg"
+            *ngIf="Group_Code.invalid && (Group_Code.dirty || Group_Code.touched || formInvalid)">
+            <span *ngIf="Group_Code.errors.required">Group Code is required</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <textarea class="custom-field" #Description="ngModel" name="Description" [(ngModel)]="i.Description"  [disabled]="mode=='view'" required></textarea>
+          <label for="">Description
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Description.invalid && (Description.dirty || Description.touched || formInvalid)">
+            <span *ngIf="Description.errors.required">Description is required</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="custom-field" #Class="ngModel" name="Class" [(ngModel)]="i.Class" pattern="^[a-zA-Z0-9 ]*$" [disabled]="mode=='view'" required>
+          <label for="">Class
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Class.invalid && (Class.dirty || Class.touched || formInvalid)">
+            <span *ngIf="Class.errors.required">Class is required</span>
+            <span *ngIf="Class.errors?.pattern">Only AlphaNumeric should enter</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <select class="custom-field" [(ngModel)]="i.Status" #Status="ngModel" name="Status"
+            [disabled]="mode=='view'" required>
+            <option [value]="undefined" selected>---Select---</option>
+            <option value=3>Active</option>
+            <option value=4>Inactive</option>
+          </select>
+          <label for="">Status
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Status.invalid && (Status.dirty || Status.touched || formInvalid)">
+            <span *ngIf="Status.errors.required">Status is required</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center">
+      <button class="btn btn-primary" type="submit"  [disabled]="mode=='view'">Save</button> &nbsp;
+      <button class="btn btn-primary" type="reset"  [disabled]="mode=='view'">Cancel</button>
+    </div>
+
+  </div>
+  </form>
+</div>

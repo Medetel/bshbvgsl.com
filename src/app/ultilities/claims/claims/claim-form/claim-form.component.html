@@ -1,0 +1,138 @@
+<form name="ClaimsForm" (ngSubmit)="SaveClaims(claimsList)">
+  <div class="wrapper">
+    <div class="title themeheading subtitle margin0">
+      {{title}}&nbsp; <span style="font-size: 16px;margin-left: 30px;">RoleName&nbsp;:&nbsp;{{roleName}}&nbsp;</span><a class="btn btn-primary float-right" [routerLink]="['/home/claims']">Back</a><span class="clearfix"></span>
+    </div>
+    <br>
+     <!-- <div class="container-fluid">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <td>Sl. No.</td>
+              <td>Module</td>
+              <td>Sub Modules</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let c of claimsList; let i=index;">
+              <td>{{i+1}}.</td>
+              <td>{{c.KHB_MenuName}}</td>
+              <td>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <td>Actions
+                      </td>
+                      <td>View
+                      </td>
+                      <td>Add
+                      </td>
+                      <td>Edit
+                      </td>
+                      <td>Delete
+                      </td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let p of c.KHB_PagesList; let j=index;">
+                      <td>{{p.KHB_Page}}</td>
+                      <td *ngFor="let claim of p.KHB_PageFunctionClaim; let k=index;">
+                        <input type="checkbox" [value]="claim.ClaimType" name="ClaimValue" [checked]="claim.ClaimValue===true" (change)="changeCheckbox(i, j, k)" [hidden]="!claim.IsClaimShown">
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>  -->
+
+    <div class="container-fluid">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <td>Sl. No.</td>
+              <td>Module</td>
+              <td>Sub Modules</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let c of claimsList; let i=index;">
+              <td>{{i+1}}.</td>
+              <td>{{c.KHB_MenuName}}</td>
+              <td>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <td>Actions
+                      </td>
+                      <td>View
+                      </td>
+                      <td>Add
+                      </td>
+                      <td>Edit
+                      </td>
+                      <td>Delete
+                      </td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let p of c.BSHB_PagesList; let j=index;">
+                      <td>{{p.KHB_Page}}</td>
+                      <td *ngFor="let claim of p.KHB_PageFunctionClaim; let k=index;">
+                        <input type="checkbox" [value]="claim.ClaimType" name="ClaimValue" [checked]="claim.ClaimValue===true" (change)="changeCheckbox(i, j, k)" [hidden]="!claim.IsClaimShown">
+                      </td>  
+                      
+                      
+                      <td *ngIf="p.KHB_SubPagesModels.length>0"> 
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <td>Actions
+                              </td>
+                              <td>View
+                              </td>
+                              <td>Add
+                              </td>
+                              <td>Edit
+                              </td>
+                              <td>Delete
+                              </td>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let s of p.KHB_SubPagesModels; let m=index;">
+                              <td>{{s.KSP_Name}}</td>
+                              <td *ngFor="let claim of s.ClaimsModels; let h=index;">
+                                <input type="checkbox" [value]="claim.ClaimType" name="ClaimValue" [checked]="claim.ClaimValue===true" (change)="changeCheckbox1(i, j, m,h)" [hidden]="!claim.IsClaimShown">
+                              </td>                    
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <button class="btn btn-primary" type="submit">Save</button>
+          <button class="btn btn-primary" type="reset">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <br>
+  </div>
+</form>

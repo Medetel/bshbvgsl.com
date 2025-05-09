@@ -1,0 +1,88 @@
+.form{
+    width:80%;
+    margin:30px auto 0px;
+    border-left: 1px solid #f3f3f3;
+    border-top: 1px solid #f3f3f3;
+    border-bottom: 1px solid #f3f3f3;
+    background: #fff;
+    padding:0px;
+}
+
+.field-title{
+    display:inline-block;
+    width:100%;
+    padding:5px 0px;
+    font-size:1em;
+    color:#8e8e8e;
+}
+
+.field-value{
+    display:inline-block;
+    padding:5px 0px;
+    font-size:1em;
+    color:#444;
+    width:100%;
+    word-break: break-word;
+}
+
+.applicant-img{
+    max-width:130px;
+}
+
+.header{
+    border-bottom:1px solid #f3f3f3;
+    border-right:1px solid #f3f3f3;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.body .col-md-3:nth-child(even){
+    border-right:1px solid #f3f3f3;
+}
+
+.body .col-md-3{
+    border-bottom:1px solid #f3f3f3;
+}
+
+
+
+.selector{
+    padding:20px 10px 0px;
+    background: #444;
+    color:#fff;
+}
+
+.selector .input-group label{
+    color:#fff;
+    margin-bottom:3px;
+}
+
+.tab-wrapper ul{
+    overflow: inherit;
+}
+
+
+
+@media(max-width:1000px){
+    .form{
+        width:90%;
+    }
+    
+}
+
+@media(max-width:480px){
+    .form{
+        width:100%;
+    }
+    
+    .body .col-md-3:nth-child(odd){
+        border-right:1px solid #f3f3f3;
+    }
+}
+
+
+@media print{
+    nav,.nav,#applicant-menu,.title,#app-filter,.table-responsive,#footer,.btn{
+        display:none !important;
+    }
+}

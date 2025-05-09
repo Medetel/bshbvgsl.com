@@ -1,0 +1,13 @@
+
+
+.row{
+    padding: 1em 0px 0px 0px !important;
+    margin-bottom: -10px;
+}
+
+td{
+    border: 1px solid #ddd;
+}
+.mandatory{
+    color:red;
+}

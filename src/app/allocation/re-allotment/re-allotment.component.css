@@ -1,0 +1,32 @@
+
+.row{
+    padding: 1em 0px 0px 0px !important;
+    margin-bottom: -3px;
+}
+/* .row:nth-child(odd){
+    background: #f2f2f2;
+}
+
+.row:nth-child(even){
+    background: white;
+} */
+
+.text-sm{
+    font-size:14px;
+    display:inline-block;
+    margin-left:20px;
+    float:right;
+}
+
+.backcolor{
+    background-color:rgba(216, 226, 231, 0.911);
+}
+
+.field-title{
+    width:200px;
+    display:inline-block;
+    color:#807f7f;
+}
+.mandatory{
+    color:red;
+}

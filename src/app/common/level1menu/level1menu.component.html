@@ -1,0 +1,26 @@
+<nav class="navbar navbar-expand-md navbar-light " style="background-color: #B5A422;padding:0px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);position: relative; top:0; width: 100%; z-index: 999;border-bottom: 1px solid  rgb(255, 255, 255);">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+  <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="collapsibleNavbar" style="line-height: 45px; ">
+    <ul class="navbar-nav">
+      <li id="{{m.KM_MenuId}}" class="nav-item" style="vertical-align: middle" *ngFor="let m of menuList">
+        <a class="nav-link" href="#" routerLink="{{m.KM_Redirect_URL}}" [ngClass]="{'main-menu-active': selectedItem == m.KM_MenuId}" (click)="listClick($event, m.KM_MenuId,m.KM_Id)"><span class="menus">{{m.KHB_MenuName}}</span></a>
+      </li>
+    </ul>
+    <!-- <a href="#" class="btn btn-info btn-lg">
+      <span class="glyphicon glyphicon-log-out"></span> Log out
+    </a> -->
+    <ul class="navbar-nav ml-auto" id="user-dopdown">
+      <li class="nav-item dropdown">
+        <a class="nav-link" id="navbardrop" data-toggle="dropdown" href="javascript:void(0);"><span class="menus"><i class="fa fa-bars"></i> </span></a>
+        <div class="dropdown-menu">
+ +           <a class="dropdown-item" href="#">{{UserName}}, {{userRole}}</a>
+            <!-- <a class="dropdown-item" href="#"></a> -->
+            <a class="dropdown-item" href="javascript:void(0);" (click)="Logout()">Logout</a>
+          </div>
+      </li>
+    </ul>
+  </div>
+</nav>

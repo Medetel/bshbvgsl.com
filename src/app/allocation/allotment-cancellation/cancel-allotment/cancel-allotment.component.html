@@ -1,0 +1,234 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <a class="btn btn-primary float-right" *ngIf="type!='can'" [routerLink]="['/home/allotmentcancellation/allotted-vacant',PD_Id,PD_Project_Name,Phase_Name,Sch_Id]">Back</a>
+    <a class="btn btn-primary float-right" *ngIf="type=='can'" [routerLink]="['/home/allotmentcancellation']">Back</a>
+
+  </div>
+  <form (ngSubmit)="mode=='edit'?onSubmit(canc):onSubmit(canc)" #canc="ngForm" autocomplete="off">
+    <div class="container-fluid cancellation">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" readonly class="custom-field" name="CA_CategoryName" style="background: rgba(0,0,0,.12)"
+              [(ngModel)]="CancelAppData.CA_CategoryName" #CA_CategoryName="ngModel">
+            <label for="">Category</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" readonly class="custom-field" name="APP_No" style="background: rgba(0,0,0,.12)"
+              [(ngModel)]="CancelAppData.APP_No" #APP_No="ngModel">
+            <label for="">App No.</label>
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" readonly class="custom-field" name="APP_PA_Name" style="background: rgba(0,0,0,.12)"
+              [(ngModel)]="CancelAppData.APP_PA_Name" #APP_PA_Name="ngModel">
+            <label for="">Name</label>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" readonly class="custom-field" name="PT_Property_Type" style="background: rgba(0,0,0,.12)"
+              [(ngModel)]="CancelAppData.PT_Property_Type" #PT_Property_Type="ngModel">
+            <label for="">Type</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" readonly class="custom-field" name="ID" style="background: rgba(0,0,0,.12)" [(ngModel)]="CancelAppData.ID"
+              #ID="ngModel">
+            <label for="">ID paid (Rs.)</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="date" readonly class="custom-field" name="Alloted_date" style="background: rgba(0,0,0,.12)"
+              [(ngModel)]="CancelAppData.Alloted_date" #Alloted_date="ngModel">
+            <label for="">Allot Date</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" readonly class="custom-field" name="PAC_Penalty_Amt" style="background: rgba(0,0,0,.12)"
+              [(ngModel)]="CancelAppData.PAC_Penalty_Amt" #PAC_Penalty_Amt="ngModel">
+            <label for="">25% of ID(RS)</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" readonly class="custom-field" name="PAC_Refund_Amt" style="background: rgba(0,0,0,.12)"
+              [(ngModel)]="CancelAppData.PAC_Refund_Amt" #PAC_Refund_Amt="ngModel">
+            <label for="">Amount for Refund</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" readonly class="custom-field" name="Quota" style="background: rgba(0,0,0,.12)"
+              [(ngModel)]="CancelAppData.Quota" #Quota="ngModel">
+            <label for="">P.Quota</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="title themeheading">
+      Installment Details
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td>Sl no.</td>
+            <td>Installment No.</td>
+            <td>Amount</td>
+            <td>Payment Date</td>
+          </tr>
+        </thead>
+        <tbody *ngFor="let inst of Installments;let i=index">
+          <tr>
+            <td>{{i+1}}</td>
+            <td>{{inst.AB_Type}}</td>
+            <td>{{inst.P_Amount}}</td>
+            <td>{{inst.P_Applicant_pay_Date | date:'dd-MM-yyyy'}}</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+    <div class="title themeheading">
+      Cancellation Details
+    </div>
+
+
+
+    <div class="container-fluid">
+      <div class="row" style="margin-bottom: 10px">
+
+        <div class="col-md-4">
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" id="inlineRadio1" name="PAC_Can_Type" [(ngModel)]="CancelAppData.PAC_Can_Type"
+                (change)="getcanceltype(CancelAppData.PAC_Can_Type)" #PAC_Can_Type="ngModel" value="NPC" required> Non
+              Payment cancellation
+            </label>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" id="inlineRadio1" name="PAC_Can_Type" [(ngModel)]="CancelAppData.PAC_Can_Type"
+                (change)="getcanceltype(CancelAppData.PAC_Can_Type)" #PAC_Can_Type="ngModel" value="ORC" required> Own
+              Request Cancellation
+            </label>
+
+          </div>
+          <div class="error-msg" *ngIf="PAC_Can_Type.invalid && (PAC_Can_Type.dirty || PAC_Can_Type.touched || formSubmitted)">
+            <span *ngIf="PAC_Can_Type.errors.required">Cancel type is required</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="date" class="custom-field" name="PAC_Can_Date" [(ngModel)]="CancelAppData.PAC_Can_Date"
+              #PAC_Can_Date="ngModel" required>
+            <label for="">Cancel Date</label>
+            <div class="error-msg" *ngIf="PAC_Can_Date.invalid && (PAC_Can_Date.dirty || PAC_Can_Date.touched || formSubmitted)">
+              <span *ngIf="PAC_Can_Date.errors.required">Cancel Date is required</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" name="PAC_Can_Ty" [(ngModel)]="CancelAppData.PAC_Can_Ty"
+              #PAC_Can_Ty="ngModel" readonly>
+            <label for="">Cancel Type</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6" *ngIf="CancelAppData.PAC_Can_Type=='NPC'">
+          <div class="input-group">
+            <input type="date" class="custom-field" name="PAC_INot_date" [(ngModel)]="CancelAppData.PAC_INot_date"
+              #PAC_INot_date="ngModel" required>
+            <label for="">1st Notice Date</label>
+            <div class="error-msg" *ngIf="PAC_INot_date.invalid && (PAC_INot_date.dirty || PAC_INot_date.touched || formSubmitted)">
+              <span *ngIf="PAC_INot_date.errors.required">1st Notice Date is required</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6" *ngIf="CancelAppData.PAC_Can_Type=='NPC'">
+          <div class="input-group">
+            <input type="date" class="custom-field" name="PAC_IINot_date" [(ngModel)]="CancelAppData.PAC_IINot_date"
+              #PAC_IINot_date="ngModel" required>
+            <label for="">2nd Notice Date</label>
+            <div class="error-msg" *ngIf="PAC_IINot_date.invalid && (PAC_IINot_date.dirty || PAC_IINot_date.touched || formSubmitted)">
+              <span *ngIf="PAC_IINot_date.errors.required">2nd Notice Date is required</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6" *ngIf="CancelAppData.PAC_Can_Type=='NPC'">
+          <div class="input-group">
+            <input type="date" class="custom-field" name="PAC_IIINot_date" [(ngModel)]="CancelAppData.PAC_IIINot_date"
+              #PAC_IIINot_date="ngModel" required>
+            <label for="">3rd Notice Date</label>
+            <div class="error-msg" *ngIf="PAC_IIINot_date.invalid && (PAC_IIINot_date.dirty || PAC_IIINot_date.touched || formSubmitted)">
+              <span *ngIf="PAC_IIINot_date.errors.required">3rd Notice Date is required</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <textarea name="" id="" cols="30" rows="10" class="custom-field" name="PAC_Remarks" [(ngModel)]="CancelAppData.PAC_Remarks"
+              #PAC_Remarks="ngModel"></textarea>
+            <label for="">Remarks</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <input type="file" #Image accept="application/pdf" (change)="PAC_Docment($event.target.files)" id="PAC_Doc"
+            name="PAC_Doc" [(ngModel)]="CancelAppData.PAC_Doc" #PAC_Doc="ngModel">
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="">Send Refund Request to Finance </label>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="Y" name="PAC_SubmittoFinance"
+              [(ngModel)]="CancelAppData.PAC_SubmittoFinance" #PAC_SubmittoFinance="ngModel">
+              <label class="form-check-label" for="inlineRadio1">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="N" name="PAC_SubmittoFinance"
+              [(ngModel)]="CancelAppData.PAC_SubmittoFinance" #PAC_SubmittoFinance="ngModel">
+              <label class="form-check-label" for="inlineRadio2">No</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="btn-wrapper text-center">
+        <button class="btn btn-primary" type="submit">Cancel Allotment</button>
+        <button class="btn btn-primary" type="reset">Cancel</button>
+      </div>
+    </div>
+  </form>
+</div>

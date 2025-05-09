@@ -1,0 +1,123 @@
+<div class="wrapper">
+
+    <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm,itemsPerPage,1)">
+        <div class="title themeheading">{{title}}
+            <div class="float-right">
+                Items per page:
+                <select name="SearchRows" #SearchRows="ngModel" [(ngModel)]="itemsPerPage" class="noofpage"
+                    (change)="itemsPerPageChanged(itemsPerPage, 1)">
+                    <option [ngValue]="5">5</option>
+                    <option [ngValue]="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                </select>
+                <button class="btn btn-primary "
+                    routerLink="/home/payroll/deduction-code-grid/deduction-code">Add</button>
+            </div>
+            <span class="clearfix"></span>
+        </div>
+        <div class="searchbar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label>Search</label>
+                    </div>
+                    <div class="col-md-4">
+                        <select name="SearchCriteria" #SearchCriteria="ngModel" [(ngModel)]="s.SearchCriteria"
+                            class="form-control" required>
+                            <option [ngValue]="undefined" selected>---Select---</option>
+                            <option value="ED_Short_name">Short Name</option>
+                            <option value="ED_DESC">Description</option>
+                        </select>
+                        <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)"
+                            class="error-msg">
+                            <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="SearchText" #SearchText="ngModel" [(ngModel)]="s.SearchText"
+                            class="form-control" placeholder="Search.." required>
+                        <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+                            <div *ngIf="SearchText.errors.required">Search text is required</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-default" type="submit">Search</button>
+                        <button class="btn btn-default" type="reset"
+                            (click)="GetAllAllowanceDeductionCode(itemsPerPage, 1)">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped grid">
+                <thead>
+                    <tr>
+                        <td>Sl No.</td>
+                        <td>Allowance <br> Code</td>
+                        <td>Deduction <br> Description</td>
+                        <td>Allowance <br> Type</td>
+                        <td>Calculation <br> Type</td>
+                        <td> Amount/Formula</td>
+                        <td class="text-center">Edit</td>
+                        <td class="text-center">Delete</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+                        *ngFor="let f of allowedlist | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index">
+
+                        <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+                        <td>{{f.ED_Short_name}}</td>
+                        <td>{{f.ED_DESC}}</td>
+                        <td *ngIf="f.Fixed_Variable_ind == 'F'">fixed</td>
+                        <td *ngIf="f.Fixed_Variable_ind == 'V'">Variable</td>
+                        <td *ngIf="f.ED_Category == 'A'">Flat</td>
+                        <td *ngIf="f.ED_Category == 'F'">Formula ({{f.Formula_Name}})</td>
+
+                        <td *ngIf="f.ED_Category == 'A'">{{f.Flat_amt}}</td>
+                        <td *ngIf="(f.ED_Category == 'F')&&(f.Formula_id==null)">Add Formula</td>
+                        <td *ngIf="(f.ED_Category == 'F')&&(f.Formula_id!=null)">{{f.Formula}}</td>
+
+                        <td class="text-center">
+                            <a href="#"
+                                [routerLink]="['/home/payroll/deduction-code-grid/deduction-code',f.ED_CODE,'edit']">
+                                <i class="fa fa-lg fa-edit themecolor"></i>
+                            </a>
+                        </td>
+                        <td class="text-center" *ngIf="(f.ED_DESC != 'Income Tax')&&(f.ED_DESC != 'Professional Tax')">
+                            <a (click)="delete(f.ED_CODE)">
+                                <i class="fa fa-lg fa-trash themecolor"></i>
+                            </a>
+                        </td>
+
+                        <td class="text-center" *ngIf="(f.ED_DESC == 'Income Tax')||(f.ED_DESC == 'Professional Tax')">
+                            --
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-11">
+                        <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)"
+                            maxSize="9" directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+                            screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                            screenReaderCurrentLabel="You're on page">
+                        </pagination-controls>
+                    </div>
+                    <div class="col-md-1">
+                        Total:
+                        <span>{{totalItems}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

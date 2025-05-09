@@ -1,0 +1,138 @@
+<div class="wrapper">
+    <form (ngSubmit)="mode=='Edit'?UpdateLeave(Leave):SaveLeave(Leave)" #Leave="ngForm" name="Leave">
+  <div class="themeheading title">
+    Add Leave Encashment
+    <button class="btn btn-primary float-right" [routerLink]="['/home/emp-claims/leave-encashment']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4">
+        <label>Encashment No :</label>  <span> {{h.DOC_CODE}} </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Date :</label>  <span> {{h.Doc_Year | date:'dd/MM/yyyy'}} </span>
+      </div>
+      <div class="col-md-4">
+          <span for="" *ngIf="h.DOC_STATUS=='G'">Status : Generated</span>  
+      </div>
+    </div>
+    <div class="title rowmarginfix themeheading">
+        Employee Details
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="input-group">
+                <label for=""> Division code </label>
+                <select class="custom-field" [(ngModel)]="h.DivisionId" #DivisionId="ngModel" name="DivisionId"
+      disabled  (change)="GetEmployee(h.DivisionId)">
+      <option [value]="undefined" selected>---Select---</option>
+      <option [value]="d.DI_Id" *ngFor="let d of Districtlist;">
+        {{d.DI_District}}
+      </option>
+    </select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group">
+                <label for="">Emp Code </label>
+                <select class="custom-field" [(ngModel)]="h.EmpID" #EmpID="ngModel" name="EmpID"[disabled]="mode=='View'"
+      (change)="GetEmployeeForTheId(h.EmpID)" >
+      <option [value]="undefined" selected>---Select---</option>
+      <option [value]="ee.EMP_EMPLOYEE_ID" *ngFor="let ee of Emplist;">
+        {{ee.EMP_EMPLOYEE_CODE}} &nbsp; {{ee.EMP_FIRST_NAME}}
+      </option>
+    </select>
+            </div>
+        </div>
+        <div class="col-md-4">
+                <label for="">Name : </label> &nbsp;
+                <span> {{EmployeeDetails.EMP_FIRST_NAME}} </span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 ">
+                <label for="">Division : </label> &nbsp;
+                <span> {{EmployeeDetails.DI_District}} </span>
+              </div>
+              <div class="col-md-4">
+                <label for="">Department : </label> &nbsp;
+                <span> {{EmployeeDetails.Department_Name}} </span>
+              </div>
+              <div class="col-md-4">
+                <label for="">Designation : </label> &nbsp;
+                <span> {{EmployeeDetails.desg_name}} </span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <label for="">Employee Category : </label> &nbsp;
+                <span> {{EmployeeDetails.EMP_CATEGORY}} </span>
+              </div>
+              <div class="col-md-4">
+                <label for="">Employee Group : </label> &nbsp;
+                <span> {{EmployeeDetails.EMP_GROUP}} </span>
+              </div>
+              <div class="col-md-4">
+                <label for="">Employee Type : </label> &nbsp;
+                <span> {{EmployeeDetails.EMP_TYPE}} </span>
+              </div>
+            </div>
+            <br>
+
+    <div class="title rowmarginfix themeheading">
+      Encashment Details
+    </div>
+
+    <br>
+    <div class="float-right"><button class="btn btn-primary">Add</button></div>
+    <br>
+
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td>Sl No.</td>
+            <td>Leave Type</td>
+            <td>Encashment Leave Available</td>
+            <td>No. of leave to encash</td>
+            <td>Encashment Amount</td>
+            <td>Encashment Date</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1.</td>
+            <td>
+                <select class="custom-field" [(ngModel)]="h.LEAVE_TYPEs" #LEAVE_TYPEs="ngModel" name="LEAVE_TYPEs"
+              [disabled]="mode=='View'" >
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="l.leave_id" *ngFor="let l of Leaveslist;">
+                {{l.leave_name}}
+              </option>
+            </select>
+            </td>
+            <td> <input type="text" name="LEAVES_AVL" maxlength="50" [(ngModel)]="h.LEAVES_AVL"
+              #LEAVES_AVL="ngModel" class="form-control" [disabled]="mode=='View'"></td>
+
+            <td> <input type="text" name="No_LEAVES" maxlength="50" [(ngModel)]="h.No_LEAVES"
+              #No_LEAVES="ngModel" class="form-control" [disabled]="mode=='View'"></td>
+
+            <td> <input type="text" name="ENCASH_AMOUNT" maxlength="50" [(ngModel)]="h.ENCASH_AMOUNT"
+              #ENCASH_AMOUNT="ngModel" class="form-control" [disabled]="mode=='View'"></td>
+
+            <td> <input type="date" name="LEAVE_TRANS_DATE" [(ngModel)]="h.LEAVE_TRANS_DATE"
+              #LEAVE_TRANS_DATE="ngModel" class="form-control" [disabled]="mode=='View'"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br>
+    <div class="d-flex justify-content-center">
+        <button [disabled]="mode=='View'" class="btn btn-primary" type="submit">{{mode=='edit'?'Update':'Save'}}</button> &nbsp;
+        <button [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button>&nbsp;
+      </div>
+    <br>
+  </div>
+</form>
+</div>

@@ -1,0 +1,271 @@
+<div class="wrapper">
+    <div class="title themeheading" style="margin: 0;">
+        {{title}}
+        <a class="btn btn-primary float-right" routerLink="/home/user">Back</a>
+        <span class="clearfix"></span>
+    </div>
+    <form (ngSubmit)="mode=='edit'?update(userForm):onSubmit(userForm)" #userForm="ngForm">
+        <div class="container-fluid">
+            
+            <!-- <div class="form-group">
+                <label for="options">Options:</label>
+                <div *ngFor="let option of options">
+                    <label>
+                        <input type="checkbox" name="options" value="{{option.value}}" [(ngModel)]="option.checked" />
+                        {{option.name}}
+                    </label>
+                </div>
+            </div> -->
+
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <div class="input-group form-group">
+                        <select name="OfficeId" class="form-control custom-field " [(ngModel)]="user.OfficeId"
+                            #OfficeId="ngModel" style="width:100%;height: 35px;border-radius: 4px;" [disabled]="mode=='view' || mode=='edit'"
+                            [ngClass]="{'view-font-color':mode=='view'}" required (change)="GetOfficeLevel(user.OfficeId)">
+                            <option [ngValue]="undefined" selected>--Select--</option>
+                            <option [value]="o.OfficeId" *ngFor="let o of officeList">{{o.OfficeName}}</option>
+                        </select>
+                        <label for="office" class="custom-label ">Office name
+                            <div *ngIf="OfficeId.invalid && (OfficeId.dirty || OfficeId.touched || formSubmitted)"
+                                class="error-msg float-right">
+                                <div *ngIf="OfficeId.errors.required">OfficeName is required</div>
+                            </div>
+                            <span class="clearfix"></span>
+                        </label>
+                    </div>
+
+                    <!-- (change)="GetRolesforSelectedOffice()" -->
+
+
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <div class="input-group form-group">
+                        <select name="RoleId" class="custom-field form-control" [(ngModel)]="user.RoleId" #RoleId="ngModel"
+                            style="width:100%;height: 35px;border-radius: 4px;" [disabled]="mode=='view' || mode=='edit'"
+                            [ngClass]="{'view-font-color':mode=='view'}" required>
+                            <option [ngValue]="undefined" selected>--Select--</option>
+                            <option [value]="r.RoleId" *ngFor="let r of roleList">{{r.RoleName}}</option>
+                        </select>
+                        <label for="office" class="custom-label">Role
+                            <div *ngIf="RoleId.invalid && (RoleId.dirty || RoleId.touched || formSubmitted)" class="error-msg float-right">
+                                <div *ngIf="RoleId.errors.required">RoleName is required</div>
+                            </div>
+                            <span class="clearfix"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <div class="input-group form-group">
+                        <input type="text" class="custom-field form-control" name="UserName" [(ngModel)]="user.UserName"
+                            #UserName="ngModel" [readonly]="mode=='view' || mode=='edit'" [ngClass]="{'view-font-color':mode=='view'}"
+                            required>
+                        <label for="">Username
+                            <div class="error-msg float-right" *ngIf="UserName.invalid && (UserName.dirty || UserName.touched || formSubmitted)">
+                                <div *ngIf="UserName.errors.required">Username is required</div>
+                            </div>
+                            <span class="clearfix"></span>
+                        </label>
+                    </div>
+                    <!-- <mat-form-field style="width:100%;">
+                        <input matInput placeholder="Username" class="md-custom" name="UserName" [(ngModel)]="user.UserName" #UserName="ngModel"
+                            [readonly]="mode=='view' || mode=='edit'" [ngClass]="{'view-font-color':mode=='view'}" required>
+                    </mat-form-field> -->
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <div class="input-group form-group">
+                        <input type="password" class="custom-field form-control" name="Password" [(ngModel)]="user.Password"
+                            #Password="ngModel"  pattern="(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-zA-Z]).*"  minlength="8" [disabled]="mode=='view'" [ngClass]="{'view-font-color':mode=='view'}"
+                            required>
+                        <label for="">Password
+                            <div *ngIf="Password.invalid && (Password.dirty || Password.touched || formSubmitted)"
+                                class="error-msg float-right">
+                                <div *ngIf="Password.errors.required">Password is required</div>
+                                <div *ngIf="Password.errors.minlength">Password must be at least 8 characters long</div>
+                                <div *ngIf="Password.errors?.pattern">Password must include at least one letter, one number, and one special character</div>
+                            </div>
+                            <span class="clearfix"></span>
+                        </label>
+                    </div>
+                    <!-- <mat-form-field style="width:100%;">
+                        <input matInput placeholder="Password" type="password" class="md-custom" name="Password" [(ngModel)]="user.Password" #Password="ngModel" minlength="6" [disabled]="mode=='view'" [ngClass]="{'view-font-color':mode=='view'}" required>
+                    </mat-form-field>
+                    <div *ngIf="Password.invalid && (Password.dirty || Password.touched || formSubmitted)" class="error-msg">
+                        <div *ngIf="Password.errors.required">Password is required</div>
+                        <div *ngIf="Password.errors.minlength">Password must be at least 6 characters long</div>
+                    </div> -->
+                </div>
+            </div>
+
+
+         
+
+
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <div class="input-group form-group">
+                        <input type="password" class="custom-field form-control" name="confirmPassword" [(ngModel)]="user.confirmPassword"
+                            #confirmPassword="ngModel" [disabled]="mode=='view'" required>
+                        <label for="">
+                            Confirm Password
+                            <div *ngIf="confirmPassword.dirty && confirmPassword.invalid" class="error-msg float-right">
+                                <div *ngIf="confirmPassword.errors.required">Confirm Password required</div>
+                            </div>
+                            <div *ngIf="confirmPassword.valid" class="error-msg float-right">
+                                <div *ngIf="Password.value!=confirmPassword.value">Passwords do not match</div>
+                            </div>
+                            <span class="clearfix"></span>
+                        </label>
+                    </div>
+                    <!-- <mat-form-field style="width:100%;">
+                        <input matInput placeholder="Confirm Password" type="password" class="md-custom" name="confirmPassword" [(ngModel)]="user.confirmPassword" #confirmPassword="ngModel" [disabled]="mode=='view'" required>
+                    </mat-form-field>
+                      <div *ngIf="confirmPassword.dirty && confirmPassword.invalid" class="error-msg">
+                      <div *ngIf="confirmPassword.errors.required">Confirm Password required</div>
+                    </div>
+                    <div *ngIf="confirmPassword.valid" class="error-msg">
+                      <div *ngIf="Password.value!=confirmPassword.value">Passwords do not match</div>
+                    </div> -->
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-md-4">
+                    <div class="input-group form-group">
+                        <input type="text" class="custom-field form-control" name="PhoneNumber" [(ngModel)]="user.PhoneNumber"
+                            #PhoneNumber="ngModel"  minlength="10" maxlength="10" pattern="^[0-9]*$" [disabled]="mode=='view'"  [ngClass]="{'view-font-color':mode=='view'}"
+                            required>
+                        <label for="">Mobile Number
+                            <div *ngIf="PhoneNumber.invalid && (PhoneNumber.dirty || PhoneNumber.touched || formSubmitted)"
+                                class="error-msg float-right">
+                                <div *ngIf="PhoneNumber.errors.required">Mobile Number is required</div>
+                                <!-- <div *ngIf="PhoneNumber.errors.minlength">Mobile Number must be 10 characters long</div> -->
+                                <div *ngIf="PhoneNumber.errors.pattern">Mobile Number must be only numericals</div>
+                            </div>
+                            <span class="clearfix"></span>
+                        </label>
+                    </div>
+                    <!-- <mat-form-field style="width:100%;">
+                        <input matInput placeholder="Password" type="password" class="md-custom" name="Password" [(ngModel)]="user.Password" #Password="ngModel" minlength="6" [disabled]="mode=='view'" [ngClass]="{'view-font-color':mode=='view'}" required>
+                    </mat-form-field>
+                    <div *ngIf="Password.invalid && (Password.dirty || Password.touched || formSubmitted)" class="error-msg">
+                        <div *ngIf="Password.errors.required">Password is required</div>
+                        <div *ngIf="Password.errors.minlength">Password must be at least 6 characters long</div>
+                    </div> -->
+                </div>
+            </div>
+
+
+
+
+            <div class="row justify-content-center" style="padding:20px 0px !important;" *ngIf="!(mode=='view')">
+                <div class="col-md-4 text-center">
+                    <button class="btn btn-primary" type="button" (click)="AddProjectsforuser()" *ngIf="officeLevel==1">
+                        Add Projects
+                    </button>
+                    <button class="btn btn-primary btn-custom" type="submit">
+                        {{mode=='edit'?'Update':'Save'}}
+                    </button>
+                    <button class="btn btn-primary btn-custom" type="reset" *ngIf="!(mode=='edit')">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- ----------------------------------- -->
+<div id="addProperty" class="modal fade" role="dialog" style="overflow: hidden;height:600px;">
+
+    <div class="modal-dialog modal-lg">
+
+
+        <div class="modal-content">
+            <!-- <div class="modal-header">
+                    <h4 class="modal-title">Select Properties</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                </div> -->
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div>
+                    <div class="container-fluid">
+                        <div class="row" style="background: none;">
+                            <div class="col-md-2">
+                                <label for="" style="margin-top:5px;">Filter by</label>
+                            </div>
+                            <div class="col-md-3">
+                                <select style="width:100%;padding:6px;" class="custom-field" name="SearchCriteria"
+                                    #SearchCriteria="ngModel" [(ngModel)]="search.SearchCriteria">
+                                    <option [ngValue]="undefined" selected>--Select--</option>
+                                    <option value="district">District.</option>
+                                    <option value="project-name">Project Name</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" style="width:100%;padding:4px;" class="custom-field" name="SearchText"
+                                    #SearchText="ngModel" [(ngModel)]="search.SearchText" placeholder="Searchtext">
+
+                            </div>
+                            <div class="col-md-4">
+                                <button class="btn btn-primary" (click)="SearchUserProperties(search.SearchCriteria,search.SearchText)">Search</button>
+                                <button class="btn btn-primary" (click)="GetAllProjectsforUser()" type="reset">Clear</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <!-- <div class="row">
+                        <div class="col-md-2">Total selected</div>
+                        <div class="col-md-2">{{totalprop.TotalSelected}}</div>
+                        <div class="col-md-2">Total Available</div>
+                        <div class="col-md-2">{{totalprop.TotAvailable}}</div>
+                    </div> -->
+                <div class="table-responsive" style="overflow: scroll;height: 400px;">
+                    <table class="table table-striped" style="width:100%;padding: 0.4rem;font-size: 13px;">
+                        <thead>
+                            <tr>
+                                <td rowspan="2">Sl.No.</td>
+                                <td rowspan="2">Disrict</td>
+                                <td rowspan="2">Project Name</td>
+                                <td rowspan="2">Phase</td>
+                                <td rowspan="2">Select</td>
+
+                            </tr>
+
+                        </thead>
+                        <tbody *ngIf="selectprojectlist == '' || selectprojectlist == 'undefined' || selectprojectlist == 'null'">
+                            <td colspan="11" class="text-center">No Data Found</td>
+                        </tbody>
+                        <tbody *ngFor="let sp of selectprojectlist;let i=index">
+                            <tr>
+                                <td>{{i+1}}</td>
+                                <!-- <td (click)="changeCheckbox(sp.DI_District,1)" class="led-yellow">{{sp.DI_District}}</td> -->
+                                <td (click)="changeCheckbox(sp.DI_District,1)">{{sp.DI_District}}</td>
+                                <td>{{sp.PD_Project_Name}}</td>
+                                <td>{{sp.Phase_Name}}</td>
+                                <td>
+                                    <input type="checkbox" [value]="sp.PU_Inactive" name="PU_Inactive" [checked]="sp.PU_Inactive===true"
+                                        (change)="changeCheckbox(sp.PD_Id)">
+                                    <!-- [disabled]="sp.disab=='dis'" -->
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <br>
+                <div class="text-center">
+                    <button class="btn btn-primary" data-dismiss="modal">Ok</button>
+                    <!-- <button class="btn btn-primary" (click)="SavePropertiesforAuction(selectpropertieslist,auctionnot.AN_Id)" data-dismiss="modal">Save</button> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

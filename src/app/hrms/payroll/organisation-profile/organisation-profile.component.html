@@ -1,0 +1,12 @@
+
+<ul class="billmenu-new header">
+  <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" >
+    <a [routerLink]="['/home/payroll/payroll-compliance/']">Income Tax</a>
+  </li>
+  <li routerLinkActive="active"><a [routerLink]="['professional-tax']">Professional Tax</a> </li>
+  <!-- <li routerLinkActive="active"><a [routerLink]="['control-data']">Control Parameters</a></li> -->
+  <li routerLinkActive="active"><a [routerLink]="['pay-monthly']">Pay Months Details</a></li>
+</ul>
+<div class="overflow">
+  <router-outlet></router-outlet>
+</div>

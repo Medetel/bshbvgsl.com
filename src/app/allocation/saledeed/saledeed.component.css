@@ -1,0 +1,19 @@
+.row{
+    padding: 1em 0px 0px 0px !important;
+    margin-bottom: -3px;
+}
+
+
+.row:nth-child(odd){
+    background: #ececec;
+}
+
+.row:nth-child(even){
+    background: white;
+}
+
+.field-title{
+    width:200px;
+    display:inline-block;
+    color:#807f7f;
+}

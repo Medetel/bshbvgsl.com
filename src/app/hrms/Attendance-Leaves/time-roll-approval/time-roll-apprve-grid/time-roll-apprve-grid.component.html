@@ -1,0 +1,140 @@
+<div class="wrapper">
+  <form >
+    <div class="title themeheading">Time Roll Approval
+      <div class="float-right">
+        Items per page:
+        <select name="SearchRows" class="noofpage">
+          <option [ngValue]="5">5</option>
+          <option [ngValue]="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="40">40</option>
+          <option value="50">50</option>
+        </select>        
+      </div>
+      <span class="clearfix"></span>
+    </div>
+    <div class="searchbar">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-1">
+            <label>Search</label>
+          </div>
+          <div class="col-md-4">
+            <select name="SearchCriteria" class="form-control" required>
+              <option [ngValue]="undefined" selected>---Select---</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <input type="text" name="SearchText" class="form-control" placeholder="Search.." required>
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-default" type="submit">Search</button>
+            <button class="btn btn-default" type="reset">Clear</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <td rowspan="2">Sl No.</td>
+            <td rowspan="2">Division</td>
+            <td rowspan="2">Year & Month</td>            
+            <td colspan="2" class="text-center">Approval/Rejection</td>
+          </tr>
+          <tr>
+            <td>Approve</td>
+            <td>Reject</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let t of timerollList;let i=index">
+            <td>{{i+1}}</td>           
+            <td>{{t.DI_District}}</td> 
+            <td>{{t.year_month}}</td>
+            <td>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" (change)="handleChange2(t.TIMEROLL_ID)" data-toggle="modal" data-target=".bd-example-modal-xl1"
+                  name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                <label class="form-check-label" for="inlineRadio1">Approval</label>
+              </div>
+            </td>
+            <td>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" data-toggle="modal" (change)="handleChange1(t.TIMEROLL_ID)" data-target=".bd-example-modal-xl2" type="radio"
+                  name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                <label class="form-check-label" for="inlineRadio2">Reject</label>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </form>
+</div>
+
+<div class="modal fade bd-example-modal-xl1" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Time Roll Approval</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for=""> Remarks </label>
+                <textarea cols="30" rows="10" class="custom-field" [(ngModel)]="a.remarks" #remarks="ngModel"
+                  name="remarks" [disabled]="mode=='view'"></textarea>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="text-center">
+            <button class="btn btn-primary" (click)="save(a.remarks)" [disabled]="saveDisable">Save</button>
+            <button class="btn btn-primary" data-dismiss="modal" aria-label="Close">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade bd-example-modal-xl2" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Time Roll Rejection</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label for=""> Remarks </label>
+                <textarea cols="30" rows="10" class="custom-field" [(ngModel)]="a.remarks" #remarks="ngModel"
+                  name="remarks" [disabled]="mode=='view'"></textarea>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="text-center">
+            <button class="btn btn-primary"  (click)="save(a.remarks)" type="button" [disabled]="saveDisable">Save</button>
+            <button class="btn btn-primary" data-dismiss="modal" aria-label="Close">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

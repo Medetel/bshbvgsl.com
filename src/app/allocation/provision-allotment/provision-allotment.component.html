@@ -1,0 +1,265 @@
+<div class="wrapper">
+
+    <div class="title themeheading">{{title}}</div>
+
+
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="input-group">
+                    <select [(ngModel)]="u.S_NotificationID" required #S_NotificationID="ngModel" name="S_NotificationID" class="custom-field"
+                    (change)="GetNotificationProjects(u.S_NotificationID,null)">
+                        <option [ngValue]="undefined" selected>---Select---</option>
+                        <option [ngValue]="n.DSWOId_NO_Id" *ngFor="let n of Notifications;">
+                            {{n.DSWOId_NO_Number}}-{{n.DSWOId_NO_Id}}-{{n.PD_Project_Name}}-{{n.PD_Project_Code}}</option>
+                    </select>
+                    <label>Notification No.</label>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group">
+                    <select [(ngModel)]="u.S_ProjectID" required #S_ProjectID="ngModel" name="S_ProjectID" class="custom-field" 
+                    (change)="GetNotificationProjects(null,u.S_ProjectID)">
+                        <option [ngValue]="undefined" selected>---Select---</option>
+                        <option [ngValue]="p.PD_Id" *ngFor="let p of Projects;">
+                            {{p.PD_Project_Code}}-{{p.PD_Project_Name}}</option>
+                    </select>
+                    <label>Project</label>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group">
+                    <input class="custom-field" type="text" [(ngModel)]="PND.DSWOId_NO_Date" style="background: rgba(0,0,0,.12)" #DSWOId_NO_Date="ngModel" name="DSWOId_NO_Date" readonly>
+
+                    <label>Notification Date</label>
+                </div>
+            </div>
+            <div class="col-md-3">
+                    <div class="input-group">
+                        <input class="custom-field" type="text" [(ngModel)]="PND.DSWOId_NO_LastDate" style="background: rgba(0,0,0,.12)" #DSWOId_NO_LastDate="ngModel" name="DSWOId_NO_LastDate" readonly>
+                        <label>Application Last Date</label>
+                    </div>
+                </div>
+        </div>
+        <div class="row">            
+            <div class="col-md-12 text-center">
+                <button class="btn btn-primary"   (click)="GETApplicationsList(u.S_NotificationID,u.S_ProjectID,itemsPerPage,1)">Go
+                    <!-- [disabled]="u.S_NotificationID==null || u.S_NotificationID==undefined || u.S_NotificationID==''|| u.S_ProjectID==null || u.S_ProjectID==undefined || u.S_ProjectID==''" -->
+                </button>
+            </div>
+        </div>
+
+
+        <div class="searchbar" style="padding: 10px 0px 16px;margin-top:20px;">
+            <div class="container">
+                <div class="row justify-content-center" style="padding:0px !important;">
+                    <div class="col-md-1">
+                        <label>Search</label>
+                    </div>                    
+                    <div class="col-md-4">
+                        <input type="text" name="SearchText" #SearchText="ngModel" [(ngModel)]="s.SearchText" class="form-control" placeholder="Application No."
+                            required autocomplete="off">
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-default" type="button" (click)="SearchApplicants(s.SearchText,itemsPerPage,1)">Search</button>
+                        <button class="btn btn-default" type="reset" (click)="GETApplicationsList(u.S_NotificationID,u.S_ProjectID,itemsPerPage,1)">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="table-responsive">
+            <table class="grid table table-striped">
+                <thead>
+                    <tr>
+                        <td>Sl No.</td>
+                        <td>Application No.</td>
+                        <td>Applicant Name</td>
+                        <td>Applied Date</td>
+                        <td>Payment</td>
+                        <td>Status</td>
+                        <!-- <td>Remarks</td> -->
+                        <!-- <td>Scruntinized</td> -->
+                        <td>Edit</td>
+                    </tr>
+                </thead>
+                <tbody *ngIf="ApplicationList == '' || ApplicationList == 'undefined' || ApplicationList == 'null'">
+                    <td colspan="11" class="text-center">No Data Found</td>
+                </tbody>
+                <tbody>
+                    <tr *ngFor="let application of ApplicationList| paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index">
+                        <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+                        <td>{{application.APP_No}}</td>
+                        <td>{{application.APP_PA_Name}}</td>
+                        <td>{{application.APP_AppliedDate | date:'dd-MM-yyyy'}}</td>
+                        <td>{{application.Payment}}</td>
+                        <td>{{application.APP_IsEligible=='Y'?'Eligible':'InEligible'}}</td>
+
+                        <td>
+                            <a href="#" data-target="#updateobjection" data-toggle="modal" (click)="GetApplicationFormDetails(application.APP_No)">
+                                <i class="fa fa-lg fa-edit themecolor"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-11">
+                        <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)" maxSize="9" directionLinks="true"
+                            autoHide="false" previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination"
+                            screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                        </pagination-controls>
+                    </div>
+                    <div class="col-md-1">
+                        Total:
+                        <span>{{totalItems}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Update Objection PopUp -->
+
+<div class="modal fade" role="dialog" id="updateobjection">
+    <div class="modal-dialog modal-lg">
+        <form #Objection="ngForm" (ngSubmit)="SaveObjection(AFD.APP_Id,Objection)" name="form1" novalidate autocomplete="off">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Update Objection</h4>
+                    <button type="button" (click)="closeModal()" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+
+                        <div class="row" style="background: rgb(237, 242, 251);">
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <input type="text" readonly placeholder=" " style="background: #e1e4dc;" [(ngModel)]="u.APP_No" #APP_No="ngModel" name="APP_No" class="custom-field">
+                                    <!-- <label>Registration No.</label> -->
+                                    <label>Application No.</label>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-2">
+                                <button class="btn btn-primary" [disabled]="u.APP_No==null || u.APP_No==undefined || u.APP_No==''" type="button" (click)="GetApplicationFormDetails(u.APP_No)">Go</button>
+                            </div> -->
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>
+                                    <span class="field-title">Applicant Name:</span>{{AFD.APP_PA_Name}} </label>
+                            </div>
+                            <div class="col-md-4">
+                                <label>
+                                    <span class="field-title">Category:</span>{{AFD.APP_Category}} </label>
+                            </div>
+                            <div class="col-md-4">
+                                <label>
+                                    <span class="field-title">Reservation:</span>{{AFD.APP_Reservation}} </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>
+                                    <span class="field-title">Property type:</span>{{AFD.APP_PropertyType}} </label>
+                            </div>
+                            <div class="col-md-4">
+                                <label>
+                                    <span class="field-title">Status:</span> {{AFD.APP_IsEligible}}</label>
+                            </div>
+                            <div class="col-md-4">
+                                <label>
+                                    <span class="field-title">Scrutiny Remark:</span> {{AFD.APP_Note}}</label>
+                            </div>
+                        </div>
+
+
+                        <div class="row" style="margin-top:10px;">
+                            <div class="col-md-2">
+                                <label>Eligible</label>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" id="inlineRadio1" value="Y" name="UO_Verified" [(ngModel)]="u.UO_Verified" #UO_Verified="ngModel"> Yes
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="radio" id="inlineRadio1" value="N" name="UO_Verified" [(ngModel)]="u.UO_Verified" #UO_Verified="ngModel"> No
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <textarea class="custom-field" placeholder=" " [(ngModel)]="u.UO_Remarks" #UO_Remarks="ngModel" name="UO_Remarks" required></textarea>
+                                    <label>Scrutiny status after objection:</label>
+                                    <div class="error-msg" *ngIf="UO_Remarks.invalid && (UO_Remarks.dirty || UO_Remarks.touched || formSubmitted)">
+                                        <span *ngIf="UO_Remarks.errors.required">Scrutiny status after objection is required</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- <div class="row" style="margin-top:10px;"> -->
+
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <td>Others1(image)</td>
+                                        <td> Others2(pdf)</td>
+                                        <td>Others3(pdf)</td>
+                                        <td>Others4(pdf)</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <input type="file" #Image accept="image/*" (change)="FileUpload1($event.target.files)" id="UO_Upload1">
+                                        </td>
+
+                                        <td>
+                                            <input type="file" #Image accept="application/pdf" (change)="FileUpload2($event.target.files)" id="UO_Upload2">
+                                        </td>
+
+                                        <td>
+                                            <input type="file" #Image accept="application/pdf" (change)="FileUpload3($event.target.files)" id="UO_Upload3">
+                                        </td>
+
+                                        <td>
+                                            <input type="file" #Image accept="application/pdf" (change)="FileUpload4($event.target.files)" id="UO_Upload4">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <br>
+
+                        <!-- <div class="btn-wrapper text-center">
+                            <button class="btn btn-primary" type="submit">Save</button>
+                            <button class="btn btn-primary" type="reset">Cancel</button>
+                        </div> -->
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" type="submit" *ngIf="showMod==true">Save</button>
+                    <!-- data-toggle="modal" data-target="#updateobjection" -->
+                    <!-- <button class="btn btn-danger" type="button" (click)="updated(Land)">{{mode=='edit'?'Update':'Save'}}</button> -->
+                    <button class="btn btn-danger" data-dismiss="modal" type="button">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

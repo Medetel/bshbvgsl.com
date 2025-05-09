@@ -1,0 +1,323 @@
+<div class="wrapper">
+
+
+
+
+
+
+
+
+
+  <div class="container-fluid">
+    <hr>
+    <div class="row" style="background-color: #6b646a">
+      <div class="col-md-6">
+        <label>
+          <span>Selected Place</span> : {{PD_Project_Name}}</label>
+      </div>
+      <div class="col-md-6">
+        <label>
+          <span>Selected Phase</span> :{{Phase_Name}}</label>
+      </div>
+    </div>
+
+    <div class="title themeheading">
+      {{title}}
+      <a class="btn btn-primary float-right" [routerLink]="['/home/allotmentcancellation/project-names',Sch_Id]">Back</a>
+    </div>
+    <!-- <div class="searchbar">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-1">
+            <label>Search</label>
+          </div>
+          <div class="col-md-4">
+            <select name="SearchCriteria" class="form-control" required>
+              <option [ngValue]="undefined" selected>---Select---</option>
+              <option value="office-code">Auction</option>
+              <option value="office-name">Allotment</option>
+
+            </select>
+            <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)" class="error-msg">
+                      <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+                  </div>
+          </div>
+          <div class="col-md-4">
+            <input type="text" name="SearchText" class="form-control" placeholder="Search.." required>
+            <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+                      <div *ngIf="SearchText.errors.required">Search text is required</div>
+                  </div>
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-default" type="submit">Search</button>
+            <button class="btn btn-default" type="reset" (click)="GetAllOffices(itemsPerPage, 1)">Clear</button>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <div class="table-responsive">
+      <table class="table table-striped grid">
+        <thead>
+          <tr>
+            <td>Sl No.</td>
+            <td>Property No</td>
+            <td>Category</td>
+            <td>Property Type</td>
+            <td>Quota</td>
+            <td>Area(in Sqmt)</td>
+            <td>Final Cost(in Rs)</td>
+
+
+          </tr>
+
+        </thead>
+        <tbody *ngIf="VacantList == '' || VacantList == 'undefined' || VacantList == 'null'">
+          <td colspan="15" class="text-center">No Data Found</td>
+        </tbody>
+        <tbody>
+          <tr *ngFor="let van of VacantList | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index">
+            <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+            <td>{{van.PR_Property_No}}</td>
+            <td>{{van.CA_CategoryName}}</td>
+            <td>{{van.PT_Property_Type}}</td>
+            <td>{{van.IC_Name!='Corner'?"Public":""}}</td>
+            <td>{{van.PR_Plot_Area}}</td>
+            <td></td>
+          </tr>
+
+        </tbody>
+      </table>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-11">
+            <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)" maxSize="9"
+              directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+              screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+            </pagination-controls>
+          </div>
+          <div class="col-md-1">
+            Total:
+            <span>{{totalItems}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="title themeheading">
+      {{title2}}
+    </div>
+
+    <!-- <div class="container mt-3">
+
+      <div class="d-inline-flex p-3 bg-primary text-white" style="width:100%;">
+        <div class="p-2" style="background:#e998dbf2;">Total Realization(Rs) :10000000</div>
+        <div class="p-2" style="background:#7597acf2;">Total Received(Rs) :2000000</div>
+        <div class="p-2" style="background:#bba488;">Amount to be Realized(Rs) :30000000</div>
+        <div class="p-2 bg-success">30</div>
+        <div class="p-2 bg-danger">20</div>
+        <div class="p-2 bg-warning">10</div>
+      </div>
+    </div> -->
+
+    <!-- <div class="searchbar">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-1">
+            <label>Search</label>
+          </div>
+          <div class="col-md-4">
+            <select name="SearchCriteria" class="form-control" required>
+              <option [ngValue]="undefined" selected>---Select---</option>
+              <option value="office-code">Auction</option>
+              <option value="office-name">Allotment</option>
+
+            </select>
+            <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)" class="error-msg">
+                        <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+                    </div>
+          </div>
+          <div class="col-md-4">
+            <input type="text" name="SearchText" class="form-control" placeholder="Search.." required>
+            <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+                        <div *ngIf="SearchText.errors.required">Search text is required</div>
+                    </div>
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-default" type="submit">Search</button>
+            <button class="btn btn-default" type="reset" (click)="GetAllOffices(itemsPerPage, 1)">Clear</button>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <div class="wrapper">
+      <form #searchForm1="ngForm" (ngSubmit)="onSearch(searchForm1,itemsPerPage,1)">
+        <div class="searchbar">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-1">
+                <label for="">Search</label>
+              </div>
+              <div class="col-md-3">
+                <select name="SearchCriteria1" #SearchCriteria1="ngModel" [(ngModel)]="ss.SearchCriteria1" class="form-control"
+                  required>
+                  <option [ngValue]="undefined" selected>---Select---</option>
+                  <option value="appno">Application No.</option>
+                  <option value="appname">Application Name</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <input type="text" name="SearchText1" #SearchText1="ngModel" [(ngModel)]="ss.SearchText1" class="form-control"
+                  placeholder="Search.." required>
+              </div>
+              <div class="col-md-3">
+                <button class="btn btn-default" type="submit">Search</button>
+                <button class="btn btn-default" type="reset" (click)="GetCancelAllottedList(itemsPerPage, 1)">Clear</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped grid">
+        <thead>
+          <!-- <tr id="real">
+            <td colspan="4" style="background: rosybrown;margin-bottom: 20px">Total Realization(Rs) : </td>
+            <td colspan="4" style="background: rosybrown;margin-bottom: 20px">Total Received(Rs) :</td>
+            <td colspan="4" style="background: rosybrown;margin-bottom: 20px">Amount to be Realized(Rs) :</td>
+            <td colspan="2" style="background: green;margin-bottom: 20px">20</td>
+            <td colspan="2" style="background: red;margin-bottom: 20px">10</td>
+            <td colspan="2" style="background:violet;margin-bottom: 20px">5</td>
+            
+          </tr> -->
+          <tr>
+            <td rowspan="2">Sl No.</td>
+            <td rowspan="2">Type</td>
+            <td rowspan="2">Category</td>
+            <td rowspan="2">Property No</td>
+            <!-- <td rowspan="2">Block No</td> -->
+            <td rowspan="2">Final Cost(in Rs)</td>
+            <td rowspan="2">Application No.</td>
+            <td rowspan="2">Allotee Name</td>
+            <td rowspan="2">Apply date</td>
+            <td colspan="2" class="text-center">Initial Deposit</td>
+
+            <td rowspan="2">Allotted date</td>
+            <td rowspan="2">Quota</td>
+            <td rowspan="2">Installment</td>
+            <!-- <td colspan="3" class="text-center">Installment-I</td>
+            <td colspan="3" class="text-center">Installment-II</td>
+            <td colspan="3" class="text-center">Installment-III</td>
+            <td colspan="3" class="text-center">Installment-IV</td> -->
+            <td rowspan="2">Leasedeed date</td>
+            <td rowspan="2">Amt Paid(in Rs)</td>
+            <td rowspan="2"></td>
+            <td rowspan="2"></td>
+            <td rowspan="2"></td>
+          </tr>
+          <tr>
+            <td>Amount(in Rs)</td>
+            <td>Paid Date</td>
+            <!-- <td>Amt</td>
+            <td>Schedule</td>
+            <td>Payment</td>
+            <td>Amt</td>
+            <td>Schedule</td>
+            <td>Payment</td>
+            <td>Amt</td>
+            <td>Schedule</td>
+            <td>Payment</td>
+            <td>Amt</td>
+            <td>Schedule</td>
+            <td>Payment</td> -->
+          </tr>
+
+        </thead>
+        <tbody *ngIf="AllottedList == '' || AllottedList == 'undefined' || AllottedList == 'null'">
+          <td colspan="15" class="text-center">No Data Found</td>
+        </tbody>
+        <tbody>
+          <tr *ngFor="let all of AllottedList | paginate: { id: 'paginationall',itemsPerPage: AlitemsPerPage,currentPage: AlcurrentPage,totalItems: AltotalItems }; let i=index">
+            <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+            <td>{{all.PT_Property_Type}}</td>
+            <td>{{all.CA_CategoryName}}</td>
+            <td>{{all.PR_Property_No}}</td>
+            <!-- <td></td> -->
+            <td>{{all.PR_Prop_FinalCost}}</td>
+            <td>{{all.APP_No}}</td>
+            <td>{{all.APP_PA_Name}}</td>
+            <td>{{all.Apply_Date | date:'dd-MM-yyyy'}}</td>
+            <td>
+              <a style="text-decoration:underline;" (click)=payment()>{{all.ID_Amt}}</a>
+            </td>
+            <td>{{all.ID_Date | date:'dd-MM-yyyy'}}</td>
+            <td>{{all.Allotted_Date | date:'dd-MM-yyyy'}}</td>
+            <td>{{all.Quota}}</td>
+            <td>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <td>Inst No.</td>
+                    <td>Inst. Amt</td>
+                    <td>Inst. Date</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let Ins of all.NoticeLetterDetailModel;let i=index;">
+                    <!-- <tr *ngFor="let Ins of all.InstallmentList;let i=index;"> -->
+
+                    <td>{{i+1}}</td>
+                    <td>{{Ins.INS_Amt}}</td>
+                    <td>{{Ins.INS_Due_Date | date:'dd-MM-yyyy'}}</td>
+
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+            <!-- <td>{{all.InsI_Amt}}</td>
+            <td></td>
+            <td>{{all.InsI_Date | date:'dd-mm-yyyy'}}</td>
+            <td>{{all.InsII_Amt}}</td>
+            <td></td>
+            <td>{{all.InsII_Date | date:'dd-mm-yyyy'}}</td>
+            <td>{{all.InsIII_Amt}}</td>
+            <td></td>
+            <td>{{all.InsIII_Date | date:'dd-mm-yyyy'}}</td>
+            <td>{{all.InsIV_Amt}}</td>
+            <td></td>
+            <td>{{all.InsIV_Date | date:'dd-mm-yyyy'}}</td> -->
+            <td></td>
+            <td>{{all.Amount_paid}}</td>
+            <td>
+              <button class="btn btn-primary" routerLink="/home/allotmentcancellation/saledeed-details"></button>
+            </td>
+            <td>
+              <button class="btn btn-primary" [routerLink]="['/home/allotmentcancellation/cancel-allotment',all.APP_Id,all.PR_Id,PD_Id,PD_Project_Name,Phase_Name,Sch_Id]">Cancel</button>
+            </td>
+            <td>
+              <button class="btn btn-primary" style="width:150px" routerLink="/home/allotmentcancellation/payment-details">Update
+                Payment</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-11">
+            <pagination-controls class="my-pagination" id="paginationall" (pageChange)="pageChangedAllot($event)"
+              maxSize="9" directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+              screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+            </pagination-controls>
+          </div>
+          <div class="col-md-1">
+            Total:
+            <span>{{AltotalItems}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

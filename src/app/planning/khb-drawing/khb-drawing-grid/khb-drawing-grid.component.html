@@ -1,0 +1,125 @@
+<div class="wrapper">
+    <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm,itemsPerPage,1)">
+        <div class="title themeheading">{{title}}
+            <div class="float-right">
+                Items per page:
+                <select name="SearchRows" #SearchRows="ngModel" [(ngModel)]="itemsPerPage" class="noofpage"
+                    (change)="itemsPerPageChanged(itemsPerPage, 1)">
+                    <option [ngValue]="5">5</option>
+                    <option [ngValue]="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                </select>
+                <a class="btn btn-primary " [routerLink]="['/home/drawingbybshb/drawingbybshb-form']">Add</a>
+            </div>
+            <span class="clearfix"></span>
+        </div>
+
+        <div class="searchbar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label>Search</label>
+                    </div>
+                    <div class="col-md-4">
+                        <select name="SearchCriteria" #SearchCriteria="ngModel" [(ngModel)]="s.SearchCriteria"
+                            class="form-control" required>
+                            <option [ngValue]="undefined" selected>---Select---</option>
+                            <option value="project-code">Project Code</option>
+                            <option value="projectname">Project Name</option>
+                            <!-- <option value="consultant-name">Consultant Name</option> -->
+                            <!-- <option value="scheme">Scheme</option> -->
+                            <!-- <option value="email">Total Properties</option> -->
+                        </select>
+                        <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)"
+                            class="error-msg">
+                            <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="SearchText" #SearchText="ngModel" [(ngModel)]="s.SearchText"
+                            class="form-control" placeholder="Search.." required>
+                        <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+                            <div *ngIf="SearchText.errors.required">Search text is required</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-default" type="submit">Search</button>
+                        <button class="btn btn-default" type="reset"
+                            (click)="GetAllKhbDrawings(itemsPerPage, 1)">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="table-responsive">
+            <table class="table table-stripped grid">
+                <thead>
+                    <tr>
+                        <td class="text-center">Sl No.</td>
+                        <td class="text-center">Project Code</td>
+                        <td class="text-center">Project Name</td>
+                        <!-- <td>Total Extent in Acres</td>
+                        <td>Total Extent in Hectors</td> -->
+                        <td class="text-center">View</td>
+                        <td class="text-center">Edit</td>
+                        <td class="text-center">Delete</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let khb of KhbDrawinglist | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index"
+                        [ngClass]="{'inactive':khb.LP_Inactive=='Y'}">
+                        <td class="text-center">{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+                        <td class="text-center">{{khb.PD_Project_Code}}</td>
+                        <td class="text-center">{{khb.PD_Project_Name}}</td>
+                        <!-- <td>{{khb.LP_Total_Extent_in_Acres}}</td>
+                        <td>{{khb.LP_Total_Extent_in_Hectors}}</td> -->
+                        <td class="text-center">
+                            <a href="#"
+                                [routerLink]="['/home/drawingbybshb/drawingbybshb-form', khb.LP_PD_ID_FK, 'view']">
+                                <i class="fa fa-lg fa-eye themecolor"></i>
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <a href="#"
+                                [routerLink]="['/home/drawingbybshb/drawingbybshb-form', khb.LP_PD_ID_FK, 'edit']">
+                                <i class="fa fa-lg fa-edit themecolor"></i>
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <a href="javascript:void(0);"
+                                (click)="ActivateInactivateKhbDrawings(khb.LP_Id,khb.LP_Inactive)"
+                                *ngIf="khb.LP_Inactive=='N'">
+                                <i class="fa fa-lg fa-trash themecolor"></i>
+                            </a>
+                            <a href="javascript:void(0);"
+                                (click)="ActivateInactivateKhbDrawings(khb.LP_Id, khb.LP_Inactive)"
+                                *ngIf="khb.LP_Inactive=='Y'" class="highlight-inactive">
+                                <i class="fa fa-lg fa-user-plus themecolor"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-11">
+                        <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)"
+                            maxSize="9" directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+                            screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                            screenReaderCurrentLabel="You're on page">
+                        </pagination-controls>
+                    </div>
+                    <div class="col-md-1">
+                        Total:
+                        <span>{{totalItems}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>

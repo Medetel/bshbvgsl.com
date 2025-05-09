@@ -1,0 +1,204 @@
+<div>
+    <div class="text-right">
+      <button class="btn btn-primary" type="button" style="margin-top: 10px;" [routerLink]="['/home/allot/manual-form']">Add</button>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td>Sl No.</td> 
+            <td>Notification No.</td>
+            <td>Project.</td>
+            <td>Reservation</td>
+            <td>Allot Date</td>
+            <td>View</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let lo of lotterylist | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index"
+            [ngClass]="{'inactive':lo.LO_Inactive=='Y'}">
+            <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+            <td>{{lo.NotificationNo}}</td>
+            <td>{{lo.ProjectName}}</td>
+            <td>{{lo.RES_Name}}</td>
+            <td>{{lo.LO_Allotted_Date | date:'dd-MM-yyyy'}}</td>
+            
+            <td>
+              <a href="#" [routerLink]="['/home/allot/manual-form', lo.LO_Id, 'View']">
+                <i class="fa fa-lg fa-eye themecolor"></i>
+            </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+
+  <!-- <form #Lottery="ngForm" (ngSubmit)="Save(Lottery)" name="form1" novalidate>
+ 
+      <div class="lottery-form-view" *ngIf="showLotFormView">
+          <div class="text-right">
+            <button class="btn btn-primary" type="button" (click)="showLotteryView()">Back</button>
+          </div>
+          <br>
+          <div class="row" style="padding:20px;">
+            <div class="col-md-2">
+              <div class="input-group">
+                <select [disabled]="mode=='View'" [(ngModel)]="l.LO_NO_Id_FK" required #LO_NO_Id_FK="ngModel" name="LO_NO_Id_FK" class="custom-field"
+                  (change)="GetProjects(l.LO_NO_Id_FK)">
+                  <option [ngValue]="undefined" selected>---Select---</option>
+                  <option [ngValue]="n.DSWOId_NO_Id" *ngFor="let n of Notifications;">
+                    {{n.DSWOId_NO_Number}}</option>
+                </select>
+                <label>Notification No.</label>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="input-group">
+                <select [disabled]="mode=='View'" [(ngModel)]="l.LO_PD_Id_FK" required #LO_PD_Id_FK="ngModel" name="LO_PD_Id_FK" class="custom-field">
+                  <option [ngValue]="undefined" selected>---Select---</option>
+                  <option [ngValue]="p.PD_Id" *ngFor="let p of Projects;">
+                    {{p.PD_Project_Code}}-{{p.PD_Project_Name}}</option>
+                </select>
+                <label>Project</label>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="input-group">
+                <select [disabled]="mode=='View'" [(ngModel)]="l.LO_CA_Id_FK" required #LO_CA_Id_FK="ngModel" name="LO_CA_Id_FK" class="custom-field">
+                  <option [ngValue]="undefined" [disabled] selected>---Select---</option>
+                  <option [ngValue]="ca.CA_Id" *ngFor="let ca of Categories;">
+                    {{ca.CA_CategoryName}}</option>
+                </select>
+                <label>Property Category</label>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="input-group">
+                <select [disabled]="mode=='View'" [(ngModel)]="l.LO_PT_Id_FK" required #LO_PT_Id_FK="ngModel" name="LO_PT_Id_FK" class="custom-field"
+                  (change)="GetPropertyType(l.LO_PT_Id_FK)">
+                  <option [ngValue]="undefined" selected>---Select---</option>
+                  <option [ngValue]="p.PT_Id" *ngFor="let p of PropertyTypes;">
+                    {{p.PT_Property_Type}}</option>
+                </select>
+                <label>Property type</label>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="input-group">
+                <select [disabled]="mode=='View'" [(ngModel)]="l.LO_RES_Id_FK" required #LO_RES_Id_FK="ngModel" name="LO_RES_Id_FK" class="custom-field"
+                  (change)="GetRESPercentage(l.LO_RES_Id_FK)">
+                  <option [ngValue]="undefined" selected>---Select---</option>
+                  <option [ngValue]="r.RES_Id" *ngFor="let r of Reservations;">
+                    {{r.RES_Name}}</option>
+                </select>
+                <label>Reservations</label>
+              </div>
+            </div>
+            <div class="col-md-1">
+              <div class="input-group">
+                <input [disabled]="mode=='View'" type="text" [(ngModel)]="l.LO_RES_Percentage" required #LO_RES_Percentage="ngModel" name="LO_RES_Percentage"
+                  class="custom-field">
+                <label>Percentage</label>
+              </div>
+            </div>
+            <div class="col-md-1">
+              <button *ngIf="mode!='View'" class="btn btn-primary go" type="button" (click)="GetTokenNoForLottery(l.LO_NO_Id_FK,l.LO_PD_Id_FK,l.LO_CA_Id_FK,l.LO_RES_Id_FK,l.LO_PT_Id_FK,l.PT_PropertyType)">Go
+              </button>
+            </div>
+          </div>
+      
+      
+          <div class="row" style="padding:20px;" [hidden]="Applications=='undefined'||Applications=='null'||Applications==''" *ngIf="mode!='View'">
+      
+            <div class="col-md-6">
+              <div class="input-group">
+                <select [disabled]="mode=='View'" [(ngModel)]="x.LO_TO_Id_FK" required #LO_TO_Id_FK="ngModel" name="LO_TO_Id_FK" class="custom-field"
+                  (change)=" GetAppData(x.LO_TO_Id_FK)">
+                  <option [ngValue]="undefined" [disabled] selected>---Select---</option>
+                  <option [ngValue]="t.TokenNo" *ngFor="let t of Applications;">
+                    {{t.TokenNo}}</option>
+                </select>
+                <label>Token No.</label>
+              </div>
+            </div>
+      
+      
+            <div class="col-md-6">
+              <div class="input-group">
+                <select [disabled]="mode=='View'" [(ngModel)]="x.LOD_Property_No" required #LOD_Property_No="ngModel" name="LOD_Property_No"
+                  class="custom-field">
+                  <option [ngValue]="undefined" disabled selected>---Select---</option>
+                  <option [ngValue]="p.PR_Property_No" *ngFor="let p of PropertyNumbers;">
+                    {{p.PR_Property_No}}</option>
+                </select>
+                <label>Property No.</label>
+              </div>
+            </div>
+      
+          </div>
+      
+          <div class="row" hidden>
+            <div class="col-md-4">
+              <div class="input-group">
+                <input type="text" placeholder=" " [(ngModel)]="x.LOD_APP_Id_FK" #LOD_APP_Id_FK="ngModel" name="LOD_APP_Id_FK" class="custom-field">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="input-group">
+                <input type="text" placeholder=" " [(ngModel)]="x.LO_APP_No" #LO_APP_No="ngModel" name="LO_APP_No" class="custom-field">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="input-group">
+                <input type="text" placeholder=" " [(ngModel)]="x.LO_APP_PA_Name" #LO_APP_PA_Name="ngModel" name="LO_APP_PA_Name" class="custom-field">
+              </div>
+            </div>
+          </div>
+      
+      
+          <div class="row" [hidden]="x.LO_TO_Id_FK==undefined || x.LOD_Property_No==undefined">
+            <div class="col-md-12 text-center">
+              <button [disabled]="mode=='View'" class="btn btn-primary" type="button"
+                 data-toggle="modal" data-target="#alloted-modal" (click)="AddLotteryList(x,Lottery)">Allot
+              </button>&nbsp;
+            </div>
+          </div>
+      
+      
+      
+          <div class="table-responsive" *ngIf="ManualLottery.length>=1">
+            <table class="table table-striped grid">
+              <thead>
+                <tr>
+                  <td>Sl No.</td>
+                  <td>Token No.</td>
+                  <td>Application No</td>
+                  <td>Applicant Name</td>
+                  <td>Property No</td>
+                  <td>View</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let lo of ManualLottery;let i=index;">
+                  <td>{{i+1}}.</td>
+                  <td>{{lo.LO_TO_Id_FK}}</td>
+                  <td hidden>{{lo.LOD_APP_Id_FK}}</td>
+                  <td>{{lo.LO_APP_No}}</td>
+                  <td>{{lo.LO_APP_PA_Name}}</td>
+                  <td>{{lo.LOD_Property_No}}</td>
+                  <td>
+                    <a href="#" [routerLink]="['/home/applicant/applicantview',lo.LOD_APP_Id_FK,l.LO_NO_Id_FK,'lottery']">
+                      <i class="fa fa-lg fa-eye themecolor"></i>
+                    </a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <br>
+        </div>
+      </form>  -->

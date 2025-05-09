@@ -1,0 +1,115 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    Generate Promotion List
+    <button class="btn btn-primary float-right" [routerLink]="['/home/increment/gen-incr-list']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4">
+        <label for="">Promotion List No. :</label>
+      </div>
+      <div class="col-md-4">
+        <label for="">Date : <span>11/11/2019</span></label>
+      </div>
+      <div class="col-md-4">
+        <label for="">Status :</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for=""> Promotion Division Code </label>
+          <select name="" id="" class="custom-field">
+            <option value="">--Select--</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Employee Id </label>
+          <select name="" id="" class="custom-field">
+            <option value="">--Select--</option>
+          </select>
+        </div>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-md-6 ">
+        <div class="input-group">
+          <label for="">Promotion Increment Year </label>
+          <select name="" id="" class="custom-field">
+            <option value="">--Select--</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-1">
+        <button class="btn btn-primary">Generate List</button>
+      </div>
+    </div>
+    <div class="title themeheading rowmarginfix">
+      Promotion Details
+      <span class="clearfix"></span>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped grid">
+        <thead>
+          <tr>
+            <td>Sl No.</td>
+            <td>Employee Id</td>
+            <td>Employee Name</td>
+            <td>Present Designation</td>
+            <td>Present Basic Pay </td>
+            <td>Promotion Due Date</td>
+            <td>Promotion Type</td>
+            <td>  Designation After Promotion</td>
+            <td> Pay Scale After Promotion </td>
+            <td> Promotion W.E.F </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td> 1 </td>
+            <td> 1 </td>
+            <td> Akash</td>
+            <td>FDA</td>
+            <td>10000-500-12500</td>
+            <td>05-01-2019</td>
+            <td>
+              <select name="" id="" class="form-control">
+                <option value="">--Select--</option>
+              </select>
+            </td>
+            <td>
+              <select name="" id="" class="form-control">
+                <option value="">--Select--</option>
+                <option value="">10500-500-12500</option>
+                <option value="">16000-1000-20000</option>
+              </select>
+            </td>
+            <td>
+              <select name="" id="" class="form-control">
+                <option value="">--Select--</option>
+                <option value="">Yes</option>
+                <option value="">No</option>
+              </select>
+            </td>
+            <td>
+              <input type="date" class="form-control">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <br>
+    <div class="text-center">
+      <button class="btn btn-primary">Save</button>
+      <button class="btn btn-primary">Cancel</button>
+    </div>
+    <br>
+  </div>
+</div>

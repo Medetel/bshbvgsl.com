@@ -1,0 +1,164 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary float-right" [routerLink]="['/home/baseline']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+
+  <form (ngSubmit)="mode=='edit'? UpdateBaseline(Baselineform):SaveBaseline(Baselineform)" #Baselineform="ngForm"
+    autocomplete="off">
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <!-- <select class="custom-field" > -->
+            <select class="custom-field" #Project_Code="ngModel" name="Project_Code" [(ngModel)]="i.Project_Code"
+              list="dynmicUserIds" [disabled]="mode=='view'" required>
+              <!-- <datalist id="dynmicUserIds"> -->
+              <option [value]="undefined" selected>---Select Project Name---</option>
+              <option [value]="c.PD_Id" *ngFor="let c of projectcode;">
+                {{c.PD_Project_Code}} - {{c.PD_Project_Name}}
+              </option>
+              <!-- </datalist> -->
+            </select>
+            <label for="">Project Name
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="Project_Code.invalid && (Project_Code.dirty || Project_Code.touched || formInvalid)">
+              <span *ngIf="Project_Code.errors.required">Project Name is required</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #Project_Phase="ngModel" name="Project_Phase"
+              [(ngModel)]="i.Project_Phase" [disabled]="mode=='view'" pattern="^[a-zA-Z0-9 ]*$" required>
+            <label for="">Project Phase
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="Project_Phase.invalid && (Project_Phase.dirty || Project_Phase.touched || formInvalid)">
+              <span *ngIf="Project_Phase.errors.required">Project Phase is required.</span>
+              <span *ngIf="Project_Phase.errors?.pattern">AlphaNumeric should enter</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #Job_Code="ngModel" name="Job_Code" [(ngModel)]="i.Job_Code"
+              [disabled]="mode=='view'" pattern="^[a-zA-Z0-9 ]*$" required>
+            <label for="">Job Code
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Job_Code.invalid && (Job_Code.dirty || Job_Code.touched || formInvalid)">
+              <span *ngIf="Job_Code.errors.required">Job Codeis required.</span>
+              <span *ngIf="Job_Code.errors?.pattern">AlphaNumeric should enter</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #BOQ_Item="ngModel" name="BOQ_Item" [(ngModel)]="i.BOQ_Item"
+              [disabled]="mode=='view'" pattern="^[a-zA-Z0-9 ]*$" required>
+            <label for="">BOQ Item
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="BOQ_Item.invalid && (BOQ_Item.dirty || BOQ_Item.touched || formInvalid)">
+              <span *ngIf="BOQ_Item.errors.required">BOQ Item is required.</span>
+              <span *ngIf="BOQ_Item.errors?.pattern">AlphaNumeric should enter</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <textarea class="custom-field" #Description="ngModel" name="Description" [(ngModel)]="i.Description"
+              [disabled]="mode=='view'" required>
+          </textarea>
+            <label for="">Description
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="Description.invalid && (Description.dirty || Description.touched || formInvalid)">
+              <span *ngIf="Description.errors.required">Description is required</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #Baseline_Qty="ngModel" name="Baseline_Qty"
+              [(ngModel)]="i.Baseline_Qty" [disabled]="mode=='view'" pattern="^[a-zA-Z0-9 ]*$" required>
+            <label for="">Baseline Quantity
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="Baseline_Qty.invalid && (Baseline_Qty.dirty || Baseline_Qty.touched || formInvalid)">
+              <span *ngIf="Baseline_Qty.errors.required">Baseline Quantity is required.</span>
+              <span *ngIf="Baseline_Qty.errors?.pattern">AlphaNumeric should enter</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #Actual_qty="ngModel" name="Actual_qty" [(ngModel)]="i.Actual_qty"
+              [disabled]="mode=='view'" pattern="^[a-zA-Z0-9 ]*$" required>
+            <label for="">Actual Quantity
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="Actual_qty.invalid && (Actual_qty.dirty || Actual_qty.touched || formInvalid)">
+              <span *ngIf="Actual_qty.errors.required">Actual Quantity is required.</span>
+              <span *ngIf="Actual_qty.errors?.pattern">AlphaNumeric should enter</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #Advance_Paid="ngModel" name="Advance_Paid"
+              [(ngModel)]="i.Advance_Paid" [disabled]="mode=='view'" pattern="^[0-9]*$" required>
+            <label for="">Advance Paid
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="Advance_Paid.invalid && (Advance_Paid.dirty || Advance_Paid.touched || formInvalid)">
+              <span *ngIf="Advance_Paid.errors.required">Advance Paid is required.</span>
+              <span *ngIf="Advance_Paid.errors?.pattern">Numeric should enter</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="i.Status" #Status="ngModel" name="Status"
+              [disabled]="mode=='view'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option value=3>Active</option>
+              <option value=4>Inactive</option>
+            </select>
+            <label for="">Status
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Status.invalid && (Status.dirty || Status.touched || formInvalid)">
+              <span *ngIf="Status.errors.required">Status is required</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center">
+        <button class="btn btn-primary" type="submit" [disabled]="mode=='view'">Save</button> &nbsp;
+        <button class="btn btn-primary" type="reset" [disabled]="mode=='view'">Cancel</button>
+      </div>
+    </div>
+  </form>
+
+</div>

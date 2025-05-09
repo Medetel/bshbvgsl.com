@@ -1,0 +1,225 @@
+<div class="wrapper">
+
+  <div class="title themeheading">
+    {{title}}
+    <a class="btn btn-primary float-right" [routerLink]="['/home/statutory']">Back</a>
+    <span class="clearfix"></span>
+  </div>
+
+  <!-- <form #Statutory="ngForm" name="form1" novalidate (ngSubmit)="SaveStatutoryDetails(Statutory)"> -->
+  <form (ngSubmit)="update(Statutory)" #Statutory="ngForm"
+    autocomplete="off">
+    <div class="container-fluid">
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #PD_Id="ngModel" name="PD_Id" [(ngModel)]="SA.PD_Id"
+              list="dynmicUserIds" />
+            <datalist id="dynmicUserIds">
+              <option *ngFor="let item of projectlist" [value]="item.PD_Id"
+                style="height:150px; width:150px;margin-bottom:50px;">
+                {{item.PD_Project_Code}} - {{item.PD_Project_Name}} - {{item.Phase_Name}}
+              </option>
+            </datalist>
+            <label>Project</label>
+            <div class="error-msg" *ngIf="PD_Id.invalid && (PD_Id.dirty || PD_Id.touched || formSubmitted)">
+              <span *ngIf="PD_Id.errors.required">Project is required</span>
+            </div>
+          </div>
+
+
+          <!-- <div class="input-group">
+            <select #PD_Id="ngModel" [disabled]="mode=='view'" name="PD_Id" [(ngModel)]="SA.PD_Id" class="custom-field"
+              required>
+              <option value="undefined">---Select---</option>
+              <option *ngFor="let project of projectlist" [value]="project.PD_Id">
+                {{project.PD_Project_Code}} - {{project.PD_Project_Name}} - {{project.Phase_Name}}
+              </option>
+            </select>
+            <label for="">Project
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="PD_Id.invalid && (PD_Id.dirty || PD_Id.touched || formSubmitted)">
+              <span *ngIf="PD_Id.errors.required">Project is required</span>
+            </div>
+          </div> -->
+        </div>
+        <div class="col-md-1">
+          <button class="btn btn-primary" [disabled]="mode=='view'" type="button"
+            (click)="GetProjectDetailsforSA(SA.PD_Id)">Go</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <label>
+            <span class="field-title">Project</span>: {{projectDetails.PD_Project_Name}}</label>
+        </div>
+        <div class="col-md-6">
+          <label>
+            <span class="field-title">Scheme</span>: {{projectDetails.Sch_Name}}</label>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label>
+            <span class="field-title">District</span>: {{projectDetails.DI_District}}</label>
+        </div>
+        <div class="col-md-6">
+          <label>
+            <span class="field-title">Taluk</span>: {{projectDetails.TA_Taluk}}</label>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label>
+            <span class="field-title">Hobli</span>: {{projectDetails.HO_Name}}</label>
+        </div>
+        <div class="col-md-6">
+          <label>
+            <span class="field-title">Village</span>: {{projectDetails.PD_Village}}</label>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label>
+            <span class="field-title">Phase</span>:{{projectDetails.Phase_Name}}</label>
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="title themeheading">
+      Statutory Clearances Details
+    </div>
+    <div class="container-fluid">
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <select [(ngModel)]="S.SC_SA_ID_FK" [disabled]="mode=='view'" #SC_SA_ID_FK="ngModel"
+              (change)="getAuthority(S.SC_SA_ID_FK)" name="SC_SA_ID_FK" class="custom-field" required>
+              <option [value]="undefined">---Select---</option>
+              <option [ngValue]="a.SA_Id" *ngFor="let a of saList;">{{a.SA_Name}}</option>
+            </select>
+            <label for="">Approvals
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="SC_SA_ID_FK.invalid && (SC_SA_ID_FK.dirty || SC_SA_ID_FK.touched || formSubmitted)">
+              <span *ngIf="SC_SA_ID_FK.errors.required">Approvals is required</span>
+          </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" [disabled]="mode=='view'" maxlength="100" name="SC_OrderNumber"
+              [(ngModel)]="S.SC_OrderNumber" #SC_OrderNumber="ngModel" required>
+            <label for="">Order number
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="SC_OrderNumber.invalid && (SC_OrderNumber.dirty || SC_OrderNumber.touched || formSubmitted)">
+              <span *ngIf="SC_OrderNumber.errors.required">Order number is required</span>
+          </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-2" style="margin-bottom: 33px;">
+          <label for="">Approved</label>
+        </div>
+        <div class="col-md-4">
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" value="Yes" type="radio" id="inlineRadio1" [(ngModel)]="S.approved"
+                #approved="ngModel" name="approved"> Yes
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" value="No" id="inlineRadio1" [(ngModel)]="S.approved"
+                #approved="ngModel" name="approved"> No
+            </label>
+          </div>
+        </div>
+        <div class="col-md-6" [hidden]="S.approved=='No'">
+          <div class="input-group">
+            <input type="date" [(ngModel)]="S.approveddate" [disabled]="mode=='view'" #approveddate="ngModel"
+              name="approveddate" class="custom-field">
+            <label for="">Approved Date</label>
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <label for="">Upload Document</label>
+        </div>
+        <div class="col-md-2">
+          <input type="file" #Image accept="application/pdf" [disabled]="mode=='view'"
+            (change)="DocFileUploadInput($event.target.files)" id="SC_ApprovedDoc">
+        </div>
+        <!-- <div class="col-md-2">
+                  <img [src]="SCApprovedDocUrl" style="width:200px;height:130px;">
+               </div> -->
+      </div>
+      <div class="row" *ngIf="mode!='view'">
+        <div class="col-md-12 text-center">
+          <button class="btn btn-primary" type="submit">{{mode=='edit'?'Update':'Save'}}</button>
+          <button class="btn btn-primary" type="reset">Cancel</button>
+          <!-- <button class="btn btn-primary" (click)="AddSADetails(S)" type="button">Add</button>&nbsp; -->
+          <!-- <button type="button" class="btn btn-primary">Cancel</button> -->
+        </div>
+      </div>
+      <div class="row" style="background:#fff;">
+        <div class="col-md-12">
+          <div class="table-responsive grid">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <td>Sl No.</td>
+                  <td>Approvals</td>
+                  <td>Order number</td>
+                  <td>Approved</td>
+                  <td>Approved Date</td>
+                  <td>Upload Document</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let a of SADetails;let i=index;">
+                  <td>{{i+1}}</td>
+                  <td>{{a.SA_Name}}</td>
+                  <td>{{a.SC_OrderNumber}}</td>
+                  <td>{{a.SC_Approved}}</td>
+                  <td>{{a.SC_Date | date:'dd-MM-yyyy'}}</td>
+                  <!-- <td>{{a.SC_ApprovedDoc}}</td> -->
+                  <td *ngIf="a.SC_ApprovedDoc!=null"><a class="" target="_blank" href="{{a.SC_ApprovedDoc}}">View</a></td>
+                  <td *ngIf="a.SC_ApprovedDoc==null">-</td>
+                  <!-- <a class="float-right" *ngIf="mode=='edit'" target="_blank" href="{{a.SC_ApprovedDoc}}">view</a> -->
+                  <!-- {{a.SC_ApprovedDoc}} -->
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- <div class="btn-wrapper text-center" *ngIf="mode!='view'">
+        <button class="btn btn-primary" [disabled]="SA.PD_Id==null || SA.PD_Id == '' || SA.PD_Id == 'undefined'" type="submit">{{mode=='edit'?'Update':'Save'}}</button>
+        <button class="btn btn-primary" type="reset">Cancel</button>
+      </div> -->
+
+
+    </div>
+  </form>
+
+</div>

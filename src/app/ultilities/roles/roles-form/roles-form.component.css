@@ -1,0 +1,19 @@
+.row:nth-child(odd){
+    background: #ececec;
+}
+
+.row{
+    padding:9px 0px 0px !important;
+}
+
+.error-msg{
+    margin-top:-4px;
+}
+
+.input-group label{
+    width:100%;
+}
+.input-group{
+    margin-top: 5px;
+    border-radius: 5px;
+}

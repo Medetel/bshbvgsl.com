@@ -1,0 +1,251 @@
+<div class="wrapper">
+  <div class="title themeheading">{{title}}
+    <a class="btn btn-primary float-right" routerLink="/home/property-register">Back</a>
+    <span class="clearfix"></span>
+  </div>
+  <form  #PRDetails="ngForm" autocomplete="off">
+      <!-- (ngSubmit)="mode=='edit'?onSubmit(PRDetails):onSubmit(PRDetails)" -->
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" placeholder=" " class="custom-field" name="PD_Project_Code" [(ngModel)]="PRD.PD_Id?PRD.PD_Project_Code:PRD.PD_Project_Code" #PD_Project_Code="ngModel">
+            <label>Project Code.</label>  
+          </div>
+        </div>
+        <div class="col-md-2">
+        <button class="btn btn-primary" (click)=getProjectbyCode(PRD.PD_Project_Code)>retreive</button>
+        </div>
+
+      </div>
+
+      <div class="row">
+          <div class="col-md-6">
+            <label>
+              <span class="field-title">Scheme</span>: {{PRD.PD_Scheme}} </label>
+          </div>
+          <div class="col-md-6">
+            <label>
+              <span class="field-title">District</span>: {{PRD.DI_District}}</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label>
+              <span class="field-title">Taluk</span>: {{PRD.TA_Taluk}} </label>
+          </div>
+          <div class="col-md-6">
+            <label>
+              <span class="field-title">Hobli</span>: {{PRD.HO_Name}} </label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label>
+              <span class="field-title">Village</span>: {{PRD.VI_Village}}</label>
+          </div>
+          <div class="col-md-6">
+            <label>
+              <span class="field-title">Phase</span>: {{PRD.PD_Phase}}</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label>
+              <span class="field-title">Project</span>: {{PRD.PD_Project_Name}}</label>
+          </div>
+  
+        </div>
+  
+  
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" name="PT_Id" [(ngModel)]="PRD.PT_Id" #PT_Id="ngModel">
+                <option [ngValue]="undefined" selected>--Select--</option>
+                <option [value]="pt.PT_Id" *ngFor="let pt of propertytype">{{pt.PT_Property_Type}}</option>
+            </select>
+            <label>Property Type</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" name="PR_Property_No" [(ngModel)]="PRD.PR_Property_No" #PR_Property_No="ngModel"
+              required>
+            <label>Property No</label>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row" >
+
+        <div class="col-md-6">
+          <div class="input-group">
+              <select class="custom-field" name="CA_Id" [(ngModel)]="PRD.CA_Id" #CA_Id="ngModel">
+                  <option [ngValue]="undefined" selected>--Select--</option>
+                  <option [value]="c.CA_Id" *ngFor="let c of categorylist">{{c.CA_CategoryName}}</option>
+              </select>
+            <label>Category</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+
+              <select class="custom-field" name="IC_Id" [(ngModel)]="PRD.IC_Id" #IC_Id="ngModel">
+                  <option [ngValue]="undefined" selected>--Select--</option>
+                  <option [value]="ic.IC_Id" *ngFor="let ic of interCor">{{ic.IC_Name}}</option>
+              </select>
+            <label>Intermediate/Corner</label>
+            <!-- <div class="error-msg" *ngIf="DistrictId.invalid && (DistrictId.dirty || DistrictId.touched || formSubmitted)">
+            <div *ngIf="DistrictId.errors.required">District is required</div>
+          </div> -->
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+              <select class="custom-field" name="OR_ID" [(ngModel)]="PRD.OR_ID" #OR_ID="ngModel">
+                  <option [ngValue]="undefined" selected>--Select--</option>
+                  <option [value]="or.OR_ID" *ngFor="let or of oddRegular">{{or.OR_Name}}</option>
+              </select>
+            <label>Odd/Regular</label>
+          </div>
+        </div>
+        
+      </div>
+
+      <div class="row">
+        <div class="col-md-2">
+          <h6>Measurement</h6>
+        </div>
+        <div class="col-md-5">
+          <div class="input-group">
+            <input type="text" class="custom-field" name="PR_M_East_west" [(ngModel)]="PRD.PR_M_East_west" #PR_M_East_west="ngModel">
+            <label>East to West</label>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="input-group">
+            <input type="text" class="custom-field" name="PR_M_North_South" [(ngModel)]="PRD.PR_M_North_South" #PR_M_North_South="ngModel">
+            <label>North to South</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" name="PR_Longitude" [(ngModel)]="PRD.PR_Longitude" #PR_Longitude="ngModel">
+
+            <label>Longitude</label>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" name="PR_Latitude" [(ngModel)]="PRD.PR_Latitude" #PR_Latitude="ngModel">
+            <label>Latitude</label>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="row">
+
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" name="PR_Plot_Area" [(ngModel)]="PRD.PR_Plot_Area" #PR_Plot_Area="ngModel">
+
+            <label>Plot Area(in sqmt)</label>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" name="PR_Plinth_Area" [(ngModel)]="PRD.PR_Plinth_Area" #PR_Plinth_Area="ngModel">
+            <label>Plinth Area(in sqmt)</label>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-2">
+          <h6>Boundary Schedule</h6>
+        </div>
+        <div class="col-md-2">
+          <div class="input-group">
+            <input type="text" class="custom-field" name="PR_B_North" [(ngModel)]="PRD.PR_B_North" #PR_B_North="ngModel">
+            <label>North</label>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="input-group">
+            <input type="text" class="custom-field" name="PR_B_South" [(ngModel)]="PRD.PR_B_South" #PR_B_South="ngModel">
+            <label>South</label>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="input-group">
+            <input type="text" class="custom-field" name="PR_B_East" [(ngModel)]="PRD.PR_B_East" #PR_B_West="ngModel">
+            <label>East</label>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="input-group">
+            <input type="text" class="custom-field" name="PR_B_West" [(ngModel)]="PRD.PR_B_West" #PR_B_West="ngModel">
+            <label>west</label>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        
+
+        <div class="col-md-2">
+          <label>Status</label>
+        </div>
+        <div class="col-md-4">
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" id="inlineRadio1" name="PR_Status" value="Available" [(ngModel)]="PRD.PR_Status" #PR_Status="ngModel"> Available for Allotment
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" id="inlineRadio1" name="PR_Status" value="Blocked" [(ngModel)]="PRD.PR_Status" #PR_Status="ngModel"> Blocked
+            </label>
+          </div>
+
+        </div>
+
+        <div class="col-md-6">
+            <div class="input-group">
+              <textarea  class="custom-field" name="PR_Remark" [(ngModel)]="PRD.PR_Remark" #PR_Remark="ngModel"></textarea>
+              <label>Remarks</label>
+            </div>
+          </div>
+        
+      </div>
+
+
+
+      <div class="btn-wrapper" style="margin-top: 10px;">
+        <button class="btn btn-primary" type="submit">{{mode=='edit'?'Update':'Save'}}</button>
+        <button class="btn btn-primary">Cancel</button>
+      </div>
+    </div>
+  </form>
+
+</div>

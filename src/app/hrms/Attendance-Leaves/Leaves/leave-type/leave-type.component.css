@@ -1,0 +1,16 @@
+/* 
+.row{
+    margin-top: 15px;
+    padding: 10px;
+}
+.form-view>.row:nth-child(odd){
+    background-color: #d0d0d0;
+} */
+
+.row{
+    padding-top:20px;
+}
+
+.row:nth-child(odd){
+    background: #f3f3f3;
+}

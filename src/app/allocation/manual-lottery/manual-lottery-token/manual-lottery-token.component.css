@@ -1,0 +1,13 @@
+.row{
+    
+}
+
+.row .col-md-3{
+    padding:10px 15px 0px;
+}
+@media print{
+    nav,#print-no-display,.btn,.menu, #footer,.print-no-display{
+        display:none !important;
+    }
+   
+}

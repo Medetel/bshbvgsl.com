@@ -1,0 +1,35 @@
+.pay-info-wrapper{
+    padding:20px;
+    background: #F2F2F2;border:1PX SOLID #CCC;
+    height: 215px;
+    margin-top: 20px;
+}
+
+.pay-info-wrapper span.small-title{
+    display: block;
+    padding:5px;
+    text-align:center;
+    font-weight:600;
+}
+
+.pay-info-wrapper span{
+    display: block;
+    padding:5px;
+}
+
+.pay-info-wrapper a{
+    background: #006;
+    color:#fff;
+    display:block;
+    border:1px solid #006;
+    padding:5px;
+    width:100%;
+    text-align: center;
+    text-decoration: none;
+    margin-top:10px;
+}
+
+h4{
+    margin-top: 10px;
+   
+}

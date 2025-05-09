@@ -1,0 +1,124 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary float-right" [routerLink]="['/home/projectencumbrance']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+
+  <form (ngSubmit)="mode=='edit'? UpdateEncumbrance(EncumbranceForm):SaveEncumbrance(EncumbranceForm)" #EncumbranceForm="ngForm" autocomplete="off">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <!-- <select class="custom-field" > -->
+          <select class="custom-field" #Project_Code="ngModel" name="Project_Code"
+            [(ngModel)]="i.Project_Code" list="dynmicUserIds" [disabled]="mode=='view'" required >
+          <!-- <datalist id="dynmicUserIds"> -->
+            <option [value]="undefined" selected>---Select Project Name---</option>        
+            <option [value]="c.PD_Id" *ngFor="let c of projectcode;">
+              {{c.PD_Project_Code}} - {{c.PD_Project_Name}}
+            </option>
+          <!-- </datalist> -->
+          </select>
+          <label for="">Project Name
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Project_Code.invalid && (Project_Code.dirty || Project_Code.touched || formInvalid)">
+           <span *ngIf="Project_Code.errors.required">Project Name is required</span>
+          </div> 
+        </div>
+
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="custom-field"  #Phase="ngModel" name="Phase" [disabled]="mode=='view'" required
+          [(ngModel)]="i.Phase" >
+          <label for="">Phase
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Phase.invalid && (Phase.dirty || Phase.touched || formInvalid)">
+            <span *ngIf="Phase.errors.required">Phase is required</span>
+           </div> 
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <!-- <select class="custom-field" > -->
+          <select class="custom-field" #Contractor="ngModel" name="Contractor"
+            [(ngModel)]="i.Contractor" list="dynmicUserIds" [disabled]="mode=='view'" required >
+          <!-- <datalist id="dynmicUserIds"> -->
+            <option [value]="undefined" selected>---Select Contractor---</option>        
+            <option [value]="c.Contractor_id" *ngFor="let c of contractorcode;">
+              {{c.Contractor_Code}} - {{c.Contractor_name}}
+            </option>
+          <!-- </datalist> -->
+          </select>
+          <label for="">Contractor
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Contractor.invalid && (Contractor.dirty || Contractor.touched || formInvalid)">
+           <span *ngIf="Contractor.errors.required">Contractor is required</span>
+          </div> 
+        </div>
+
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="custom-field"  #Encumbrance_Doc_No="ngModel" name="Encumbrance_Doc_No" [disabled]="mode=='view'" required
+          [(ngModel)]="i.Encumbrance_Doc_No">
+          <label for="">Encumbrance Doc No.
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Encumbrance_Doc_No.invalid && (Encumbrance_Doc_No.dirty || Encumbrance_Doc_No.touched || formInvalid)">
+            <span *ngIf="Encumbrance_Doc_No.errors.required">Encumbrance Doc No is required</span>
+           </div> 
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <!-- <select class="custom-field" > -->
+          <select class="custom-field" #Encumbrance="ngModel" name="Encumbrance"
+            [(ngModel)]="i.Encumbrance" list="dynmicUserIds" [disabled]="mode=='view'" required >
+          <!-- <datalist id="dynmicUserIds"> -->
+            <option [value]="undefined" selected>---Select Encumbrance---</option>        
+            <option [value]="c.encumb_id" *ngFor="let c of encumbrancecode;">
+              {{c.encumb_code}} 
+            </option>
+          <!-- </datalist> -->
+          </select>
+          <label for="">Encumbrance
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Encumbrance.invalid && (Encumbrance.dirty || Encumbrance.touched || formInvalid)">
+           <span *ngIf="Encumbrance.errors.required">Encumbrance is required</span>
+          </div> 
+        </div>
+
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="custom-field"  #Quantum="ngModel" name="Quantum" required [disabled]="mode=='view'"
+          [(ngModel)]="i.Quantum">
+          <label for="">Quantum released
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Quantum.invalid && (Quantum.dirty || Quantum.touched || formInvalid)">
+            <span *ngIf="Quantum.errors.required">Quantum is required</span>
+           </div> 
+        </div>
+      </div>
+    </div>
+
+    <br>
+
+    <div class="text-center">
+      <button class="btn btn-primary" [disabled]="mode=='view'" type="submit">Save</button>&nbsp;
+      <button class="btn btn-primary" [disabled]="mode=='view'" type="reset">Cancel</button>
+    </div>
+  </div>
+</form>
+</div>

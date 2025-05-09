@@ -1,0 +1,596 @@
+<div class="wrapper">
+    <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm,itemsPerPage,1,0,0)">
+        <div class="title themeheading">{{ProjName}} - Land Owner Details
+            <div class="float-right">
+                Items per page:
+                <select name="SearchRows" #SearchRows="ngModel" [(ngModel)]="itemsPerPage" class="noofpage" (change)="itemsPerPageChanged(itemsPerPage, 1)">
+                    <option [ngValue]="5">5</option>
+                    <option [ngValue]="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                </select>
+                <a class="btn btn-primary" data-target="#lNewModel" data-toggle="modal" (click)="ClearLanddetails()">Add</a>
+                <a class="btn btn-primary" [routerLink]="['/home/landdetails']">Back</a>
+            </div>
+            <span class="clearfix"></span>
+        </div>
+        <div class="searchbar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label>Search</label>
+                    </div>
+                    <div class="col-md-4">
+                        <select name="SearchCriteria" #SearchCriteria="ngModel" [(ngModel)]="s.SearchCriteria" class="form-control"
+                            required pattern="^[0-9]{10,15}$" maxlength="10" minlength="10">
+                            <option [ngValue]="undefined" selected>---Select---</option>
+                            <!-- <option value="LOD_SurveyNumber">Survey Number</option> -->
+                            <option value="LOD_LO_Name">Land Owner Name</option>
+                            <option value="LOD_Mobile">Mobile</option>
+                            <option value="LOD_Email">Email</option>
+                        </select>
+                        <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)" class="error-msg">
+                            <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+                            <div *ngIf="SearchCriteria.errors.pattern">Search criteria is invalid</div>
+                            <div *ngIf="SearchCriteria.errors.minlength">Search criteria is invalid</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="SearchText" #SearchText="ngModel" [(ngModel)]="s.SearchText" class="form-control"
+                            placeholder="Search.." required>
+                        <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+                            <div *ngIf="SearchText.errors.required">Search text is required</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-default" type="submit">Search</button>
+                        <button class="btn btn-default" type="reset" (click)="GetAllLandOwnerDetails(itemsPerPage, 1,0,0)">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped grid">
+                <thead>
+                    <tr>
+                        <td>Sl No.</td>
+                        <!-- <td>Survey No.</td> -->
+                        <td>Owner Name</td>
+                        <td>Mobile</td>
+                        <td>Email</td>
+                        <td>View</td>
+                        <td>Edit</td>
+                        <td>Tally</td>
+                        <td>Delete</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let l of landOwnerDetailslist | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index">
+                        <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+                        <!-- <td>{{l.LOD_SurveyNumber}}</td> -->
+                        <td>{{l.LOD_LO_Name}}</td>
+                        <td>{{l.LOD_Mobile}}</td>
+                        <td>{{l.LOD_Email}}</td>
+                        <td>
+                            <a href="#" data-target="#lNewModel" data-toggle="modal" (click)="GetByIdLandOwnerDetails(l.LOD_Id_PK,'view')">
+                                <i class="fa fa-lg fa-eye themecolor"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" data-target="#lNewModel" data-toggle="modal" (click)="GetByIdLandOwnerDetails(l.LOD_Id_PK,'edit')">
+                                <i class="fa fa-lg fa-edit themecolor"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="javascript:void(0);">
+                                <i class="fa fa-lg">|</i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="javascript:void(0);" (click)="delete(l.LOD_Id_PK)">
+                                <i class="fa fa-lg fa-trash themecolor"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-11">
+                        <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)"
+                            maxSize="9" directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+                            screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                            screenReaderCurrentLabel="You're on page">
+                        </pagination-controls>
+                    </div>
+                    <div class="col-md-1">
+                        Total:
+                        <span>{{totalItems}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="modal fade" role="dialog" id="lNewModel">
+    <div class="modal-dialog modal-lg">
+        <form (ngSubmit)="mode=='edit'?UpdateLandOwnerDetails(LandOwnerForm):SaveLandOwnerDetails(LandOwnerForm)"
+            #LandOwnerForm="ngForm" name="form1">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">{{ProjName}} - Land Owner Details</h4>
+                    <!-- <button type="button"  class="close" data-dismiss="modal">&times;</button> -->
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
+                            <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid Background-Color ">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <select #LOD_PD_Id_FK="ngModel" name="LOD_PD_Id_FK" [(ngModel)]="pro.LOD_PD_Id_FK"
+                                        class="custom-field" required disabled>
+                                        <option value="undefined">---Select---</option>
+                                        <option *ngFor="let project of projectlist" [value]="project.PD_Id">
+                                            {{project.PD_Project_Code}} - {{project.PD_Project_Name}} -
+                                            {{project.Phase_Name}}
+                                        </option>
+                                    </select>
+                                    <label>Project<span class="mandatory">*</span>
+                                    </label>
+                                    <div class="error-msg" *ngIf="LOD_PD_Id_FK.invalid && (LOD_PD_Id_FK.dirty || LOD_PD_Id_FK.touched || formInvalid)">
+                                        <span *ngIf="LOD_PD_Id_FK.errors.required">Project is required.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <select class="custom-field" [(ngModel)]="pro.LOD_PR_Id_FK" #LOD_PR_Id_FK="ngModel"
+                                        name="LOD_PR_Id_FK" (change)="GetOtherrelatedinfo(o.LOD_PR_Id_FK)" [disabled]="mode =='view'"
+                                        required disabled>
+                                        <option [value]="undefined" selected>---Select---</option>
+                                        <option [value]="p.PR_Id_PK" *ngFor="let p of proposallist;">
+                                            {{p.PR_Id}} </option>
+                                    </select>
+                                    <label for="">Proposal Id
+                                        <span class="mandatory">*</span>
+                                    </label>
+                                    <div class="error-msg" *ngIf="LOD_PR_Id_FK.invalid && (LOD_PR_Id_FK.dirty || LOD_PR_Id_FK.touched || formInvalid)">
+                                        <span *ngIf="LOD_PR_Id_FK.errors.required">Proposal Id is required.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="" style="margin-bottom: 15px;">Proposal for :{{ProposalFor}}</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <input [disabled]="mode=='view'" [(ngModel)]="o.LOD_LO_Name" maxlength="100"
+                                        #LOD_LO_Name="ngModel" name="LOD_LO_Name" class="custom-field" required pattern="^[A-Za-z]+$">
+                                    <label for="">Owner Name
+                                        <span class="mandatory">*</span>
+                                    </label>
+                                    <div class="error-msg" *ngIf="LOD_LO_Name.invalid && (LOD_LO_Name.dirty || LOD_LO_Name.touched || formInvalid)">
+                                        <span *ngIf="LOD_LO_Name.errors.required">Land Owner Name is required.</span>
+                                        <span *ngIf="LOD_LO_Name.errors.pattern">Land Owner Name must be alphabets.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <input [disabled]="mode=='view'" [(ngModel)]="o.LOD_Mobile" pattern="^[0-9+]{10,12}$"
+                                        maxlength="10" #LOD_Mobile="ngModel" name="LOD_Mobile" class="custom-field"
+                                        required>
+                                    <label for="">Mobile
+                                        <span class="mandatory">*</span>
+                                    </label>
+                                    <div class="error-msg" *ngIf="LOD_Mobile.invalid && (LOD_Mobile.dirty || LOD_Mobile.touched || formInvalid)">
+                                        <span *ngIf="LOD_Mobile.errors.required">Mobile is required.</span>
+                                        <span *ngIf="LOD_Mobile.errors?.pattern">Enter Valid Mobile No.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <input [disabled]="mode=='view'" [(ngModel)]="o.LOD_Email" pattern="^[a-zA-Z0-9._%-+]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                                        maxlength="100" #LOD_Email="ngModel" name="LOD_Email" class="custom-field"
+                                        required>
+                                    <label for="">Email
+                                        <span class="mandatory">*</span>
+                                    </label>
+                                    <div class="error-msg" *ngIf="LOD_Email.invalid && (LOD_Email.dirty || LOD_Email.touched || formInvalid)">
+                                        <span *ngIf="LOD_Email.errors.required">Email is required.</span>
+                                        <span *ngIf="LOD_Email.errors?.pattern">Enter Valid Email.</span>
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="col-md-4">
+                                    <label>
+                                        Gender
+                                        <span class="mandatory">*</span>
+                                        <div class="error-msg float-right" *ngIf="LOD_Gender.invalid && (LOD_Gender.dirty || LOD_Gender.touched || formInvalid)">
+                                            <span *ngIf="LOD_Gender.errors.required">Gender required</span>
+                                        </div>
+                                        <span class="clearfix"></span>
+                                    </label>
+                                
+                                <!-- <div class="col-md-4"> -->
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label">
+                                            <input required class="form-check-input" type="radio" value="M" name="LOD_Gender"
+                                                [(ngModel)]="o.LOD_Gender" #LOD_Gender="ngModel" id="inlineRadio1"> Male
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label">
+                                            <input required class="form-check-input" type="radio" value="F" name="LOD_Gender"
+                                                [(ngModel)]="o.LOD_Gender" #LOD_Gender="ngModel" id="inlineRadio1"> Female
+                                        </label>
+                                    </div>
+                                <!-- </div> -->
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <textarea class="custom-field" name="LOD_Address1" maxlength="249" [(ngModel)]="o.LOD_Address1"
+                                        #LOD_Address1="ngModel" required></textarea>
+                                    <label for="">Address1
+                                        <span class="mandatory">*</span>
+                                    </label>
+                                </div>
+                                <div class="error-msg" *ngIf="LOD_Address1.invalid && (LOD_Address1.dirty || LOD_Address1.touched || formSubmitted)">
+                                    <span *ngIf="LOD_Address1.errors.required">Address is required</span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <textarea class="custom-field" name="LOD_Address2" maxlength="249" [(ngModel)]="o.LOD_Address2"
+                                        #LOD_Address2="ngModel"></textarea>
+                                    <label for="">Address2
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="title themeheading rowmarginfix">
+                            Bank Details
+                            <span class="clearfix"></span>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <input [disabled]="mode=='view'" [(ngModel)]="o.LOD_BankName" maxlength="20"
+                                        #LOD_BankName="ngModel" name="LOD_BankName" class="custom-field" pattern="^[A-Za-z]+$" required>
+                                    <label for="">Bank Name
+                                        <span class="mandatory">*</span>
+                                    </label>
+                                </div>
+                                <div class="error-msg" *ngIf="LOD_BankName.invalid && (LOD_BankName.dirty || LOD_BankName.touched || formInvalid)">
+                                    <span *ngIf="LOD_BankName.errors.required">BankName is required.</span>
+                                    <span *ngIf="LOD_BankName.errors.pattern">BankName is Invalid.</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <input [disabled]="mode=='view'" [(ngModel)]="o.LOD_Branch" maxlength="20"
+                                        #LOD_Branch="ngModel" name="LOD_Branch" class="custom-field" pattern="^[A-Za-z]+$" required>
+                                    <label for="">Bank Branch
+                                        <span class="mandatory">*</span>
+                                    </label>
+                                </div>
+                                <div class="error-msg" *ngIf="LOD_Branch.invalid && (LOD_Branch.dirty || LOD_Branch.touched || formInvalid)">
+                                    <span *ngIf="LOD_Branch.errors.required">Branch is required.</span>
+                                    <span *ngIf="LOD_Branch.errors.pattern">Branch is Invalid.</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <input [disabled]="mode=='view'" [(ngModel)]="o.LOD_Acc_No" maxlength="12" minlength="12"
+                                        #LOD_Acc_No="ngModel" name="LOD_Acc_No" class="custom-field" pattern="^[0-9+]{12,15}$" required>
+                                    <label for="">Account No.
+                                        <span class="mandatory">*</span>
+                                    </label>
+                                </div>
+                                <div class="error-msg" *ngIf="LOD_Acc_No.invalid && (LOD_Acc_No.dirty || LOD_Acc_No.touched || formInvalid)">
+                                    <span *ngIf="LOD_Acc_No.errors.required">Account Number is required.</span>
+                                    <span *ngIf="LOD_Acc_No.errors?.pattern">Enter Valid Account No.</span>
+                                    <span *ngIf="LOD_Acc_No.errors?.minlength">Account Number it should contain atleast 12 digits.</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <input [disabled]="mode=='view'" [(ngModel)]="o.LOD_IFSCCode" maxlength="11" minlength="11"
+                                        #LOD_IFSCCode="ngModel" name="LOD_IFSCCode" class="custom-field" placeholder="AAAA0111111" pattern="^[A-Z]{4}0\d{6}$" required>
+                                    <label for="">IFSC Code
+                                        <span class="mandatory">*</span>
+                                    </label>
+                                </div>
+                                <div class="error-msg" *ngIf="LOD_IFSCCode.invalid && (LOD_IFSCCode.dirty || LOD_IFSCCode.touched || formInvalid)">
+                                    <span *ngIf="LOD_IFSCCode.errors.required">IFSC Code is required.</span>
+                                    <span *ngIf="LOD_IFSCCode.errors.pattern">IFSC code is Invalid</span>
+                                    <span *ngIf="LOD_IFSCCode.errors.minlength">IFSC code must be 11 characters</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-box">
+                            <div class="title themeheading rowmarginfix">
+                                Land Details
+                                <span class="clearfix"></span>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input [disabled]="mode=='view'" [(ngModel)]="Survey.LD_SurveyNo" maxlength="5" minlength="5"
+                                            #LD_SurveyNo="ngModel" name="LD_SurveyNo" class="custom-field" pattern="^[0-9.]*$">
+                                        <label for="">Survey No.
+                                            <span class="mandatory">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="error-msg" *ngIf="LD_SurveyNo.invalid && (LD_SurveyNo.dirty || LD_SurveyNo.touched || formInvalid)">
+                                        <span *ngIf="LD_SurveyNo.errors.required">Survey No. is required.</span>
+                                        <span *ngIf="LD_SurveyNo.errors.pattern">Survey No. is Invalid.</span>
+                                        <span *ngIf="LD_SurveyNo.errors.minlength">Survey No. it should contain atleast 5 digits.</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input [disabled]="mode=='view'" [(ngModel)]="Survey.LD_Extents" pattern="^[0-9.]*$"
+                                            maxlength="20" #LD_Extents="ngModel" name="LD_Extents" class="custom-field">
+                                        <label for="">Extents in sq.ft
+                                            <span class="mandatory">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="error-msg" *ngIf="LD_Extents.invalid && (LD_Extents.dirty || LD_Extents.touched || formInvalid)">
+                                        <span *ngIf="LD_Extents.errors.pattern">Extents in sq.ft is Invalid.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input [disabled]="mode=='view'" [(ngModel)]="Survey.LD_Latitude" pattern="^[0-9.]*$"
+                                            maxlength="20" #LD_Latitude="ngModel" name="LD_Latitude" class="custom-field">
+                                        <label for="">Latitude</label>
+                                    </div>
+                                    <div class="error-msg" *ngIf="LD_Latitude.invalid && (LD_Latitude.dirty || LD_Latitude.touched || formInvalid)">
+                                        <span *ngIf="LD_Latitude.errors.pattern">Latitude is Invalid.</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input [disabled]="mode=='view'" [(ngModel)]="Survey.LD_Longitude" pattern="^[0-9.]*$"
+                                            maxlength="20" #LD_Longitude="ngModel" name="LD_Longitude" class="custom-field">
+                                        <label for="">Longitude </label>
+                                    </div>
+                                    <div class="error-msg" *ngIf="LD_Longitude.invalid && (LD_Longitude.dirty || LD_Longitude.touched || formInvalid)">
+                                        <span *ngIf="LD_Longitude.errors.pattern">Longitude is Invalid.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input [disabled]="mode=='view'" [(ngModel)]="Survey.LD_Akar" maxlength="100"
+                                            #LD_Akar="ngModel" name="LD_Akar" class="custom-field" pattern="^[0-9.]*$">
+                                        <label for="">Acre
+                                            <span class="mandatory">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="error-msg" *ngIf="LD_Akar.invalid && (LD_Akar.dirty || LD_Akar.touched || formInvalid)">
+                                        <span *ngIf="LD_Akar.errors.pattern">Acre is Invalid.</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <select class="custom-field" [(ngModel)]="Survey.LD_LT_Id_Fk" #LD_LT_Id_Fk="ngModel"
+                                            name="LD_LT_Id_Fk" [disabled]="mode =='view'">
+                                            <option [value]="undefined" selected>---Select---</option>
+                                            <option [value]="ll.LandType_Id" *ngFor="let ll of LandTypellist;">
+                                                {{ll.LandType_Name}} </option>
+                                        </select>
+                                        <label for="">Land Type
+                                            <span class="mandatory">*</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                  <div class="input-group">
+                                    <select #LT_PV_Id_FK="ngModel" name="LT_PV_Id_FK" [(ngModel)]="Survey.LT_PV_Id_FK" class="custom-field" >
+                                      <option value="undefined" selected>---Select---</option>
+                                      <option *ngFor="let vill of projvillagelist" [value]="vill.PV_Id">
+                                        {{vill.PV_VillageName}}
+                                      </option>
+                                    </select>
+                                    <label>Village<span class="mandatory">*</span>
+                                    </label>
+                                    <!-- <div class="error-msg" *ngIf="RF_PD_Id_FK.invalid && (RF_PD_Id_FK.dirty || RF_PD_Id_FK.touched || formInvalid)">
+                                      <span *ngIf="RF_PD_Id_FK.errors.required">Project is required.</span>
+                                    </div> -->
+                                  </div>
+                                </div>
+                        
+                              </div>
+                            <!--  -->
+                            <div class="row">
+                                <div class="col-md-12 no-background">
+                                    <label for="">Schedule
+                                        <!-- <span class="mandatory">*</span> -->
+                                    </label>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <label for="">North</label>
+                                                <input type="text" class="custom-field" [(ngModel)]="Survey.LD_North"
+                                                    #LD_North="ngModel" name="LD_North" [disabled]="mode =='view'" maxlength="10" pattern="^[0-9.]*$">
+                                            </div>
+                                            <div class="error-msg" *ngIf="LD_North.invalid && (LD_North.dirty || LD_North.touched || formInvalid)">
+                                                <span *ngIf="LD_North.errors.pattern">North is Invalid.</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <label for="">East</label>
+                                                <input type="text" class="custom-field" [(ngModel)]="Survey.LD_East"
+                                                    #LD_East="ngModel" name="LD_East" [disabled]="mode =='view'" maxlength="10" pattern="^[0-9.]*$">
+                                            </div>
+                                            <div class="error-msg" *ngIf="LD_East.invalid && (LD_East.dirty || LD_East.touched || formInvalid)">
+                                                <span *ngIf="LD_East.errors.pattern">East is Invalid.</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <label for="">South</label>
+                                                <input type="text" class="custom-field" [(ngModel)]="Survey.LD_South"
+                                                    #LD_South="ngModel" name="LD_South" [disabled]="mode =='view'" maxlength="10" pattern="^[0-9.]*$">
+                                            </div>
+                                            <div class="error-msg" *ngIf="LD_South.invalid && (LD_South.dirty || LD_South.touched || formInvalid)">
+                                                <span *ngIf="LD_South.errors.pattern">South is Invalid.</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="input-group">
+                                                <label for="">West</label>
+                                                <input type="text" class="custom-field" [(ngModel)]="Survey.LD_West"
+                                                    #LD_West="ngModel" name="LD_West" [disabled]="mode =='view'" maxlength="10" pattern="^[0-9.]*$">
+                                            </div>
+                                            <div class="error-msg" *ngIf="LD_West.invalid && (LD_West.dirty || LD_West.touched || formInvalid)">
+                                                <span *ngIf="LD_West.errors.pattern">West is Invalid.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <select class="custom-field" [(ngModel)]="Survey.LD_Mop_Id_Fk" #LD_Mop_Id_Fk="ngModel"
+                                            name="LD_Mop_Id_Fk" [disabled]="mode =='view'">
+                                            <option [value]="undefined" selected>---Select---</option>
+                                            <option [value]="mop.MOP_Id" *ngFor="let mop of Moplist;">
+                                                {{mop.MOP_Name}} </option>
+                                        </select>
+                                        <label for="">Mode of Procurement<span class="mandatory">*</span>
+                                        </label>
+                                        
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3" *ngIf="Survey.LD_Mop_Id_Fk==3">
+                                    <div class="input-group">
+                                        <select class="custom-field" [(ngModel)]="Survey.LD_SP_Id_Fk" #LD_SP_Id_Fk="ngModel"
+                                            name="LD_SP_Id_Fk" [disabled]="mode =='view'">
+                                            <option [value]="undefined" selected>---Select---</option>
+                                            <option [value]="spl.SharingPattern_Id" *ngFor="let spl of Sharinglist;">
+                                                {{spl.SharingPattern_Name}} </option>
+                                        </select>
+                                        <label for="">Sharing Pattern
+
+                                        </label>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <label for="">CAD </label>
+                                        <input type="file" #Image accept="application/pdf" (change)="imageUpload($event.target.files)"
+                                            id="LD_Cad" name="LD_Cad" [disabled]="mode=='view'" [(ngModel)]="Survey.LD_Cad"
+                                            #LD_Cad="ngModel">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <label for="">Sketch </label>
+                                        <input type="file" #Image accept="application/pdf" (change)="SketchimageUpload($event.target.files)"
+                                            id="LD_Sketch" [disabled]="mode=='view'" name="LD_Sketch" [(ngModel)]="Survey.LD_Sketch"
+                                            #LD_Sketch="ngModel">
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <button class="btn btn-primary" [disabled]="mode=='view'" type="button" (click)="FileDetails(Survey)">Add</button>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <td>Sl No.</td>
+                                            <td> Survey No </td>
+                                            <td>Village</td>
+                                            <td>Procurement Type</td>
+                                            <td> Extents </td>
+                                            <td> Akar </td>
+                                            <td>Latitude</td>
+                                            <td>Longitude</td>
+                                            <td>North</td>
+                                            <td>South</td>
+                                            <td>East</td>
+                                            <td>West</td>
+                                            <td>Cad File</td>
+                                            <td>Sketch File</td>
+                                            <td>Delete</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let sl of SurveyList; let i=index">
+                                            <td>{{i+1}}.</td>
+                                            <td>{{sl.LD_SurveyNo}}</td>
+                                            <td>{{sl.PV_VillageName}}</td>
+                                            <td>{{sl.MOP_Name}}</td>
+                                            <td>{{sl.LD_Extents}} </td>
+                                            <td>{{sl.LD_Akar}}</td>
+                                            <td>{{sl.LD_Latitude}}</td>
+                                            <td>{{sl.LD_Longitude}}</td>
+                                            <td>{{sl.LD_North}}</td>
+                                            <td>{{sl.LD_South}}</td>
+                                            <td>{{sl.LD_East}}</td>
+                                            <td>{{sl.LD_West}}</td>
+                                            <td>
+                                                <a class="float-right" [hidden]="sl.LD_Cad==null" target="_blank" href="{{sl.LD_Cad}}">view</a>
+                                            </td>
+        
+                                            
+                                            <td>
+                                                <a class="float-right" [hidden]="sl.LD_Sketch==null" target="_blank" href="{{sl.LD_Sketch}}">view</a>
+                                            </td>
+                                            <td *ngIf="!(mode=='view')"><i class="fa fa-trash" (click)="removeFile(i)"></i></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-primary" [disabled]="mode=='view'" *ngIf="show=='Y'" type="submit">Save</button>&nbsp;
+                        <button type="button" [disabled]="mode=='view'" (click)="close()" data-dismiss="modal" class="btn btn-primary">Cancel</button>
+                    </div>
+                </div>
+                <!-- <div class="modal-footer">
+
+                </div> -->
+            </div>
+        </form>
+    </div>
+</div>

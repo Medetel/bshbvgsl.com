@@ -1,0 +1,57 @@
+<div class="wrapper">
+  <div class="title themeheading">{{title}}
+    <a class="btn btn-primary float-right" routerLink="/home/applicantview">Back</a>
+  </div>
+
+  <div class="container-fluid">
+      <h4><u>Online Payment</u></h4>
+    <div class="row">
+
+      <!-- <div class="col-md-2">
+        <div class="pay-info-wrapper">
+          <span>Pay Online Via</span>
+          <ul>
+            <li>RTGS</li>
+            <li>IMPS</li>
+            <li>NEFT</li>
+          </ul>
+          <a target="_blank">Pay</a>
+        </div>
+      </div> -->
+      <div class="col-md-2">
+        <div class="pay-info-wrapper">
+          <span>Pay Via AtomGateway</span>
+          <!-- <span>2.5% Conveinence fee will be charged</span> -->
+          <button class="btn btn-primary" (click)="GetKhbchallan()">Pay</button>
+        </div>
+      </div>
+      <!-- <div class="col-md-2">
+        <div class="pay-info-wrapper">
+          <span>Pay Via PayUbiz</span>
+          <span>2.5% Conveinence fee will be charged</span>
+          <a target="_blank" href="https://www.payubiz.in">Pay</a>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="pay-info-wrapper">
+          <span class="small-title">Pay Via Paytm</span>
+          <span>2.5% Conveinence fee will be charged</span>
+          <a target="_blank" href="https://paytm.com/">Pay</a>
+        </div>
+      </div> -->
+    </div>
+    <!-- <h4><u>Offline Payment</u></h4> -->
+    <!-- <div class="row">
+
+      <div class="col-md-2">
+        <div class="pay-info-wrapper">
+          <span>Pay offline Via</span>
+          <span>Demand Draft (DD)</span>
+         
+          <a target="_blank" (click)="payment()">Pay</a>
+        </div>
+      </div>
+    </div> -->
+  </div>
+
+</div>

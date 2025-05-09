@@ -1,0 +1,100 @@
+<div class="wrapper">
+  <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm,itemsPerPage,1)">
+  <div class="title themeheading">
+    {{title}}
+    <div class="float-right">
+      Items per page:
+      <select name="SearchRows" #SearchRows="ngModel" [(ngModel)]="itemsPerPage" class="noofpage"
+                    (change)="itemsPerPageChanged(itemsPerPage, 1)">
+        <option [ngValue]="5">5</option>
+        <option [ngValue]="10">10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+        <option value="40">40</option>
+        <option value="50">50</option>
+      </select>
+      <!-- <button class="btn btn-primary" [routerLink]="['submitrequest-form']">Add</button> -->
+    </div>
+    <span class="clearfix"></span>
+  </div>
+  <!-- <div class="searchbar">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-1">
+          <label>Search</label>
+        </div>
+        <div class="col-md-4">
+          <select name="SearchCriteria" class="form-control" required>
+            <option [ngValue]="undefined" selected>---Select---</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <input type="text" name="SearchText" class="form-control" placeholder="Search.." required>
+        </div>
+        <div class="col-md-3">
+          <button class="btn btn-default" type="submit">Search</button>
+          <button class="btn btn-default" type="reset">Clear</button>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <td>Sl No.</td>
+          <td>Application Number</td>
+          <td>Applicant Name</td>
+          <td>Submitted Date</td>
+          <td>Amount Paid</td>
+          <!-- <td></td> -->
+          <td class="text-center">View</td>
+          <td class="text-center">Edit</td>
+          <td class="text-center">Print</td>
+          <!-- <td>Edit</td>
+            <td>Delete</td> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let a of RtiApplicantlist | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index">
+          <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+          <td>{{a.rtiappno}}</td>
+          <td>{{a.rappname}}</td>
+          <td>{{a.submitted_date | date: 'dd/MM/yyyy'}}</td>
+          <td>{{a.PAmount}}</td>
+          <td>
+            <a href="#" [routerLink]="['/home/submitrequest/submitrequest-form',a.rtiappid,'view']">
+              <i class="fa fa-lg fa-eye themecolor"></i>
+            </a>
+          </td>
+          <td>
+            <a href="#" [routerLink]="['/home/submitrequest/submitrequest-form',a.rtiappid,'edit']">
+              <i class="fa fa-lg fa-edit themecolor"></i>
+            </a>
+          </td>
+          <td>
+            <a href="#" [routerLink]="['/home/submitrequest/submitrequest-form',a.rtiappid,'print']">
+              <i class="fa fa-lg fa-print themecolor"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-11">
+            <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)" maxSize="9"
+              directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+              screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+            </pagination-controls>
+          </div>
+          <div class="col-md-1">
+            Total:
+            <span>{{totalItems}}</span>
+          </div>
+        </div>
+      </div>
+  </div>
+</form>
+</div>

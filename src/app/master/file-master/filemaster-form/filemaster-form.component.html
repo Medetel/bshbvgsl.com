@@ -1,0 +1,80 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary float-right" [routerLink]="['/home/filemaster']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <form (ngSubmit)="mode=='edit'?UpdateFile(File):SaveFile(File)" #File="ngForm" name="File">
+  
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-md-4">
+                    <div class="input-group form-group">
+            <input type="text" class="custom-field" name="File_Name" maxlength="100" [(ngModel)]="f.File_Name"
+              #File_Name="ngModel" [disabled]="mode=='view'" pattern="^[a-zA-Z0-9 ]*$" required>
+            <label for="">File name.
+              <span class="mandatory">*</span>
+            </label>
+
+            <div class="error-msg" *ngIf="File_Name.invalid && (File_Name.dirty || File_Name.touched || formInvalid)">
+              <span *ngIf="File_Name.errors.required">File name is required</span>
+              <span *ngIf="File_Name.errors?.pattern">Only AlphaNumeric should enter</span>
+            </div>
+          </div>
+             
+         
+
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+          <div class="col-md-4">
+            <div class="input-group form-group">
+              <!-- <input type="text" class="custom-field" name="File_Dep_Id_FK" maxlength="100" [(ngModel)]="f.File_Dep_Id_FK"
+                #File_Dep_Id_FK="ngModel" [disabled]="mode=='view'" required> -->
+                <select class="custom-field" [(ngModel)]="f.File_Dep_Id_FK" #File_Dep_Id_FK="ngModel" name="File_Dep_Id_FK" 
+                [disabled]="mode=='view'" required>
+                  <option [value]="undefined" selected>---Select---</option>
+                  <option [value]="d.Department_Id" *ngFor="let d of departmentlist;">
+                    {{d.Department_Name}} 
+                  </option>
+              </select>
+              <label for="">Department
+                <span class="mandatory">*</span>
+              </label>             
+              <div class="error-msg" *ngIf="File_Dep_Id_FK.invalid && (File_Dep_Id_FK.dirty || File_Dep_Id_FK.touched || formInvalid)">
+                <span *ngIf="File_Dep_Id_FK.errors.required">Departname name is required</span>
+                <span *ngIf="File_Dep_Id_FK.errors?.pattern">Only AlphaNumeric should enter</span>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-md-4">
+          
+          <div class="input-group form-group">
+            <input type="text" class="custom-field" name="File_Number" maxlength="100" [(ngModel)]="f.File_Number"
+              #File_Number="ngModel" [disabled]="mode=='view'" pattern="^[a-zA-Z0-9 ]*$" required>
+            <label for="">File.
+              <span class="mandatory">*</span>
+            </label>
+
+            <div class="error-msg"
+              *ngIf="File_Number.invalid && (File_Number.dirty || File_Number.touched || formInvalid)">
+              <span *ngIf="File_Number.errors.required"> File number is required</span>
+              <span *ngIf="File_Number.errors?.pattern">Only AlphaNumeric should enter</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="btn-wrapper text-center">
+        <button [disabled]="mode=='view'"class="btn btn-primary" type="submit">Save</button><button [disabled]="mode=='view'" class="btn btn-primary" type="button"  (click)="Cancel()">Cancel</button>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+
+
+

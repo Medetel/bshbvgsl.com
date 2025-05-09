@@ -1,0 +1,109 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    Professional Tax
+    <a class="btn btn-primary float-right" [routerLink]="['/home/payroll/payroll-compliance/professional-tax']">Back</a>
+    <span class="clearfix"></span>
+  </div>
+
+  <form (ngSubmit)="mode=='edit'?UpdateProfessionalTax(Details):SaveProfessionalTax(Details)"
+  #Details="ngForm" name="form1">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="input-group">
+          <input class="custom-field" type="text" name="Pt_desc" maxlength="100" [(ngModel)]="a.Pt_desc" #Pt_desc="ngModel" [disabled]="mode=='view'" required>
+          <label for="">PT Slab Description <span class="mandatory">*</span>
+          </label>
+        </div>
+        <div class="error-msg pull-right"  *ngIf="Pt_desc.invalid && (Pt_desc.dirty || Pt_desc.touched || formInvalid)">
+          <span  *ngIf="Pt_desc.errors.required">Description is reqiured.</span>             
+      </div>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group ">
+          <label for="">Taxable Range</label>
+          <div class="form-inline">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">₹</span>
+              </div>
+              <input  class="form-control" type="number" name="From_amount" maxlength="100" [(ngModel)]="a.From_amount"
+              #From_amount="ngModel" [disabled]="mode=='view'">
+            </div>
+            <span style="margin: -16px 1px 0px 53px; font-size: 34px;"> - </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group">
+          <div class="form-inline">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">₹</span>
+              </div>
+              <input class="form-control" type="number" name="To_amount" maxlength="100" [(ngModel)]="a.To_amount"
+              #To_amount="ngModel" [disabled]="mode=='view'">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="input-group">
+          <label for="">Professional Tax Rate</label>
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">₹</span>
+          </div>
+          <input class="form-control" type="number" name="PT_rate"  [(ngModel)]="a.PT_rate"
+            #PT_rate="ngModel" [disabled]="mode=='view'">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group">
+          <label for="">Surcharge</label>          
+          <input class="form-control" type="number" name="Surcharge_rate"  [(ngModel)]="a.Surcharge_rate"
+          #Surcharge_rate="ngModel" [disabled]="mode=='view'">
+          <div class="input-group-append">
+            <span class="input-group-text" id="basic-addon1">%</span>
+          </div>
+        </div>
+      </div>      
+    </div>
+    <br>
+    <div class="text-center">
+      <button class="btn btn-primary" type="submit">Save</button> &nbsp;
+      <button class="btn btn-primary" type="reset" (click)="Cancel()">Cancel</button>
+    </div>
+    <br>
+    <div class="table-responsive">
+      <table class="table table-stripped grid">
+        <thead>
+          <tr>
+            <td>Sl.No</td>
+            <td>PT Slab Description</td>
+            <td>Taxable Range</td>
+            <td>Professional Tax</td>
+            <td>Surcharge(%)</td>
+            <td class="text-center">Edit</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let in of professionalTax; let i=index">
+            <td>{{(i+1)}}</td>
+            <td>{{in.Pt_desc}}</td>
+            <td>{{in.From_amount}}-{{in.To_amount}}</td>
+            <td>{{in.PT_rate}}</td>
+            <td>{{in.Surcharge_rate}}</td>
+            <td class="text-center">
+              <a href="#" [routerLink]="['/home/payroll/professional-tax/professional-tax-form',in.PT_SLAB_ID,'edit']" >
+                <i class="fa fa-lg fa-edit themecolor"></i>
+            </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  </form>
+</div>

@@ -1,0 +1,332 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <!-- <input type="radio" value="CAN" #dpocancel="ngModel" name="dpocancel" [(ngModel)]="can.dpocancel">Cancellation
+    Request
+    <input type="radio" value="DPO" #dpocancel="ngModel" name="dpocancel" [(ngModel)]="can.dpocancel">DPO Cancellation -->
+  </div>
+  <br>
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+    <li class="nav-item">
+      <a class="nav-link active" id="Cancellation-tab" data-toggle="tab" href="#Cancellation" role="tab" aria-controls="Cancellation"
+        aria-selected="true">Cancellation Request</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="DOP-Cancellation-tab" data-toggle="tab" href="#DOP-Cancellation" role="tab" aria-controls="DOP-Cancellation"
+        aria-selected="false">DPO Cancellation</a>
+    </li>
+  </ul>
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade fade show active" id="Cancellation" role="tabpanel" aria-labelledby="Cancellation-tab">
+
+      <br>
+      <div class="wrapper">
+        <form #searchForm1="ngForm" (ngSubmit)="onSearch(searchForm1,itemsPerPage,1)">
+          <div class="searchbar">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-1">
+                  <label for="">Search</label>
+                </div>
+                <div class="col-md-3">
+                  <select name="SearchCriteria1" #SearchCriteria1="ngModel" [(ngModel)]="ss.SearchCriteria1" class="form-control"
+                    required>
+                    <option [ngValue]="undefined" selected>---Select---</option>
+                    <option value="appno">Application No.</option>
+                    <option value="proptype">Property Type</option>
+                    <option value="category">Category</option>
+
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <input type="text" name="SearchText1" #SearchText1="ngModel" [(ngModel)]="ss.SearchText1" class="form-control"
+                    placeholder="Search.." required>
+                </div>
+                <div class="col-md-3">
+                  <button class="btn btn-default" type="submit">Search</button>
+                  <button class="btn btn-default" type="reset" (click)="GetOnlineCancelList(itemsPerPage, 1)">Clear</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-striped grid">
+          <thead>
+            <tr>
+              <td rowspan="2">Sl No.</td>
+              <td rowspan="2">Type</td>
+              <td rowspan="2">Category</td>
+              <td rowspan="2">Property No</td>
+              <td rowspan="2">Final Cost(in Rs)</td>
+              <td rowspan="2">Application No.</td>
+              <td rowspan="2">Allotee Name</td>
+              <td rowspan="2">Apply date</td>
+              <td colspan="2" class="text-center">Initial Deposit</td>
+              <td rowspan="2">Allotted date</td>
+              <td rowspan="2">Quota</td>
+              <!-- <td rowspan="2">Installment</td> -->
+              <td rowspan="2">Amt Paid(in Rs)</td>
+              <td rowspan="2"> Action </td>
+            </tr>
+            <!-- <tr>
+              <td>Amount(in Rs)</td>
+              <td>Paid Date</td>
+            </tr> -->
+          </thead>
+          <tbody>
+            <tr *ngFor="let all of AllottedList | paginate: { id: 'paginationall',itemsPerPage: AlitemsPerPage,currentPage: AlcurrentPage,totalItems: AltotalItems }; let i=index">
+              <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+              <td>{{all.PT_Property_Type}}</td>
+              <td>{{all.CA_CategoryName}}</td>
+              <td>{{all.PR_Property_No}}</td>
+
+              <td>{{all.PR_Prop_FinalCost}}</td>
+              <td>{{all.APP_No}}</td>
+              <td>{{all.APP_PA_Name}}</td>
+              <td>{{all.Apply_Date | date:'dd-MM-yyyy'}}</td>
+              <td>
+                <a style="text-decoration:underline;" (click)=payment()>{{all.ID_Amt}}</a>
+              </td>
+              <td>{{all.ID_Date | date:'dd-MM-yyyy'}}</td>
+              <td>{{all.Allotted_Date | date:'dd-MM-yyyy'}}</td>
+              <td>{{all.Quota}}</td>
+              <!-- <td>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <td>Inst No.</td>
+                      <td>Inst. Amt</td>
+                      <td>Inst. Date</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let Ins of all.NoticeLetterDetailModel;let i=index;">
+                      <td>{{i+1}}</td>
+                      <td>{{Ins.INS_Amt}}</td>
+                      <td>{{Ins.INS_Due_Date | date:'dd-MM-yyyy'}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td> -->
+              <td>{{all.Amount_paid}}</td>
+              <td> 
+                <!-- <button class="btn btn-primary" [routerLink]="['/home/allotmentcancellation/cancel-allotment', 'can']">Cancel</button> -->
+                <button class="btn btn-primary" [routerLink]="['/home/allotmentcancellation/cancel-allotment','can',all.APP_Id,all.PR_Id,all.PAC_Can_Type,all.PAC_Id]">Cancel</button>
+              </td>
+            </tr>
+            
+            
+            <!-- <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              
+              
+              <td> <button class="btn btn-primary" [routerLink]="['/home/allotmentcancellation/cancel-allotment', 'can']">Cancel</button>
+              </td>
+            </tr> -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="DOP-Cancellation" role="tabpanel" aria-labelledby="DOP-Cancellation-tab">
+      <div class="container-fluid">
+        <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm,itemsPerPage,1)">
+          <div class="table-responsive">
+            <table class="table table-striped grid">
+              <thead>
+                <tr>
+                  <td rowspan="2">Sl No.</td>
+                  <td rowspan="2">DPO Name</td>
+                  <td rowspan="2">DPO Code</td>
+                  <td rowspan="2">Scheme Name</td>
+                  <td rowspan="2">Scheme No</td>
+
+                  <td rowspan="2">VPub</td>
+                  <td rowspan="2">VDQ</td>
+                  <td rowspan="2">VCor</td>
+                  <td rowspan="2">ALPub</td>
+
+                  <td rowspan="2">AlDQ</td>
+                  <td rowspan="2">ALCor</td>
+                  <td rowspan="2">VTotal</td>
+                  <td rowspan="2">ALTotal</td>
+                  <td rowspan="2">Total</td>
+                </tr>
+
+              </thead>
+              <tbody>
+                <tr *ngFor="let can of cancellist;let i=index">
+                  <td>{{i+1}}</td>
+                  <td>
+                    <a href="#" style="text-decoration:underline;" [routerLink]="['/home/allotmentcancellation/project-names',can.Sch_id]">{{can.DI_District}}</a>
+                  </td>
+                  <td>{{can.DPO_Id}}</td>
+                  <td>{{can.Sch_Name}}</td>
+                  <td>{{can.Sch_Code}}</td>
+
+                  <td>{{can.VPub}}</td>
+                  <td></td>
+                  <td>{{can.VCor}}</td>
+                  <td>{{can.ALPub}}</td>
+
+                  <td></td>
+                  <td>{{can.ALCor}}</td>
+                  <td>{{can.VTotal}}</td>
+                  <td>{{can.ALTotal}}</td>
+                  <td>{{can.Total}}</td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+
+          <div class="container-fluid">
+            <div class="row" style="margin-bottom: 10px">
+
+              <div class="col-md-4">
+                <div class="form-check form-check-inline">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="radio" id="inlineRadio1" name="PAC_Can_Type" [(ngModel)]="CancelAppData.PAC_Can_Type"
+                       #PAC_Can_Type="ngModel" value="NPC" required>
+                       <!-- (change)="getcanceltype(CancelAppData.PAC_Can_Type)" -->
+                    Non
+                    Payment cancellation
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-check form-check-inline">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="radio" id="inlineRadio1" name="PAC_Can_Type" [(ngModel)]="CancelAppData.PAC_Can_Type"
+                       #PAC_Can_Type="ngModel" value="ORC" required>
+                       <!-- (change)="getcanceltype(CancelAppData.PAC_Can_Type)" -->
+                    Own
+                    Request Cancellation
+                  </label>
+
+                </div>
+                <div class="error-msg" *ngIf="PAC_Can_Type.invalid && (PAC_Can_Type.dirty || PAC_Can_Type.touched || formSubmitted)">
+                  <span *ngIf="PAC_Can_Type.errors.required">Cancel type is required</span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="input-group">
+                  <input type="date" class="custom-field" name="PAC_Can_Date" [(ngModel)]="CancelAppData.PAC_Can_Date"
+                    #PAC_Can_Date="ngModel" required>
+                  <label for="">Cancel Date</label>
+                  <div class="error-msg" *ngIf="PAC_Can_Date.invalid && (PAC_Can_Date.dirty || PAC_Can_Date.touched || formSubmitted)">
+                    <span *ngIf="PAC_Can_Date.errors.required">Cancel Date is required</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="input-group">
+                  <input type="text" class="custom-field" name="PAC_Can_Ty" [(ngModel)]="CancelAppData.PAC_Can_Ty"
+                    #PAC_Can_Ty="ngModel" readonly>
+                  <label for="">Cancel Type</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6" *ngIf="CancelAppData.PAC_Can_Type=='NPC'">
+                <div class="input-group">
+                  <input type="date" class="custom-field" name="PAC_INot_date" [(ngModel)]="CancelAppData.PAC_INot_date"
+                    #PAC_INot_date="ngModel" required>
+                  <label for="">1st Notice Date</label>
+                  <div class="error-msg" *ngIf="PAC_INot_date.invalid && (PAC_INot_date.dirty || PAC_INot_date.touched || formSubmitted)">
+                    <span *ngIf="PAC_INot_date.errors.required">1st Notice Date is required</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6" *ngIf="CancelAppData.PAC_Can_Type=='NPC'">
+                <div class="input-group">
+                  <input type="date" class="custom-field" name="PAC_IINot_date" [(ngModel)]="CancelAppData.PAC_IINot_date"
+                    #PAC_IINot_date="ngModel" required>
+                  <label for="">2nd Notice Date</label>
+                  <div class="error-msg" *ngIf="PAC_IINot_date.invalid && (PAC_IINot_date.dirty || PAC_IINot_date.touched || formSubmitted)">
+                    <span *ngIf="PAC_IINot_date.errors.required">2nd Notice Date is required</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6" *ngIf="CancelAppData.PAC_Can_Type=='NPC'">
+                <div class="input-group">
+                  <input type="date" class="custom-field" name="PAC_IIINot_date" [(ngModel)]="CancelAppData.PAC_IIINot_date"
+                    #PAC_IIINot_date="ngModel" required>
+                  <label for="">3rd Notice Date</label>
+                  <div class="error-msg" *ngIf="PAC_IIINot_date.invalid && (PAC_IIINot_date.dirty || PAC_IIINot_date.touched || formSubmitted)">
+                    <span *ngIf="PAC_IIINot_date.errors.required">3rd Notice Date is required</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="input-group">
+                  <textarea name="" id="" cols="30" rows="10" class="custom-field" name="PAC_Remarks" [(ngModel)]="CancelAppData.PAC_Remarks"
+                    #PAC_Remarks="ngModel"></textarea>
+                  <label for="">Remarks</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <input type="file" #Image accept="application/pdf"  id="PAC_Doc"
+                  name="PAC_Doc" [(ngModel)]="CancelAppData.PAC_Doc" #PAC_Doc="ngModel">
+                  <!-- (change)="PAC_Docment($event.target.files)" -->
+              </div>
+            </div>
+
+            <div class="btn-wrapper text-center">
+              <button class="btn btn-primary" type="submit">Cancel Allotment</button>
+              <button class="btn btn-primary" type="reset">Cancel</button>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>

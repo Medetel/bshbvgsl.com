@@ -1,0 +1,68 @@
+<div class="wrapper">
+  <div class="title themeheading">{{title}}
+    <button class="btn btn-primary pull-right" [routerLink]="['/home/district']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+
+  <form (ngSubmit)="mode=='edit'?UpdateDistrict(District):SaveDistrict(District)" #District="ngForm" name="District">
+
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-md-4">
+          <!-- <div class="form-group input-group">
+            <input type="text" class="form-control custom-field">
+            <label for="">District Code</label>
+          </div> -->
+
+
+          <div class="input-group form-group">
+            <input type="text" class="custom-field" name="DI_Code" maxlength="10" [(ngModel)]="d.DI_Code"
+              #DI_Code="ngModel" [disabled]="mode=='view'" pattern="^[a-zA-Z0-9]+-[a-zA-Z0-9]+$" required>
+            <label for="">District Code.
+              <span class="mandatory">*</span>
+            </label>
+
+            <div class="error-msg" *ngIf="DI_Code.invalid && (DI_Code.dirty || DI_Code.touched || formInvalid)">
+              <span *ngIf="DI_Code.errors.required">District code is required</span>
+              <span *ngIf="DI_Code.errors?.pattern">Please Enter Valid District code</span>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-md-4">
+          <!-- <div class="form-group input-group">
+            <input type="text" class="form-control custom-field">
+            <label for="">District</label>
+          </div> -->
+
+
+
+          <div class="input-group form-group">
+            <input type="text" class="custom-field" name="DI_District" maxlength="50" [(ngModel)]="d.DI_District"
+              #DI_District="ngModel" [disabled]="mode=='view'"  pattern="[A-Za-z\u0900-\u097F()]+$"   required>
+            <label for="">District.
+              <span class="mandatory">*</span>
+            </label>
+
+            <div class="error-msg"
+              *ngIf="DI_District.invalid && (DI_District.dirty || DI_District.touched || formInvalid)">
+              <span *ngIf="DI_District.errors.required">District is required</span>
+              <span *ngIf="DI_District.errors?.pattern">it should not contain numbers.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="btn-wrapper text-center">
+        <button [disabled]="mode=='view'"class="btn btn-primary" type="submit">Save</button><button [disabled]="mode=='view'" class="btn btn-primary" type="button"  (click)="Cancel()">Cancel</button>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+
+
+

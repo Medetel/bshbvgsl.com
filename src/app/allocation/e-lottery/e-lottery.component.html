@@ -1,0 +1,259 @@
+<div class="Lottery">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="input-group">
+          <select [(ngModel)]="u.S_NotificationID" required #S_NotificationID="ngModel" name="S_NotificationID" class="custom-field"
+            (change)="GetNotificationProjects(u.S_NotificationID,null)">
+            <option [ngValue]="undefined" selected>---Select---</option>
+            <option [ngValue]="n.DSWOId_NO_Id" *ngFor="let n of Notifications;">
+              {{n.DSWOId_NO_Number}}-{{n.DSWOId_NO_Id}}-{{n.PD_Project_Name}}-{{n.PD_Project_Code}}</option>
+          </select>
+          <label>Notification No.</label>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="input-group">
+          <select [(ngModel)]="u.S_ProjectID" required #S_ProjectID="ngModel" name="S_ProjectID" class="custom-field"
+            (change)="GetNotificationProjects(null,u.S_ProjectID)">
+            <option [ngValue]="undefined" selected>---Select---</option>
+            <option [ngValue]="p.PD_Id" *ngFor="let p of Projects;">
+              {{p.PD_Project_Code}}-{{p.PD_Project_Name}}</option>
+          </select>
+          <label>Project</label>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="input-group">
+          <select [(ngModel)]="u.R_Created_Date" required #R_Created_Date="ngModel" name="R_Created_Date" class="custom-field">
+            <option [ngValue]="undefined" selected>---Select---</option>
+            <option [ngValue]="r.R_Created_Date" *ngFor="let r of Reservation;">
+              {{r.R_Created_Date |  date:'dd/MM/yyyy'}}</option>
+          </select>
+          <label>Reservation/Percentage Change Date </label>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <button class="btn btn-primary" (click)="GetApplicantDetailsforElottery(u.S_NotificationID,u.S_ProjectID,u.R_Created_Date)" type="button">Go
+          <!-- [disabled]="u.S_NotificationID==null || u.S_NotificationID==undefined || u.S_NotificationID==''|| u.S_ProjectID==null || u.S_ProjectID==undefined || u.S_ProjectID==''" -->
+        </button>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td> Sl.No </td>
+            <td> Category </td>
+            <td> Property Count </td>
+            <td class="text-center"> Details </td>
+            <!-- <td> Property Type </td>
+            <td class="text-center">
+              Applicant Details
+            </td> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let lot of ApplDetails;let i = index ;">
+            <td>
+              {{i+1}}
+            </td>
+            <td> {{lot.CA_CategoryName}} </td>
+            <td>{{lot.propCount}}</td>
+            <td>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <td>
+                      Sl No.
+                    </td>
+                    <td>
+                      Property Type
+                    </td>
+                    <td colspan="2" class="text-center">
+                      Applicant Details
+                    </td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let prop of lot.ElotteryPropertyModel; let j = index ;" [hidden]="prop.ElotteryModel == null">
+                    <td> {{j+1}}</td>
+                    <td> {{prop.PT_Property_Type}}</td>
+                    <td>
+                      <table class="table table-stripped">
+                        <thead>
+                          <tr>
+                            <td>Sl No.</td>
+                            <td> Reservation</td>
+                            <td>Applicant count</td>
+                            <td>Reservation Percentage</td>
+                            <td>Property count</td>
+                            <td>Lottery</td>
+                            <td>Prior Allotted</td>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let app of prop.ElotteryModel;let k=index;">
+                            <td>{{k+1}}</td>
+                            <td>{{app.RES_Name}}</td>
+                            <td>{{app.ApplCount}}</td>
+                            <td>{{app.RES_Percentage}}</td>
+                            <td>{{app.Total_Res_Properties}}</td>
+                            <td [ngClass]="app.visible==='Y'?'alert':'notseen'">
+                              <button class="btn btn-primary" type="button" (click)="GetApplicantandPropertyDetailsforElottery(app.lot_Not_ID,app.lot_Proj_ID,app.PT_Id,app.CA_Id,app.RES_Id,i,j,k,app.Total_Res_Properties,u.R_Created_Date)" [disabled]="app.AllottedCount >= app.Total_Res_Properties">GO</button>
+                              <!-- lot.CA_CategoryName,lot.PT_Property_Type,lot.RES_Name, -->
+                            </td>
+                            <td>{{app.AllottedCount}}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+  <div class="title themeheading"> Category: {{Cat}}, Property Type: {{Prop}} , Reservation: {{Res}}, Reservation
+    Percentage: {{RESPercentage}}</div>
+  <div class="clearfix"></div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="table-responsive" style="height:400px;overflow-y:scroll">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <td>Sl No.</td>
+                <td>Application Numbers</td>
+                <td>Name</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let App of EligibleApplDetails;let i=index">
+                <td>{{i+1}}</td>
+                <td>{{App.APP_No}}</td>
+                <td>{{App.APP_PA_Name}}</td>
+              </tr>
+            </tbody>
+            <!-- <tfoot>
+              <tr>
+                <td>Count</td>
+                <td></td>
+              </tr>
+            </tfoot> -->
+          </table>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <!-- <div class="lottery-wrapper text-center">
+          <div class="heading">
+            Property Number
+          </div>
+          <div class="num">
+            {{propno}}
+          </div>
+        </div>
+        <br>
+        <div class="lottery-wrapper text-center">
+          <div class="heading">
+            Registration Number
+          </div>
+          <div class="num">
+            {{appno}}
+
+          </div>
+        </div>
+        <div class="btn-wrapper text-center">
+          <button class="btn btn-primary" type="button" (click)="Elottery()">Next</button>
+
+        </div> -->
+        <div class="btn-wrapper text-center">
+          <button class="btn btn-primary" style="width: 300px;height:80px" type="button" (click)="QElottery(Total_Res_Properties, clickCount)">Randomize</button>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="table-responsive" style="height:400px;overflow-y:scroll">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <td>Sl No.</td>
+                <td>Property Numbers</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let prop of PropertyDetails;let i=index">
+                <td>{{i+1}}</td>
+                <td>{{prop.PR_Property_No}}</td>
+              </tr>
+
+            </tbody>
+            <!-- <tfoot>
+              <tr>
+                <td>Count</td>
+                <td></td>
+              </tr>
+            </tfoot> -->
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row" style="padding:20px 0px;margin-top:20px;">
+      <div class="col-md-4">
+        <!-- <div class="input-group">
+          <input type="text" placeholder=" " class="custom-field">
+          <label>Lottery ID</label>
+      </div> -->
+        <!-- <label for="">Lottery ID : 12254785</label> -->
+      </div>
+      <div class="col-md-1">
+        <!-- <button class="btn btn-primary" style="padding: 2px;">Go</button> -->
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td>Sl No</td>
+            <td>Application No.</td>
+            <td>Name</td>
+            <td>Category</td>
+            <td>Reservation</td>
+            <td>Property No</td>
+            <td>Property type</td>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let allot of ApplAllotDetails;let i=index">
+            <td>{{i+1}}</td>
+            <td>{{allot.APP_No}}</td>
+            <td>{{allot.APP_PA_Name}}</td>
+
+            <td>{{allot.CA_CategoryName}}</td>
+            <td>{{allot.RES_Name}}</td>
+            <td>{{allot.PR_Property_No}}</td>
+            <td>{{allot.PT_Property_Type}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="btn-wrapper text-center">
+    <button class="btn btn-primary" style="width: 150px;height:60px" type="button" (click)="FinalizeElottery()"
+      [disabled]="ApplAllotDetails == '' || ApplAllotDetails == 'undefined' || ApplAllotDetails == 'null'">Finalize</button>
+    <button class="btn btn-primary" style="width: 150px;height:60px" type="button" (click)="Clear()" [disabled]="ApplAllotDetails == '' || ApplAllotDetails == 'undefined' || ApplAllotDetails == 'null'">Clear</button>
+  </div>
+</div>

@@ -1,0 +1,218 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    Current Salary Structure
+    <div class="float-right">
+      <button class="btn btn-primary"  [routerLink]="['/home/payroll/emp-salary-details',Emp_id]">Back</button>     
+      <span class="clearfix"></span>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4">
+        <label>Emp.Code :</label>
+        <span>{{EmpDetails.EMP_EMPLOYEE_CODE}}</span>
+      </div>
+      <div class="col-md-4">
+        <label>Name :</label>
+        <span>{{EmpDetails.EmpName}}</span>
+      </div>
+      <!-- <div class="col-md-4">
+        <label>Design : </label>
+        <span>Software Engg.</span>
+      </div> -->
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label>Dept : </label>
+        <span>{{EmpDetails.Department_Name}}</span>
+      </div>
+      <div class="col-md-4">
+        <label>Division : </label>
+        <span>{{EmpDetails.DI_District}}</span>
+      </div>
+      <div class="col-md-4">
+        <label>Emp Category :</label>
+        <span> {{EmpDetails.Category}}</span>
+      </div>
+    </div>
+    <div class="row">
+      <!-- <div class="col-md-4">
+        <label>Emp. Group : </label>
+        <span>A</span>
+      </div> -->
+      <!-- <div class="col-md-5">
+        <label>Pay Scale : </label>
+        <span>(48000-2000-50000-3000-59000-4000-71000)</span>
+      </div> -->
+    </div>
+  </div>
+  <br>
+
+
+
+
+<div class="wrapper">
+  <div class="title themeheading">
+    Current Salary Structure   
+  </div>
+
+  <div class="row">&nbsp;</div>
+
+
+
+  <br>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="title-one">
+        Standard Earnings
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped grid table-sm table-bordered">
+          <thead>
+            <tr>
+              <td>Sl.No</td>
+              <td>Standard Eraning</td>
+              <td>Amount</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let f of fixedEarningDetails ; let i=index">
+              <td>{{i+1}}</td>
+              <td>{{f.ED_DESC}}</td>
+              <td>{{f.AMOUNT}}</td>
+            </tr>          
+            <tr>
+              <td colspan="2"> <span class="float-right">Total</span> </td>
+              <td>{{TotalFixedEarnings}} </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+<div class="col-md-6">
+      <div class="title-one">
+         Standard Deductions
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped grid table-sm table-bordered">
+          <thead>
+            <tr>
+              <td>Sl.No</td>
+              <td> Standard Deductions</td>
+              <td>Amount</td>
+            </tr>
+          </thead>
+          <tbody>
+           
+           <tr *ngFor="let f of fixedDeduction ; let i=index">
+              <td>{{i+1}}</td>
+              <td>{{f.ED_DESC}}</td>
+              <td>{{f.AMOUNT}}</td>
+            </tr> 
+            <tr>
+              <td colspan="2"> <span class="float-right">Total</span> </td>
+              <td> {{TotalFixedDeduction}} </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    
+  </div>
+  <div class="row">
+    
+    <div class="col-md-6">
+      <div class="title-one">
+        Variable Earnings
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped grid table-sm table-bordered">
+          <thead>
+            <tr>
+              <td>Sl.No</td>
+              <td> Variable Earnings</td>
+              <td>Amount</td>
+            </tr>
+          </thead>
+          <tbody>
+           
+           <tr *ngFor="let f of variableEarningsDetails ; let i=index">
+              <td>{{i+1}}</td>
+              <td>{{f.ED_DESC}}</td>
+              <td>{{f.AMOUNT}}</td>
+            </tr>          
+            <tr>
+            <tr>
+              <td colspan="2"> <span class="float-right">Total</span> </td>
+              <td> {{TotalVaribaleEarnings}} </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="title-one">
+        Variable Deductions
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped grid table-sm table-bordered">
+          <thead>
+            <tr>
+              <td>Sl.No</td>
+              <td>Variable Deductions</td>
+              <td>Amount</td>
+            </tr>
+          </thead>
+          <tbody>
+           
+            <tr *ngFor="let f of variableDeductionDetails ; let i=index">
+              <td>{{i+1}}</td>
+              <td>{{f.ED_DESC}}</td>
+              <td>{{f.AMOUNT}}</td>
+            </tr> 
+            <tr>
+              <td colspan="2"> <span class="float-right">Total</span> </td>
+              <td> {{TotalVariableDeduction}} </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="table-responsive">
+        <table class="table table-sm table-bordered">         
+          <tbody>
+            <tr>
+              <td colspan="2"> <span class="float-right">Gross Salary</span> </td>
+              <td><span class="float-right">₹&nbsp;{{GrossSalary}} </span> </td>             
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="table-responsive">
+        <table class="table table-sm table-bordered">
+          <tbody>
+            <tr>              
+              <td colspan="2"> <span class="float-right">Net Salary</span> </td>
+              <td> <span class="float-right">₹&nbsp;{{NetSalary}} </span>  </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+
+</div>
+
+
+  
+
+</div>

@@ -1,0 +1,267 @@
+
+<div class="wrapper">
+  <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm,itemsPerPage,1)">
+      <div class="title themeheading">{{title}}
+          <div class="float-right">
+              Items per page:
+              <select name="SearchRows" #SearchRows="ngModel" [(ngModel)]="itemsPerPage" class="noofpage" (change)="itemsPerPageChanged(itemsPerPage, 1)">
+                  <option [ngValue]="5">5</option>
+                  <option [ngValue]="10">10</option>
+                  <option value="20">20</option>
+                  <option value="30">30</option>
+                  <option value="40">40</option>
+                  <option value="50">50</option>
+              </select>
+              <!-- <a class="btn btn-primary " [routerLink]="['/home/dept-enquiry/external-enquiry-form']">Add</a> -->
+          </div>
+          <span class="clearfix"></span>
+      </div>
+      <div class="searchbar">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-1">
+                    <label>Search</label>
+                </div>
+                <div class="col-md-4">
+                    <select name="SearchCriteria" #SearchCriteria="ngModel" [(ngModel)]="s.SearchCriteria"
+                        class="form-control" required>
+                        <option [ngValue]="undefined" selected>---Select---</option>
+                        <option value="DOC_CODE">External Enquiry Number</option>
+                        <option value="EMP_EMPLOYEE_CODE">Employee Id</option>
+                        <option value="EMP_FIRST_NAME">Employee Name</option>
+                        <option value="DOC_DATE">Date</option>                                                 
+                    </select>
+                    <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)"
+                        class="error-msg">
+                        <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" name="SearchText" #SearchText="ngModel" [(ngModel)]="s.SearchText"
+                        class="form-control" placeholder="Search.." required>
+                    <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+                        <div *ngIf="SearchText.errors.required">Search text is required</div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-default" type="submit">Search</button>
+                    <button class="btn btn-default" type="reset"
+                        (click)="GetAllExeternalDetails(itemsPerPage, 1)">Clear</button>
+                </div>
+            </div>
+        </div>
+    </div>
+          <table class="table table-striped grid">
+              <thead>
+                  <tr>
+                      <td>Sl No.</td>
+                      <td>External Enq No</td>
+                      <td>Employee Id</td> 
+                      <td>Employee Name</td>   
+                      <td>External Enq Date</td>                         
+                                 
+                    <td class="text-center">View</td>
+                    <td>Closure</td>               
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let E of Examlist | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index"
+                  [ngClass]="{'inactive':E.INACTIVE=='Y'}"
+                  
+                  [class.Blue]="E.DOC_STATUS == 'A'"
+                  [class.Red]="E.DOC_STATUS == 'R'"
+                  [class.DGreen]="E.DOC_STATUS == 'S'"
+                  [class.Green]="E.DOC_STATUS == 'G'">               
+                  <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+                  <td>{{E.DOC_CODE}}</td>
+                  <td>{{E.EMP_EMPLOYEE_CODE}}</td>
+                  <td>{{E.EMP_FIRST_NAME}}</td>               
+                  <td>{{E.DOC_DATE | date:'dd-MM-yyyy'}}</td>
+                  <td class="text-center">
+                      <a href="#" [routerLink]="['/home/dept-enquiry/ex-enquiry-closure-form',E.EEN_ID,'View']">
+                          <i class="fa fa-lg fa-eye themecolor"></i>
+                      </a>
+                  </td>
+                  <!-- <td class="text-center">
+                      <a href="#" [routerLink]="['/home/dept-enquiry/ex-enquiry-closure-form',E.EEN_ID,'Edit']">
+                          <i class="fa fa-lg fa-edit themecolor"></i>
+                      </a>
+                  </td> -->
+                  <td> <button class="btn-primary btn" data-toggle="modal" data-target=".bd-example-modal-lg" (click)="ClosureEnquiryid(E.EEN_ID)">Closure</button>
+                  </td>
+                  <!-- <td class="text-center">
+                      <a href="javascript:void(0);" (click)="delete(E.EEN_ID)">
+                          <i class="fa fa-lg fa-trash themecolor"></i>
+                      </a>
+                  </td> -->
+                  </tr>
+              </tbody>
+          </table>
+          <div class="container-fluid">
+              <div class="row">
+                  <div class="col-md-11">
+                      <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)"
+                          maxSize="9" directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+                          screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                          screenReaderCurrentLabel="You're on page">
+                      </pagination-controls>
+                  </div>
+                  <div class="col-md-1">
+                      Total:
+                      <span>{{totalItems}}</span>
+                  </div>
+              </div>
+          </div>
+     
+  </form>
+</div>
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+aria-hidden="true">
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Closure</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="container-fluid">
+        <div class="title themeheading rowmarginfix">
+            External Enquiry Closure Details
+          </div>
+          <div class="row">
+            <div class="col-md-9">
+              <div class="input-group">
+                <label for="">Recommendations </label>
+                <input type="text" name="EEC_RECCOMD" #EEC_RECCOMD="ngModel" [(ngModel)]="e.EEC_RECCOMD" [disabled]="mode=='View'"class="custom-field" pattern="[A-Za-z]+">
+              </div>
+              <div class="error-msg"
+        *ngIf="EEC_RECCOMD.invalid && (EEC_RECCOMD.dirty || EEC_RECCOMD.touched || formInvalid)">
+        <span *ngIf="EEC_RECCOMD.errors.pattern"> Recommendations should enter alphabets</span>
+      </div>
+            </div>
+            <div class="col-md-3">
+              <div class="input-group">
+                <label for="">Recommended By </label>
+                <input type="text" name="EEC_RECOMM_BYs" #EEC_RECOMM_BYs="ngModel" [(ngModel)]="e.EEC_RECOMM_BYs" [disabled]="mode=='View'"class="custom-field" pattern="[A-Za-z]+">
+              </div>
+              <div class="error-msg"
+        *ngIf="EEC_RECOMM_BYs.invalid && (EEC_RECOMM_BYs.dirty || EEC_RECOMM_BYs.touched || formInvalid)">
+        <span *ngIf="EEC_RECOMM_BYs.errors.pattern"> Recommended By should enter alphabets</span>
+      </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-9">
+              <div class="input-group">
+                <label for="">Comments </label>
+                <input type="text" name="EEC_COMMENT" #EEC_COMMENT="ngModel" [(ngModel)]="e.EEC_COMMENT" [disabled]="mode=='View'"class="custom-field" pattern="[A-Za-z]+">
+              </div>
+              <div class="error-msg"
+              *ngIf="EEC_COMMENT.invalid && (EEC_COMMENT.dirty || EEC_COMMENT.touched || formInvalid)">
+              <span *ngIf="EEC_COMMENT.errors.pattern">Comments should enter alphabets</span>
+            </div>
+            </div>
+            <div class="col-md-3">
+              <div class="input-group">
+                <label for="">Commented By </label>
+                <input type="text" name="EEC_COMMENT_BYs" #EEC_COMMENT_BYs="ngModel" [(ngModel)]="e.EEC_COMMENT_BYs" [disabled]="mode=='View'"class="custom-field" pattern="[A-Za-z]+">
+              </div>
+              <div class="error-msg"
+              *ngIf="EEC_COMMENT_BYs.invalid && (EEC_COMMENT_BYs.dirty || EEC_COMMENT_BYs.touched || formInvalid)">
+              <span *ngIf="EEC_COMMENT_BYs.errors.pattern"> Commented By should enter alphabets</span>
+            </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input-group">
+                <label for=""> Conclusion </label>
+                <input type="text" name="EEC_CONCLUSION" #EEC_CONCLUSION="ngModel" [(ngModel)]="e.EEC_CONCLUSION" [disabled]="mode=='View'"class="custom-field" pattern="[A-Za-z]+">
+              </div>
+              <div class="error-msg"
+              *ngIf="EEC_CONCLUSION.invalid && (EEC_CONCLUSION.dirty || EEC_CONCLUSION.touched || formInvalid)">
+              <span *ngIf="EEC_CONCLUSION.errors.pattern"> Conclusion should enter alphabets</span>
+            </div>
+            </div>
+            <!-- <div class="col-md-6">
+              <label for=""> Conclusion Date: </label>&nbsp;<spn>{{e.EEC_CONCLUSION_DATE}}</spn>
+            </div> -->
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input-group">
+                <label for=""> Recommended Punishment </label>
+                <select name="EEC_RECM_PUNISHMENT" #EEC_RECM_PUNISHMENT ="ngModel" [(ngModel)]="e.EEC_RECM_PUNISHMENT" class="custom-field">
+                  <option value="undefined">--Select--</option>
+                  <option value="1">Demotion</option>
+                  <option value="2">Suspension</option>
+                  <option value="3">Service Termination</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="input-group">
+                <label for="">WEF </label>
+                <input type="date" name="EEC_WEF" #EEC_WEF="ngModel" [(ngModel)]="e.EEC_WEF" [disabled]="mode=='View'"class="custom-field">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input-group">
+                <label for=""> Remarks </label>
+               <textarea name="EEC_REMARKS" #EEC_REMARKS="ngModel" [(ngModel)]="e.EEC_REMARKS" [disabled]="mode=='View'" cols="30" rows="10" class="custom-field"></textarea>
+              </div>
+            </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-inline">
+                  <div class="form-group ">
+                    <label for="" style="color:blue;"> BSHB/HB OM </label>
+                  </div> &nbsp;
+                  <div class="form-group ">
+                    <input *ngIf="!hide" type="file" #Image accept="application/pdf"
+                    (change)="imageUpload4($event.target.files)" id="EEN_OM_UPLOAD" name="EEN_OM_UPLOAD">
+                  <a class=""  target="_blank" href="{{E.EEN_OM_UPLOAD}}">View</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-inline">
+                  <div class="form-group ">
+                    <label for="" style="color:blue;">Complaint Document </label>
+                  </div> &nbsp;
+                  <div class="form-group ">
+                    <input *ngIf="!hide" type="file" #Image accept="application/pdf"
+                    (change)="imageUpload1($event.target.files)" id="EEN_COMP_UPLOAD" name="EEN_COMP_UPLOAD">
+                  <a class=""  target="_blank" href="{{E.EEN_COMP_UPLOAD}}">View</a>
+                  </div>
+                </div>
+              </div>
+        
+              <div class="col-md-4">
+                <div class="form-inline">
+                  <div class="form-group ">
+                    <label for="" style="color:blue;">Other Document </label>
+                  </div> &nbsp;
+                  <div class="form-group ">
+                    <input *ngIf="!hide" type="file" #Image accept="application/pdf"
+                    (change)="imageUpload3($event.target.files)" id="EEN_Other_UPLOAD" name="EEN_Other_UPLOAD">
+                  <a class=""  target="_blank" href="{{E.EEN_Other_UPLOAD}}">View</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+      <br>
+    <div class="d-flex justify-content-center">
+      <button [disabled]="mode=='View'" class="btn btn-primary"type="button" (click)="SaveClosure(e)">Save</button> &nbsp;
+      <button [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button>&nbsp;
+    </div>
+  </div>
+</div>
+</div>
+

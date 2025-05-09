@@ -1,0 +1,18 @@
+
+<ul class="billmenu-new header">
+  <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+    <a [routerLink]="['/home/payroll/payroll-process-details']">Pay Month</a>
+  </li>
+  <!-- <li routerLinkActive="active">
+    <a [routerLink]="['payroll-attendace-leave']">Attendance & Leave  </a>
+  </li> 
+  <li routerLinkActive="active">
+    <a [routerLink]="['payroll-process-payroll']">Process Payroll</a>
+  </li>
+  <li routerLinkActive="active">
+    <a [routerLink]="['payroll-finalize-payroll']">Finalize Payroll  </a>
+  </li>   -->
+</ul>
+<div class="overflow">
+  <router-outlet></router-outlet>
+</div>

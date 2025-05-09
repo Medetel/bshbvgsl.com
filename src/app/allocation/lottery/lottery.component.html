@@ -1,0 +1,35 @@
+<div class="wrapper lot">
+  <div class="title themeheading">   
+      <span class="pull-left">{{title}} </span>  &nbsp;&nbsp;
+    <div class="pull-left lot-type">
+
+        <div class="form-check-inline">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" [routerLink]="['/home/allot/manual-grid']" [(ngModel)]="lott.optradio" #optradio="ngModel" name="optradio" value="manual">Manual Lottery
+            </label>
+          </div>
+        </div>
+    
+      &nbsp;&nbsp;&nbsp;
+      <div class="form-check-inline">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" [routerLink]="['/home/allot']" [(ngModel)]="lott.optradio" #optradio="ngModel" name="optradio" value="elottery">e-Lottery
+          </label>
+        </div>
+      <span class="clearfix"></span>
+     
+  </div>
+  <!-- <button [routerLink]="['/home/allot/manual-grid']">Manual</button> -->
+
+  <router-outlet></router-outlet>
+
+  <!-- <form #Lottery="ngForm" (ngSubmit)="Save(Lottery)" name="form1" novalidate>
+    
+  </form> -->
+</div>
+
+
+
+
+
+

@@ -1,0 +1,212 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- <div class="col-md-5">
+        <div class="input-group">
+          <select class="custom-field" #APP_No="ngModel" name="APP_No"
+            [(ngModel)]="k.APP_No" list="dynmicUserIds" (change)="GetAllPropertyekhata(k.APP_No)" required >
+            <option [value]="undefined" selected>---Select Application No---</option>        
+            <option [value]="c.APP_Id" *ngFor="let c of applicant;">
+              {{c.APP_No}} 
+            </option>
+          </select>
+          <label for="">Application No.
+            <span class="mandatory">*</span>
+          </label>
+        </div> 
+      </div>
+      <div class="col-md-5">
+        <div class="input-group">
+          <select class="custom-field" #PR_Property_No="ngModel" name="PR_Property_No"
+            [(ngModel)]="k.PR_Property_No" list="dynmicUserIds"  required >
+            <option [value]="undefined" selected>---Select Project Name---</option>        
+            <option [value]="p.PR_Id" *ngFor="let p of property;">
+              {{p.PR_Property_No}} 
+            </option>
+          </select>
+          <label for="">Property No.
+            <span class="mandatory">*</span>
+          </label>
+        </div> 
+      </div> -->
+      <div class="col-md-4">
+        <div class="form-group">
+          <label>Application No
+            <span class="mandatory">*</span>
+          </label>
+          <input type="text" class="custom-field" id="txtAppNo" maxlength="30" name="APP_No" value=""
+            #APP_No="ngModel" [(ngModel)]="k.APP_No" required>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label>Property No
+            <span class="mandatory">*</span>
+          </label>
+          <input type="text" class="custom-field" id="txtPropertyNo" maxlength="20" name="PR_Property_No" value=""
+            #PR_Property_No="ngModel" [(ngModel)]="k.PR_Property_No" required>
+
+        </div>
+      </div>
+      <div class="col-md-2" style="margin-top: 1.8%;">
+        <button class="btn btn-primary"  (click)="GetEkhataLists(k.APP_No, k.PR_Property_No)">Go</button>
+      </div> 
+    </div>      
+  </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label><span class="field-title">Name</span>: {{data.APP_PA_Name}}</label>
+        </div>
+        <div class="col-md-6">
+            <label><span class="field-title">DOB</span>: {{data.APP_PA_DOB}}</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label><span class="field-title">Age</span>: {{data.APP_PA_Age}} </label>
+        </div>
+        <div class="col-md-6">
+            <label><span class="field-title">Mobile Number</span>:{{data.APP_PA_MobileNo}}</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label><span class="field-title">Email ID</span>: {{data.APP_PA_Email}}</label>
+        </div>
+        <div class="col-md-6">
+            <label><span class="field-title">Address</span>: {{data.APP_Address1}}</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <label><span class="field-title">Category</span>: {{data.CA_CategoryName}}</label>
+        </div>
+        <div class="col-md-6">
+            <label><span class="field-title">Applicant Type</span>: {{data.Applicant_Type}}</label>
+        </div>
+    </div>
+    <!-- <div class="row">
+        <div class="col-md-6">
+            <label><span class="field-title">Amount</span>: </label>
+        </div>
+        <div class="col-md-6">
+            <label><span class="field-title">Application Fee</span>: </label>
+        </div>
+    </div> -->
+
+    
+
+    <div class="title themeheading" style="padding: 5px;margin-top: 15px">{{title1}}
+        <div class="float-right">
+          Items per page:
+          <select >
+            <option [ngValue]="5">5</option>
+            <option [ngValue]="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+            <option value="50">50</option>
+          </select>
+          <!-- <a class="btn btn-primary " routerLink="/home/khbnotification/khbnotificationform">Add</a> -->
+        </div>
+        <span class="clearfix"></span>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-striped grid">
+          <thead>
+            <tr>
+              <td>Sl No.</td>
+              <td>Installment No.</td>
+              <td>Amount</td>
+              <td>Initial Deposit</td>
+              <td>Maintainance fee</td>
+
+              <!-- <td class="text-center">Edit</td>
+                            <td class="text-center">Delete</td> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let e of data.Installment;let i=index;">
+              <td>{{i+1}}.</td>
+              <td>{{e.Installments_No}}</td>
+              <td>{{e.INS_Amt}}</td>
+              <td>{{e.Initial_Amount}}</td>
+              <td *ngIf="i === 0">{{ e.MF_Amount }}</td> <!-- Display MF_Amount only for the first installment -->
+              <td *ngIf="i !== 0"></td> <!-- Empty cell for other installments -->
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="title themeheading" style="padding: 5px;">{{title2}}
+          <div class="float-right">
+            Items per page:
+            <select >
+              <option [ngValue]="5">5</option>
+              <option [ngValue]="10">10</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+              <option value="40">40</option>
+              <option value="50">50</option>
+            </select>
+            <!-- <a class="btn btn-primary">Add</a> -->
+          </div>
+          <span class="clearfix"></span>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped grid">
+              <thead>
+                <tr>
+                  <td>Sl No.</td>
+                  <td>Project</td>
+                  <td>Scheme</td>
+                  <td>Phase</td>
+                  <td>District</td>
+                  <td>Mode of Payment</td>
+                  <td>Date</td>
+                  <td>Amount</td>
+                 
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let f of data.MaintenanceFee;let i=index;">
+                  <td>{{i+1}}.</td>
+                  <td>{{f.PD_Project_Name}}</td>
+                  <td>{{f.Sch_Name}}</td>
+                  <td>{{f.Phase_Name}}</td>
+                  <td>{{f.DI_District}}</td>
+                  <td>{{f.MF_PaymentMode}}</td>
+                  <td>{{f.MF_App_Pay_Date}}</td>
+                  <td>{{f.MF_Amount}}</td>
+                  
+                </tr>
+              </tbody>
+            </table>
+    
+    
+    
+    
+        <!-- <div class="btn-wrapper text-center">
+         
+              <button class="btn btn-primary">Save</button>
+              <button class="btn btn-primary">Cancel</button>
+         
+        </div> -->
+      </div>
+  
+
+
+     
+
+    <div class="btn-wrapper text-center">
+  
+          <button class="btn btn-primary">Print NOC</button>
+       
+    </div>
+</div>

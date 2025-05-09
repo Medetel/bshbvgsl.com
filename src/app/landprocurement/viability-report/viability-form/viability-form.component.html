@@ -1,0 +1,89 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <div class="float-right">
+      <button class="btn btn-primary" [routerLink]="['/home/viabilityreport']">Back</button>
+    </div>
+    <span class="clearfix"></span>
+  </div>
+
+  <form (ngSubmit)="mode=='edit'?UpdateViabilityReport(viabilityForm):SaveViabilityReport(viabilityForm)"
+    #viabilityForm="ngForm" name="form1">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="v.VR_PR_Id_FK" #VR_PR_Id_FK="ngModel" name="VR_PR_Id_FK"
+              (change)="GetOtherrelatedinfo(v.VR_PR_Id_FK)" [disabled]="mode =='view'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="p.PR_Id_PK" *ngFor="let p of proposallist;">
+                {{p.PR_Id}} </option>
+            </select>
+            <label for="">Proposal Id
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="VR_PR_Id_FK.invalid && (VR_PR_Id_FK.dirty || VR_PR_Id_FK.touched || formInvalid)">
+              <span *ngIf="VR_PR_Id_FK.errors.required">Proposal Id is required.</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="">Proposal for : {{ProposalFor=='Mix'?'Acquisition/Purchase/Joint Ventures':ProposalFor}}</label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3"><label for="">District: {{district}}</label></div>
+        <div class="col-md-3"><label for="">Block: {{Taluk}}</label></div>
+        <div class="col-md-3"><label for="">Village/City/Colony: {{Village}}</label></div>
+        <div class="col-md-3">
+          <label for="">
+            <a *ngIf="v.VR_PR_Id_FK>0" [routerLink]="['/home/landprocurement/proposal-form',v.VR_PR_Id_FK,'view']">
+              View Proposal
+            </a>
+          </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input *ngIf="!hide" type="file" #Image accept="application/pdf" (change)="imageUpload($event.target.files)"
+              id="VR_ReportPath" name="VR_ReportPath" [(ngModel)]="v.VR_ReportPath" #VR_ReportPath="ngModel">
+            <a class="" *ngIf="v.VR_ReportPath!=null && (mode=='view' || mode=='edit')" target="_blank" href="{{v.VR_ReportPath}}">view</a>
+            <label for="">Viability Report<span class="mandatory">*</span></label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <textarea [disabled]="mode=='view'" [(ngModel)]="v.VR_Comments" maxlength="200" #VR_Comments="ngModel"
+              name="VR_Comments" cols="30" rows="10" class="custom-field"></textarea>
+            <label for=""> Comments
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <select [disabled]="mode=='view'" [(ngModel)]="v.VR_Status" #VR_Status="ngModel" name="VR_Status" class="custom-field" required>
+              <option value="">---select---</option>
+              <option [value]="">Viable</option>
+              <option [value]="">Not Viable</option>
+            </select>
+            <label for="">Status<span class="mandatory">*</span></label>
+            <div class="error-msg" *ngIf="VR_Status.invalid && (VR_Status.dirty || VR_Status.touched || formInvalid)">
+              <span *ngIf="VR_Status.errors.required">Status is required.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="text-center">
+        <button class="btn btn-primary" [disabled]="mode=='view'" type="submit">Save</button> &nbsp;
+        <button class="btn btn-primary" [disabled]="mode=='view'" type="reset">Cancel</button>
+        <!-- <button class="btn btn-primary" (click)="Cancel()">Cancel</button> -->
+      </div>
+    </div>
+  </form>
+</div>

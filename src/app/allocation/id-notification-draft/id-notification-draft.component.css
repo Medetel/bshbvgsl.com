@@ -1,0 +1,30 @@
+/* @font-face{
+    font-family: 'Nudi 01 e';
+    src:url(Nudi01e.ttf);
+} */
+
+/* @import url(http://fonts.googleapis.com/earlyaccess/notosanskannada.css);
+body { font-family: "Noto Sans Kannada", sans-serif; font-size: 19.0px; line-height: 1.11em; } */
+
+/* @import url('https://fonts.googleapis.com/css?family=Baloo+Tamma');
+body{
+    font-family: 'Baloo Tamma', cursive;
+} */
+
+
+.header{
+    font-size:30px !important;
+    padding:10px;
+}
+
+.note-title{
+    font-size:30px !important;
+    padding:10px;
+}
+
+.details{
+    padding:20px;
+    /* text-align: center; */
+    width:70%;
+    margin:0px auto;
+}

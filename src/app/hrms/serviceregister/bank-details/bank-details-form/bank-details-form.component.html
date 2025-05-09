@@ -1,0 +1,240 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary pull-right" [routerLink]="['/home/serviceregister/bankdetails']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <form (ngSubmit)="mode=='edit'?UpdateEmplBankDetails(EmplDetails):SaveEmplBankDetails(EmplDetails)"
+    #EmplDetails="ngForm" name="form1">
+    <div class="container-fluid">
+
+      <!--  -->
+      <div class="row">
+        <!-- <div class="col-md-4" *ngIf="!((mode=='view')||(mode=='edit'))">
+        <div class="input-group">
+          <label for=""> Division code </label>
+          <select class="custom-field" [(ngModel)]="b.EMP_DIVISION_ID" #EMP_DIVISION_ID="ngModel"
+            name="EMP_DIVISION_ID"  (change)="ChangeOfDivision(b.EMP_DIVISION_ID)">
+            <option [value]="undefined" selected>---Select---</option>
+            <option [value]="d.DI_Id" *ngFor="let d of DistrictsList;">
+              {{d.DI_District}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group">
+          <label for="">Emp Code </label>
+          <select select class="custom-field" [(ngModel)]="b.EMP_ID" #EMP_ID="ngModel" name="EMP_ID"
+            [disabled]="(mode=='view') || (mode=='edit')" (change)="ChangeOfEmployee(b.EMP_ID)">
+            <option [value]="" selected>--Select--</option>
+            <option [value]="emp.EMP_EMPLOYEE_ID" *ngFor="let emp of AllEmployeeList;">
+              {{emp.EMP_EMPLOYEE_CODE}} &nbsp; {{emp.EMP_FIRST_NAME}}
+            </option>
+          </select>
+        </div>
+      </div> -->
+        <div class="col-md-6">
+          <label for="">Employee Id :</label> &nbsp; <span class="name">  {{detailsEmployee.EMP_EMPLOYEE_CODE}}</span>
+        </div>
+        <div class="col-md-6">
+          <label for=""> Name :</label> &nbsp; <span class="name"> {{detailsEmployee.EmpName}} </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 ">
+          <label for="">Division : </label> &nbsp; <span class="name">{{detailsEmployee.DI_District}} </span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Department : </label> &nbsp; <span class="name">{{detailsEmployee.Department_Name}} </span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Designation : </label> &nbsp; <span class="name">{{detailsEmployee.desg_name}}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <label for="">Employee Category : </label> &nbsp; <span class="name">{{detailsEmployee.Category}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Employee Group : </label> &nbsp; <span class="name">{{detailsEmployee.EmpGroup}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Employee Type : </label> &nbsp; <span class="name">{{detailsEmployee.EmpType}}</span>
+        </div>
+      </div>
+      <!--  -->
+      <div class="title themeheading rowmarginfix">
+       
+        {{title2}}
+                    <!-- <button class="btn btn-primary pull-right" *ngIf="mode=='view' || mode=='edit'" style="margin-top: -3px;" (click)="gotoAdd(EmployeeId)" type="button">Add</button> -->
+      </div>
+      <div class="row">
+        <div class=" col-md-6 col-sm-6">
+          <div class="input-group">
+            <label>Account Number
+              <span class="mandatory">*</span>
+            </label>
+            <br>
+            <input type="text" class="custom-field capitalize" name="BNKACC_NO" maxlength="15" [(ngModel)]="b.BNKACC_NO"
+              #BNKACC_NO="ngModel" [disabled]="mode=='view'" required pattern="^[0-9]{15}$">
+          </div>
+          <div class="error-msg pull-right"  *ngIf="BNKACC_NO.invalid && (BNKACC_NO.dirty || BNKACC_NO.touched || formInvalid)">
+            <span  *ngIf="BNKACC_NO.errors.required">Bank Account No is required</span>  
+              <span  *ngIf="BNKACC_NO.errors?.pattern">Bank Account No should be in proper pattern.</span>                      
+        </div>
+        </div>
+        <div class=" col-md-6  col-sm-6">
+          <div class="input-group">
+            <label>Account Type
+              <span class="mandatory">*</span>
+            </label>
+            <br>
+            <select class="custom-field" [(ngModel)]="b.BNKACC_TYPE" #BNKACC_TYPE="ngModel" name="BNKACC_TYPE"
+              [disabled]="mode=='view'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="e.fix_code_id" *ngFor="let e of AccountNolist;">
+                {{e.code_value}}
+              </option>
+            </select>
+          </div>
+          <div class="error-msg pull-right"  *ngIf="BNKACC_TYPE.invalid && (BNKACC_TYPE.dirty || BNKACC_TYPE.touched || formInvalid)">
+            <span  *ngIf="BNKACC_TYPE.errors.required">Bank Account Type is required</span>                      
+        </div>
+        </div>
+      </div>
+      <div class="row ">
+        <div class="col-md-6 col-sm-6">
+          <div class="input-group">
+            <label>Bank name
+              <span class="mandatory">*</span>
+            </label>
+            <br>
+            <!-- <input type="text" class="custom-field capitalize" name="BNKACC_BANK_NAME" maxlength="50"
+              [(ngModel)]="b.BNKACC_BANK_NAME" #BNKACC_BANK_NAME="ngModel" [disabled]="mode=='view'" required> -->
+
+              <select select class="custom-field" [(ngModel)]="b.BNKACC_BANK_NAME" #BNKACC_BANK_NAME="ngModel"
+                            name="BNKACC_BANK_NAME" [disabled]="mode=='view' || hide== true" >
+                            <option [value]="" selected>--Select--</option>
+                            <option [value]="l.code_value" *ngFor="let l of BankList">
+                                {{l.code_value}}
+                            </option>
+                </select>
+          </div>
+          <div class="error-msg pull-right"  *ngIf="BNKACC_BANK_NAME.invalid && (BNKACC_BANK_NAME.dirty || BNKACC_BANK_NAME.touched || formInvalid)">
+            <span  *ngIf="BNKACC_BANK_NAME.errors.required">Bank Name is required</span>                      
+        </div>
+        </div>
+        <div class="col-md-6  col-sm-6">
+          <div class="input-group">
+            <label>Branch
+              <span class="mandatory">*</span>
+            </label>
+            <br>
+            <input type="text" class="custom-field capitalize" name="BNKACC_BANK_BRANCH" maxlength="50" pattern="[A-Za-z]+"
+              [(ngModel)]="b.BNKACC_BANK_BRANCH" #BNKACC_BANK_BRANCH="ngModel" [disabled]="mode=='view'" required>
+          </div>
+          <div class="error-msg pull-right"  *ngIf="BNKACC_BANK_BRANCH.invalid && (BNKACC_BANK_BRANCH.dirty || BNKACC_BANK_NAME.touched || formInvalid)">
+            <span  *ngIf="BNKACC_BANK_BRANCH.errors.required">Branch is required</span>            
+            <span  *ngIf="BNKACC_BANK_BRANCH.errors.pattern">Branch should alphabets only</span>              
+        </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <div class="input-group">
+            <label>IFSC Code
+              <span class="mandatory">*</span>
+            </label>
+            <br>
+            <input type="text" class="custom-field capitalize" name="BNKACC_IFSC_CODE" maxlength="11" minlength="11" placeholder="AAAA0111111"
+              [(ngModel)]="b.BNKACC_IFSC_CODE" #BNKACC_IFSC_CODE="ngModel" [disabled]="mode=='view'" required pattern="^[A-Z]{4}0\d{6}$">
+          </div>
+          <div class="error-msg pull-right"  *ngIf="BNKACC_IFSC_CODE.invalid && (BNKACC_IFSC_CODE.dirty || BNKACC_IFSC_CODE.touched || formInvalid)">
+            <span  *ngIf="BNKACC_IFSC_CODE.errors.required" >IFSC Code is required</span>
+            <span  *ngIf="BNKACC_IFSC_CODE.errors.pattern">IFSC Code is invalid</span>         
+            <span  *ngIf="BNKACC_IFSC_CODE.errors.minlength">IFSC Code should be 11 digit</span>               
+        </div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <div class="input-group">
+            <label>Contact Number</label>
+            <br>
+            <input type="text" class="custom-field capitalize" name="BNKACC_CONTACT_NO" maxlength="10" minlength="10"
+              [(ngModel)]="b.BNKACC_CONTACT_NO" #BNKACC_CONTACT_NO="ngModel" [disabled]="mode=='view'" pattern="^[0-9]{10}$">
+          </div>
+          <div class="error-msg pull-right"  *ngIf="BNKACC_CONTACT_NO.invalid && (BNKACC_CONTACT_NO.dirty || BNKACC_CONTACT_NO.touched || formInvalid)">
+            <span  *ngIf="BNKACC_CONTACT_NO.errors.pattern">Enter 10 digit no.</span>  
+            <span  *ngIf="BNKACC_CONTACT_NO.errors.minlength">Enter 10 digit no.</span>                      
+        </div>
+        </div>
+      </div>
+      <div class="row">    
+        <!-- <div class="col-md-6 col-sm-6">
+          <label>W.E.F :</label>
+        </div> -->
+      </div>
+
+      <br>
+      <div class="text-center">
+          <button [disabled]="mode=='view'" class="btn btn-primary">{{mode=='edit'?'Edit':'Save'}}</button> &nbsp;
+          <button [disabled]="mode=='view'" (click)="Cancel()" class="btn btn-primary">Cancel</button>
+      </div>
+
+
+      <!--  -->
+
+      <br>
+      <div class="table-responsive">
+          <table class="table table-striped grid">
+              <thead>
+                  <tr>
+                    <td>Sl No.</td>
+                    <td>Bank Id</td>              
+                    <td>Bank Name</td>
+                    <td>Branch</td>
+                    <td>Account Number</td>                    
+                    <td>IFSC Code </td> 
+                    <td class="text-center">View</td>
+                    <td class="text-center">Edit</td>
+                    <td class="text-center">Delete</td>
+                  </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let b of EmployeeBankDetails | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index" 
+                [ngStyle]="{'color':b.BNKACC_STATUS === 'A' ? 'green' : 'black' }">                 
+                    <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+                    <td>{{b.BNKACC_ID}}</td>           
+                    <td>{{b.BNKACC_BANK_NAME}}</td>
+                    <td>{{b.BNKACC_BANK_BRANCH }}</td>
+                    <td>{{b.BNKACC_NO }}</td>
+                    <td>{{b.BNKACC_IFSC_CODE }}</td>
+                    <td class="text-center">
+                        <a href="#" [routerLink]="['/home/serviceregister/bankdetails-form',b.BNKACC_ID,'view',b.EMP_ID]">
+                            <i class="fa fa-lg fa-eye themecolor"></i>
+                        </a>
+                    </td>
+                    <td class="text-center">
+                        <a  *ngIf="b.BNKACC_STATUS != 'A'" href="#" [routerLink]="['/home/serviceregister/bankdetails-form',b.BNKACC_ID,'edit',b.EMP_ID]">
+                            <i class="fa fa-lg fa-edit themecolor"></i>
+                        </a>
+                    </td>
+                    <td class="text-center">
+                        <a (click)="delete(b.BNKACC_ID)" *ngIf="b.BNKACC_STATUS != 'A'">
+                            <i class="fa fa-lg fa-trash themecolor"></i>
+                        </a>
+                    </td>                 
+                </tr>
+              </tbody>
+          </table>
+      </div>
+
+
+    </div>
+    <br>
+    <!-- <div class="text-center">
+    <button class="btn btn-primary" type="submit">Save</button> &nbsp;
+    <button class="btn btn-primary" (click)="Cancel()">Cancel</button>
+  </div> -->
+  </form>
+</div>

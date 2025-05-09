@@ -1,0 +1,125 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    Generate Increment List
+    <button class="btn btn-primary float-right" (click)="Back()">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <div class="container-fluid">
+    <div class="row" *ngIf="mode !== View">
+      <div class="col-md-4">
+        <!-- <label for="">Increment List No. :{{EmployeeList.IncrementOrderNo}}</label> -->
+        <label>Increment List No. &nbsp; <span class="name"> {{EmployeeList[0].IncrementOrderNo }} </span> </label>
+      </div>
+      <div class="col-md-4">
+        <!-- <label for="">Status :{{EmployeeList.DOC_STATUSes}}</label> -->
+        <label>District : &nbsp; <span class="name"> {{ EmployeeList[0].DI_District }} </span> </label>
+      </div>
+      <div class="col-md-4">
+        <!-- <label for="">Status :{{EmployeeList.DOC_STATUSes}}</label> -->
+        <label>Increment year : &nbsp; <span class="name"> {{ EmployeeList[0].INCREMENTT_YEAR_CODE }} </span> </label>
+      </div>
+      <div class="col-md-4">
+        <!-- <label for="">Date : {{EmployeeList.CREATED_DATE}}</label> -->
+        <label>Date : &nbsp; <span class="name">{{ EmployeeList[0].CREATED_DATE | date: 'dd/MM/yyyy' }} </span> </label>
+      </div>
+      <div class="col-md-4">
+        <!-- <label for="">Status :{{EmployeeList.DOC_STATUSes}}</label> -->
+        <label>Status : &nbsp; <span class="name"> {{ EmployeeList[0].DOC_STATUSes }} </span> </label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6" *ngIf="mode === View">
+        <div class="input-group">
+          <label for=""> Select Division </label>
+          <select class="custom-field" [(ngModel)]="a.EMP_DIVISION_ID" #EMP_DIVISION_ID="ngModel"
+          name="EMP_DIVISION_ID">
+          <option [value]="undefined" selected>---Select---</option>
+          <option [value]="d.DI_Id" *ngFor="let d of DistrictsList;">
+            {{d.DI_District}}
+          </option>
+        </select>
+        </div>
+      </div>
+      <!-- <div class="col-md-6"> -->
+        <!-- <div class="input-group">
+          <label for="">Select Designation </label>
+          <select name="" id="" class="custom-field">
+            <option value="">--Select--</option>
+          </select>
+        </div> -->
+      <!-- </div> -->
+
+    </div>
+    <div class="row">
+      <div class="col-md-6 " *ngIf="mode === View">
+        <div class="input-group">
+          <label for="year">Select Increment Year</label>
+          <select name="year" id="year" class="form-control" [(ngModel)]="selectedYear" required>
+            <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+          </select>
+        </div>
+        
+      </div>
+      <div class="col-md-1" *ngIf="mode === View">
+        <button class="btn btn-primary" type="button" (click)="generatelist(a.EMP_DIVISION_ID, selectedYear)">Generate List</button>
+      </div>
+    </div>
+    <div class="title themeheading rowmarginfix">
+      Increment Details
+      <span class="clearfix"></span>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped grid">
+        <thead>
+          <tr>
+            <td>Sl No.</td>
+            <td>Employee Id.....</td>
+            <td>Employee Name</td>
+            <td>Designation</td>
+            <td>Pay Scale </td>
+            <td>Basic Pay [Before Increment]</td>
+            <td>Increment Due Date</td>
+            <td> Basic Pay [After Increment] </td>
+            <td>Increment W.E.F</td>
+            <td>Hold_Ind</td>
+            <td>Next Increment Due Date</td>
+          
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let e of EmployeeList; let i=index">
+              <td>{{i+1}}</td>
+            <td>{{e.EMP_EMPLOYEE_CODE}}</td>
+            <td>{{e.EmployeeName}}</td>
+            <td>{{e.desg_name}}</td>
+            <td>{{e.Pay_Scale_Slab}}</td>
+            <td>{{e.EMP_BASIC_PAY}}</td>
+            <td>{{e.IncrementDueDate|date:'dd/MM/yyyy'}}</td>
+            <td>{{e.BasicPayafterInc}}       
+            </td>
+            <td>{{e.wof|date:'dd/MM/yyyy'}}             
+            </td>
+            <td>
+              <select [(ngModel)]="e.hold_ind"  class="form-control">
+                <!-- <option value="undefined">--Select--</option> -->
+                <option selected [ngValue]="N" >No</option>
+                <option value="Y">Yes</option>               
+              </select>
+            </td>
+            <td>
+              {{e.NextIncrementDueDate|date:'dd/MM/yyyy'}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br>
+    <div class="text-center">
+      <button class="btn btn-primary" type="button" (click)="Save(selectedYear,EmployeeList)" [disabled]="mode=='View'">Save</button>
+      <button class="btn btn-primary" [disabled]="mode=='View'">Cancel</button>
+    </div>
+    <br>
+  </div>
+</div>

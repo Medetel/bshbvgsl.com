@@ -1,0 +1,123 @@
+<div class="wrapper">
+  <div class="title themeheading"> 6(1)
+    <div class="float-right">
+      Items per page:
+      <select name="SearchRows" class="noofpage">
+        <option [ngValue]="5">5</option>
+        <option [ngValue]="10">10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+        <option value="40">40</option>
+        <option value="50">50</option>
+      </select>
+      <a class="btn btn-primary">Add</a>
+    </div>
+    <span class="clearfix"></span>
+  </div>
+  <div class="container-fluid upload" style="background-color:#d2cce9;font-size: 0px;padding: 11px 15px 0px 0px;">
+    <div class="row justify-content-center">
+      <div class="col-md-2">
+        <span style="color: #fff;display: block;text-align: right;font-size:17px;margin-top: 6px;">
+          Select Project
+        </span>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <select class="form-control" required style="background:#fff;">
+            <option [ngValue]="undefined" selected>---Select---</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group"><input type="text" class="form-control"></div>
+      </div>
+      <div class="col-md-1">
+        <button class="btn btn-primary">Go</button>
+      </div>
+      <div class="col-md-3 text-right">
+        <a class="btn btn-primary float-right" style="margin-right:10px;display:inline-block;">Download</a>
+        <a class="btn btn-danger" style="color:#fff;margin:0px 5px;">Upload</a>
+      </div>
+    </div>
+  </div>
+  <div class="searchbar">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-1">
+          <label>Search</label>
+        </div>
+        <div class="col-md-4">
+          <select class="form-control">
+            <option [ngValue]="undefined" selected>---Select---</option>
+          </select>
+          <!-- <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)" class="error-msg">
+            <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+          </div> -->
+        </div>
+        <div class="col-md-4">
+          <input type="text" class="form-control" placeholder="Search.." required>
+          <!-- <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+            <div *ngIf="SearchText.errors.required">Search text is required</div>
+          </div> -->
+        </div>
+        <div class="col-md-3">
+          <button class="btn btn-default" type="submit">Search</button>
+          <button class="btn btn-default" type="reset">Clear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped grid">
+      <thead>
+        <tr>
+          <td rowspan="2">Sl No.</td>
+          <td rowspan="2">Name</td>
+          <td rowspan="2">Address</td>
+          <td rowspan="2">Servey No.</td>
+          <td colspan="4" class="text-center">Boundary</td>
+          <td rowspan="2">Extent A-G</td>
+          <td rowspan="2" class="text-center">View</td>
+          <td rowspan="2" class="text-center">Edit</td>
+          <td rowspan="2" class="text-center">Delete</td>
+        </tr>
+        <tr>
+          <td>East Servey No.</td>
+          <td>West Servey No.</td>
+          <td>North Servey No.</td>
+          <td>South Servey No.</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td></td>
+          <td></td>
+          <td></td>
+
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+
+          <td> </td>
+          <td class="text-center">
+            <a href="javascript:void(0);">
+              <i class="fa fa-lg fa-eye themecolor"></i>
+            </a>
+          </td>
+          <td class="text-center">
+            <a href="javascript:void(0);">
+              <i class="fa fa-lg fa-edit themecolor"></i>
+            </a>
+          </td>
+          <td class="text-center">
+            <a href="javascript:void(0);">
+              <i class="fa fa-lg fa-trash themecolor"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

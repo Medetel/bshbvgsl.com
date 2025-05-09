@@ -1,0 +1,42 @@
+.card{
+    box-shadow: 3px 3px 3px #ccc;
+    border:1px solid #ccc;
+    padding:20px 10px;
+    margin-top:10px;
+    /* background: linear-gradient(rgba(255,255,255,.1), rgba(255,255,255,.1)), url(../../../assets/images/logo.jpg); */
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.card .head{
+    padding:0px 10px 10px;
+}
+
+.card .body{
+    padding:0px 10px 10px;
+}
+
+.card .body span{
+    font-size:20px;
+}
+
+.card .foot{
+    padding:0px 10px; 
+}
+
+.card .data{
+    display:inline-block;
+    font-size:12px;
+}
+
+.card .name{
+    color:#0000ff;
+}
+
+.card .value{
+    color:#B5A422;
+}
+
+tfoot{
+    background: #e2e2e2;
+}

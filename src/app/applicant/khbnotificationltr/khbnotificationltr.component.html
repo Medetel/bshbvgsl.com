@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>KHB</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B"
+        crossorigin="anonymous">
+
+    <style>
+        td {
+            vertical-align: middle !important;
+        }
+
+        .template {
+            padding: 10px;
+        }
+
+        .header-section1 .text-block {
+            display: block;
+            margin-top: 5px;
+        }
+
+        .header-section2 .text-block {
+            display: block;
+            width: 100%;
+            margin-top: 5px;
+        }
+
+        .underline {
+            text-decoration: underline;
+        }
+
+        .font30 {
+            font-size: 30px;
+        }
+
+        .title {
+            padding: 10px;
+        }
+
+        .title .text-block {
+            display: block;
+        }
+
+        .font15 {
+            font-size: 15px;
+        }
+
+        /* .content{
+            
+        } */
+
+        .section {
+            width: 70%;
+            margin: 0px auto;
+            padding: 5px;
+            display: block;
+            margin-top: 30px;
+        }
+
+        .tabular-section {
+            width: 90%;
+            margin: 0px auto;
+        }
+
+        .reducetdpad td {
+            padding: 2px;
+        }
+
+        .installment-table td {
+            width: 20%;
+        }
+
+        .section2 {
+            width: 90%;
+            margin: 0px auto;
+        }
+
+        .block {
+            display: block;
+            width: 100%;
+        }
+
+        .width100 {
+            width: 100%
+        }
+
+        .font20 {
+            font-size: 20px;
+        }
+
+        .info-wrapper {
+            width: 80%;
+            margin: 0px auto;
+        }
+
+        .info-wrapper span {
+            display: block;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .header {
+            padding: 30px 16px;
+            background: #555;
+            color: #f1f1f1;
+            position: sticky;
+            top: 0;
+            width: 100%;
+        }
+
+        /* .sticky {
+            position: sticky;
+            top: 0;
+            width: 100%;
+        } */
+
+        @media print {
+            .break{page-break-after: always;}
+        }
+    </style>
+
+    <!-- <script>
+        window.onscroll = function () { myFunction() };
+        var header = document.getElementById("myHeader");
+        var sticky = header.offsetTop;
+        function myFunction() {
+            if (window.pageYOffset > sticky) {
+                header.classList.add("sticky");
+            } else {
+                header.classList.remove("sticky");
+            }
+        }
+    </script> -->
+
+</head>
+
+<body>
+    <!-- <div *ngFor="let r of Response;">
+        <div *ngFor="let a of r.Reservations;">
+            <div *ngFor="let b of a.AllotedList;">
+                <div class="template" *ngFor="let notificationDetails of b.AllotmentLetterModel;"> -->
+
+    <div class="header" id="myHeader sticky">
+        <button class="btn btn-primary float-right" (click)="myFunction()" style="
+        padding: 3px 15px;
+        margin-top: -17px;">Print Alllotment letter</button>
+    </div>
+    <div *ngFor="let r of PrintAllotmentList;">
+        <div *ngFor="let a of r.Reservations;">
+            <div *ngFor="let b of a.AllotedList;let i=index">
+                <div class="template" *ngFor="let notificationDetails of b.AllotmentLetterModel;">
+                    <div class="header-section1">
+                        <div class="container">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <span class="text-block">ಸಂಖ್ಯೆ: ಕಗೃಮ೦/ಉಪ್ರವ್ಯ/ ಗ್ರಾಸೇ/ ಹಂಚಿಕೆ/ ನಿವೇಶನಗಳು/ 18 - 19</span>
+
+                                    <span class="text-block">SL No. {{i+1}}</span>
+                                    <span class="text-block">ನೊಂದಣಿ ಸಂಖ್ಯೆ : {{notificationDetails.APP_No}}</span>
+                                </div>
+                                <div class="col-md-6 text-center">
+                                    <span class="text-block"> ಗೃಹ ಆಯುಕ್ತರವರ ಕಚೇರಿ </span>
+                                    <span class="text-block">ಕರ್ನಾಟಕ ಗೃಹ ಮಂಡಳಿ,</span>
+                                    <span class="text-block">ಕೆ,ಜಿ, ರಸ್ತೆ,ಬೆಂಗಳೂರು,</span>
+                                    <span class="text-block">ದಿನಾಂಕ:{{ today | date:'dd-MM-yyyy' }}</span>
+                                    <span class="text-block">Reservation- {{notificationDetails.RES_Name}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="header-section2">
+                        <div class="container">
+                            <div class="row">
+                                <span class="text-block underline">ರವರಿಗೆ :-</span>
+                                <span class="text-block">{{notificationDetails.APP_PA_Name}}</span>
+                                <span class="text-block">{{notificationDetails.APP_Address1}}-{{notificationDetails.APP_Address2}}</span>
+                                <span class="text-block">{{notificationDetails.VI_Village}}-{{notificationDetails.HO_Name}}</span>
+                                <span class="text-block">{{notificationDetails.TA_Taluk}}</span>
+                                <span class="text-block">{{notificationDetails.DI_District}}-{{notificationDetails.APP_Pincode}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="title text-center">
+                        <span class="text-block underline font30">ಹಂಚಿಕೆ ತಿಳುವಳಿಕೆ ಪತ್ರ</span>
+                        <span class="text-block font15">ವಿಷಯ: ನೂರು ವಸತಿ ಯೋಜನೆಯಡಿಯಲ್ಲಿ ನಿವೇಶನ ಹಂಚಿಕೆ ತಿಳುವಳಿಕೆ ಪತ್ರ.</span>
+                        <span class="text-block font15">ಉಲ್ಲೇಖ: 1 ) ನಿಮ್ಮ ಅರ್ಜಿ ಸಂಖ್ಯೆ:{{notificationDetails.APP_No}}</span>
+                        <span class="text-block font15">2 ) ಪತ್ರಿಕಾ ಪ್ರಕಟಣೆ ದಿನಾಂಕ: {{notificationDetails.DSWOId_NO_Date | date:'dd-MM-yyyy'}}</span>
+                    </div>
+
+
+                    <div class="content">
+                        <div class="section text-center">
+                            ದಿನಾಂಕ: {{notificationDetails.LO_TS | date:'dd-MM-yyyy'}} ರಿಂದ {{notificationDetails.LO_TS | date:'dd-MM-yyyy'}} ರಂದು ನಡೆದ
+                            ಕರ್ನಾಟಕ ಗೃಹ ಮಂಡಳಿ ಬಡಾವಣೆಯಲ್ಲಿನ ನಿವೇಶನಗಳ ಲಾಟರಿ ಪ್ರಕ್ರಿಯೆಯಲ್ಲಿ ಈ ಕೆಳಕಂಡ ನಿವೇಶನ ಪೂರ್ಣ ಬೆಲೆ ಆಧಾರದ
+                            ಮೇಲೆ ಹಂಚಿಕೆಯಾಗಿದೆಯೆಂದು ತಿಳಿಸಲು ಹರ್ಷಿಸುತ್ತೇವೆ.
+                        </div>
+                        <br>
+                        <br>
+                        <div class="tabular-section">
+                            <table class="table table-bordered">
+                                <thead class="text-center">
+                                    <tr>
+                                        <td>ನಿವೇಶನ ಸಂಖ್ಯೆ</td>
+                                        <td>ವರ್ಗ</td>
+                                        <td>ಅಳತೆ </td>
+                                        <td>ವಿಸ್ತೀರ್ಣ</td>
+                                        <td> ಪಾವತಿ ಮಾಡಿರುವ ನೋಂದಣಿ ಶುಲ್ಕ ( ರೂ)</td>
+                                        <td>ಅಂತಿಮ ಬೆಲೆ ( ರೂ)</td>
+                                    </tr>
+                                    <tr class="text-center reducetdpad">
+                                        <td>1</td>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>5</td>
+                                        <td>6</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr>
+                                        <td style="text-align: center">{{notificationDetails.LOD_Property_No}}</td>
+                                        <td style="text-align: center">{{notificationDetails.CA_CategoryName}}</td>
+                                        <td style="text-align: center">{{notificationDetails.CA_Dimension}}</td>
+                                        <td style="text-align: center">{{notificationDetails.PFC_Sqmt}} </td>
+                                        <td style="text-align: center">{{notificationDetails.PC_RegFee}}</td>
+                                        <td style="text-align: center">{{notificationDetails.PFC_Final_Cost}}</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="tabular-section installment-table">
+                            <table class="table table-bordered">
+                                <thead class="text-center">
+                                    <tr>
+                                        <td rowspan="5">ಈಗಾಗಲೇ ಪಾವತಿಸಿರುವ ಆರಂಭಿಕ ಠೇವಣಿ ( ರೂ) (ID+EMD+PC)</td>
+                                        <td rowspan="5">ಪಾವತಿಸಬೇಕಾದ ಬಾಕಿ ಅಂತಿಮ ಬೆಲೆ ( ರೂ) </td>
+                                        <td>ಕಂತು</td>
+                                        <td>ಮೊತ್ತ ( ರೂಗಳಲ್ಲಿ )</td>
+                                        <td>ಪಾವತಿ ಮಾಡಬೇಕಾದ ಕಡೆಯ ದಿನಾಂಕ</td>
+                                    </tr>
+                                    <tr>
+                                        <td>ಮೊದಲನೆ</td>
+                                        <td>{{notificationDetails.Installments.Inst_I | number}}</td>
+                                        <td>{{notificationDetails.Installments.Inst_I_Duedate}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>ಎರಡನೆ</td>
+                                        <td>{{notificationDetails.Installments.Inst_II | number}}</td>
+                                        <td>{{notificationDetails.Installments.Inst_II_Duedate}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>ಮೂರನೆ</td>
+                                        <td>{{notificationDetails.Installments.Inst_III | number}}</td>
+                                        <td>{{notificationDetails.Installments.Inst_III_Duedate}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>ನಾಲ್ಕನೆ</td>
+                                        <td>{{notificationDetails.Installments.Inst_IV | number}}</td>
+                                        <td>{{notificationDetails.Installments.Inst_IV_Duedate}}</td>
+                                    </tr>
+                                    <tr class="text-center reducetdpad">
+                                        <td>7</td>
+                                        <td>8 = 6 - 7</td>
+                                        <td>9</td>
+                                        <td>10</td>
+                                        <td>11</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align: center">{{notificationDetails.PC_InitialDeposit}}</td>
+                                        <td style="text-align: center">{{notificationDetails.PFC_Final_Cost-notificationDetails.PC_InitialDeposit | number}}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="section2">
+                            <span class="underline">ವಿಶೇಷ ಸೂಚನೆ:-</span>ಹಂಚಿಕೆದಾರರು ಮನೆ / ನಿವೇಶನದ ಬೆಲೆಯನ್ನು ಅಂಕಣ 8 ರಲ್ಲಿ ತಿಳಿಸಿರುವಂತೆ ಒಂದೇ ಇಡಿಗಂಟಿನಲ್ಲಿ
+                            ಮೊದಲ ಕಂತಿನ ಅವಧಿಯೊಳಗೆ ಮಂಡಳಿ ಖಾತೆಗೆ ಜಮಾ ಮಾಡಿ ಕ್ರಯ ಪಡೆದ ನಂತರ ಸದರಿ ಮೊತ್ತದ ಶೇಕಡ 1 % ರಿಯಾಯಿತಿ ಮೊತ್ತವನ್ನು
+                            ಹಿಂದಿರಿಗಿಸಲಾಗುವುದು. ಸೂಚನೆ / ಅವಧಿ ಪುಟ 2 ರಲ್ಲಿ ಮುಂದುವರೆದಿದೆ.
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+                        <div class="float-right text-center">
+                            <span class="text-block block">ಗೃಹ ಆಯುಕ್ತರ ಪರವಾಗಿ ,</span>
+                            <span class="text-block block">ಕರ್ನಾಟಕ ಗೃಹ ಮಂಡಳಿ, </span>
+                            <span class="text-block block">ಬೆಂಗಳೂರು.</span>
+                        </div>
+                        <span class="clearfix"></span>
+                    </div>
+                    <div class="break"></div>
+                    <div class="content">
+                        <div class="title text-center">
+                            <span class="text-block underline font20">ಸೂಚನೆಗಳು / ಅವಧಿ ಮತ್ತು ಷರತ್ತುಗಳುರ</span>
+                        </div>
+
+                        <div class="info-wrapper">
+                            <span>1.ಈ ಹಂಚಿಕೆಯನ್ನು ಕರ್ನಾಟಕ ಗೃಹ ಮಂಡಳಿ ಹಂಚಿಕೆ ನಿಯಮಾವಳಿ 1983 ರನ್ವಯ ಹಾಗೂ ಕಾಲ ಕಾಲಕ್ಕೆ ಅನ್ವಯವಾಗುವ ನಿಯಮಗಳ
+                                ಪ್ರಕಾರ ಹಂಚಿಕೆ ಮಾಡಲಾಗಿದೆ. ಆರ್ಥಿಕ ದುರ್ಬಲ ವರ್ಗದ ಸ್ವತ್ತುಗಳನ್ನು ಪಡೆದ ಹಂಚಿಕೆದಾರರು ಸದರಿ ನಿವೇಶನಗಳನ್ನು
+                                5 ವರ್ಷಗಳ ವರೆಗೆ ಪರಭಾರೆ ವರ್ಗಾವಣೆ ಮಾಡುವಂತಿಲ್ಲ. ಹಾಗೂ ಒಂದು ಒಂದಕ್ಕಿಂತಾ ಹೆಚ್ಚು ಸ್ವತ್ತುಗಳ ಜೋಡಣೆ ಮಾಡುವುದನ್ನು
+                                ನಿರ್ಬಂಧಿಸಿದೆ.
+                            </span>
+
+                            <span>2. ಹಂಚಿಕೆ ಸೂಚನೆ ದೊರೆತ ಕೂಡಲೆ ಪಾವತಿಸ ಬೇಕಾದ ಬಾಕಿ ಅಂತಿಮ ಬೆಲೆಯನ್ನು ಮೇಲೆ ತಿಳಿಸುವಂತೆ, ನಾಲ್ಕು ಸಮಾನ ಕಂತುಗಳಲ್ಲಿ
+                                ನಿಗಧಿತ ದಿನಾಂಕದೊಳಗಾಗಿ, HOUSING COMMISSIONER, KARNATAKA HOUSING BOARD,BENGALURU ಇವರ ಹೆಸರಿನಲ್ಲಿ
+                                D.D ಪಡೆದು ಬ್ಯಾಂಕಿನ ಚಲನ್ ಮುಖಾಂತರ ಕೆಳಗೆ ನಮೂದಿಸಿರುವ ಬ್ಯಾಂಕಿನ ಖಾತೆಗೆ ಪಡೆದು ಬ್ಯಾಂಕಿನ ಚಲನ್ ಮುಖಾಂತರ
+                                ಕೆಳಗೆ ನಮೂದಿಸಿರುವ ಬ್ಯಾಂಕಿನ ಖಾತೆಗೆ ತಪ್ಪದೇ ಪಾವತಿ ಮಾಡುವುದು. ಪಾವತಿಯ ಸಂಧರ್ಭದಲ್ಲಿ ನಿಮ್ಮ ಅರ್ಜಿ/ ನೋಂದಣೀ
+                                ಸಂಖ್ಯೆ ಮತ್ತು ಹಂಚಿಕೆಯಾಗಿರುವ ಸ್ವತ್ತಿನ ಹಂಚಿಕೆದಾರರೇ ಮನವಿ ಸಲ್ಲಿಸಿ ಮನೆ / ನಿವೇಶನ ಬೇಡವೆಂದಲ್ಲಿ ಯಾವುದೇ
+                                ಮುನ್ಸೂಚನೆ ಹಾಗೂ ಕಾರಣ ನೀಡದೆ ಹಂಚಿಕೆ ರದ್ದುಪಡಿಸಿ, ಪ್ರಾರಂಭಿಕ ಠೇವಣಿಯ 25 % ಹಣವನ್ನು ಮುಟ್ಟುಗೋಲು ಹಾಕಿಕೊಳ್ಳಲಾಗುವುದು.
+                                ತಡವಾಗಿ ಹಣವನ್ನು ಪಾವತಿ ಮಾಡುವವರಿಗೆ ನಿಯಮಾನುಸಾರ ಬಡ್ಡಿ ವಿಧಿಸಲಾಗುವುದು .
+                                <span class="block">1) CORPORATION BANK, SC ROAD BRANCH, BANGALORE, A/C NO: 510101002828811(IFSC CODE: CORP0000144)</span>
+                                <span class="block">2) INDUSIND BANK LTD, BASAVANAGUDI BRANCH, BANGALORE, A/C NO: 100021432876(IFSC CODE: INDB0000039)</span>
+                                <span class="block">3) AXIS BANK, JAYANAGAR BRANCH, BANGALORE, A/C NO: 052010100380348 (IFSC CODE:UTIB0000052)
+                                    )
+                                </span>
+                                <span class="block">4) KOTAK MAHINDRA BANK, LEVELE ROAD BRANCH,BANGALORE A/C NO: 9311324652 ( IFSC CODE:KKBK0000422
+                                    )
+                                </span>
+                            </span>
+
+
+                            <span>3.ಈ ನಿವೇಶನವನ್ನು ಒಂದೇ ಇಡಿಗಂಟಿನ ಆಧಾರದ () ಮೇಲೆ ಹಂಚಿಕೆ ಮಾಡಲಾಗಿದೆ</span>
+
+                            <span>4. ನಿವೇಶನಕ್ಕೆ ನಿಗಧಿ ಪಡಿಸಿರುವ ಬೆಲೆಯು ಯೋಜನಾ ಅವಧಿಯೊಳಗೆ ಮಾತ್ರ ಅನ್ವಯಿಸುತ್ತದೆ ಹಾಗು ಅಂತಿಮವಾಗಿರುತ್ತದೆ.
+                                ಈ ಬೆಲೆಯನ್ನು ಯೋಜನಾ ಅವಧಿಯೊಳಗೆ ಯಾವುದೇ ವ್ಯತ್ಯಾಸವಿರುವುದಿಲ್ಲ. </span>
+
+                            <span>5. ಕರ / ನಿರ್ವಹಣಾ ವೆಚ್ಚಗಳನ್ನು ಪ್ರತ್ಯೇಕವಾಗಿ ಪಾವತಿ ಮಾಡಬೇಕಾಗಿರುತ್ತದೆ. ಹಾಗು ಪೂರ್ಣ ಹಣ ಪಾವತಿ ಮಾಡಿದರೆ
+                                ನಿವೇಶನದ ಕ್ರಯಪತ್ರ ನೋಂದಣಿ ಮಾಡಿಸಿ ಕ್ರಯಪತ್ರದ ಜೆರಾಕ್ಸ್ ಪ್ರತಿ ನೀಡಿದ ನಂತರ ಸ್ವಾಧೀನ ಪತ್ರ ನೀಡಲಾಗುವುದು
+                                .
+                            </span>
+
+                            <span>6. ಗೃಹ ಮಂಡಳಿಯ ಕಾಯಿದೆ, ನಿಯಮ ಮತ್ತು ನಿಬಂಧನೆಗಳ ಪ್ರಕಾರ ಎಲ್ಲಾ ಹಕ್ಕುಗಳನ್ನು ಮಂಡಳಿಯು ಕಾಯ್ದಿರಿಸಿದೆ.</span>
+
+                            <span>7. ಮುಂದಿನ ಪರಾಮರ್ಶೆಗಾಗಿ ಎಲ್ಲಾ ಪಾತ್ರ ವ್ಯವಹಾರದ ಒಂದು ಪ್ರತಿಯನ್ನು ಸದರಿ ಹಂಚಿಕೆದಾರರು ಇಟ್ಟುಕೊಳ್ಳಬೇಕು.
+                                ಯಾವಾಗಲೂ ಕ್ಯಾನ್ ಬ್ಯಾಂಕ್ ಕಂಪ್ಯೂಟರ್ ಸರ್ವಿಸಸ್ ಲಿಮಿಟೆಡ್ ನಲ್ಲಿ ಮಾಡಿರುವ ನೋಂದಣಿತ ಉಲ್ಲೇಖ ಸಂಖ್ಯೆ ಮತ್ತು
+                                ಅರ್ಜಿ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಬೇಕು.</span>
+
+                            <span>8.ಆರ್ಥಿಕ ದುರ್ಬಲ ವರ್ಗದ ಸ್ವತ್ತುಗಳನ್ನು ಪಡೆದ ಹಂಚಿಕೆದಾರರುಗಳು ಪರಿಶಿಷ್ಟ ಜಾತಿ / ಪರಿಶಿಷ್ಟ ಪಂಗಡದವರಾಗಿದ್ದಲ್ಲಿ
+                                ಜಾತಿ ಪ್ರಮಾಣ ಪತ್ರವನ್ನು ಹಾಗೂ ವಾರ್ಷಿಕ ವರಮಾನ ರೂ. 17000 ಗಳ ಮಿತಿಯೊಳಗೆ ಇರುವಂತೆ ವರಮಾನ ದೃಢೀಕರಣ ಪತ್ರವನ್ನು
+                                ಸಂಬಂಧಿಸಿದ ತಹಶೀಲ್ಧಾರ್ ರವರಿಂದ ಪಡೆದು ಹಂಚಿಕೆ ಪತ್ರ ತಲುಪಿದ 01 ತಿಂಗಳೊಳಗೆ ಸಹಾಯಕ ಕಾರ್ಯಪಾಲಕ ಅಭಿಯಂತರರು
+                                ಜಿಲ್ಲಾ ಯೋಜನಾ ಕಛೇರಿ, ರವರಿಗೆ ಸಲ್ಲಿಸಲು ತಿಳಿಸಿದೆ. ಈಗಾಗಲೇ ಸಲ್ಲಿಸಿದ್ದಲ್ಲಿ ಮಾಹಿತಿ ನೀಡಲು ಕೋರಿದೆ.
+                                ತಪ್ಪಿದಲ್ಲಿ ಯಾವುದೇ ಕಾರಣ ನೀಡದೇ ಹಂಚಿಕೆ ರದ್ದುಪಡಿಸಿ ನಿಯಮಾನುಸಾರ ಕ್ರಮ ಕೈಗೊಳ್ಳಲಾಗುವುದು.</span>
+
+                            <span> 9. ಹಂಚಿಕೆದಾರರು ತಮ್ಮ ಖಾತೆಯಿಂದ ಮಾತ್ರ RTGS/NEFTಅಥವಾ TRANSFER ಹಣ ಸಂದಾಯ ಮಾಡಬಹುದು. ಆದರೆ ಹಂಚಿಕೆದಾರರಲ್ಲದೇ
+                                ಬೇರೆಯವರ ಖಾತೆಯಿಂದ RTGS/NEFTಅಥವಾ TRANSFER ಖಾತೆಯಿಂದ ಮಾಡಿದರೆ, ಅಂತಹ ಹಣವನ್ನು ಸದರಿ ಹಂಚಿಕೆದಾರರ ಖಾತೆಗೆ
+                                ಜಮಾ ಮಾಡಿಕೊಳ್ಳಲಾಗುವುದಿಲ್ಲ.</span>
+
+                            <span>10. ಹಂಚಿಕೆದಾರರು ನಾಲ್ಕು ಕಂತುಗಳನ್ನು ಬ್ಯಾಂಕಿನಲ್ಲಿ ಹಣ ಸಂದಾಯ ಮಾಡಿದ ನಂತರ ಸ್ಟೇಟ್ಮೆಂಟ್ ಆ ಅಕೌಂಟ್ /ಪಾಸ್
+                                ಶೀಟ್ ಪಡೆದುಕೊಳ್ಳಲು ಅವಕಾಶವಿದ್ದು ಹಂಚಿಕೆ ಪತ್ರಾ ಮತ್ತು ಬಾಂಕಿನ್ ಚಲನ್ಗಳನ್ನು ಕಡ್ಡಾಯವಾಗಿ ತರಬೇಕು .</span>
+
+                            <span>11.ಹಂಚಿಕೆದಾರರು ಪೂರ್ಣ ಹಣವನ್ನು ಒಂದೇ ಇಡಿಗಂಟಿನಲ್ಲಿ ಬ್ಯಾಂಕಿನಲ್ಲಿ ಸಂದಾಯ ಮಾಡಿದ ದಿನಾಂಕವನ್ನು ಪರಿಗಣಿಸುವದಿಲ್ಲ
+                                .ಆದರೆ ಮಂಡಳಿಗೆ ಜಮೆಯಾದ ದಿನಾಂಕವನ್ನು ಪರಿಗಣಿಸಿ ನಂತರ ೧% ರಿಯಾಯಿತಿ (ರಿಬೇಟ್) ನೀಡುವದಕ್ಕೆ ಪರಿಶೀಲಿಸಲಾಗುವುದು
+                                .
+                            </span>
+
+                            <span>12.ಮಂಡಳಿಯ ಯಾವುದೇ ನಗದು ಅಥವಾ ಡಿಮ್ಯಾಂಡ್ ಡ್ರಾಫ್ಟ್ ಅನ್ನು ನೇರವಾಗಿ ಕೇಂದ್ರ ಕಚೇರಿಯಲ್ಲಿ ಸ್ವೀಕರಿಸುವುದಿಲ್ಲ
+                                .ಎಲ್ಲ ಪಾವತಿಗಳು ಸಂಬಂಧಿಸಿದ ಬ್ಯಾಂಕಿನ ಮಂಡಳಿಯ ಖಾತೆಗೆ ಜಮೆಯಾಗುವ ರೀತಿಯಲ್ಲಿ ಸಂದಾಯ ಮಾಡಬೇಕು.</span>
+
+                            <h4>  *************************************************************************************************
+                            </h4>
+                        </div>
+                    </div>
+
+                    <div class="break"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>

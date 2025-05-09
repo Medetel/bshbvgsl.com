@@ -1,0 +1,393 @@
+<div class="wrapper">
+    <div class="title themeheading">
+      {{title}}
+      <button class="btn btn-primary float-right" [routerLink]="['/home/landpurchase/land-pur-agreement/land-pur-payment']">Back</button>
+      <span class="clearfix"></span>
+    </div>
+  
+  
+    <form  #LandOwnerPayment="ngForm"
+                      name="form1">
+                      <!-- (ngSubmit)="mode=='edit'?UpdateLandOwnerPayment(LandOwnerPayment):UpdateLandOwnerPayment(LandOwnerPayment)" -->
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="input-group">
+                            <select #LP_PD_Id_FK="ngModel" name="LP_PD_Id_FK" [(ngModel)]="l.LP_PD_Id_FK" class="custom-field" required
+                              (change)="GetProjectId(l.LP_PD_Id_FK)">
+                              <option value="undefined">---Select---</option>
+                              <option *ngFor="let project of projectlist" [value]="project.PD_Id">
+                                {{project.PD_Project_Code}} - {{project.PD_Project_Name}} - {{project.Phase_Name}}
+                              </option>
+                            </select>
+                            <label>Project Name.<span class="mandatory">*</span>
+                            </label>
+                            <div class="error-msg" *ngIf="LP_PD_Id_FK.invalid && (LP_PD_Id_FK.dirty || LP_PD_Id_FK.touched || formInvalid)">
+                              <span *ngIf="LP_PD_Id_FK.errors.required">Project is required.</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="input-group">
+                            <select #LP_Id_PK="ngModel" name="LP_Id_PK" [(ngModel)]="l.LP_Id_PK" class="custom-field" 
+                            (change)="GetProjectDetailsforPayment(l.LP_PD_Id_FK,l.LP_Id_PK)">
+                              <option value="undefined">---Select---</option>
+                              <option *ngFor="let agree of Agreementlist" [value]="agree.LP_Id_PK">
+                                {{agree.LP_Note_No}} 
+                              </option>
+                            </select>
+                            <label>Agreement No.<span class="mandatory">*</span>
+                            </label>
+                            <!-- <div class="error-msg" *ngIf="LP_PD_Id_FK.invalid && (LP_PD_Id_FK.dirty || LP_PD_Id_FK.touched || formInvalid)">
+                              <span *ngIf="LP_PD_Id_FK.errors.required">Project is required.</span>
+                            </div> -->
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="table-responsive" style="margin-top:15px">
+                        <table class="table table-bordered" style="width: 1800px;">
+                          <thead>
+                            <tr>
+                              <td rowspan="2">Sl No.</td>
+                              <!-- <td rowspan="2">LTP Id</td> -->
+                              <td rowspan="2">Survey No.</td>
+                              <td rowspan="2">Land Owner</td>
+                              <td rowspan="2"> Extends </td>
+
+                              <td rowspan="2"> Latitude </td>
+                              <td rowspan="2"> Longitude </td>
+                              <td rowspan="2">Akar </td>
+                              <td rowspan="2">Land Type</td>
+
+                              <td rowspan="2"> North </td>
+                              <td rowspan="2"> East </td>
+                              <td rowspan="2">West </td>
+                              <td rowspan="2">South</td>
+
+                              <td rowspan="2">Sharing Pattern </td>
+                              <td rowspan="2"> CAD </td>
+                              <td rowspan="2">Sketch </td>
+
+
+                              <td colspan="2" class="text-center">Extent</td>
+                              <td colspan="2" class="text-center">Tippani</td>
+                              <td rowspan="2">Atlas</td>
+                              <td rowspan="2">Khatha</td>
+                              <td rowspan="2">EC</td>
+                              <td rowspan="2">RTC</td>
+                              <td rowspan="2">Revenue Sketch</td>
+                              <td rowspan="2">PT sheet</td>
+                              <td rowspan="2">Akar Bandh</td>
+                              <td rowspan="2">JMC</td>
+                              <td rowspan="2">Select</td>
+                              <!-- <td rowspan="2">Note</td> -->
+                            </tr>
+                            <tr>
+                              <td class="text-center">Acres</td>
+                              <td class="text-center">Guntas</td>
+                              <td>No</td>
+                              <td>Date</td>
+                            </tr>
+                          </thead>
+
+                          <tbody class="data-grid">
+                            <tr *ngFor="let info of LandRecordDetailswithLTP;let i=index" [ngClass]="{'planning':info.LR_From =='Planning'}">
+                              <td>{{i+1}} </td>
+                              <!-- <td>{{info.LR_LTP_Id_Fk}}</td> -->
+                              <td>{{info.LR_SurveyNo}}</td>
+                              <td>{{info.LR_Owner}}</td>
+                              <td>{{info.LD_Extents}}</td>
+                              <td>{{info.LD_Latitude}}</td>
+                              <td>{{info.LD_Longitude}}</td>
+                              <td>{{info.LD_Akar}}</td>
+                              <td>{{info.LandType_Name}}</td>
+                              <td>{{info.LD_North}}</td>
+                              <td>{{info.LD_East}}</td>
+                              <td>{{info.LD_West}}</td>
+                              <td>{{info.LD_South}}</td>
+                              <td>{{info.SharingPattern_Name}}</td>
+                              <td>
+                                <span *ngIf="info.LD_Cad != null">
+                                  <a href="javascript:void(0);">Yes</a>
+                                </span>
+                                <span *ngIf="info.LD_Cad == null">No</span>
+                              </td>
+                              <td>
+                                <span *ngIf="info.LD_Sketch != null">
+                                  <a href="javascript:void(0);">Yes</a>
+                                </span>
+                                <span *ngIf="info.LD_Sketch == null">No</span>
+                              </td>
+                              <td>{{info.LR_ExtentinAcres}}</td>
+                              <td>{{info.LR_ExtentinGuntas}}</td>
+                              <td>{{info.LR_Tippani_No}}</td>
+                              <td>{{info.LR_Tippani_Date | date:'dd-MM-yyyy'}}</td>
+
+                              <td>
+                                <span *ngIf="info.LR_Atlas != null">
+                                  <a href="javascript:void(0);">Yes</a>
+                                </span>
+                                <span *ngIf="info.LR_Atlas == null">No</span>
+                              </td>
+                              <td>
+                                <span *ngIf="info.LR_Khatha != null">
+                                  <a href="javascript:void(0);">Yes</a>
+                                </span>
+                                <span *ngIf="info.LR_Khatha == null">No</span>
+                              </td>
+                              <td>
+                                <span *ngIf="info.LR_EC != null">
+                                  <a href="javascript:void(0);">Yes</a>
+                                </span>
+                                <span *ngIf="info.LR_EC == null">No</span>
+                              </td>
+                              <td>
+                                <span *ngIf="info.LR_RTC != null">
+                                  <a href="javascript:void(0);">Yes</a>
+                                </span>
+                                <span *ngIf="info.LR_RTC == null">No</span>
+                              </td>
+                              <td>
+                                <span *ngIf="info.LR_Revenue_Sketch != null">
+                                  <a href="javascript:void(0);">Yes</a>
+                                </span>
+                                <span *ngIf="info.LR_Revenue_Sketch == null">No</span>
+                              </td>
+                              <td>
+                                <span *ngIf="info.LR_PTSheet != null">
+                                  <a href="javascript:void(0);">Yes</a>
+                                </span>
+                                <span *ngIf="info.LR_PTSheet == null">No</span>
+                              </td>
+                              <td>
+                                <span *ngIf="info.LR_Akar_Bandh != null">
+                                  <a href="javascript:void(0);">Yes</a>
+                                </span>
+                                <span *ngIf="info.LR_Akar_Bandh == null">No</span>
+                              </td>
+                              <td>
+                                <span *ngIf="info.LR_JMC != null">
+                                  <a href="javascript:void(0);">Yes</a>
+                                </span>
+                                <span *ngIf="info.LR_JMC == null">No</span>
+                              </td>
+
+                              <td>
+                                <input type="checkbox" [value]="info.Select" name="Select" [checked]="info.Select===true" (change)="changeCheckbox(info.LR_Id,info.Select,info.LR_LOD_Id_Fk)">
+                              </td>
+
+                            </tr>
+                            <!-- <tr>
+                                  <td colspan="3" style="text-align: right;font-size: 20px;">Total</td>
+                                  <td colspan="2" style="text-align: right;font-size: 20px;">{{total | number}}</td>
+                                </tr> -->
+                          </tbody>
+                        </table>
+                      </div>
+
+                      <div class="border-box">
+                        <div class="title themeheading">
+                          Payments Made
+                          <span class="clearfix"></span>
+                        </div>
+                        <div class="table-responsive">
+                          <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <td>Sl No</td>
+                                <!-- <td>Survey No</td> -->
+                                <td>Land owner Name</td>
+                                <td>Payment Id</td>
+                                <td>Amount</td>
+                                <td>Status</td>
+                                <td>Payment type</td>
+                                <td>UTR No</td>
+                                <td>Payment Date</td>
+                                <td>Note</td>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let Lo of LandOwner;let i=index">
+                                <td>{{i+1}}</td>
+                                <!-- <td>{{Lo.LD_SurveyNo}}</td> -->
+                                <td>{{Lo.LOD_LO_Name}}</td>
+                                <td></td>
+                                <td>{{Lo.LOP_Amount}}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>{{Lo.LOP_Notes}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+
+                      <div class="title themeheading">
+                        Payment Advice
+                        <span class="clearfix"></span>
+                      </div>
+                      <div class="container-fluid">
+                        <!-- <div class="row">
+                          <div class="col-md-6">
+                            <div class="input-group">
+                              <input type="text" class="custom-field">
+                              <label for="">Bank Name</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="input-group">
+                              <input type="text" class="custom-field">
+                              <label for="">Bank Branch</label>
+                            </div>
+                          </div>
+                        </div> -->
+                        <!-- <div class="row">
+                          <div class="col-md-6">
+                            <div class="input-group">
+                              <input type="text" class="custom-field">
+                              <label for="">Account No.</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="input-group">
+                              <input type="text" class="custom-field">
+                              <label for="">IFSC Code</label>
+                            </div>
+                          </div>
+                        </div> -->
+
+
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label for="">Land Procurement Payment Id:</label>
+                            <label>&nbsp;{{LODetails.LOP_Id_PK}}</label>
+                          </div>
+                          <div class="col-md-3">
+                            <label for="">District:</label>
+                            <label>&nbsp;{{LODetails.DI_District}}</label>
+                          </div>
+                          <div class="col-md-3">
+                            <label for="">Village/City/Colony:</label>
+                            <label>&nbsp;{{LODetails.PD_Village}}</label>
+                            <!-- <label>&nbsp;{{LODetails.PR_Village}}</label> -->
+                          </div>
+                          <div class="col-md-3">
+                            <label for="">Block:</label>
+                            <label>&nbsp;{{LODetails.TA_Taluk}}</label>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <!-- <div class="col-md-3"><label for="">Survey No :</label><label>&nbsp;{{LODetails.LD_SurveyNo}}</label></div> -->
+                          <div class="col-md-3">
+                            <label for="">Land Owner Name:</label>
+                            <label>&nbsp;{{LODetails.LOD_LO_Name}}</label>
+                          </div>
+                          <div class="col-md-3">
+                            <label for="">Account No.:</label>
+                            <label>&nbsp;{{LODetails.LOD_Acc_No}}</label>
+                          </div>
+                          <div class="col-md-3">
+                            <label for="">Bank name:</label>
+                            <label>&nbsp;{{LODetails.LOD_BankName}}</label>
+                          </div>
+                          <div class="col-md-3">
+                            <label for="">Branch:</label>
+                            <label>&nbsp;{{LODetails.LOD_Branch}}</label>
+                          </div>
+                        </div>
+                        <div class="row">
+
+                          <div class="col-md-3">
+                            <label for="">IFSC Code:</label>
+                            <label>&nbsp;{{LODetails.LOD_IFSCCode}}</label>
+                          </div>
+                          <div class="col-md-3">
+                            <label for="">Procurement Type : {{LODetails.PR_For=='Mix'?'Acquisition/Purchase/Joint Ventures':LODetails.PR_For}}</label>
+                          </div>
+                        </div>
+                        <div class="row">
+
+                          <div class="col-md-6">
+                            <div class="input-group">
+                              <input [disabled]="mode=='view'" [(ngModel)]="p.LOP_Amount" maxlength="18" pattern="^[0-9.]*$" #LOP_Amount="ngModel" name="LOP_Amount"
+                                class="custom-field" required>
+                              <label for="">Amount
+                                <span class="mandatory">*</span>
+                              </label>
+                              <div class="error-msg" *ngIf="LOP_Amount.invalid && (LOP_Amount.dirty || LOP_Amount.touched || formInvalid)">
+                                <span *ngIf="LOP_Amount.errors.required">Amount is required.</span>
+                                <span *ngIf="LOP_Amount.errors?.pattern">Enter Valid ammount</span>
+                              </div>
+                            </div>
+                          </div>
+
+
+
+                          <div class="col-md-6">
+                            <div class="input-group">
+                              <textarea [disabled]="mode=='view'" [(ngModel)]="p.LOP_Notes" maxlength="100" #LOP_Notes="ngModel" name="LOP_Notes" class="custom-field"
+                                required></textarea>
+                              <label for="">Notes
+                                <span class="mandatory">*</span>
+                              </label>
+                              <div class="error-msg" *ngIf="LOP_Notes.invalid && (LOP_Notes.dirty || LOP_Notes.touched || formInvalid)">
+                                <span *ngIf="LOP_Notes.errors.required">Note is required.</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-4">
+                            <div class="input-group">
+                              <label for="">File Upload</label>
+                              <input type="file" #LOP_File="ngModel" name="LOP_File" [(ngModel)]="p.LOP_File" #Image accept="application/pdf" [disabled]="mode=='view'"
+                                (change)="LOPFileInput($event.target.files)" id="LOP_File">
+                            </div>
+                          </div>
+                          <div class="col-md-2">
+                            <a class="float-right" [hidden]="Pay_File_Show=='hide'" target="_blank" href="{{p.LOP_File}}">view</a>
+                          </div>
+                        </div>
+
+                        <!-- <div class="table-responsive grid">
+                        <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <td>Sl no.</td>
+                                <td>Installment No.</td>
+                                <td>Account No.</td>
+                                <td>Name</td>
+                                <td>Amount</td>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                              </tr>
+                            </tbody>
+                        </table>
+                      </div> -->
+                        <!-- <div class="row">
+                        <div class="col-md-12 text-center">
+                          <button class="btn btn-primary">Pay Now</button>
+                        </div>  
+                      </div> -->
+                        <div class="row">
+                          <div class="col-md-12 text-center">
+                            <!-- [disabled]="p.LOP_Amount!=null" -->
+                            <button class="btn btn-primary" type="button" [disabled]="mode=='view'" (click)="SaveLopPayment(p)">Send to Finance</button>
+                            &nbsp;
+                            <!-- <button class="btn btn-primary" type="button">Cancel</button> -->
+                            <button class="btn btn-primary" type="reset" [disabled]="mode=='view'">Cancel</button>
+                          </div>
+                        </div>
+                      </div>
+                    </form>
+  </div>

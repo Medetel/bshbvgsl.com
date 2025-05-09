@@ -1,0 +1,104 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary float-right" [routerLink]="['/home/designissue']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <form (ngSubmit)="mode=='edit'? UpdateDesignIssue(DesignIssueForm):SaveDesignIssue(DesignIssueForm)" #DesignIssueForm="ngForm"
+  autocomplete="off">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <!-- <select class="custom-field" > -->
+          <select class="custom-field" #Project="ngModel" name="Project"
+            [(ngModel)]="i.Project" list="dynmicUserIds" [disabled]="mode=='view'" required >
+          <!-- <datalist id="dynmicUserIds"> -->
+            <option [value]="undefined" selected>---Select Project Name---</option>        
+            <option [value]="c.PD_Id" *ngFor="let c of projectcode;">
+              {{c.PD_Project_Code}} - {{c.PD_Project_Name}}
+            </option>
+          <!-- </datalist> -->
+          </select>
+          <label for="">Project Name
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Project.invalid && (Project.dirty || Project.touched || formInvalid)">
+           <span *ngIf="Project.errors.required">Project Name is required</span>
+          </div> 
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="custom-field" #Phase="ngModel" name="Phase" [(ngModel)]="i.Phase" [disabled]="mode=='view'" required>
+          <label for="">Phase
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Phase.invalid && (Phase.dirty || Phase.touched || formInvalid)">
+            <span *ngIf="Phase.errors.required">Phase is required</span>
+           </div> 
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <!-- <select class="custom-field" > -->
+          <select class="custom-field" #Contractor="ngModel" name="Contractor"
+            [(ngModel)]="i.Contractor" list="dynmicUserIds" [disabled]="mode=='view'" required >
+          <!-- <datalist id="dynmicUserIds"> -->
+            <option [value]="undefined" selected>---Select Contractor---</option>        
+            <option [value]="c.Contractor_id" *ngFor="let c of contractorcode;">
+              {{c.Contractor_Code}} - {{c.Contractor_name}}
+            </option>
+          <!-- </datalist> -->
+          </select>
+          <label for="">Contractor
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Contractor.invalid && (Contractor.dirty || Contractor.touched || formInvalid)">
+           <span *ngIf="Contractor.errors.required">Contractor is required</span>
+          </div> 
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <!-- <select class="custom-field" > -->
+          <select class="custom-field" #desiss="ngModel" name="desiss"
+            [(ngModel)]="i.desiss" list="dynmicUserIds" [disabled]="mode=='view'" required >
+          <!-- <datalist id="dynmicUserIds"> -->
+            <option [value]="undefined" selected>---Select Design Issue---</option>        
+            <option [value]="d.desisstype_id" *ngFor="let d of designissuecode;">
+              {{d.desisstype_code}} 
+            </option>
+          <!-- </datalist> -->
+          </select>
+          <label for="">Design Issue
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="desiss.invalid && (desiss.dirty || desiss.touched || formInvalid)">
+           <span *ngIf="desiss.errors.required">Design Issue is required</span>
+          </div> 
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <textarea class="custom-field"#Remarks="ngModel" name="Remarks" [(ngModel)]="i.Remarks" [disabled]="mode=='view'" required></textarea>
+          <label for="">Remarks
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Remarks.invalid && (Remarks.dirty || Remarks.touched || formInvalid)">
+            <span *ngIf="Remarks.errors.required">Remarks is required</span>
+           </div> 
+        </div>
+      </div>
+    </div>
+<div class="text-center">
+  <button class="btn btn-primary" type="submit" [disabled]="mode=='view'">Save</button>&nbsp;
+  <button class="btn btn-primary" type="reset" [disabled]="mode=='view'">Cancel</button>
+</div>
+  </div>
+</form>
+</div>

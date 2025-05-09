@@ -1,0 +1,91 @@
+<div class="wrapper">
+  <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm,itemsPerPage,1)">
+  <div class="title themeheading">
+    View Property
+    <div class="float-right">
+      Items per page:
+      <select name="SearchRows" class="noofpage" (change)="itemsPerPageChanged(itemsPerPage, 1)">
+        <option [ngValue]="5">5</option>
+        <option [ngValue]="10">10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+        <option value="40">40</option>
+        <option value="50">50</option>
+      </select>
+      <button class="btn btn-primary" [routerLink]="['/home/property-recovery/property-recovery-form']">Add</button>
+    </div>
+    <span class="clearfix"></span>
+  </div>
+  <div class="searchbar">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-1">
+          <label>Search</label>
+        </div>
+        <div class="col-md-4">
+          <select name="SearchCriteria" #SearchCriteria="ngModel" [(ngModel)]="s.SearchCriteria" class="form-control"
+          required>
+          <option [ngValue]="undefined" selected>---Select---</option>
+          <option value="Property_Num" selected>Property Number</option>
+          <option value="PD_Project_Name" selected>Project Name</option>
+          <option value="PR_BlK_NME" selected>Building Name</option>
+          <option value="PropertyType" selected>Property Type</option>
+          <option value="PropertyCategory" selected>Property Category</option>
+        </select>
+        </div>
+        <div class="col-md-4">
+          <input type="text" name="SearchText" class="form-control" placeholder="Search.." required>
+        </div>
+        <div class="col-md-3">
+          <button class="btn btn-default" type="submit">Search</button>
+          <button class="btn btn-default" type="reset">Clear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <td>Sl No.</td>          
+          <td>Property No</td>
+          <td>Project Name </td>
+          <td>Building Name</td>
+          <td>Property Type</td>
+          <td>Property Category</td>          
+          <td class="text-center">View</td>
+          <td class="text-center">Edit</td>
+          <td class="text-center">Delete</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+        *ngFor="let R of RecoveryPropertyList | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index">
+          <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}</td>
+          <td>{{R.Property_Num}}</td>
+          <td>{{R.PD_Project_Name}}</td>
+          <td>{{R.PR_BlK_NME}}</td>
+          <td>{{R.PropertyType}}</td>
+          <td>{{R.PropertyCategory}}</td>
+          <td class="text-center">
+            <a href="#" [routerLink]="['/home/property-recovery/property-recovery-form',R.PR_Id,'View']">
+              <i class="fa fa-lg fa-eye themecolor"></i>
+            </a>
+          </td>
+          <td class="text-center">
+            <a href="javascript:void(0);">
+              <i class="fa fa-lg fa-edit themecolor"></i>
+            </a>
+          </td>
+          <td class="text-center">
+            <a href="javascript:void(0);">
+              <i class="fa fa-lg fa-trash themecolor"></i>
+            </a>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</form>
+</div>

@@ -1,0 +1,158 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <div class="float-right">
+      <button class="btn btn-primary" [routerLink]="['/home/boardmeeting']">Back</button>
+    </div>
+    <span class="clearfix"></span>
+  </div>
+
+  <form (ngSubmit)="mode=='edit'?UpdateBoardMeeting(boardmeetingForm):SaveBoardMeeting(boardmeetingForm)"
+    #boardmeetingForm="ngForm" name="form1">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="b.BM_PR_Id_FK" #BM_PR_Id_FK="ngModel" name="BM_PR_Id_FK"
+              (change)="GetOtherrelatedinfo(b.BM_PR_Id_FK)" [disabled]="mode =='view'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="p.PR_Id_PK" *ngFor="let p of proposallist;">
+                {{p.PR_Id}} </option>
+            </select>
+            <label for="">Proposal Id
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="BM_PR_Id_FK.invalid && (BM_PR_Id_FK.dirty || BM_PR_Id_FK.touched || formInvalid)">
+              <span *ngIf="BM_PR_Id_FK.errors.required">Proposal Id is required.</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="">Procurement Type : {{ProposalFor=='Mix'?'Acquisition/Purchase/Joint Ventures':ProposalFor}}</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <label for="">District: {{district}}</label>
+        </div>
+        <div class="col-md-3">
+          <label for="">Block: {{Taluk}}</label>
+        </div>
+        <div class="col-md-3">
+          <label for="">Village/City/Colony: {{Village}}</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input [disabled]="mode=='view'" type="text" [(ngModel)]="b.BM_ResolutionNo" maxlength="20"
+              #BM_ResolutionNo="ngModel" name="BM_ResolutionNo" class="custom-field" pattern="^[0-9]*$" required>
+            <label for="">Resolution No
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="BM_ResolutionNo.invalid && (BM_ResolutionNo.dirty || BM_ResolutionNo.touched || formInvalid)">
+              <span *ngIf="BM_ResolutionNo.errors.required">Resolution No is required.</span>
+              <span *ngIf="BM_ResolutionNo.errors.pattern">Resolution No must be numbers.</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input [disabled]="mode=='view'" type="date" [(ngModel)]="b.BM_ResolutionDate" #BM_ResolutionDate="ngModel"
+              name="BM_ResolutionDate" class="custom-field" required>
+            <label for="">Resolution Date
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="BM_ResolutionDate.invalid && (BM_ResolutionDate.dirty || BM_ResolutionDate.touched || formInvalid)">
+              <span *ngIf="BM_ResolutionDate.errors.required">Resolution Date is required.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input [disabled]="mode=='view'" type="text" [(ngModel)]="b.BM_TotalAcres" #BM_TotalAcres="ngModel"
+              name="BM_TotalAcres" class="custom-field" pattern="([0-9]*[.])?[0-9]+" required>
+            <label for="">Total Acres
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="BM_TotalAcres.invalid && (BM_TotalAcres.dirty || BM_TotalAcres.touched || formInvalid)">
+              <span *ngIf="BM_TotalAcres.errors.required">Total Acre is required.</span>
+              <span *ngIf="BM_TotalAcres.errors.pattern">Enter valid data</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input [disabled]="mode=='view'" type="text" pattern="([0-9]*[.])?[0-9]+" [(ngModel)]="b.BM_RatePerAcre" #BM_RatePerAcre="ngModel"
+              name="BM_RatePerAcre" class="custom-field" required>
+            <label for="">Rate Per Acre
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="BM_RatePerAcre.invalid && (BM_RatePerAcre.dirty || BM_RatePerAcre.touched || formInvalid)">
+              <span *ngIf="BM_RatePerAcre.errors.required">Rate Per Acre is required.</span>
+              <span *ngIf="BM_RatePerAcre.errors.pattern">Enter valid data</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input [disabled]="mode=='view'" type="date" [(ngModel)]="b.BM_BoardMeeting_Date"
+              #BM_BoardMeeting_Date="ngModel" name="BM_BoardMeeting_Date" class="custom-field" required>
+            <label for="">Board Meeting Date
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="BM_BoardMeeting_Date.invalid && (BM_BoardMeeting_Date.dirty || BM_BoardMeeting_Date.touched || formInvalid)">
+              <span *ngIf="BM_BoardMeeting_Date.errors.required">Board Meeting Date is required.</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <textarea [disabled]="mode=='view'" [(ngModel)]="b.BM_Comments" #BM_Comments="ngModel" name="BM_Comments"
+              class="custom-field"></textarea>
+            <label for="">Comments
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input *ngIf="!hide" type="file" #Image accept="application/pdf"
+              (change)="AgendaimageUpload($event.target.files)" id="BM_AgendaFile" name="BM_AgendaFile"
+              [(ngModel)]="b.BM_AgendaFile" #BM_AgendaFile="ngModel">
+            <a class="" *ngIf="b.BM_AgendaFile!=null && mode!=null" target="_blank" href="{{b.BM_AgendaFile}}">view</a>
+            <label for="">Agenda File
+              <span class="mandatory">*</span>
+            </label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input *ngIf="!hide" type="file" #Image accept="application/pdf" (change)="imageUpload($event.target.files)"
+              id="BM_FilePath" name="BM_FilePath" [(ngModel)]="b.BM_FilePath" #BM_FilePath="ngModel">
+            <a class="" *ngIf="b.BM_FilePath!=null  && mode!=null" target="_blank" href="{{b.BM_FilePath}}">view</a>
+            <label for="">Board Meeting File
+              <span class="mandatory">*</span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="text-center">
+        <button class="btn btn-primary" [disabled]="mode=='view'" type="submit">Save</button> &nbsp;
+        <button class="btn btn-primary" type="button" [disabled]="mode=='view'" type="reset">Cancel</button>
+      </div>
+    </div>
+  </form>
+</div>

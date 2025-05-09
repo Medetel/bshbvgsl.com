@@ -1,0 +1,58 @@
+<div class="DemandSurveywithID">
+  <div class="title themeheading" style="padding: 5px;">Demand Survey
+      <div class="float-right">
+          Items per page:
+          <select >
+              <option [ngValue]="5">5</option>
+              <option [ngValue]="10">10</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+              <option value="40">40</option>
+              <option value="50">50</option>
+          </select>
+          <a class="btn btn-primary " [routerLink]="['/home/demandsurvey/demandsurvey-form']">Add</a>
+      </div>
+      <span class="clearfix"></span>
+  </div>
+
+  <div class="table-responsive">
+      <table class="table table-striped grid">
+          <thead>
+              <tr>
+                  <td>Sl No.</td>
+                  <td>Notification No.</td>
+                  <td>Approved date</td>
+                  <td>Application last date</td>
+                  <td>Scheme</td>
+                  <td>District</td>
+                  <td>Project</td>
+                  <td>Phase</td>
+                  <td class="text-center">Edit</td>
+                  <td class="text-center">Delete</td>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>1</td>
+                  <td>1</td>
+                  <td>10-03-2018</td>
+                  <td>20-04-2018</td>
+                  <td>MGRY</td>
+                  <td>Ramnagara</td>
+                  <td>KHB</td>
+                  <td>II</td>
+                  <td class="text-center">
+                      <a href="#">
+                          <i class="fa fa-lg fa-edit themecolor"></i>
+                      </a>
+                  </td>
+                  <td class="text-center">
+                      <a href="javascript:void(0);">
+                          <i class="fa fa-lg fa-trash themecolor"></i>
+                      </a>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+</div>

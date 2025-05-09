@@ -1,0 +1,52 @@
+<!-- <div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      <div class="sidemenu">
+        <ul class="billmenu">
+          <li><a [routerLink]="['/home/serviceregister/']">Employee Basic Details</a></li>
+          <li><a [routerLink]="['address-details']">Address Details</a></li>
+          <li><a [routerLink]="['dependentdetails']">Family Details</a></li>
+          <li><a [routerLink]="['qualification']">Qualification</a></li>
+          <li><a [routerLink]="['experiencedetails']">Experience Details</a></li>
+          <li><a [routerLink]="['leavedetails']">Leave Details</a></li>
+          <li><a [routerLink]="['bankdetails']">Bank Details</a></li>
+          <li><a [routerLink]="['policeverification']">Statutory Verifications</a></li>
+          <li><a [routerLink]="['leave-bal-details']">Leave & Attendance Details</a></li> 
+          <li><a [routerLink]="['service-reg-view']">Service Register View</a></li>  
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-10">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div> -->
+
+<!-- <router-outlet></router-outlet> -->
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      <div class="sidemenu">
+        <ul class="billmenu">
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="['/home/calculation-revenue/']">Installment Calculation</a></li>
+          <li routerLinkActive="active"><a [routerLink]="['dividend-form']">Divident Calculation</a></li>
+          <li routerLinkActive="active"><a [routerLink]="['dependentdetails']">Penalty Calculation</a></li>
+          <li routerLinkActive="active"><a [routerLink]="['qualification']">One-time-Settlement</a></li>
+          <li routerLinkActive="active"><a [routerLink]="['refund-form']">Refund Calculation</a></li>
+          <li routerLinkActive="active"><a [routerLink]="['leavedetails']">Administrative Charges Calculation</a></li>
+          <li routerLinkActive="active"><a [routerLink]="['ground-rent']">Ground-rent Calculation</a></li>
+          <li routerLinkActive="active"><a [routerLink]="['freehold-form']">Freehold Calculation</a></li>
+          <!-- <li><a [routerLink]="['leave-bal-details']">Leave & Attendance Details</a></li> 
+          <li><a [routerLink]="['service-reg-view']">Service Register View</a></li>   -->
+        </ul>
+        <!-- <ul class="billmenu" *ngFor="let p of subpageslist">
+          <li><a [ngClass]="{'alert-primary':p.KSP_Redirect_URL === localurl}" (click)="geturl(p.KSP_Redirect_URL)" routerLink="{{p.KSP_Redirect_URL}}">{{p.KSP_Name}}</a></li>              
+        </ul> -->
+      </div>
+    </div>
+    <div class="col-md-10">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

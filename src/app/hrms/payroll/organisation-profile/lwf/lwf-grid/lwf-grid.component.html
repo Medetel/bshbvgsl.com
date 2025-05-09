@@ -1,0 +1,80 @@
+<div class="wrapper">
+  <br>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2">
+        <label for="">Enable / Disable</label>
+      </div>
+      <div class="col-md-2">
+        <label class="switch">
+          <input type="checkbox" (click)="toggle1()">
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+  <br>
+
+  <span *ngIf="show1">
+    <div class="title themeheading">
+      Labour Welfare Fund
+      <span class="clearfix"></span>
+    </div>
+
+
+    <br>
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-md-3">
+          <label for=""> State </label>
+        </div>
+        <div class="col-md-6">
+          <span>Bihar</span>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-md-3">
+          <label for="">Employees' Contribution</label>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group ">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">₹</span>
+            </div>
+            <input type="text" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-md-3">
+          <label for="">Employer's Contribution</label>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group ">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1">₹</span>
+            </div>
+            <input type="text" class="form-control">
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-md-3">
+          <label for="">Deduction Cycle</label>
+        </div>
+        <div class="col-md-6">
+          <select name="" id="" class="custom-field">
+            <option value="">--Select--</option>
+            <option value="">Monthly</option>
+            <option value="">Yearly</option>
+          </select>
+        </div>
+      </div>
+      <br>
+      <div class="text-center">
+        <button class="btn btn-change">Save</button> &nbsp;
+        <button class="btn btn-change">Cancel</button>
+      </div>
+    </div>
+  </span> 
+</div>

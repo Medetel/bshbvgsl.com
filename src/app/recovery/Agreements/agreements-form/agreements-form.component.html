@@ -1,0 +1,301 @@
+<div class="wrapper">
+    <div class="title themeheading">
+        Request & Customer Details
+        <!-- <button class="btn btn-primary float-right" [routerLink]="['/home/agreements']">Back</button> -->
+        <button class="btn btn-primary float-right" [routerLink]="['/home/agreements']" *ngIf="BackId=='1'">Back</button>
+        <button class="btn btn-primary float-right" [routerLink]="['/home/agreements/agreements-approval']" *ngIf="BackId=='2'">Back</button>
+        <button class="btn btn-primary float-right" [routerLink]="['/home/Renewals']" *ngIf="BackId=='3'">Back</button>
+        <span class="clearfix"></span>
+    </div>
+    <!-- <form (ngSubmit)="mode=='Edit'?UpdatePropertyAgreement(PropertyAgreement):CreateAgreementDetails(PropertyAgreement)"  #PropertyAgreement="ngForm"> -->
+    <div class="add-click container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <label for="">Request No. : </label>
+                <span> <b>{{PG.PropertyReqCode}}</b> </span>
+            </div>
+            <div class="col-md-4">
+                <label for=""> Requested Date : </label>
+                <span> <b>{{PG.PropertyReqDate | date:'dd/MM/yyyy'}}</b> </span>
+            </div>
+            <div class="col-md-4">
+                <label for="">Request For : </label>
+                <span> <b>{{PG.code_value}}</b> </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="">Project Name : </label>
+                <span> <b>{{PG.PD_Project_Name}}</b> </span>
+            </div>
+            <div class="col-md-4">
+                <label for="">Customer No. : </label>
+                <span> <b>{{PG.CUST_CODE}}</b> </span>
+            </div>
+            <div class="col-md-4">
+                <label for="">Customer Name : </label>
+                <span> <b>{{PG.CUST_F_NAME}}</b> </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="">Customer Address : </label>
+                <span> <b>{{PG.CUST_ADRSS1}}</b> </span>
+            </div>
+            <div class="col-md-4">
+                <label for=""> Contact No. : </label>
+                <span> <b>{{PG.CUST_CNT_NO}}</b> </span>
+            </div>
+            <div class="col-md-4">
+                <label for=""> Agreement No. : </label>
+                <span> <b>{{AG.Agmnt_Code}}</b> </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <label> Old Agreement Renewal Date :</label>
+            </div>
+            <div class="col-md-4">
+                <label> Agreement Period : </label>
+            </div>
+            <div class="col-md-4">
+                <label> Agreement Renewal Date : </label>
+            </div>
+        </div>
+        <div class="title themeheading">
+            Agreement Details
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="input-group">
+                    <label for="">Agreement Type <span style="color:red;"> *</span> </label>
+                    <select class="custom-field" [(ngModel)]="AG.Agrmnt_Type" #Agrmnt_Type="ngModel" name="Agrmnt_Type"
+                        [disabled]="mode=='View'" required>
+                        <option [value]="undefined" selected>---Select---</option>
+                        <option [value]="AT.fix_code_id" *ngFor="let AT of AgreementType;">
+                            {{AT.code_value}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <label for=""> Old Agreement No <span style="color:red;"> *</span></label>
+                    <select class="custom-field" [(ngModel)]="AG.Old_Agemnt_No" #Old_Agemnt_No="ngModel" name="Old_Agemnt_No"
+                        [disabled]="AG.Agrmnt_Type==5118" required>
+                        <!-- [disabled]="AG.Agrmnt_Type==6109" -->
+                        <option [value]="undefined" selected>---Select---</option>
+                        <option [value]="OA.Old_Agemnt_No" *ngFor="let OA of AgreementList;">
+                            {{OA.Old_Agemnt_No}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <label for="">Agreement Date <span style="color:red;"> *</span> </label>
+                    <input class="custom-field" type="date" [(ngModel)]="AG.DOC_DATE" #DOC_DATE="ngModel" name="DOC_DATE"
+                        [disabled]="mode=='View'" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="input-group">
+                    <label for=""> Start Date </label>
+                    <input class="custom-field" type="date" [(ngModel)]="AG.Start_Date" #Start_Date="ngModel" name="Start_Date"
+                        [disabled]="mode=='View'" required>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <label for="">End Date </label>
+                    <input class="custom-field" type="date" [(ngModel)]="AG.End_Date" #End_Date="ngModel" name="End_Date"
+                        [disabled]="mode=='View'" required>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <label> Allotment Type </label>
+                    <select class="custom-field" [(ngModel)]="AG.Allotment_Type" #Allotment_Type="ngModel" name="Allotment_Type"
+                        [disabled]="mode=='View'" required>
+                        <option [value]="undefined" selected>---Select---</option>
+                        <option [value]="ALT.fix_code_id" *ngFor="let ALT of AllotmentType;">
+                            {{ALT.code_value}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="input-group">
+                    <label> Payment Type </label>
+                    <select class="custom-field" [(ngModel)]="AG.Payment_Type" #Payment_Type="ngModel" name="Payment_Type"
+                        [disabled]="mode=='View'" required>
+                        <option [value]="undefined" selected>---Select---</option>
+                        <option [value]="PT.fix_code_id" *ngFor="let PT of PaymentType;">
+                            {{PT.code_value}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <label> Payment Frequency </label>
+                    <select class="custom-field" [(ngModel)]="AG.Payment_Frequency" #Payment_Frequency="ngModel" name="Payment_Frequency"
+                        [disabled]="mode=='View'" required>
+                        <option [value]="undefined" selected>---Select---</option>
+                        <option [value]="PF.fix_code_id" *ngFor="let PF of PaymentFrequency;">
+                            {{PF.code_value}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <label> SD Amount </label>
+                    <input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="AG.Sd_Amnt"
+                        #Sd_Amnt="ngModel" name="Sd_Amnt" [disabled]="mode=='View'" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="input-group">
+                    <label> Payment Overdue Period </label>
+                    <input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="AG.Pymnt_Od_Period"
+                        #Pymnt_Od_Period="ngModel" name="Pymnt_Od_Period" [disabled]="mode=='View'" required>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <label> Interest Rate(%) </label>
+                    <input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="AG.Interst_Rate"
+                        #Interst_Rate="ngModel" name="Interst_Rate" [disabled]="mode=='View'" required>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <label> Penalty </label>
+                    <input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="AG.Penalty"
+                        #Penalty="ngModel" name="Penalty" [disabled]="mode=='View'" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="input-group">
+                    <label for=""> Lesser Details </label>
+                    <select class="custom-field" [(ngModel)]="AG.Lesser_Details" #Lesser_Details="ngModel" name="Lesser_Details"
+                        [disabled]="mode=='View'" required>
+                        <option [value]="undefined" selected>---Select---</option>
+                        <option [value]="LD.fix_code_id" *ngFor="let LD of LesserDetails;">
+                            {{LD.code_value}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="AG.Lesser_Adress"
+                        #Lesser_Adress="ngModel" name="Lesser_Adress" [disabled]="mode=='View'" required>
+                    <label for=""> Lesser Address </label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="AG.Lesser_Contact"
+                        #Lesser_Contact="ngModel" name="Lesser_Contact" minlength="10" maxlength="10" [disabled]="mode=='View'"
+                        required>
+                    <label for=""> Lesser Contact No.
+                        <div *ngIf="Lesser_Contact.invalid && (Lesser_Contact.dirty || Lesser_Contact.touched || formSubmitted)"
+                            class="error-msg float-right">
+                            <div *ngIf="Lesser_Contact.errors.required">Contact Number is required</div>
+                            <div *ngIf="Lesser_Contact.errors.minlength">Contact Number Must be at least 10 numbers
+                                long
+                            </div>
+                            <div *ngIf="Lesser_Contact.errors.maxlength"></div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="input-group">
+                    <label for=""> Estamp Details</label>
+                    <input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="AG.Estamp_Details"
+                        #Estamp_Details="ngModel" name="Estamp_Details" [disabled]="mode=='View'" required>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-inline">
+                    <div class="form-group mb-2">
+                        <label for="" style="color:blue;">Upload Agreement Document </label>
+                    </div>
+                    <div class="form-group mb-2 mx-sm-3">
+                        <input *ngIf="!hide" type="file" #Image accept="application/pdf" (change)="imageUpload($event.target.files)"
+                            id="DOC_UPLOAD_PATH" name="DOC_UPLOAD_PATH">
+                        <a class="" *ngIf="AG.DOC_UPLOAD_PATH!=null && (mode=='view' || mode=='edit')" target="_blank" href="{{AG.DOC_UPLOAD_PATH}}">View</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="title themeheading">
+        Property & Commercial Details
+        <span class="clearfix"></span>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead class="thead">
+                <tr>
+                    <td>SL.No</td>
+                    <td> Project Details </td>
+                    <td> Property Details </td>
+                    <td> Building Details </td>
+                    <td> Rate(Lease/Rent) </td>
+                    <td> Maintenance Cost </td>
+                    <td> GST Rate(%) </td>
+                    <td> TDS Rate (%) </td>
+                    <td> Total Cost </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let PL of Propertylist; let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{PL.PD_Project_Name}}</td>
+                    <td>{{PL.PR_Property_No}}</td>
+                    <!-- <td>{{PL.Building_Details}}</td>
+                        <td>{{PL.Rate}}</td>
+                        <td>{{PL.Maintenance_Cost}}</td>
+                        <td>{{PL.GST_Rate}}</td>
+                        <td>{{PL.TDS_Rate}}</td> -->
+                    <!-- <td><input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="PL.PR_Property_No"
+                            #PR_Property_No="ngModel" name="PR_Property_No" [disabled]="mode=='View'" required></td> -->
+                    <td><input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="PL.Building_Details"
+                            #Building_Details="ngModel" name="Building_Details" [disabled]="mode=='View'" required></td>
+                    <td><input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="PL.Rate"
+                            #Rate="ngModel" name="Rate" [disabled]="mode=='View'" required></td>
+                    <td><input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="PL.Maintenance_Cost"
+                            #Maintenance_Cost="ngModel" name="Maintenance_Cost" [disabled]="mode=='View'" required></td>
+                    <td><input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="PL.GST_Rate"
+                            #GST_Rate="ngModel" name="GST_Rate" [disabled]="mode=='View'" required></td>
+                    <td><input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="PL.TDS_Rate"
+                            #TDS_Rate="ngModel" name="TDS_Rate" [disabled]="mode=='View'" (change)="GetTotal(PL.Rate,PL.Maintenance_Cost,PL.GST_Rate,PL.TDS_Rate)"
+                            required></td>
+                    <td><span> <b>{{PL.TotalAmount}}</b> </span></td>
+                    <!-- <input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="PL.TotalAmount"
+                            #TotalAmount="ngModel" name="TotalAmount" [disabled]="mode=='View'" required> -->
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <div class="text-center">
+        <button [disabled]="mode=='View'" class="btn btn-primary" type="submit" (click)="mode=='Edit'?UpdatePropertyAgreement(AG):CreateAgreementDetails(AG)">{{mode=='Edit'?'Update':'Save'}}</button>
+        &nbsp;
+        <button [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="CancelAll()">Cancel</button>
+    </div>
+</div>

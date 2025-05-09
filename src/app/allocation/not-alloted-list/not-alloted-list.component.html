@@ -1,0 +1,137 @@
+<div class="wrapper">
+    <div class="searchbar">
+        <div class="container">
+            <div class="row" style="padding:0px;background:none;">
+                <div class="col-md-1">
+                    <label>Search</label>
+                </div>
+                <div class="col-md-4">
+                    <select name="SearchCriteria" class="form-control" required>
+                        <option [ngValue]="undefined" selected>---Select---</option>
+                        <option value="">Application No.</option>
+                        <option value="">Name</option>
+                        <option value="">DOB</option>
+                        <option value="">Age</option>
+                        <option value="">Amount</option>
+                        <option value="">Type</option>
+                        <option value="">Refund status</option>
+                    </select>
+                    <!-- <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)" class="error-msg">
+                        <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+                    </div> -->
+                </div>
+                <div class="col-md-4">
+                    <input type="text" name="SearchText"  class="form-control" placeholder="Search.."
+                        required>
+                    <!-- <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+                        <div *ngIf="SearchText.errors.required">Search text is required</div>
+                    </div> -->
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-default" type="submit">Search</button>
+                    <button class="btn btn-default" type="reset">Clear</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="title themeheading">{{title}}</div>
+    <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-group">
+                    <input type="text" placeholder=" " class="custom-field">
+              <!-- <select onclick="this.setAttribute('value', this.value);" value="" class="custom-field">
+                <option value=""></option>
+                <option value=""></option>
+                <option value=""></option>
+              </select> -->
+              <label>Notification No.</label>
+            </div>
+          </div>
+          <div class="col-md-6">
+              <div class="input-group">
+                  <input type="date" placeholder=" " class="custom-field">
+                  <label>Notification Date</label>
+                </div>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="table-responsive grid">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <td rowspan="2">Sl No.</td>
+                  <td rowspan="2">Application No.</td>
+                  <td rowspan="2">Name</td>
+                  <td rowspan="2">DOB</td>
+                  <td rowspan="2">Age</td>
+                  <td colspan="2" class="text-center">Amount</td>
+                  <td rowspan="2">Type</td>
+                  <td rowspan="2">Refund Status</td>
+                  <td rowspan="2">Refund Amount</td>
+                  <td rowspan="2">Refund Letter Sent</td>
+                </tr>
+                <tr>
+                  <td>Application fee</td>
+                  <td>Initial Deposit</td>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                    <td>1.</td>
+                    <td>112233655.</td>
+                    <td>Akilesh</td>
+                    <td>14-05-1987</td>
+                    <td>30</td>
+                    <td>100</td>
+                    <td>1000</td>
+                    <td>EWS</td>
+                    <td></td>
+                    <td></td>
+                    <td>Yes</td>
+                  </tr>
+                  <tr>
+                      <td>2.</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                        <td>3.</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                          <td>4.</td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+  </div>

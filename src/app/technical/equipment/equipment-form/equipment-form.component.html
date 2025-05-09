@@ -1,0 +1,150 @@
+<div class="wrapper">
+    <div class="title themeheading">
+      {{title}}
+      <button class="btn btn-primary float-right" [routerLink]="['/home/equipmob']">Back</button>
+      <span class="clearfix"></span>
+    </div>
+    <form (ngSubmit)="mode=='edit'? UpdateEquipment(Equipmentform):SaveEquipment(Equipmentform)" #Equipmentform="ngForm"
+    autocomplete="off">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <!-- <select class="custom-field" > -->
+            <select class="custom-field" #Area_Dist="ngModel" name="Area_Dist" [(ngModel)]="i.Area_Dist"
+              list="dynmicUserIds" [disabled]="mode=='view'" required>
+              <!-- <datalist id="dynmicUserIds"> -->
+              <option [value]="undefined" selected>---Select Area/District Name---</option>
+              <option [value]="c.DI_Id" *ngFor="let c of Areacode;">
+                {{c.DI_Code}} - {{c.DI_District}}
+              </option>
+              <!-- </datalist> -->
+            </select>
+            <label for="">Area/District Name
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Area_Dist.invalid && (Area_Dist.dirty || Area_Dist.touched || formInvalid)">
+              <span *ngIf="Area_Dist.errors.required">Area/District Name is required</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <!-- <select class="custom-field" > -->
+            <select class="custom-field" #Project_Code="ngModel" name="Project_Code" [(ngModel)]="i.Project_Code"
+              list="dynmicUserIds" [disabled]="mode=='view'" required>
+              <!-- <datalist id="dynmicUserIds"> -->
+              <option [value]="undefined" selected>---Select Project Name---</option>
+              <option [value]="c.PD_Id" *ngFor="let c of projectcode;">
+                {{c.PD_Project_Code}} - {{c.PD_Project_Name}}
+              </option>
+              <!-- </datalist> -->
+            </select>
+            <label for="">Project Name
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="Project_Code.invalid && (Project_Code.dirty || Project_Code.touched || formInvalid)">
+              <span *ngIf="Project_Code.errors.required">Project Name is required</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #Equipment_Number="ngModel" name="Equipment_Number" [disabled]="mode=='view'"
+            [(ngModel)]="i.Equipment_Number" pattern="^[0-9]*$" required>
+            <label for="">Equipment Number
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Equipment_Number.invalid && (Equipment_Number.dirty || Equipment_Number.touched || formInvalid)">
+              <span *ngIf="Equipment_Number.errors.required">Equipment Number is required</span>
+              <span *ngIf="Equipment_Number.errors?.pattern">Equipment Number must be numeric characters</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="date" class="custom-field" #Working_Start_Date="ngModel" name="Working_Start_Date"
+            [disabled]="mode=='view'" [(ngModel)]="i.Working_Start_Date" required>
+            <label for="">Work Start Date
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="Working_Start_Date.invalid && (Working_Start_Date.dirty || Working_Start_Date.touched || formInvalid)">
+              <span *ngIf="Working_Start_Date.errors.required">Working Start Date is required.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="date" class="custom-field" #Working_End_Date="ngModel" name="Working_End_Date"
+            [disabled]="mode=='view'" [(ngModel)]="i.Working_End_Date" required>
+            <label for="">Work End Date
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="Working_End_Date.invalid && (Working_End_Date.dirty || Working_End_Date.touched || formInvalid)">
+              <span *ngIf="Working_End_Date.errors.required">Working End Date is required.</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #Equipment_quantity="ngModel" name="Equipment_quantity"
+            [disabled]="mode=='view'" [(ngModel)]="i.Equipment_quantity"  pattern="^[0-9]*$"  required>
+            <label for="">Equipment Quantity
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Equipment_quantity.invalid && (Equipment_quantity.dirty || Equipment_quantity.touched || formInvalid)">
+              <span *ngIf="Equipment_quantity.errors.required">Equipment Quantity is required</span>
+              <span *ngIf="Equipment_quantity.errors?.pattern">numericals should enter</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #Equipment_cost="ngModel" name="Equipment_cost"
+            [disabled]="mode=='view'" [(ngModel)]="i.Equipment_cost" pattern="^[0-9]*$" required>
+            <label for="">Equipment cost
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Equipment_cost.invalid && (Equipment_cost.dirty || Equipment_cost.touched || formInvalid)">
+              <span *ngIf="Equipment_cost.errors.required">Equipment Cost is required</span>
+              <span *ngIf="Equipment_cost.errors?.pattern">Equipment Cost must be numeric characters</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="i.Status" #Status="ngModel" name="Status"
+              [disabled]="mode=='view'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option value=3>Active</option>
+              <option value=4>Inactive</option>
+            </select>
+            <label for="">Status
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Status.invalid && (Status.dirty || Status.touched || formInvalid)">
+              <span *ngIf="Status.errors.required">Status is required</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="text-center">
+        <button class="btn btn-primary" type="submit" [disabled]="mode=='view'">Save</button> &nbsp;
+        <button class="btn btn-primary" type="reset" [disabled]="mode=='view'">Cancel</button>
+      </div>
+
+    </div>
+
+  </form>
+  </div>

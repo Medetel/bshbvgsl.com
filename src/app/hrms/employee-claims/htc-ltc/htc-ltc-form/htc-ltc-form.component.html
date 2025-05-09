@@ -1,0 +1,143 @@
+<div class="wrapper">
+        <form (ngSubmit)="mode=='Edit'?UpdateHTC(HTC):SaveHTC(HTC)" #HTC="ngForm" name="HTC">
+    <div class="title themeheading">
+        {{title}}
+        <button class="btn btn-primary float-right" [routerLink]="['/home/emp-claims/htc-ltc']">Back</button>
+        <span class="clearfix"></span>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <label>Leave Concession No. :</label>    <span> {{h.DOC_CODE}} </span>
+            </div>
+            <div class=" col-md-4">
+                <label for="">Date : </label>      <span> {{h.Doc_Year | date:'dd/MM/yyyy'}} </span>
+            </div>
+            <div class=" col-md-4">
+                    <span for="" *ngIf="h.DOC_STATUS=='G'">Status : Generated</span>  
+            </div>
+        </div>
+        <!--  -->
+        <div class="title rowmarginfix themeheading">
+            Employee Details
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="input-group">
+                    <label for=""> Division code </label>
+                    <select class="custom-field" [(ngModel)]="h.DivisionId" #DivisionId="ngModel" name="DivisionId"
+          disabled (change)="GetEmployee(h.DivisionId)">
+          <option [value]="undefined" selected>---Select---</option>
+          <option [value]="d.DI_Id" *ngFor="let d of Districtlist;">
+            {{d.DI_District}}
+          </option>
+        </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <label for="">Emp Code </label>
+                    <select class="custom-field" [(ngModel)]="h.EmpID" #EmpID="ngModel" name="EmpID"[disabled]="mode=='View'"
+          (change)="GetEmployeeForTheId(h.EmpID)" >
+          <option [value]="undefined" selected>---Select---</option>
+          <option [value]="ee.EMP_EMPLOYEE_ID" *ngFor="let ee of Emplist;">
+            {{ee.EMP_EMPLOYEE_CODE}} &nbsp; {{ee.EMP_FIRST_NAME}}
+          </option>
+        </select>
+                </div>
+            </div>
+            <div class="col-md-4">
+                    <label for="">Name : </label> &nbsp;
+                    <span> {{EmployeeDetails.EMP_FIRST_NAME}} </span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4 ">
+                    <label for="">Division : </label> &nbsp;
+                    <span> {{EmployeeDetails.DI_District}} </span>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="">Department : </label> &nbsp;
+                    <span> {{EmployeeDetails.Department_Name}} </span>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="">Designation : </label> &nbsp;
+                    <span> {{EmployeeDetails.desg_name}} </span>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <label for="">Employee Category : </label> &nbsp;
+                    <span> {{EmployeeDetails.EMP_CATEGORY}} </span>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="">Employee Group : </label> &nbsp;
+                    <span> {{EmployeeDetails.EMP_GROUP}} </span>
+                  </div>
+                  <div class="col-md-4">
+                    <label for="">Employee Type : </label> &nbsp;
+                    <span> {{EmployeeDetails.EMP_TYPE}} </span>
+                  </div>
+                </div>
+                <br>
+        <!--  -->
+        <div class="title themeheading rowmarginfix">
+            HTC & LTC Details
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <div class="input-group">
+                    <label>Concession Type</label>
+                    <br>
+                    <select name="CONS_TYPE" #CONS_TYPE="ngModel" [(ngModel)]="h.CONS_TYPE" [disabled]="mode=='View'" class="form-control">
+                        <option value="undefined">--Select--</option>
+                        <option value="H">HTC</option>
+                        <option value="L">LTC</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div class="input-group">
+                    <label>Availed Date</label>
+                    <br>
+                    <input class="custom-field" type="date"  name="CONS_AVAILED_DATE" #CONS_AVAILED_DATE="ngModel" [(ngModel)]="h.CONS_AVAILED_DATE" [disabled]="mode=='View'" >
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <div class="input-group">
+                    <label>Description</label>
+                    <br>
+                    <input type="text" name="CONS_DESCRIPTION" maxlength="50" [(ngModel)]="h.CONS_DESCRIPTION"
+                    #CONS_DESCRIPTION="ngModel" class="form-control" [disabled]="mode=='View'">
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div class="input-group">
+                    <label>Amount</label>
+                    <br>
+                    <input type="text" name="CONS_AMOUNT" maxlength="50" [(ngModel)]="h.CONS_AMOUNT"
+          #CONS_AMOUNT="ngModel" class="form-control" [disabled]="mode=='View'">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+                <label style="color:blue;">Upload HTC/LTC Document</label>
+            </div>
+            <div class="col-md-4">
+                    <input *ngIf="!hide" type="file" #Image accept="application/pdf"
+                    (change)="imageUpload1($event.target.files)" id="PHAR_DOC_UPLOAD_PATH" name="PHAR_DOC_UPLOAD_PATH">
+                  <a class="" target="_blank" href="{{h.PHAR_DOC_UPLOAD_PATH}}">View</a>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <div class="d-flex justify-content-center">
+            <button [disabled]="mode=='View'" class="btn btn-primary" type="submit">{{mode=='edit'?'Update':'Save'}}</button> &nbsp;
+            <button [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button>&nbsp;
+          </div>
+          </form>
+</div>

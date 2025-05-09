@@ -1,0 +1,32 @@
+.container-fluid{
+    border:1px solid #ccc;
+}
+
+.row{
+    padding:5px;
+}
+
+.row:nth-child(odd){
+    background: #f2f2f2;
+}
+
+.applicationview label{
+    color:#000;
+}
+
+.field-title{
+    width:250px;
+    display:inline-block;
+    color:#807f7f;
+}
+
+.applicationview{
+    width:95%;
+    margin:30px auto;
+}
+
+@media(max-width:768px){
+    .applicationview{
+        width:100%;
+    }
+}

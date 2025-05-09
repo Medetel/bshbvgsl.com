@@ -1,0 +1,23 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      <div class="sidemenu">
+        <ul class="billmenu">
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <a [routerLink]="['/home/payroll/allowance-code-grid']">Masters</a>
+          </li>
+          <li routerLinkActive="active"><a [routerLink]="['payroll-compliance']"> Compliance </a></li>
+          <li routerLinkActive="active"><a [routerLink]="['emp-salary-details']">Employee Salary Data </a></li>
+          <li routerLinkActive="active"><a [routerLink]="['payroll-process-details']">Payroll Process </a></li>
+          <li routerLinkActive="active"><a [routerLink]="['payroll-reports']">Payroll Reports </a></li>
+          <!-- <li routerLinkActive="active"><a [routerLink]="['payrollprocess/']">Pay Bill ( Draft) </a></li>
+          <li routerLinkActive="active"><a [routerLink]="['payroll-authorize']">Pay Bill (Approval) </a></li>
+          <li routerLinkActive="active"><a [routerLink]="['payrollfinalize']">Pay Bill (Finalization) </a></li> -->
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-10">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,74 @@
+
+<div class="wrapper">
+  <div class="title themeheading">
+     View Rate Fixation
+    <div class="float-right">
+        Items per page:
+        <select name="SearchRows" class="noofpage">
+            <option [ngValue]="5">5</option>
+            <option [ngValue]="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+            <option value="50">50</option>
+        </select>
+        &nbsp;
+        <button class="btn btn-primary float-right" [routerLink]="['/home/rec_ratefixation/rec_ratefixation-form']" routerLinkActive="active">Add</button>
+    </div>
+    <span class="clearfix"></span>
+  </div>  
+
+  <div class="searchbar"> 
+    <div class="container">   
+      <div class="row">
+        <div class="col-md-1">
+            <label >Search</label>  
+        </div>
+        <div class="col-md-4">     
+          <select class="form-control">
+            <option selected>  --Select-- </option>      
+            <option value="">10</option>
+            <option value="">20</option>
+            <option value="">30</option>
+            <option value="">40</option>     
+          </select>             
+        </div>
+        <div class="col-md-4">
+          <input class="form-control" placeholder="Search">
+        </div>
+        <div class="col-md-3">
+          <button class="btn btn-primary">Search</button> &nbsp;
+          <button class="btn btn-primary">Clear</button>
+        </div>
+      </div> 
+    </div>   
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead class="thead-dark">
+        <tr> 
+          <td>Sl No</td>         
+          <td>Project Code </td>
+          <td>Building Name</td>
+          <td>Block Name</td> 
+          <td>Floor Name</td>
+          <td>View</td>
+          <td>Edit</td>
+          <td>Delete</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>        
+          <td>  </td>
+          <td>  </td>
+          <td>  </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

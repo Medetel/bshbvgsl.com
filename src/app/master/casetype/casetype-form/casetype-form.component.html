@@ -1,0 +1,63 @@
+<div class="wrapper">
+  <div class="title themeheading">
+      {{title}}
+      <button class="btn btn-primary float-right" [routerLink]="['/home/casetype']">Back</button>
+      <span class="clearfix"></span>
+  </div>
+
+  <form (ngSubmit)="mode=='edit'?UpdateCaseType(CaseType):SaveCaseType(CaseType)" #CaseType="ngForm" name="CaseType">
+
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-md-4">
+         
+
+
+          <div class="input-group form-group">
+            <input type="text" class="custom-field" name="CaseType_Code" maxlength="10" [(ngModel)]="c.CaseType_Code"
+              #CaseType_Code="ngModel" [disabled]="mode=='view'" pattern="^[a-zA-Z0-9 ]*$" required>
+            <label for="">CaseType Code.
+              <span class="mandatory">*</span>
+            </label>
+
+            <div class="error-msg" *ngIf="CaseType_Code.invalid && (CaseType_Code.dirty || CaseType_Code.touched || formInvalid)">
+              <span *ngIf="CaseType_Code.errors.required">CaseType code is required</span>
+              <span *ngIf="CaseType_Code.errors?.pattern">Only AlphaNumeric should enter</span>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-md-4">
+          
+
+
+
+          <div class="input-group form-group">
+            <input type="text" class="custom-field" name="CaseType_Name" maxlength="50" [(ngModel)]="c.CaseType_Name"
+              #CaseType_Name="ngModel" [disabled]="mode=='view'" pattern="^[a-zA-Z0-9 ]*$" required>
+            <label for="">CaseType
+              <span class="mandatory">*</span>
+            </label>
+
+            <div class="error-msg"
+              *ngIf="CaseType_Name.invalid && (CaseType_Name.dirty || CaseType_Name.touched || formInvalid)">
+              <span *ngIf="CaseType_Name.errors.required">CaseType is required</span>
+              <span *ngIf="CaseType_Name.errors?.pattern">Only AlphaNumeric should enter</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="btn-wrapper text-center">
+        <button [disabled]="mode=='view'"class="btn btn-primary" type="submit">Save</button><button [disabled]="mode=='view'" class="btn btn-primary" type="button"  (click)="Cancel()">Cancel</button>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+
+
+

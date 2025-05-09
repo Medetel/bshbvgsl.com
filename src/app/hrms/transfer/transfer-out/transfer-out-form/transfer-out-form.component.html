@@ -1,0 +1,221 @@
+<div class="wrapper">
+  <form (ngSubmit)="mode=='Edit'?UpdateTRF(TRF):SaveTRF(TRF)" #TRF="ngForm" name="TRF">
+    <div class="title themeheading">
+      {{title}}
+      <!-- <button class="btn btn-primary float-right" [routerLink]="['/home/transfer']">Back</button> -->
+      <button class="btn btn-primary float-right" (click)="Back()" >Back</button>
+      <span class="clearfix"></span>
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-4 ">
+          <label>Transfer Order No : </label> &nbsp; <span>{{TR.DOC_CODE1}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Date :
+            <span> {{TR.DOC_DATE | date:'dd/MM/yyyy'}} </span>
+          </label>
+        </div>
+        <div class="col-md-4">
+          <label for=""> Status :
+            <span for="">{{TR.Doc_STATUSes}}</span>  
+          </label>
+        </div>
+      </div>
+      <div class="title rowmarginfix themeheading">
+        Employee Details
+        <span class="clearfix"></span>
+      </div>
+      <div class="row">
+        <!-- <div class="col-md-4">
+          <div class="input-group">
+            <label for=""> Division code  <span style="color:red;">*</span> </label>
+            <select class="custom-field" [(ngModel)]="TR.DivisionId" #DivisionId="ngModel" name="DivisionId"
+              disabled (change)="GetEmployee(TR.DivisionId)" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="D.DI_Id" *ngFor="let D of DistrictList;">
+                {{D.DI_District}}
+              </option>
+            </select>
+          </div>
+          <div class="error-msg" *ngIf="DivisionId.invalid && (DivisionId.dirty || DivisionId.touched || formInvalid)">
+            <span *ngIf="DivisionId.errors.required">Division is required</span>
+          </div>
+        </div> -->
+        <!-- </div> -->
+
+        <div class="col-md-4">
+          <div class="input-group">
+            <label for="">Emp Code  <span style="color:red;">*</span> </label>
+            <select class="custom-field" [(ngModel)]="TR.EMP_EMPLOYEE_ID" #EMP_EMPLOYEE_ID="ngModel"
+              name="EMP_EMPLOYEE_ID" [disabled]="mode=='View' || mode == 'Edit'" (change)="GetEmployeeForTheId(TR.EMP_EMPLOYEE_ID)" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="ee.EMP_EMPLOYEE_ID" *ngFor="let ee of Emplist;">
+                {{ee.EMP_EMPLOYEE_CODE}} &nbsp; {{ee.EMP_FIRST_NAME}}
+              </option>
+            </select>
+          </div>
+          <div class="error-msg" *ngIf="EMP_EMPLOYEE_ID.invalid && (EMP_EMPLOYEE_ID.dirty || EMP_EMPLOYEE_ID.touched || formInvalid)">
+            <span *ngIf="EMP_EMPLOYEE_ID.errors.required">Employee Id is required</span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label for="">Name : </label> &nbsp; <span>{{EmployeeDetails.EMP_FIRST_NAME}} &nbsp; {{EmployeeDetails.EMP_LAST_NAME}}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 ">
+          <label for="">Division : </label> &nbsp; <span>{{EmployeeDetails.DI_District}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Department : </label> &nbsp; <span>{{EmployeeDetails.Department_Name}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Designation : </label> &nbsp; <span>{{EmployeeDetails.desg_name}}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <label for="">Employee Category : </label> &nbsp; <span>{{EmployeeDetails.EMP_CATEGORY}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Employee Group : </label> &nbsp; <span>{{EmployeeDetails.EMP_GROUP}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Employee Type : </label> &nbsp; <span>{{EmployeeDetails.EMP_TYPE}}</span>
+        </div>
+      </div>
+      <!--  -->
+
+      <div class="title rowmarginfix themeheading">
+        Transfer Relieving Details
+        <span class="clearfix"></span>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <div class="input-group">
+            <label>Transfer Type  <span style="color:red;">*</span></label>
+            <br>
+            <select class="custom-field" [(ngModel)]="TR.tranfr_type" #tranfr_type="ngModel" name="tranfr_type"
+              [disabled]="mode=='View'" required>
+              <option value="undefined">--Select--</option>
+              <option value="1">Internal</option>
+              <option value="2">External</option>
+            </select>
+          </div>
+          <div class="error-msg" *ngIf="tranfr_type.invalid && (tranfr_type.dirty || tranfr_type.touched || formInvalid)">
+            <span *ngIf="tranfr_type.errors.required">Transfer Type is required</span>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <div class="input-group">
+          <label>Current Location (Division) <span style="color:red;">*</span></label>
+          <br>
+          <select class="custom-field" [(ngModel)]="TR.currnt_loc" #currnt_loc="ngModel" name="currnt_loc"
+          [disabled]="mode=='View'" required>
+          <option [value]="undefined" selected>---Select---</option>
+          <option [value]="D2.DI_Id" *ngFor="let D2 of DistrictList2;">
+          {{D2.DI_District}}
+          </option>
+          </select>
+          </div>
+          <div class="error-msg" *ngIf="currnt_loc.invalid && (currnt_loc.dirty || currnt_loc.touched || formInvalid)">
+          <span *ngIf="currnt_loc.errors.required">Current Location is required</span>
+          </div>
+          </div>
+       
+      </div>
+      <div class="row">
+        <div class="col-md-6  col-sm-6">
+          <div class="input-group">
+            <label>Transfer Location (Division)  <span style="color:red;">*</span></label>
+            <br>
+            <select class="custom-field" [(ngModel)]="TR.tranfr_loc" #tranfr_loc="ngModel" name="tranfr_loc"
+              [disabled]="mode=='View'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="D1.DI_Id" *ngFor="let D1 of DistrictList1;">
+                {{D1.DI_District}}
+              </option>
+            </select>
+          </div>
+          <div class="error-msg" *ngIf="tranfr_loc.invalid && (tranfr_loc.dirty || tranfr_loc.touched || formInvalid)">
+            <span *ngIf="tranfr_loc.errors.required">Transfer Location is required</span>
+          </div>
+        </div>
+        <div class="col-md-6  col-sm-6">
+          <div class="input-group">
+            <label>Department  <span style="color:red;">*</span></label>
+            <br>
+            <select class="custom-field" [(ngModel)]="TR.Department_Id" #Department_Id="ngModel" name="Department_Id"
+              [disabled]="mode=='View'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="De.Department_Id" *ngFor="let De of DepartmentList;">
+                {{De.Department_Name}}
+              </option>
+            </select>
+          </div>
+          <div class="error-msg" *ngIf="Department_Id.invalid && (Department_Id.dirty || Department_Id.touched || formInvalid)">
+            <span *ngIf="Department_Id.errors.required">Department is required</span>
+          </div>
+        </div>
+        
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <div class="input-group">
+            <label>Reporting Authority  <span style="color:red;">*</span></label>
+            <br>
+            <select class="custom-field" [(ngModel)]="TR.desg_id" #desg_id="ngModel" name="desg_id"
+              [disabled]="mode=='View'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="Des.desg_id" *ngFor="let Des of DesignationList;">
+                {{Des.desg_name}}
+              </option>
+            </select>
+          </div>
+          <div class="error-msg" *ngIf="desg_id.invalid && (desg_id.dirty || desg_id.touched || formInvalid)">
+            <span *ngIf="desg_id.errors.required">Reporting Authority is required</span>
+          </div>
+        </div>
+        <div class=" col-md-6  col-sm-6">
+          <div class="input-group">
+            <label>Relieving Date  <span style="color:red;">*</span></label>
+            <br>
+            <input class="custom-field" type="date" [(ngModel)]="TR.tranfr_relv_date" #tranfr_relv_date="ngModel"
+              name="tranfr_relv_date" [disabled]="mode=='View'" required>
+          </div>
+          <div class="error-msg" *ngIf="tranfr_relv_date.invalid && (tranfr_relv_date.dirty || tranfr_relv_date.touched || formInvalid)">
+            <span *ngIf="tranfr_relv_date.errors.required">Relieving Date  is required</span>
+          </div>
+        </div>
+        
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <div class="input-group">
+            <label>Reporting Date  <span style="color:red;">*</span></label>
+            <br>
+            <input class="custom-field" type="date" [(ngModel)]="TR.tranfr_rep_date" #tranfr_rep_date="ngModel"
+              name="tranfr_rep_date" [disabled]="mode=='View'" required>
+          </div>
+          <div class="error-msg" *ngIf="tranfr_rep_date.invalid && (tranfr_rep_date.dirty || tranfr_rep_date.touched || formInvalid)">
+            <span *ngIf="tranfr_rep_date.errors.required">Reporting Date is required</span>
+          </div>
+        </div>
+        <div class="col-md-2 col-sm-2">
+          <label style="color:blue;">Upload (OM) </label>
+        </div>
+        <div class="col-md-4 col-sm-4">
+          <input *ngIf="!hide" type="file"     #Image accept="application/pdf" [disabled]="mode=='View'" (change)="imageUpload($event.target.files)"
+            id="om_upload_path" name="om_upload_path">
+          <a class="" *ngIf="TR.om_upload_path != null" target="_blank" href="{{TR.om_upload_path}}">View</a>
+        </div>
+      </div>
+      <!-- </div> -->
+      <br>
+      <div class="d-flex justify-content-center">
+        <button [disabled]="mode=='View'" class="btn btn-primary" type="submit">Save</button> &nbsp;
+        <button [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button>&nbsp;
+      </div>
+    </div>
+  </form>

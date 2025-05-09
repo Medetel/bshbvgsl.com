@@ -1,0 +1,124 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    Add Promotion
+    <button class="btn btn-primary float-right" [routerLink]="['/home/promotion/pro-list-auth']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4">
+        <label>Promotion List No :</label>
+      </div>
+      <div class="col-md-4"><label for="">Date : <span>11/12/2019</span></label></div>
+      <div class="col-md-4"><label for="">Status : <span> Pending </span></label></div>
+    </div>
+
+    <div class="title rowmarginfix themeheading">
+      Generate Promotion List
+    </div>
+
+
+    <div class="table-responsive">
+      <table class="table table-striped grid">
+        <thead>
+          <tr>
+            <td>Sl No.</td>
+            <td>Employee Id</td>
+            <td>Employee Name</td>
+            <td>Present Designation</td>
+            <td>Present Basic Pay </td>
+            <td>Promotion Due Date</td>
+            <td>Promotion Type</td>
+            <td> Designation After Promotion</td>
+            <td> Pay Scale After Promotion </td>
+            <td> Promotion W.E.F </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td> 1 </td>
+            <td> 1 </td>
+            <td> Akash</td>
+            <td>FDA</td>
+            <td>10000-500-12500</td>
+            <td>05-01-2019</td>
+            <td>
+              <select name="" id="" class="form-control">
+                <option value="">--Select--</option>
+              </select>
+            </td>
+            <td>
+              <select name="" id="" class="form-control">
+                <option value="">--Select--</option>
+                <option value="">10500-500-12500</option>
+                <option value="">16000-1000-20000</option>
+              </select>
+            </td>
+            <td>
+              <select name="" id="" class="form-control">
+                <option value="">--Select--</option>
+                <option value="">Yes</option>
+                <option value="">No</option>
+              </select>
+            </td>
+            <td>
+              <input type="date" class="form-control">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="title themeheading rowmarginfix">
+      Authorization Screen
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Authorised</label>
+          <select name="" id="" class="custom-field">
+            <option value="">--Select--</option>
+            <option value="">Yes</option>
+            <option value="">No</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Cancel</label>
+          <select name="" id="" class="custom-field">
+            <option value="">--Select--</option>
+            <option value="">Yes</option>
+            <option value="">No</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label for="">Authorzed By :</label>
+      </div>
+      <div class="col-md-4">
+        <label for="">Authorzed Date :</label>
+      </div>
+      <div class="col-md-4">
+        <label for="">Canceled Date :</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Remarks</label>
+          <textarea name="" id="" cols="30" rows="10" class="custom-field"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <br>
+  <div class="text-center">
+    <button class="btn btn-primary">Save</button>
+    <button class="btn btn-primary">Cancel</button>
+  </div>
+</div>

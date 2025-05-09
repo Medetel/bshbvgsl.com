@@ -1,0 +1,266 @@
+<div class="wrapper">
+        <form (ngSubmit)="mode=='Edit'?UpdateEXM(EXM):SaveExam(EXM)" #EXM="ngForm" name="EXM">
+    <div class="title themeheading">
+        {{title}}
+        <!-- <button class="btn btn-primary float-right" [routerLink]="['/home/deptexam']">Back</button> -->
+         <button class="btn btn-primary float-right" (click)="Back()">Back</button>
+        <span class="clearfix"></span>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+              <div class="row">
+                <div class="col-md-5">
+                  <label for="">Dep.Exm No. : </label>
+                </div>
+                <div class="col-md-7">
+                  <span> {{E.DOC_CODE}} </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="row">
+                <div class="col-md-5">
+                  <label for="">Date. : </label>
+                </div>
+                <div class="col-md-7">
+                  <span> {{E.Doc_Year | date:'dd/MM/yyyy'}} </span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-7">
+              <span *ngIf="N.STATUS=='G'"> Generated</span> 
+              <span *ngIf="N.STATUS=='A'">Approved</span>
+              <span *ngIf="N.STATUS=='R'">Rejected</span>
+              <span *ngIf="N.STATUS=='S'">Sanctioned</span>
+              </div>
+          </div>
+        <div class="title rowmarginfix themeheading">
+            Employee Details
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="input-group">
+                    <label for=""> Division code <span style="color:red;">*</span></label>
+                    <select class="custom-field" [(ngModel)]="E.DivisionId" #DivisionId="ngModel" name="DivisionId"
+                      (change)="GetEmployee(E.DivisionId)" required>
+                    <option [value]="undefined" selected>---Select---</option>
+                    <option [value]="d.DI_Id" *ngFor="let d of Districtlist;">
+                      {{d.DI_District}}
+                    </option>
+                  </select>
+                </div>
+                <div class="error-msg"
+                *ngIf="DivisionId.invalid && (DivisionId.dirty || DivisionId.touched || formInvalid)">
+                <span *ngIf="DivisionId.errors.required">Division is required</span>
+              </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <label for="">Emp Code <span style="color:red;">*</span></label>
+                    <select class="custom-field" [(ngModel)]="E.EmpID" #EmpID="ngModel" name="EmpID"[disabled]="mode=='View'"
+                    (change)="GetEmployeeForTheId(E.EmpID)" required>
+                    <option [value]="undefined" selected>---Select---</option>
+                    <option [value]="ee.EMP_EMPLOYEE_ID" *ngFor="let ee of Emplist;">
+                      {{ee.EMP_EMPLOYEE_CODE}} &nbsp; {{ee.EMP_FIRST_NAME}}
+                    </option>
+                  </select>
+                </div>
+                <div class="error-msg"
+                *ngIf="EmpID.invalid && (EmpID.dirty || EmpID.touched || formInvalid)">
+                <span *ngIf="EmpID.errors.required">Employee Id is required</span>
+              </div>
+            </div>          
+            <div class="col-md-4">
+                <label for="">Name : </label> &nbsp;
+                <span> {{EmployeeDetails.EMP_FIRST_NAME}} </span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 ">
+                <label for="">Division : </label> &nbsp;
+                <span> {{EmployeeDetails.DI_District}} </span>
+              </div>
+              <div class="col-md-4">
+                <label for="">Department : </label> &nbsp;
+                <span> {{EmployeeDetails.Department_Name}} </span>
+              </div>
+              <div class="col-md-4">
+                <label for="">Designation : </label> &nbsp;
+                <span> {{EmployeeDetails.desg_name}} </span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <label for="">Employee Category : </label> &nbsp;
+                <span> {{EmployeeDetails.EMP_CATEGORY}} </span>
+              </div>
+              <div class="col-md-4">
+                <label for="">Employee Group : </label> &nbsp;
+                <span> {{EmployeeDetails.EMP_GROUP}} </span>
+              </div>
+              <div class="col-md-4">
+                <label for="">Employee Type : </label> &nbsp;
+                <span> {{EmployeeDetails.EMP_TYPE}} </span>
+              </div>
+            </div>
+        <div class="title rowmarginfix themeheading">
+            Exam Details
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <div class="input-group">
+                    <label>Exam Type <span style="color:red;">*</span></label>
+                    <br>
+                    <select class="custom-field" [(ngModel)]="E.TrainingId" #TrainingId="ngModel" name="TrainingId"[disabled]="mode=='View'"
+          required>
+          <option [value]="undefined" selected>---Select---</option>
+          <option [value]="tt.fix_code_id" *ngFor="let tt of Trainingtypelist;">
+            {{tt.code_value}}
+          </option>
+        </select>
+                </div>
+                <div class="error-msg"
+                *ngIf="TrainingId.invalid && (TrainingId.dirty || TrainingId.touched || formInvalid)">
+                <span *ngIf="TrainingId.errors.required">Exam Type is required</span>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div class="input-group">
+                    <label>Exam Category <span style="color:red;">*</span></label>
+                    <br>
+                    <select class="custom-field" [(ngModel)]="E.CategoryId" #CategoryId="ngModel" name="CategoryId"[disabled]="mode=='View'"
+         required >
+          <option [value]="undefined" selected>---Select---</option>
+          <option [value]="tc.fix_code_id" *ngFor="let tc of TrainingCategorylist;">
+            {{tc.code_value}}
+          </option>
+        </select>
+                </div>
+                <div class="error-msg"
+                *ngIf="CategoryId.invalid && (CategoryId.dirty || CategoryId.touched || formInvalid)">
+                <span *ngIf="CategoryId.errors.required">Exam Category is required</span>
+              </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <div class="input-group">
+                    <label>Subject <span style="color:red;">*</span></label>
+                    <br>
+                    <input type="text" name="Subject" maxlength="50" [(ngModel)]="E.Subject"
+                    #Subject="ngModel" class="form-control" [disabled]="mode=='View'" required  pattern="^[a-zA-Z0-9]*$" >
+                </div>
+                <div class="error-msg"
+                *ngIf="Subject.invalid && (Subject.dirty || Subject.touched || formInvalid)">
+                <span *ngIf="Subject.errors.required">Subject is required</span>
+                <span *ngIf="Subject.errors.pattern">Subject should accept only alphanumerics</span>
+              </div>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group">
+                    <label>Start Date <span style="color:red;">*</span></label>
+                    <br>
+                    <input type="datetime-local" name="Start_Date" maxlength="50" [(ngModel)]="E.Start_Date"
+                    #Start_Date="ngModel" class="form-control" [disabled]="mode=='View'" required>
+                </div>
+                <div class="error-msg"
+                *ngIf="Start_Date.invalid && (Start_Date.dirty || Start_Date.touched || formInvalid)">
+                <span *ngIf="Start_Date.errors.required">Start Date is required</span>
+              </div>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group">
+                    <label>End Date <span style="color:red;">*</span></label>
+                    <br>
+                    <input type="datetime-local" name="End_Date" maxlength="50" [(ngModel)]="E.End_Date"
+                #End_Date="ngModel" class="form-control" [disabled]="mode=='View'" required>
+                </div>
+                <div class="error-msg"
+                *ngIf="End_Date.invalid && (End_Date.dirty || End_Date.touched || formInvalid)">
+                <span *ngIf="End_Date.errors.required">End Date is required</span>
+              </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <div class="input-group">
+                    <label>Registration No. <span style="color:red;">*</span></label>
+                    <br>
+                    <input type="text" name="Registration" maxlength="50" [(ngModel)]="E.Registration"
+          #Registration="ngModel" class="form-control" [disabled]="mode=='View'" required pattern="^[a-zA-Z0-9]*$">
+                </div>
+                <div class="error-msg"
+                *ngIf="Registration.invalid && (Registration.dirty || Registration.touched || formInvalid)">
+                <span *ngIf="Registration.errors.required">Registration is required</span>
+                <span *ngIf="Registration.errors.pattern">Registration should accept only alphanumeric</span>
+              </div>
+            </div>
+            <!-- <div class="col-md-6 col-sm-6">
+                <div class="input-group">
+                    <label>Registration Date</label>
+                    <br>
+                    <input type="Date" name="Registration_Date" maxlength="50" [(ngModel)]="E.Registration_Date"
+                    #Registration_Date="ngModel" class="form-control" [disabled]="mode=='View'">
+                </div>
+            </div> -->
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <div class="input-group">
+                    <label> Certificate Description</label>
+                    <br>
+                    <input type="text" name="discrioption" maxlength="50" [(ngModel)]="E.discrioption"
+                    #discrioption="ngModel" class="form-control" [disabled]="mode=='View'" pattern="^[a-zA-Z0-9]*$">
+                </div>
+                <div class="error-msg"
+                *ngIf="discrioption.invalid && (discrioption.dirty || discrioption.touched || formInvalid)">
+                <span *ngIf="discrioption.errors.pattern"> Certificate Description should accept only alphanumeric</span>
+              </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div class="input-group">
+                    <label>Certificate Date</label>
+                    <br>
+                    <input type="Date" name="Cretification_Date" maxlength="50" [(ngModel)]="E.Cretification_Date"
+                    #Cretification_Date="ngModel" class="form-control" [disabled]="mode=='View'">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-sm-2">
+                <label style="color:blue;">Upload Certificate</label>
+            </div>
+            <div class="col-md-4">
+                <input *ngIf="!hide" type="file" #Image accept="application/pdf"
+                (change)="imageUpload1($event.target.files)" id="Upload1" name="Upload1">
+              <a class="" *ngIf="E.Upload1 != null && (hide || mode === 'Edit' || mode === 'View')"  target="_blank" href="{{E.Upload1}}">View</a>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div class="input-group">
+                    <label>Other Document</label>
+                    <br>
+                    <input type="text" name="Documentdis" maxlength="50" [(ngModel)]="E.Documentdis"
+                    #Documentdis="ngModel" class="form-control" [disabled]="mode=='View'">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 col-sm-2">
+                <label style="color:blue;">Upload Document</label>
+            </div>
+            <div class="col-md-4">
+                <input *ngIf="!hide" type="file" #Image accept="application/pdf"
+          (change)="imageUpload1($event.target.files)" id="Upload2" name="Upload2">
+        <a class="" *ngIf="E.Upload2 != null && (hide || mode === 'Edit' || mode === 'View')" target="_blank" href="{{E.Upload2}}">View</a>
+            </div>
+        </div>
+    </div>
+
+    <br />
+    <div class="d-flex justify-content-center">
+            <button [disabled]="mode=='View'" class="btn btn-primary" type="submit">{{mode=='edit'?'Update':'Save'}}</button> &nbsp;
+            <button [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button>&nbsp;
+          </div>
+</form>
+</div>

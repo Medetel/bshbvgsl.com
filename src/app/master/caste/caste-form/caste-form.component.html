@@ -1,0 +1,88 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary pull-right" [routerLink]="['/home/masters/caste']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <form (ngSubmit)="mode=='Edit'?UpdateCasteDetails(Caste):SaveCaste(Caste)" #Caste="ngForm" name="Caste">
+    <div class="container-fluid">
+      <div class="row ">
+        <div class="col-md-6" *ngIf="mode=='View'">
+          <div class="input-group">
+            <label>Caste Code</label>
+            <input class="custom-field" type="text" oninput="this.value = this.value.toUpperCase()" maxlength="100"
+              name="caste_code" [(ngModel)]="c.caste_code" #caste_code="ngModel"  disabled required>
+          </div>
+        </div>
+        <div class="col-md-6 ">
+          <div class="input-group">
+            <label>Religion
+              <span class="mandatory">*</span>
+            </label><br>
+            <select class="custom-field" [(ngModel)]="c.Rlg_Id" #Rlg_Id="ngModel" name="Rlg_Id"
+              [disabled]="mode=='View'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="r.Rlg_Id" *ngFor="let r of religionList;">
+                {{r.Relg_Name}}
+              </option>
+            </select>
+          </div>
+          <div class="error-msg pull-right" *ngIf="Rlg_Id.invalid && (Rlg_Id.dirty || Rlg_Id.touched || formInvalid)">
+            <span *ngIf="Rlg_Id.errors.required">Religion is required</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 ">
+          <div class="input-group">
+            <label>Caste Name
+              <span class="mandatory">*</span>
+            </label>
+            <input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="c.caste_name"
+              #caste_name="ngModel" name="caste_name" pattern= "[A-Za-z]+" [disabled]="mode=='View'" required>
+          </div>
+          <div class="error-msg pull-right"
+            *ngIf="caste_name.invalid && (caste_name.dirty || caste_name.touched || formInvalid)">
+            <span *ngIf="caste_name.errors.required">Caste is required</span>
+            <span *ngIf="caste_name.errors?.pattern">Caste name should contain only alphabets.</span>
+          </div>
+        </div>
+        <div class="col-md-6 ">
+          <div class="input-group">
+            <label>Caste Category
+              <span class="mandatory">*</span>
+            </label>
+            <select class="custom-field" [(ngModel)]="c.fix_code_id" #fix_code_id="ngModel" name="fix_code_id"
+              [disabled]="mode=='View'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="r.fix_code_id" *ngFor="let r of CasteCategoryList;">
+                {{r.code_value}}
+              </option>
+            </select>
+          </div>
+          <div class="error-msg pull-right"
+            *ngIf="fix_code_id.invalid && (fix_code_id.dirty || fix_code_id.touched || formInvalid)">
+            <span *ngIf="fix_code_id.errors.required">Caste Category is required</span>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="row">
+      <div class="col-md-6 ">
+         <div class="input-group">
+          <label>Status</label><br>
+          <select class="custom-field">
+            <option value=""> --Select-- </option>
+            <option value="">Active</option>
+            <option value="">In Active</option> 
+         </select>
+        </div> 
+      </div>
+    </div> -->
+    </div>
+    <br>
+    <div class="text-center">
+      <button [disabled]="mode=='View'" class="btn btn-primary" type="submit">{{mode=='Edit'?'Edit':'Save'}}</button>
+      <button [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button>
+    </div>
+  </form>
+</div>

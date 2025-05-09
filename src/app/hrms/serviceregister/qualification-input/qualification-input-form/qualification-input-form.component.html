@@ -1,0 +1,221 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary float-right" [routerLink]="['/home/serviceregister/qualification']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+
+
+  <form (ngSubmit)="mode=='edit'?UpdateEmplQualification(EmplDetails):SaveEmplQualification(EmplDetails)"
+    #EmplDetails="ngForm" name="form1">
+    <div class="container">
+      <div class="row">
+
+        <!-- <div class="col-md-4">
+            <div class="input-group">
+              <label for=""> Division code </label>
+              <select class="custom-field" [(ngModel)]="q.EMP_DIVISION_ID" #EMP_DIVISION_ID="ngModel" name="EMP_DIVISION_ID"
+              [disabled]="mode=='view'" (change)="ChangeOfDivision(q.EMP_DIVISION_ID)">
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="d.DI_Id" *ngFor="let d of DistrictsList;">
+                {{d.DI_District}}
+              </option>
+            </select>    
+            </div>
+          </div>
+     
+      <div class="col-md-4">
+        <div class="input-group">
+      <label for="">Emp Code & Name</label>
+      <select select class="custom-field" [(ngModel)]="q.EMP_ID_FK" #EMP_ID_FK="ngModel" name="EMP_ID_FK"
+      [disabled]="mode=='view'" (change)="ChangeOfEmployee(q.EMP_ID_FK)">
+      <option [value]="" selected>--Select--</option>
+      <option [value]="emp.EMP_EMPLOYEE_ID" *ngFor="let emp of AllEmployeeList;">
+        {{emp.EMP_EMPLOYEE_CODE}} &nbsp; {{emp.EMP_FIRST_NAME}}
+      </option>
+    </select>
+  </div>
+
+
+
+
+
+</div> -->
+
+        <div class="col-md-6">
+          <label for=""> Employee Id :</label> &nbsp; <span class="name"> {{detailsEmployee.EMP_EMPLOYEE_CODE}} </span>
+        </div>
+        <div class="col-md-6">
+          <label for=""> Name :</label> &nbsp; <span class="name"> {{detailsEmployee.EmpName}} </span>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-4 ">
+          <label for="">Division : </label> &nbsp; <span class="name">{{detailsEmployee.DI_District}} </span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Department : </label> &nbsp; <span class="name">{{detailsEmployee.Department_Name}} </span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Designation : </label> &nbsp; <span class="name">{{detailsEmployee.desg_name}}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <label for="">Employee Category : </label> &nbsp; <span class="name">{{detailsEmployee.Category}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Employee Group : </label> &nbsp; <span class="name">{{detailsEmployee.EmpGroup}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Employee Type : </label> &nbsp; <span class="name">{{detailsEmployee.EmpType}}</span>
+        </div>
+      </div>
+
+      <!--  -->
+
+      <div class="title rowmarginfix themeheading">
+       {{title2}}
+        <!-- <button class="btn btn-primary pull-right" type="button" *ngIf="mode=='view' || mode=='edit'" style="margin-top: -3px;" (click)="gotoAdd(EmployeeId)" >Add</button> -->
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <div class="input-group">
+            <label>Qualification Name
+              <span class="mandatory">*</span>
+            </label><br>
+            <select class="custom-field" [(ngModel)]="q.EMP_QLNF_NAME" #EMP_QLNF_NAME="ngModel" name="EMP_QLNF_NAME"
+              [disabled]="mode=='view'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="e.fix_code_id" *ngFor="let e of Qualificationlist;">
+                {{e.code_value}}
+              </option>
+            </select>
+          </div>
+          <div class="error-msg pull-right"  *ngIf="EMP_QLNF_NAME.invalid && (EMP_QLNF_NAME.dirty || EMP_QLNF_NAME.touched || formInvalid)">
+            <span  *ngIf="EMP_QLNF_NAME.errors.required">Qualification is required</span>                      
+        </div>
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <div class="input-group">
+            <label>Name of University
+              <span class="mandatory">*</span>
+            </label><br>
+            <input class="custom-field" maxlength="50" type="text" [(ngModel)]="q.EMP_QLNF_UNIVERSITY" #EMP_QLNF_UNIVERSITY="ngModel"
+              name="EMP_QLNF_UNIVERSITY" [disabled]="mode=='view'" required pattern="[A-Za-z]+">
+          </div>
+          <div class="error-msg pull-right"  *ngIf="EMP_QLNF_UNIVERSITY.invalid && (EMP_QLNF_UNIVERSITY.dirty || EMP_QLNF_UNIVERSITY.touched || formInvalid)">
+            <span  *ngIf="EMP_QLNF_UNIVERSITY.errors.required">University is required</span>       
+            <span *ngIf="EMP_QLNF_UNIVERSITY.errors?.pattern">University name should contain only alphabets</span>               
+        </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <div class="input-group">
+            <label>Year of Passing Out 
+              <span class="mandatory">*</span>
+            </label><br>
+            <input class="custom-field" type="date" [(ngModel)]="q.EMP_QLNF_YEAR_PASSING"
+              #EMP_QLNF_YEAR_PASSING="ngModel" name="EMP_QLNF_YEAR_PASSING" [disabled]="mode=='view'" required>
+          </div>
+          <div class="error-msg pull-right"  *ngIf="EMP_QLNF_YEAR_PASSING.invalid && (EMP_QLNF_YEAR_PASSING.dirty || EMP_QLNF_YEAR_PASSING.touched || formInvalid)">
+            <span  *ngIf="EMP_QLNF_YEAR_PASSING.errors.required">Year of Passing Out is required</span>                      
+        </div>
+       
+        </div>
+        <div class="col-md-6 col-sm-6">
+          <div class="input-group">
+            <label>Grade / Percentage</label><br>
+            <input class="custom-field" type="text"  [(ngModel)]="q.EMP_QLNF_PERC_GRADE" #EMP_QLNF_PERC_GRADE="ngModel"
+              name="EMP_QLNF_PERC_GRADE" [disabled]="mode=='view'" maxlength="2" pattern="^[0-9]*$">
+          </div>
+          <div class="error-msg pull-right"  *ngIf="EMP_QLNF_PERC_GRADE.invalid && (EMP_QLNF_PERC_GRADE.dirty || EMP_QLNF_PERC_GRADE.touched || formInvalid)">
+            <span  *ngIf="EMP_QLNF_PERC_GRADE.errors.pattern">Enter valid data.</span>                      
+        </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2 col-sm-2">
+          <label style="color:blue;">Document upload</label>
+        </div>
+        <div class="col-md-4 col-sm-4">
+          <input input *ngIf="!hide" type="file" #Image accept="application/pdf"
+            (change)="imageUpload1($event.target.files)" id="EMP_DOC_UPLOAD_PATH">
+          <a class="" *ngIf="q.EMP_DOC_UPLOAD_PATH!=null && hide" target="_blank"
+            href="{{q.EMP_DOC_UPLOAD_PATH}}">view</a>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <textarea type="text" class="custom-field" [(ngModel)]="q.EMP_Remarks" #EMP_Remarks="ngModel"
+              name="EMP_Remarks" [disabled]="mode=='view'" maxlength="100"></textarea>
+            <label for="">Remarks</label>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="text-center">
+        <div class="text-center">
+          <button [disabled]="mode=='view'" class="btn btn-primary">{{mode=='edit'?'Edit':'Save'}}</button> &nbsp;
+          <button [disabled]="mode=='view'" (click)="Cancel()" class="btn btn-primary">Cancel</button>
+      </div>
+      </div>
+       <!--  -->
+
+      <br>
+      <div class="table-responsive">
+        <table class="table table-striped grid">
+          <thead>
+              <tr>
+                  <td>Sl No.</td>     
+                  <td>Qualification Id</td>        
+                  <td>Qualification Name</td>
+                  <td>Year of Passing</td>
+                  <td>Grade Percentage </td>
+                  <td class="text-center">View</td>
+                  <td class="text-center">Edit</td>
+                  <td class="text-center">Delete</td>
+              </tr>
+          </thead>
+          <tbody>
+              <tr
+                  *ngFor="let q of EmployeeQualificationDetails | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index">
+                  <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>   
+                  <td>{{q.EMP_QLNF_ID}}</td>             
+                  <td>{{q.code_value}}</td>
+                  <td>{{q.EMP_QLNF_YEAR_PASSING |date:'dd/MM/yyyy'}}</td>
+                  <td>{{q.EMP_QLNF_PERC_GRADE}}</td>
+                  <td class="text-center">
+                      <a href="#"
+                          [routerLink]="['/home/serviceregister/qualification-form',q.EMP_QLNF_ID,'view',q.EMP_ID_FK]">
+                          <i class="fa fa-lg fa-eye themecolor"></i>
+                      </a>
+                  </td>
+                  <td class="text-center">
+                      <a href="#"
+                          [routerLink]="['/home/serviceregister/qualification-form',q.EMP_QLNF_ID,'edit',q.EMP_ID_FK]">
+                          <i class="fa fa-lg fa-edit themecolor"></i>
+                      </a>
+                  </td>
+                  <td class="text-center">
+                      <a (click)="delete(q.EMP_QLNF_ID)">
+                          <i class="fa fa-lg fa-trash themecolor"></i>
+                      </a>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+      </div>
+
+
+
+    </div>
+    <br>
+
+    <!-- <div class="text-center">
+    <button [disabled]="mode=='view'" class="btn btn-primary">Save</button> &nbsp;
+    <button  [disabled]="mode=='view'" class="btn btn-primary" (click)="Cancel()">Cancel</button>
+  </div> -->
+  </form>
+</div>

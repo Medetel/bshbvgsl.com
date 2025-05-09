@@ -1,0 +1,97 @@
+/*31-03-2018*/
+
+.row{
+    padding:10px;
+}
+
+.row:nth-child(odd){
+    background: #f2f2f2;
+}
+
+
+ .input-group {
+    position: relative;
+    margin: 10px 0;
+  }
+  
+input.custom-field,textarea.custom-field,select.custom-field {
+    font-size: 18px;
+    padding: 6px;
+    display: block;
+    width: 100%;
+    border: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .mandatory{
+    color:red;
+  }
+  /*  input.custom-field:focus,
+  textarea.custom-field:focus {
+    outline: none;
+  }
+  
+  .input-group label {
+    color: #999;
+    background: #fff;
+    font-size: 18px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 7px;
+    top: 7px;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+  }
+  
+  input.custom-field:focus ~  label,
+  textarea.custom-field:focus ~  label {
+    top: -20px;
+    font-size: 14px;
+    color: #4285f4;
+    background: none;
+  }
+
+  input.custom-field:valid ~  label,
+  textarea.custom-field:valid ~  label{
+    top: -20px;
+    font-size: 14px;
+    color: #4285f4;
+    background: none;
+  }
+
+
+
+  .type-property table{
+    border:1px solid #ccc;
+  }
+
+  .type-property table thead{
+    background:#808080;
+    color:#fff;
+}
+
+table thead td{    
+    text-align: center;
+    vertical-align: middle;
+    border:1px solid #fff;    
+}
+
+td{
+    text-align: center;
+} */
+
+.field-title{
+  width:200px;
+  display:inline-block;
+  color:#807f7f;
+}
+
+
+/* ---------------------------tooltip style-------------------------- */
+
+
+
+/* ---------------------------------End--------------------------------------- */

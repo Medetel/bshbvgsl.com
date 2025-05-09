@@ -1,0 +1,420 @@
+<div class="wrapper" style="overflow: hidden">
+  <div class="title themeheading">{{title}}
+    <div class="float-right">
+      <button class="btn btn-primary" [routerLink]="['/home/landdetails']">Back</button>
+    </div>
+    <span class="clearfix"></span>
+  </div>
+
+  <form (ngSubmit)="mode=='edit'?UpdateLandOwnerDetails(LandOwnerForm):SaveLandOwnerDetails(LandOwnerForm)"
+    #LandOwnerForm="ngForm" name="form1">
+    <div class="container-fluid">
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <select #LOD_PD_Id_FK="ngModel" name="LOD_PD_Id_FK" [(ngModel)]="o.LOD_PD_Id_FK" class="custom-field" required>
+              <option value="undefined">---Select---</option>
+              <option *ngFor="let project of projectlist" [value]="project.PD_Id">
+                {{project.PD_Project_Code}} - {{project.PD_Project_Name}} - {{project.Phase_Name}}
+              </option>
+            </select>
+            <label>Project<span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="LOD_PD_Id_FK.invalid && (LOD_PD_Id_FK.dirty || LOD_PD_Id_FK.touched || formInvalid)">
+              <span *ngIf="LOD_PD_Id_FK.errors.required">Project is required.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="o.LOD_PR_Id_FK" #LOD_PR_Id_FK="ngModel" name="LOD_PR_Id_FK"
+              (change)="GetOtherrelatedinfo(o.LOD_PR_Id_FK)" [disabled]="mode =='view'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="p.PR_Id_PK" *ngFor="let p of proposallist;">
+                {{p.PR_Id}} </option>
+            </select>
+            <label for="">Proposal Id
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="LOD_PR_Id_FK.invalid && (LOD_PR_Id_FK.dirty || LOD_PR_Id_FK.touched || formInvalid)">
+              <span *ngIf="LOD_PR_Id_FK.errors.required">Proposal Id is required.</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="">Proposal for :{{ProposalFor}}</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input [disabled]="mode=='view'" [(ngModel)]="o.LOD_SurveyNumber" maxlength="50" #LOD_SurveyNumber="ngModel"
+              name="LOD_SurveyNumber" class="custom-field" required>
+            <label for="">Survey No.
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="LOD_SurveyNumber.invalid && (LOD_SurveyNumber.dirty || LOD_SurveyNumber.touched || formInvalid)">
+              <span *ngIf="LOD_SurveyNumber.errors.required">Survey Number is required.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <input [disabled]="mode=='view'" [(ngModel)]="o.LOD_LO_Name" maxlength="100" #LOD_LO_Name="ngModel" name="LOD_LO_Name"
+              class="custom-field" required>
+            <label for="">Owner Name
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="LOD_LO_Name.invalid && (LOD_LO_Name.dirty || LOD_LO_Name.touched || formInvalid)">
+              <span *ngIf="LOD_LO_Name.errors.required">Land Owner Name is required.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input [disabled]="mode=='view'" [(ngModel)]="o.LOD_Size" pattern="^[0-9.]*$" maxlength="20" #LOD_Size="ngModel"
+              name="LOD_Size" class="custom-field" required>
+            <label for="">Extents
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="LOD_Size.invalid && (LOD_Size.dirty || LOD_Size.touched || formInvalid)">
+              <span *ngIf="LOD_Size.errors.required">Extents is required.</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input [disabled]="mode=='view'" [(ngModel)]="o.LOD_Latitute" pattern="^[0-9.]*$" maxlength="20"
+              #LOD_Latitute="ngModel" name="LOD_Latitute" class="custom-field">
+            <label for="">Latitude
+              <!-- <span class="mandatory">*</span> -->
+            </label>
+            <!-- <div class="error-msg" *ngIf="LOD_Latitute.invalid && (LOD_Latitute.dirty || LOD_Latitute.touched || formInvalid)">
+            <span *ngIf="LOD_Latitute.errors.required">Latitude is required.</span>
+          </div> -->
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input [disabled]="mode=='view'" [(ngModel)]="o.LOD_Longitute" pattern="^[0-9.]*$" maxlength="20"
+              #LOD_Longitute="ngModel" name="LOD_Longitute" class="custom-field">
+            <label for="">Longitude
+              <!-- <span class="mandatory">*</span> -->
+            </label>
+            <!-- <div class="error-msg" *ngIf="LOD_Longitute.invalid && (LOD_Longitute.dirty || LOD_Longitute.touched || formInvalid)">
+            <span *ngIf="LOD_Longitute.errors.required">Longitude is required.</span>
+          </div> -->
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input [disabled]="mode=='view'" [(ngModel)]="o.LOD_Mobile" pattern="^[0-9+]{10,12}$" maxlength="20"
+              #LOD_Mobile="ngModel" name="LOD_Mobile" class="custom-field" required>
+            <label for="">Mobile
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="LOD_Mobile.invalid && (LOD_Mobile.dirty || LOD_Mobile.touched || formInvalid)">
+              <span *ngIf="LOD_Mobile.errors.required">Mobile is required.</span>
+              <span *ngIf="LOD_Mobile.errors?.pattern">Enter Valid Mobile No.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input [disabled]="mode=='view'" [(ngModel)]="o.LOD_Email" pattern="^[a-zA-Z0-9._%-+]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+              maxlength="20" #LOD_Email="ngModel" name="LOD_Email" class="custom-field" required>
+            <label for="">Email
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="LOD_Email.invalid && (LOD_Email.dirty || LOD_Email.touched || formInvalid)">
+              <span *ngIf="LOD_Email.errors.required">Email is required.</span>
+              <span *ngIf="LOD_Email.errors?.pattern">Enter Valid Email.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <input [disabled]="mode=='view'" [(ngModel)]="o.LOD_Akar" maxlength="100" #LOD_Akar="ngModel" name="LOD_Akar"
+              class="custom-field" required>
+            <label for="">Akar
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="LOD_Akar.invalid && (LOD_Akar.dirty || LOD_Akar.touched || formInvalid)">
+              <span *ngIf="LOD_Akar.errors.required">Akar is required.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="o.LOD_LandType_Id_Fk" #LOD_LandType_Id_Fk="ngModel" name="LOD_LandType_Id_Fk"
+              [disabled]="mode =='view'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="ll.LandType_Id" *ngFor="let ll of LandTypellist;">
+                {{ll.LandType_Name}} </option>
+            </select>
+            <label for="">Land Type
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="LOD_LandType_Id_Fk.invalid && (LOD_LandType_Id_Fk.dirty || LOD_LandType_Id_Fk.touched || formInvalid)">
+              <span *ngIf="LOD_LandType_Id_Fk.errors.required">Land Type is required.</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="o.LOD_Schedule_Id_Fk" #LOD_Schedule_Id_Fk="ngModel" name="LOD_Schedule_Id_Fk"
+              [disabled]="mode =='view'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="sl.Schedule_Id" *ngFor="let sl of Schedulelist;">
+                {{sl.Schedule_Name}} </option>
+            </select>
+            <label for="">Schedule
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="LOD_Schedule_Id_Fk.invalid && (LOD_Schedule_Id_Fk.dirty || LOD_Schedule_Id_Fk.touched || formInvalid)">
+              <span *ngIf="LOD_Schedule_Id_Fk.errors.required">Schedule is required.</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="input-group">
+            <input type="text" [disabled]="mode=='view'" [(ngModel)]="o.LOD_Schedule" maxlength="100" #LOD_Schedule="ngModel"
+              name="LOD_Schedule" class="custom-field">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="o.LOD_SharingPattern_Id_Fk" #LOD_SharingPattern_Id_Fk="ngModel"
+              name="LOD_SharingPattern_Id_Fk" [disabled]="mode =='view'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="spl.SharingPattern_Id" *ngFor="let spl of Sharinglist;">
+                {{spl.SharingPattern_Name}} </option>
+            </select>
+            <label for="">Sharing Pattern
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="LOD_SharingPattern_Id_Fk.invalid && (LOD_SharingPattern_Id_Fk.dirty || LOD_SharingPattern_Id_Fk.touched || formInvalid)">
+              <span *ngIf="LOD_SharingPattern_Id_Fk.errors.required">Sharing Patternd is required.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <br>
+
+      <div class="box1">
+        <div class="row">
+          <div class="col-md-5">
+            <div class="input-group">
+              <select [disabled]="mode=='view'" [(ngModel)]="f.LOFU_DOC_Type" #LOFU_DOC_Type="ngModel" name="LOFU_DOC_Type"
+                class="form-control">
+                <option value="">---Select---</option>
+                <option [value]="">CAD</option>
+                <option [value]="">Sketch</option>
+              </select>
+              <label for="">Document Type
+              </label>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="input-group">
+              <input type="file" #Image accept="application/pdf" (change)="imageUpload($event.target.files)" id="LOFU_FileName"
+                name="LOFU_FileName" [(ngModel)]="f.LOFU_FileName" #LOFU_FileName="ngModel">
+              <!-- <label for="">File         
+            </label> -->
+            </div>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-primary" type="button" (click)="FileDetails(f)">Add</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="table-responsive">
+              <table class="table table-striped" style="width:60%;margin:0px auto;">
+                <thead>
+                  <tr>
+                    <td>Sl No.</td>
+                    <td>Document Type</td>
+                    <td>Document</td>
+                    <td *ngIf="mode=='view'">View</td>
+                    <td *ngIf="!(mode=='view')">Delete</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let f of FileList; let i=index">
+                    <td>{{i+1}}.</td>
+                    <td>{{f.LOFU_DOC_Type}}</td>
+                    <td>{{f.LOFU_FileName}} </td>
+                    <td *ngIf="mode=='view'"><a class="" *ngIf="f.LOFU_FileNameView!=null" target="_blank" href="{{f.LOFU_FileNameView}}">view</a></td>
+                    <td *ngIf="!(mode=='view')"><i class="fa fa-trash" (click)="removeFile(i)"></i></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- <div class="col-md-12 text-center">
+      <button class="btn btn-primary" type="button" (click)="FileDetails(f)">Add</button>
+    </div> -->
+        </div>
+      </div>
+      <br>
+
+      <div class="row">
+        <!-- <div class="col-md-2">
+        <label for="">Upload Sketch</label>
+      </div>
+      <div class="col-md-4">
+        <input type="file">
+      </div> -->
+        <div class="col-md-6">
+          <div class="input-group">
+            <select [disabled]="mode=='view'" [(ngModel)]="o.LOD_Status" #LOD_Status="ngModel" name="LOD_Status" class="custom-field"
+              required>
+              <option value="No_Status">No Status</option>
+            </select>
+            <label for="">Status
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="LOD_Status.invalid && (LOD_Status.dirty || LOD_Status.touched || formInvalid)">
+              <span *ngIf="LOD_Status.errors.required">Status is required.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="title themeheading">
+      Bank Details
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input [disabled]="mode=='view'" [(ngModel)]="o.LOD_BankName" maxlength="50" #LOD_BankName="ngModel" name="LOD_BankName"
+              class="custom-field" required>
+            <label for="">Bank Name
+              <span class="mandatory">*</span>
+            </label>
+          </div>
+          <div class="error-msg" *ngIf="LOD_BankName.invalid && (LOD_BankName.dirty || LOD_BankName.touched || formInvalid)">
+            <span *ngIf="LOD_BankName.errors.required">BankName is required.</span>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <input [disabled]="mode=='view'" [(ngModel)]="o.LOD_Branch" maxlength="50" #LOD_Branch="ngModel" name="LOD_Branch"
+              class="custom-field" required>
+            <label for="">Bank Branch
+              <span class="mandatory">*</span>
+            </label>
+          </div>
+          <div class="error-msg" *ngIf="LOD_Branch.invalid && (LOD_Branch.dirty || LOD_Branch.touched || formInvalid)">
+            <span *ngIf="LOD_Branch.errors.required">Branch is required.</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input [disabled]="mode=='view'" [(ngModel)]="o.LOD_Acc_No" minlength="6" maxlength="50" #LOD_Acc_No="ngModel" name="LOD_Acc_No"
+              class="custom-field" required>
+            <label for="">Account No.
+              <span class="mandatory">*</span>
+            </label>
+          </div>
+          <div class="error-msg" *ngIf="LOD_Acc_No.invalid && (LOD_Acc_No.dirty || LOD_Acc_No.touched || formInvalid)">
+            <span *ngIf="LOD_Acc_No.errors.required">Account Number is required.</span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input [disabled]="mode=='view'" [(ngModel)]="o.LOD_IFSCCode" maxlength="50" #LOD_IFSCCode="ngModel" name="LOD_IFSCCode"
+              class="custom-field" required>
+            <label for="">IFSC Code
+              <span class="mandatory">*</span>
+            </label>
+          </div>
+          <div class="error-msg" *ngIf="LOD_IFSCCode.invalid && (LOD_IFSCCode.dirty || LOD_IFSCCode.touched || formInvalid)">
+            <span *ngIf="LOD_IFSCCode.errors.required">IFSC Code is required.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+
+    </div>
+
+
+
+
+    <!-- <div class="title themeheading">
+    Land Owners Details      
+  </div> -->
+    <!-- <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-12">
+            <div class="table-responsive">
+              <table class="table table-striped" >
+                <thead>
+                  <tr>
+                    <td>S NO</td>
+                    <td>Survey No.</td>
+                    <td>Owner Name</td>
+                    <td>Size</td>
+                    <td>Mobile</td>
+                    <td>Email</td>
+                    <td>Bank Name</td>
+                    <td>Bank Branch</td>
+                    <td>Account No.</td>
+                    <td>IFSC Code</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>                   
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+  </div> -->
+
+    <div class="row">
+      <div class="col-md-12 text-center">
+        <button [disabled]="mode=='view'" class="btn btn-primary" type="submit">Save</button>&nbsp;
+        <button type="button" class="btn btn-primary">Cancel</button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,77 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <!-- <button class="btn btn-primary pull-right" [routerLink]="['/home/paymentconfig/payment-config-form']">Add</button> -->
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <td>Sl No.</td>
+          <td>Notification No.</td>
+          <td>EMI Payment Config Details</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let PC of PaymentConfiguration | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index">
+          <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+          <td>{{PC.NotificationNo}}</td>
+          <td>
+            <table class="table">
+              <thead>
+                <tr style="background-color:#2980b9">
+                  <td >Project Name</td>
+                  <td>Category</td>
+                  <td>View</td>
+                  <td>Edit</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let PCR of PC.PaymentConfigReservationModel">
+                  <td>{{PCR.PD_Project_Name}}</td>
+                  <td>{{PCR.CA_CategoryName}}</td>
+                  <td class="text-center">
+                    <a href="#" [routerLink]="['/home/paymentconfig/payment-config-form', PCR.PC_Id, 'view']">
+                      <i class="fa fa-lg fa-eye themecolor"></i>
+                    </a>
+                  </td>
+                  <td class="text-center">
+                    <a href="#" [routerLink]="['/home/paymentconfig/payment-config-form', PCR.PC_Id, 'edit']">
+                      <i class="fa fa-lg fa-edit themecolor"></i>
+                    </a>
+                  </td>
+                  <!-- <td class="text-center">
+              <a href="#">
+                <i class="fa fa-lg fa-eye themecolor"></i></a>
+          </td>
+          <td class="text-center">
+                <a href="javascript:void(0);">
+                  <i class="fa fa-lg fa-trash themecolor"></i></a>
+          </td> -->
+                </tr>
+              </tbody>
+            </table>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-11">
+          <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)" maxSize="9" directionLinks="true"
+            autoHide="false" previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+            screenReaderCurrentLabel="You're on page">
+          </pagination-controls>
+        </div>
+        <div class="col-md-1">
+          Total:
+          <span>{{totalItems}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,87 @@
+<div class="wrapper">
+  <div class="title themeheading">
+   {{title}}
+    <button class="btn btn-primary float-right" [routerLink]="['/home/milestone']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <form (ngSubmit)="mode=='edit'? Updatemilestone(MilestoneForm):SaveMilestone(MilestoneForm)" #MilestoneForm="ngForm"
+  autocomplete="off">
+  <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #phase="ngModel" name="phase" [(ngModel)]="i.phase" pattern="^[a-zA-Z0-9 ]*$" [disabled]="mode=='view'"  required>
+            <label for="">Phase
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="phase.invalid && (phase.dirty || phase.touched || formInvalid)">
+              <span *ngIf="phase.errors.required">Phase is required</span>
+              <span *ngIf="phase.errors?.pattern">Only AlphaNumeric should enter</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <textarea class="custom-field" #Description="ngModel" name="Description" [(ngModel)]="i.Description" [disabled]="mode=='view'"  required></textarea>
+            <label for="">Description
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Description.invalid && (Description.dirty || Description.touched || formInvalid)">
+              <span *ngIf="Description.errors.required">Description is required</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #standard_duration="ngModel" name="standard_duration" [(ngModel)]="i.standard_duration" pattern="^[a-zA-Z0-9 ]*$" [disabled]="mode=='view'"  required>
+            <label for="">Standard Duration
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="standard_duration.invalid && (standard_duration.dirty || standard_duration.touched || formInvalid)">
+              <span *ngIf="standard_duration.errors.required">Standard Duration is required</span>
+              <span *ngIf="standard_duration.errors?.pattern">Only AlphaNumeric should enter</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #milestone="ngModel" name="milestone" [(ngModel)]="i.milestone" pattern="^[a-zA-Z0-9 ]*$" [disabled]="mode=='view'"  required>
+            <label for="">Milestone
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="milestone.invalid && (milestone.dirty || milestone.touched || formInvalid)">
+              <span *ngIf="milestone.errors.required">milestone is required</span>
+              <span *ngIf="milestone.errors?.pattern">Only AlphaNumeric should enter</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="i.Status" #Status="ngModel" name="Status"
+              [disabled]="mode=='view'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option value=3>Active</option>
+              <option value=4>Inactive</option>
+            </select>
+            <label for="">Status
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Status.invalid && (Status.dirty || Status.touched || formInvalid)">
+              <span *ngIf="Status.errors.required">Status is required</span>
+            </div>
+          </div>
+        </div>
+      </div>
+<br>
+      <div class="text-center">
+        <button class="btn btn-primary" [disabled]="mode=='view'" type="submit">Save</button>&nbsp;
+        <button class="btn btn-primary" [disabled]="mode=='view'"  type="reset">Cancel</button>
+      </div>
+
+  </div>
+  </form>
+</div>

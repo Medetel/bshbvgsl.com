@@ -1,0 +1,120 @@
+<div class="wrapper">
+  <div class="title themeheading">Payment Form </div>
+  <!-- (ngSubmit)="SubmitPayment(PF)" -->
+  <form #PF="ngForm" name="PF" autocomplete="off">
+    <div class="container-fluid">       
+        <div class="row">
+          <div class="col-md-6">            
+            <div class="input-group">
+              <label for="">Customer Name
+                <span class="mandatory">*</span>
+              </label>	
+                <input type="text" class="custom-field" name="Customer_Name" maxlength="100" 
+                ngModel #Customer_Name="ngModel"  pattern="[A-Za-z]+" required>                      
+              </div>   
+              <div class="error-msg"
+              *ngIf="Customer_Name.invalid && (Customer_Name.dirty || Customer_Name.touched || formInvalid)">
+              <span *ngIf="Customer_Name.errors.reqiured">Customer Name is required</span>
+              <span *ngIf="Customer_Name.errors.pattern">Customer Name should alphabets</span>
+          </div>  
+          
+          
+          <!-- <div class="col-md-6">
+            <div class="input-group">
+              <label for="">Employee Id <span class="mandatory">*</span></label>
+              <input type="text" class="custom-field" name="EMP_CODE" value="" #EMP_CODE="ngModel"
+                [(ngModel)]="d.EMP_CODE" [disabled]="mode=='view'" required>
+                <div class="error-msg"
+                *ngIf="EMP_CODE.invalid && (EMP_CODE.dirty || EMP_CODE.touched || formInvalid)">
+                <span *ngIf="EMP_CODE.errors.required">Employee Id is required.</span>
+              </div>
+            </div>
+          </div> -->
+
+          </div>
+          <div class="col-md-6">
+            <div class="input-group">
+              <label for="">Email
+                <span class="mandatory">*</span>
+              </label> 
+              <input type="text" class="custom-field" name="Email" maxlength="100" 
+              ngModel #Email="ngModel" required pattern="^[a-zA-Z0-9._%-+]+@[a-z0-9.-]+\.[a-z]{2,3}$" >                       
+            </div> 
+            <div class="error-msg"
+            *ngIf="Email.invalid && (Email.dirty || Email.touched || formInvalid)">
+            <span *ngIf="Email.errors.pattern">Email pattern mismatch</span>
+            <span *ngIf="Email.errors.reqiured">Email is required</span>
+        </div>           
+          </div>
+       </div>
+
+       <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Phone Number
+              <span class="mandatory">*</span>
+            </label> 
+            <input type="text" class="custom-field" name="Phone_Number" 
+            ngModel #Phone_Number="ngModel" required maxlength=10
+            pattern="^[0-9]{10}$" minlength="10 " >                         
+          </div>   
+          <div class="error-msg"
+          *ngIf="Phone_Number.invalid && (Phone_Number.dirty || Phone_Number.touched || formInvalid)">
+          <span *ngIf="Phone_Number.errors.pattern">Phone Number must be 10 digits</span>
+          <span *ngIf="Phone_Number.errors.minlength">Phone Number must be 10 digits</span>
+          <span *ngIf="Phone_Number.errors.reqiured">Phone Number is required</span>
+      </div>             
+        </div>
+        <div class="col-md-6">            
+          <div class="input-group">
+            <label for="">Customer Address
+              <span class="mandatory">*</span>
+            </label>  
+            <input type="text" class="custom-field" name="Customer_Address" maxlength="100" 
+            ngModel #Customer_Address="ngModel" required>                      
+          </div>
+          <div class="error-msg"
+          *ngIf="Customer_Address.invalid && (Customer_Address.dirty || Customer_Address.touched || formInvalid)">
+          <span *ngIf="Customer_Address.errors.reqiured">Customer Address is required</span>
+      </div> 
+        </div>
+     </div>
+     <div class="row">
+      <div class="col-md-6">         
+        <div class="input-group">
+          <label for="">Amount (INR)
+            <span class="mandatory">*</span>
+          </label>
+          <input type="text" class="custom-field" name="Pay_Amount" 
+          ngModel #Pay_Amount="ngModel" required pattern="^[0-9]*$" maxlength="30">
+        </div>
+        <div class="error-msg"
+        *ngIf="Pay_Amount.invalid && (Pay_Amount.dirty || Pay_Amount.touched || formInvalid)">
+        <span *ngIf="Pay_Amount.errors.pattern">Pay Amount should numericals </span>
+        <span *ngIf="Pay_Amount.errors.reqiured">Pay Amount is required</span>
+    </div> 
+      </div>
+      <div class="col-md-6">          
+        <div class="input-group">
+          <label for="">Remarks
+            <span class="mandatory">*</span>
+          </label>
+          <input type="text" class="custom-field" cols="20" rows="10" name="Remarks" maxlength="100" 
+          ngModel #Remarks="ngModel" required>       
+        </div>
+        <div class="error-msg"
+        *ngIf="Remarks.invalid && (Remarks.dirty || Remarks.touched || formInvalid)">
+        <span *ngIf="Remarks.errors.reqiured">Remarks is required</span>
+    </div> 
+      </div>
+   </div>	  
+      <div class="btn-wrapper text-center">
+        <button class="btn btn-primary" type="submit">Submit</button><button class="btn btn-primary" type="reset" >Cancel</button>
+      </div>
+    </div>
+
+  </form>
+
+
+  
+</div>

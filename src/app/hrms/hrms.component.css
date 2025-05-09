@@ -1,0 +1,31 @@
+#u-menu{
+    list-style: none;
+    padding-left:0px;
+    margin:0px;
+    width:100%;
+    display: block;
+}
+
+#u-menu li{
+    float:left;
+}
+
+#u-menu li a{
+    display:inline-block;
+    padding:5px 10px;
+    width:100px;
+    text-align: center;
+    text-decoration: none;
+    color:#212121;
+    transition: .5s;
+}
+
+#u-menu li a:hover{
+    background:#B5A422;
+}
+
+#u-menu img{
+    display: inline-block;
+    width:50px;
+
+}

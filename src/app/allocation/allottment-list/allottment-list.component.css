@@ -1,0 +1,26 @@
+.row{
+    padding:20px 0px 0px;
+}
+
+
+/* .row:nth-child(odd){
+    background: #ececec;
+} */
+
+#cen {
+    text-align: center;
+    background: #ced7e6;
+    font-size: 22px;
+}
+
+table, td{
+    border: 1px solid #ddd;
+}
+
+.Green{
+    background: #63e673eb;
+}
+
+.Red{
+    background: #e65b6deb;
+}

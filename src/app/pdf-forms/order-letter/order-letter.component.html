@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>bshb</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <style>
+    .header-center {
+      margin: 0% auto;
+      text-align: justify;
+    }
+  </style>
+
+</head>
+
+<body *ngFor="let b of PrintOrderList;let i=index">
+  <div *ngFor="let notificationDetails of b.NoticeLetterDetailModel;">
+    <section>
+      <div class="container row text-center">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+          <h4 style="margin-top:50px;"> ಕರ್ನಾಟಕ ಗೃಹ ಮಂಡಳಿ </h4>
+        </div>
+        <div class="col-md-3">
+          <img src="/img" width="150px;" height="150px">
+        </div>
+      </div>
+    </section>
+    <hr>
+    <section class="container">
+      <div class="row" style="text-align:center;">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+          <p>
+            ನಂ. ಕಗೃಮಂ /ಜಿಯೋಕ/____ /_____/_____/{{notificationDetails.Years}}/
+          </p>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+          <p>
+            ಸಹಾಯಕ ಕಾರ್ಯಪಾಲಕ ಅಭಿಯಂತರವರ ಕಛೇರಿ <br>
+            ಉಪ-ವಿಭಾಗ, ಕರ್ನಾಟಕ ಗೃಹ ಮಂಡಳಿ,<br>
+            {{notificationDetails.DI_District}}, ದಿನಾಂಕ: {{ notificationDetails.N_Order_Date | date:'dd-MM-yyyy' }}.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section style=" width:90%;margin: 0% auto;">
+      <h3 class="text-center">
+        <b> ಹಂಚಿಕೆ ರದ್ದತಿ ಆದೇಶ </b>
+      </h3>
+      <div class="row container">
+        <div class="col-md-1"></div>
+        <div class="col-md-1">
+          <b> ವಿಷಯ:- </b>
+        </div>
+        <div class="col-md-10">
+          <span> {{notificationDetails.DI_District}} ನಗರ/ಪಟ್ಟಣದಲ್ಲಿ {{notificationDetails.PD_Project_Name}} 
+            ಬಡಾವಣೆಯಲ್ಲಿ ಹಂಚಿಕೆಯಾಗಿರುವ </span>
+        </div>
+      </div>
+      <div class="row container">
+        <div class="col-md-1"></div>
+        <div class="col-md-1">
+          <b> ಉಲ್ಲೆಖ:- </b>
+        </div>
+        <div class="col-md-10">
+          <p>
+            ನಿವೇಶನ ಸಂಖ್ಯೆ: {{notificationDetails.LOD_Property_No}} {{notificationDetails.CA_CategoryName}} ಹಂಚಿಕೆ
+            ರದ್ದತಿ ಮಾಡಿರುವ ಕುರಿತು.
+          </p>
+          <p>
+            1. ಹಂಚಿಕೆ ಪತ್ರದ ಸಂಖ್ಯೆ: ಕಗೃಮಂ /_____/_______/________/{{notificationDetails.Years}}. ದಿನಾಂಕ: {{
+            notificationDetails.PR_App_AllotDate | date:'dd-MM-yyyy' }}.
+          </p>
+          <!-- <p>
+            2. ಹಂಚಿಕೆದಾರರ ಮನವಿ ಪತ್ರದ ದಿನಾಂಕ : 19-02-2019.
+          </p> -->
+        </div>
+      </div>
+    </section>
+    <br>
+    <p class="text-center"><b> *********** </b> </p>
+    <br><br>
+    <section>
+      <div class="container">
+        <h3> <b> ಪ್ರಸ್ತಾವಣೆ </b> </h3>
+        <p>
+          ಕರ್ನಾಟಕ ಗೃಹ ಮಂಡಳಿ {{notificationDetails.DI_District}} ನಗರ {{notificationDetails.PD_Project_Name}} 
+          ಬಡಾವಣೆಯಲ್ಲಿ ಹಂಚಿಕೆಯಾಗಿರುವ ಎಲ್.ಐ.ಜ ವರ್ಗದ ನಿವೇಶನ
+          ಸಂಖ್ಯೆ:
+          {{notificationDetails.LOD_Property_No}} {{notificationDetails.CA_CategoryName}} ಇದನ್ನು ದಿನಾಂಕ: 16-01-2017 ರಂದು ಉಲ್ಲೇಖ (1) ರಂತೆ ಹಂಚಿಕೆ ಮಾಡಲಾಗಿದ್ದೆ,
+          ಹಂಚಿಕೆದಾರರಾದ ಶ್ರೀ : {{notificationDetails.APP_PA_Name}}
+          . ಅದ ನಿಮಗೆ ಪೂರ್ಣ ಬೆಲೆ ಮಾರಾಟ ಆಧಾರದ ಮೇಲೆ ಹಂಚಿಕೆ ಮಾಡಲಾಗಿತ್ತೆ. ಸದರಿ ಸ್ವತ್ತಿನ ಒಟ್ಟು ಮೊತ್ತ ರೂ.
+          {{notificationDetails.PFC_Final_Cost}} /-
+          ಗಳಾಗಿದ್ದು. ಇದರ ಪೈಕಿ ಅರಂಭಿಕ ಠೇವಣಿ ಮುತ್ತೆ ರೂ. {{notificationDetails.PC_InitialDeposit}}/- ಗಳನ್ನು ಕಳೆದು ಉಳಿದ
+          ಬಾಕಿ ಮೊತ್ತೆ ರೂ. {{notificationDetails.PFC_Final_Cost-notificationDetails.PC_InitialDeposit | number}} /-
+          ಗಳನ್ನು
+          ನಾಲ್ಕು ಸಮಾನ ಕಂತುಗಳಲ್ಲಿ ಪಾವತಿಸಲು ತಿಳಿಸಲಾಗಿತ್ತು. ಆದರೆ ಹಂಚಿಕೆದಾರರು ನಿಗದಿತ ಅವಧಿಯಲ್ಲಿ ಮಂಡಳಿಗೆ ಹಣ ಮಾವತಿ
+          ಮಾಡಿರುವುದಿಲ್ಲಿ. ಉಲ್ಲೇಖ (2) ರಲ್ಲಿ ಈ ಕಛೇರಿಗೆ ಮನವಿ ಪತ್ರವನ್ನು ಸಲ್ಲಿಸಿ ನನಗೆ ಆರ್ಥಿಕ ತೊಂದರೆ ಇರುವ ಕಾರಣ ಹಣವನ್ನು ಸಂದಾಯ
+          ಮಾಡಿರುವುದಿಲ್ಲಿ ಕಾರಣ ನನಗೆ ಹಂಚಿಕೆಯಾಗಿರುವ ಮನೆಯನ್ನು ರದ್ದುಗೊಳಿಸಿ ಮಂಡಳಿಗೆ ಸಂದಾಯ ಮಾಡಿರುವ ಠೇವಣಿ ಹಣವನ್ನು
+          ಮರುಪಾವತಿಸುವಂತೆ
+          ಕೋರಿರುತ್ತಾರೆ.
+        </p>
+      </div>
+      <div class="container">
+        <h3 class="text-center"> <b> ಆದುದರಿಂದ ಈ ಆದೇಶ </b> </h3>
+        <p>
+          ಪ್ರಸ್ತಾವನೆಯಲ್ಲಿ ನಮೂದಿಸಿರುವ ಅಂಶಗಳನ್ನು ಪರಿಶೀಲಿಸಿ ಶ್ರೀ ಉಮೇಶ ಆರ್. ಗಡ್ಡಿ, ಸಹಾಯಕ ಕಂದಾಯ ಅಧಿಕಾರಿಯಾದ ನಾನು ಕರ್ನಾಟಕ ಗೃಹ
+          ಮಂಡಳಿ ಕಾಯಿದೆ ಮತ್ತು ನಿಯಮದಡಿಯಲ್ಲಿ ಪ್ರದತ್ತ ಅಧಿಕಾರವನ್ನು ಚಲಾಯಿಸಿ, ಶ್ರೀ : ಬಸಪ್ಪ ಬಸಪ್ಪ ರಖಾಸಗಿ ದೇಸಾಯಿ, ಇವರಿಗೆ
+          ಮುದ್ದೇಬಿಹಾಳ 2 ನೇ ಹಂತ ಕಗೃಮಂ ಬಡಾವಣೆಯಲ್ಲಿ ಹಂಚಿಕೆಯಾಗಿರುವ ನಿವೇಶನ ಸಂಖ್ಯೆ ಎಲ್.ಐ.ಜ 158 ರ ಹಂಚಿಕೆಯನ್ನು ರದ್ದುಗೊಳಿಸಿ
+          ಆದೇಶಿಸಿರುತ್ತೇನೆ. ಹಂಚಿಕೆ ನಿಯಮಾವಳಿ 12(4) ರ ಪ್ರಕಾರ ಹಂಚಿಕೆದಾರರು ಮಂಡಳಿಗೆ ಪಾವತಿಸಲಾಗಿದ್ದ ಆರಂಭಿಕೆ ಠೇವಣಿ ಹಣದಲ್ಲಿ 25%
+          ರಷ್ಟುನ್ನು ಮುಟ್ಟುಗೋಲು ಹಾಕಿಕೊಂಡು ಉಳಿದ ಬಾಕಿ ಮೊತ್ತವನ್ನು ಮರುಪಾವತಿ ಮಾಡಲು ಆದೇಶಿಸಿರುತ್ತೇನೆ. ಹಂಚಿಕೆ ರದ್ದತಿ ನಂತರ ಹಣ
+          ಪಾವತಿಸಲು ಅವಕಾಸವಿರುವುದಿಲ್ಲಿ.
+        </p>
+      </div>
+    </section>
+    <br>
+    <section>
+      <div class="container row">
+        <div class="col-md-8">
+
+        </div>
+        <div class="col-md-4">
+          <p class="text-center">
+            ಸಹಾಯಕ ಕಂದಾಯ ಅಧಿಕಾರಿ <br>
+            ಜಿಲ್ಲಾ ಯೋಜನಾ ಕಛೇರಿ, <br>
+            ಕರ್ನಾಟಕ ಗೃಹ ಮಂಡಳಿ, {{notificationDetails.DI_District}}
+          </p>
+        </div>
+      </div>
+    </section>
+    <br>
+    <section>
+      <div class="container">
+        <h3> <b> ಪ್ರತಿಯನ್ನು </b></h3>
+        <p>
+          1) ಹಂಚಿದಾರರಿಗೆ ಶ್ರೀ : ಬಸಪ್ಪ ಬಸಪ್ಪ ರಖಾಸಗಿ ದೇಸಾಯಿ, ಬಮ್ಮಬಹಳ್ಳಿ, ಮುದ್ದೇಬಿಹಾಳ ವಿಜಯಪುರ ಇವರ ಮಾಹಿತಿಗಾಗಿ. <br>
+          2) ಉಪಪ್ರಧಾನ ವ್ಯವಸ್ಥಾಪಕರು (ಹಂಚಿಕೆ) ಕಗೃಮಂ, ಕಾವೇರಿ ಭವನ ಬೆಂಗಳೂರು ಇವರಿಗೆ ಮಾಹಿತಿಗಾಗಿ ಸಲ್ಲಿಸಲಾಗಿದೆ. <br>
+          3) ಹಣಕಾಸು ನಿಯಂತ್ರಕರು ಕಗೃಮಂ, 4 ನೇ ಮಹಡಿ ಕಾವೇರಿ ಕಛೇರಿ ಭವನ ಬೆಂಗಳೂರು ಇವರಿಗೆ ಮಾಹಿತಿಗಾಗಿ ಹಾಗು ಮುಂದಿನ ಕ್ರಮಕ್ಕಾಗಿ
+          ಸಲ್ಲಿಲಾಗಿದೆ.<br>
+          4) ಕಾರ್ಯಾಪಾಲಕ ಅಭಿಯಂತತರು ಕಗೃಮಂ ಸಮನ್ವಯ ಕಛೇರಿ ಕಲಬುರಗಿ ಇವರಿಗೆ ಮಾಹಿತಿಗಾಗಿ ಕಳುಹಿಸಿದೆ.<br>
+          5) ಕಛೇರಿ ಕಡತಕ್ಕೆ.
+
+        </p>
+      </div>
+    </section>
+    <section>
+      <div class="container">
+        <div class="container row">
+          <div class="col-md-8">
+
+          </div>
+          <div class="col-md-4">
+            <p class="text-center">
+              ಸಹಾಯಕ ಕಂದಾಯ ಅಧಿಕಾರಿ <br>
+              ಜಿಲ್ಲಾ ಯೋಜನಾ ಕಛೇರಿ, <br>
+              ಕರ್ನಾಟಕ ಗೃಹ ಮಂಡಳಿ, {{notificationDetails.DI_District}}
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!--     script -->
+    <input type="text" #AdhaarHolderName="ngModel" name="AdhaarHolderName" [(ngModel)]="Adhaar.AdhaarHolderName" class="custom-field"/>
+    <button type="button" (click)="EsignAdhaar(notificationDetails,b.APP_Id)">SignHash</button>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,141 @@
+<div class="wrapper">
+  <div class="title">
+
+    <!-- <a  href="" [routerLink]="['/home/scrutiny]" class="btn btn-primary pull-right">Back</a> -->
+    <span class="clearfix"></span>
+  </div>
+  <div class="title themeheading">Provisional List
+    <button (click)="reloadPage()"  class="btn btn-primary pull-right">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <br>
+
+  <div class="container-fluid">
+    <div class="row holder1">
+      <div class="col-md-4">
+        <div class="input-group">
+          <select [(ngModel)]="s.S_NotificationID" required #S_NotificationID="ngModel" name="S_NotificationID" class="custom-field"
+            (change)="GetProjects(s.S_NotificationID)">
+            <option [ngValue]="undefined" selected>---Select---</option>
+            <option [ngValue]="n.DSWOId_NO_Id" *ngFor="let n of Notifications;">
+              {{n.DSWOId_NO_Number}}</option>
+          </select>
+          <label>Notification No.</label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group">
+          <select [(ngModel)]="s.S_ProjectID" required #S_ProjectID="ngModel" name="S_ProjectID" class="custom-field">
+            <option [ngValue]="undefined" selected>---Select---</option>
+            <option [ngValue]="p.PD_Id" *ngFor="let p of Projects;">
+              {{p.PD_Project_Code}}-{{p.PD_Project_Name}}</option>
+          </select>
+          <label>Project</label>
+        </div>
+      </div>
+     
+
+      <div class="col-md-1">
+        <button type="button" class="btn btn-primary" (click)="GetProvisionalLists(s.S_NotificationID,s.S_ProjectID)">Go </button>
+      </div>
+    </div>
+  </div>
+<div class="container-fluid projectdetails">
+  <div class="row">
+    <div class="col-md-3"><span>Project Name:</span><span>{{PD.PD_Project_Name}}</span></div>
+  <div class="col-md-3"><span>Project Code:</span><span>{{PD.PD_Project_Code}}</span></div>
+  <div class="col-md-3"><span>Project Scheme:</span><span>{{PD.PD_Scheme}}</span></div>
+  <div class="col-md-3"><span>Project Phase:</span><span>{{PD.PD_Phase}}</span></div>
+  </div>
+  <div class="row">
+    <div class="col-md-3"><span>Project Place:</span><span>{{PD.DI_District}}</span></div>
+  <div class="col-md-3"><span>Notification No:</span><span>{{PD.DSWOId_NO_Number}}</span></div>
+  <div class="col-md-3"><span>Notification Date:</span><span>{{PD.DSWOId_NO_Date | date:'dd-MM-yyyy'}}</span></div>
+  <div class="col-md-3"><span>Last Date:</span><span>{{PD.DSWOId_NO_LastDate | date:'dd-MM-yyyy'}}</span></div>
+  </div>
+</div>
+  <div class="title text-center">
+    Eligible
+  </div>
+
+  <div class="container-fluid">
+    <div class="table-responsive grid">
+      <table class="table">
+        <thead>
+          <tr>
+            <td>Sl No.</td>
+            <td>Application No.</td>
+            <!-- <td>Registration No.</td> -->
+            <td>Applicant Name</td>
+            <td>Category</td>
+            <td>Property Type</td>
+            <td>Applied Date</td>
+          </tr>
+        </thead>
+        <tbody *ngFor="let r of Reservations">
+          <tr>
+              <td colspan="6" class="text-center table-title">{{r.RES_Name}}</td>
+          </tr>
+          <tr *ngFor="let eligible of r.ReservationsProvisionalListEligible;let i=index;">
+            <td>{{i+1}}.</td>
+            <td>{{eligible.APP_No}}</td>
+            <!-- <td>{{eligible.APP_Reg_No}}</td> -->
+            <td>{{eligible.APP_PA_Name}}</td>
+            <td>{{eligible.APP_Category}}</td>
+            <td>{{eligible.APP_PropertyType}}</td>
+            <td>{{eligible.APP_AppliedDate | date:'dd-MM-yyyy'}}</td>
+          </tr>
+          <!--   <tr *ngFor="let eligible of r.ReservationsProvisionalListIneligible;let i=index;">
+              <td>{{i+1}}.</td>
+              <td>{{ineligible.APP_No}}</td>
+              <td>{{ineligible.APP_Reg_No}}</td>
+              <td>{{ineligible.APP_PA_Name}}</td>
+              <td>{{ineligible.APP_Category}}</td>
+              <td>{{ineligible.APP_PropertyType}}</td>
+              <td>{{ineligible.APP_AppliedDate | date:'dd-MM-yyyy'}}</td>
+            </tr> -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="title text-center">
+    InEligible
+  </div>
+    <div class="container-fluid">
+        <div class="table-responsive grid">
+          <table class="table">
+            <thead>
+              <tr>
+                  <td>Sl No.</td>
+                  <td>Application No.</td>
+                  <!-- <td>Registration No.</td> -->
+                  <td>Applicant Name</td>
+                  <td>Category</td>
+                  <td>Property Type</td>
+                  <td>Applied Date</td>
+              </tr>
+            </thead>
+            <tbody *ngFor="let r of Reservations">
+              <tr>
+                  <td colspan="6" class="text-center table-title">{{r.RES_Name}}</td>
+              </tr>
+                <tr *ngFor="let ineligible of r.ReservationsProvisionalListIneligible;let i=index;">
+                    <td>{{i+1}}.</td>
+                    <td>{{ineligible.APP_No}}</td>
+                    <!-- <td>{{eligible.APP_Reg_No}}</td> -->
+                    <td>{{ineligible.APP_PA_Name}}</td>
+                    <td>{{ineligible.APP_Category}}</td>
+                    <td>{{ineligible.APP_PropertyType}}</td>
+                    <td>{{ineligible.APP_AppliedDate | date:'dd-MM-yyyy'}}</td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+  <div style="padding:20px;text-align:center;">
+    <button type="button" class="btn btn-primary">Push to Website</button>
+  </div>
+  
+</div>

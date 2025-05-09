@@ -1,0 +1,714 @@
+<div style="padding:20px;text-align:center;" >
+
+    <div class="main-wrapper" >
+        <div class="body container-fluid">
+
+            <!-- <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="pills-alert-tab" data-toggle="pill" href="#pills-alert" role="tab"
+                        aria-controls="pills-alert" aria-selected="true">Alert</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-dashboard-tab" data-toggle="pill" href="#pills-dashboard" role="tab"
+                        aria-controls="pills-dashboard" aria-selected="false">Dashboard</a>
+                </li>
+
+            </ul> -->
+
+            <div class="tab-content" id="pills-tabContent">
+
+
+                <!-- <div class="tab-pane fade show active" id="pills-alert" role="tabpanel" aria-labelledby="pills-alert-tab">
+
+                    <div class="container-fluid martop20">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="recieved-tab" data-toggle="tab" href="#recieved" role="tab"
+                                    aria-controls="recieved" aria-selected="true">Recieved</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="sent-tab" data-toggle="tab" href="#sent" role="tab"
+                                    aria-controls="sent" aria-selected="false">Sent</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="escalated-tab" data-toggle="tab" href="#escalated" role="tab"
+                                    aria-controls="escalated" aria-selected="false">Escalated</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="escalated-tab" data-toggle="tab" href="#escalated" role="tab"
+                                    aria-controls="escalated" aria-selected="false">Resolved</a>
+                            </li>
+                        </ul>
+                        <br>
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="recieved" role="tabpanel" aria-labelledby="recieved-tab">
+                                <br>
+                                <div class="table-responsive">
+                                    <table class="grid table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <td>Sl No.</td>
+                                                <td>Task</td>
+                                                <td>Alert Message</td>
+                                                <td>Notification No.</td>
+                                                <td>Project No.</td>
+                                                <td>FromUser</td>
+                                                <td>View</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let Alt of Alert;let i=index">
+                                                <td>{{i+1}}</td>
+                                                <td>{{Alt.PageName}}</td>
+                                                <td>{{Alt.TR_Trans_Message}}</td>
+                                                <td>{{Alt.Not_Id}}</td>
+                                                <td>{{Alt.Proj_Id}}</td>
+                                                <td>{{Alt.UserName}}</td>
+                                                <td>
+                                                    <a href="#" [routerLink]="Alt.RedirectUrl">
+                                                        <i class="fa fa-lg fa-eye themecolor"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="sent" role="tabpanel" aria-labelledby="sent">
+                                <br>
+                                <div class="table-responsive">
+                                    <table class="grid table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <td>Sl No.</td>
+                                                <td>Task</td>
+                                                <td>Alert Message</td>
+                                                <td>Notification No.</td>
+                                                <td>Project No.</td>
+                                                <td>ToUser</td>
+                                                <td>View</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let Altrec of AlertReceived;let i=index">
+                                                <td>{{i+1}}</td>
+                                                <td>{{Altrec.PageName}}</td>
+                                                <td>{{Altrec.TR_Trans_Message}}</td>
+                                                <td>{{Altrec.Not_Id}}</td>
+                                                <td>{{Altrec.Proj_Id}}</td>
+                                                <td>{{Altrec.UserName}}</td>
+                                                <td>
+                                                    <a href="#" [routerLink]="Altrec.RedirectUrl">
+                                                        <i class="fa fa-lg fa-eye themecolor"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="escalated" role="tabpanel" aria-labelledby="escalated-tab">
+                                <br>
+                                <div class="table-responsive">
+                                    <table class="grid table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <td>Sl No.</td>
+                                                <td>Task</td>
+                                                <td>Alert Message</td>
+                                                <td>Notification No.</td>
+                                                <td>Project No.</td>
+                                                <td>FromUser</td>
+                                                <td>View</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let Altesc of AlertEscalated;let i=index">
+                                                <td>{{i+1}}</td>
+                                                <td>{{Altesc.PageName}}</td>
+                                                <td>{{Altesc.TR_Trans_Message}}</td>
+                                                <td>{{Altesc.Not_Id}}</td>
+                                                <td>{{Altesc.Proj_Id}}</td>
+                                                <td>{{Altesc.UserName}}</td>
+                                                <td>
+                                                    <a href="#" [routerLink]="Altesc.RedirectUrl">
+                                                        <i class="fa fa-lg fa-eye themecolor"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="resolved" role="tabpanel" aria-labelledby="escalated-tab">
+                                <br>
+                                <div class="table-responsive">
+                                    <table class="grid table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <td>Sl No.</td>
+                                                <td>Task</td>
+                                                <td>Alert Message</td>
+                                                <td>Notification No.</td>
+                                                <td>Project No.</td>
+                                                <td>FromUser</td>
+                                                <td>View</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let Altres of AlertResolved;let i=index">
+                                                <td>{{i+1}}</td>
+                                                <td>{{Altres.PageName}}</td>
+                                                <td>{{Altres.TR_Trans_Message}}</td>
+                                                <td>{{Altres.Not_Id}}</td>
+                                                <td>{{Altres.Proj_Id}}</td>
+                                                <td>{{Altres.UserName}}</td>
+                                                <td>
+                                                    <a href="#" [routerLink]="Altres.RedirectUrl">
+                                                        <i class="fa fa-lg fa-eye themecolor"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div> -->
+
+                <!-- <button (click)="Pay()">Payment Gateway</button> -->
+
+                <!-- <div class="tab-pane fade" id="pills-dashboard" role="tabpanel" aria-labelledby="pills-dashboard-tab"> -->
+
+                <div class="row" style="margin-top: 30px;">
+                    <div class="col-md-12">
+                        <!-- <div style="display: flex; justify-content: flex-end;">
+                            <div *ngIf="selectedDistrict" class="district-label">
+                            <label style="color: black;">List of Available Projects for Districts:</label><br>
+                            <span [ngStyle]="{'color': 'blue', 'font-weight': 'bold'}">{{ selectedDistrict }}</span>
+                            </div>
+                            </div> -->
+                        <div class="panel-group" id="accordion" style="position:sticky;top:20px;">
+                            <div class="map panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" style="color: #B5A422;" href="#map">BIHAR (बिहार)</a>
+                                        <!-- <iframe src="http://localhost:14080/Documents/Images/BidderDetails/B_AddresProof/12.pdf?21-10-2019%203:26:20%20PM" width=100% height=100%></iframe> -->
+                                    </h4>
+<!--                                     
+                                    <a class="btn btn-link" id="all_state" (click)="getid(0, 'Entire State')" *ngIf="userRole=='Super Admin'">Entire
+                                        State</a> -->
+                                </div>
+                                <div id="map">
+                                    <div class="map-wrapper" >
+                                        <img id="ctl00_ImgMapBihar" src="../assets/images/Bihar-Map.png" usemap="#ImageMapctl00_ImgMapBihar">
+                                        <map name="ImageMapctl00_ImgMapBihar" id="ctl00_ImgMapBihar">
+                                            <area target="" alt="ARARIA(अररिया)" title="ARARIA(अररिया)" nohref="nohref" id="1" (click)="getid(1,'ARARIA(अररिया)')" coords="754,233,772,246,791,247,807,257,817,240,835,236,853,244,868,249,861,258,869,272,875,291,871,313,862,319,854,330,840,335,818,332,796,337,774,340,758,335,761,320,760,308,762,291,754,272,754,261,757,248" shape="poly">
+	                                        <area target="" alt="Arwal(अरवल )" title="Arwal(अरवल )" nohref="nohref" id="2" (click)="getid(2,'Arwal(अरवल )')"  coords="233,513,241,503,255,500,268,495,280,479,281,485,277,491,285,492,291,490,296,491,285,500,297,497,303,498,308,498,305,507,305,516,310,522,310,529,298,530,286,533,279,524,266,523,253,519,242,521" shape="poly">   
+	                                        <area target="" alt="Aurangabad(औरंगाबाद )" title="Aurangabad(औरंगाबाद )" nohref="nohref" id="3" (click)="getid(3,'Aurangabad(औरंगाबाद ) ')" coords="145,618,153,600,168,586,181,571,193,558,206,541,223,532,232,520,240,526,253,520,261,529,273,525,281,528,285,536,278,539,285,545,282,558,277,566,271,575,275,581,280,586,285,595,282,605,277,611,264,615,257,625,255,640,242,649,232,644,230,635,220,636,215,648,204,653,202,640,192,640,185,640,174,640,171,649,164,653,155,638" shape="poly"> 
+	                                        <area target="" alt="Banka(बांका)" title="Banka(बांका)" nohref="nohref" id="4" (click)="getid(4,'Banka(बांका)')" coords="679,523,761,528,770,534,769,543,766,556,768,567,764,573,754,583,754,591,752,602,746,627,731,619,724,626,722,642,711,636,698,633,690,631,681,634,671,638,663,630,658,614,650,601,647,592,647,582,643,566,639,551,653,557,662,554,671,548,669,534" shape="poly">   
+	                                        <area target="" alt="Begusarai(बेगूसराय)" title="Begusarai(बेगूसराय)" nohref="nohref" id="5" (click)="getid(5,'Begusarai(बेगूसराय)')" coords="490,426,506,423,507,412,516,409,526,409,540,420,544,408,543,400,546,392,563,391,571,397,576,405,594,411,595,425,599,436,611,444,622,439,625,450,634,452,631,460,616,463,608,471,597,479,586,486,574,487,560,477,548,462,532,458,519,450,520,439,509,430" shape="poly">   
+	                                        <area target="" alt="Bhagalpur(भागलपुर)" title="Bhagalpur(भागलपुर)" nohref="nohref" id="6" (click)="getid(6,'Bhagalpur(भागलपुर)')" coords="672,500,685,494,695,489,699,478,710,469,705,460,705,451,731,446,749,448,756,453,772,454,778,452,779,460,791,470,798,468,798,460,807,460,815,461,826,469,839,473,845,477,845,483,833,487,831,498,820,500,812,500,805,499,802,509,798,520,791,525,777,526,774,534,764,528,743,520,733,521,719,520,701,520,689,518,681,518,686,504" shape="poly">   
+	                                        <area target="" alt="Bhojpur(भोजपुर)" title="Bhojpur(भोजपुर)" nohref="nohref" id="7" (click)="getid(7,'Bhojpur(भोजपुर)')"  coords="206,401,208,388,223,391,227,397,237,396,245,402,251,399,254,388,264,393,281,396,299,396,306,401,299,424,289,438,295,453,283,477,266,492,246,499,232,508,217,501,208,497,208,480,200,472,203,462,211,450,212,436,211,422,214,411" shape="poly">
+	                                        <area target="" alt="Buxar(बक्सर)" title="Buxar(बक्सर)" nohref="nohref" id="8" (click)="getid(8,'Buxar(बक्सर)')"coords="97,462,110,453,119,434,138,418,161,405,161,395,170,387,181,399,198,405,210,407,206,431,210,441,207,452,199,461,193,468,178,468,167,466,148,465,148,482,144,489,131,483,118,475,108,469" shape="poly">   
+	                                        <area target="" alt="Darbhanga(दरभंगा)" title="Darbhanga(दरभंगा)" nohref="nohref" id="9" (click)="getid(9,'Darbhanga(दरभंगा)')"  coords="481,239,488,239,492,246,500,247,501,257,504,265,503,271,516,272,527,268,537,267,541,278,544,287,550,289,560,292,570,285,581,285,590,290,594,296,601,302,610,318,613,329,615,340,607,348,604,359,610,368,618,375,619,385,608,387,595,381,587,377,588,368,588,357,570,350,551,346,538,341,525,335,512,324,494,319,486,315,489,306,495,299,485,289,485,279,486,263,481,252" shape="poly">   
+	                                        <area target="" alt="East Champaran (पूरबी चंपारण)" title="East Champaran (पूरबी चंपारण)" nohref="nohref" id="10" (click)="getid(10,'East Champaran (पूरबी चंपारण)')"coords="291,125,298,117,308,117,316,122,333,126,341,140,351,143,355,149,378,145,375,158,383,169,390,169,389,183,389,190,392,198,388,207,382,223,376,224,382,237,394,246,395,255,382,254,390,261,383,266,376,259,368,262,361,262,351,258,343,261,321,258,316,278,301,268,299,259,290,250,282,241,269,231,257,234,254,228,247,219,244,209,239,204,249,196,261,188,271,187,280,183,284,176,287,164,288,155,281,144,285,135" shape="poly"> 
+	                                        <area target="" alt="Gaya (गया)" title="Gaya (गया)" nohref="nohref" id="11" (click)="getid(11,'Gaya (गया)')" coords="203,660,216,654,221,645,224,641,232,641,238,648,250,650,259,643,262,635,264,625,274,618,286,612,291,599,291,587,283,581,279,572,283,567,288,560,290,554,293,546,284,537,297,536,311,532,326,532,325,539,328,548,348,545,355,546,362,543,370,532,384,537,392,543,403,542,413,547,418,558,413,568,406,577,399,590,395,602,402,602,406,609,401,618,402,627,404,638,414,643,405,646,397,652,384,660,373,660,373,667,362,676,359,664,351,670,340,672,333,677,321,670,319,661,311,659,309,648,297,648,284,656,276,666,272,675,255,669,251,678,245,683,242,693,234,688,227,681,217,676,211,673" shape="poly">  
+	                                        <area target="" alt="Gopalganj (गोपालगंज)" title="Gopalganj (गोपालगंज)" nohref="nohref" id="12" (click)="getid(12,'Gopalganj (गोपालगंज)')" coords="122,224,132,224,139,219,150,218,160,204,160,197,173,195,183,196,198,203,211,198,224,198,223,207,232,199,240,212,250,227,259,238,268,232,278,240,287,254,293,258,299,266,308,275,318,283,299,284,291,285,277,278,271,266,255,261,237,256,222,251,213,252,211,265,204,258,194,263,180,251,166,248,156,246,148,236,138,235,123,233" shape="poly">
+	                                        <area target="" alt="Jamui (जमुई)" title="Jamui (जमुई)" nohref="nohref" id="13" (click)="getid(13,'Jamui (जमुई)')"  coords="511,547,524,547,550,550,563,554,568,537,579,544,590,547,587,536,600,530,609,518,620,516,621,525,614,532,625,540,634,549,638,559,636,569,643,573,643,586,638,592,646,594,650,606,657,617,660,621,655,631,650,643,638,648,634,658,634,669,630,680,615,669,597,662,602,644,604,632,593,633,581,625,577,635,567,628,566,609,550,598,551,588,541,580,533,568,526,574,514,561" shape="poly">    
+	                                        <area target="" alt="Jehanabad (जेहनाबाद)" title="Jehanabad (जेहनाबाद)"  nohref="nohref" id="14" (click)="getid(14,'Jehanabad (जेहनाबाद)')" coords="308,505,316,500,323,487,329,489,341,483,341,489,352,488,361,487,365,480,373,485,378,489,370,497,369,503,369,511,370,517,374,527,365,532,359,541,349,543,345,535,337,538,330,547,325,532,317,531,315,522,311,517" shape="poly">
+    
+	                                        <area target="" alt="Khagaria (खगडिया)" title="Khagaria (खगडिया)" nohref="nohref" id="15" (click)="getid(15,'Khagaria (खगडिया)')" coords="597,409,610,398,621,395,633,404,642,414,649,417,655,418,661,414,673,414,680,413,686,407,695,413,703,413,706,426,704,437,698,449,702,456,706,465,700,473,694,475,690,485,678,489,671,486,667,472,664,452,657,440,643,441,635,451,628,444,624,436,616,436,607,436,599,424,600,418" shape="poly">
+    
+	                                        <area target="" alt="Kaimur (कैमूर)" title="Kaimur (कैमूर)" nohref="nohref" id="16" (click)="getid(16,'Kaimur (कैमूर)')"  coords="13,503,31,490,46,485,67,472,79,465,94,464,103,470,115,479,119,486,109,493,101,499,101,510,101,520,104,531,104,544,102,556,94,562,91,572,85,581,84,589,94,591,94,598,92,610,86,616,90,625,88,636,81,640,73,641,63,640,52,641,48,630,51,623,46,615,43,607,31,598,21,591,21,579,18,569,17,555,12,542,12,529,15,520" shape="poly">
+    
+	                                        <area target="" alt="Kishanganj (किशनगंज)" title="Kishanganj (किशनगंज)" nohref="nohref" id="17" (click)="getid(17,'Kishanganj (किशनगंज)')" coords="862,257,868,243,878,240,887,244,896,231,908,236,917,230,920,240,932,247,939,252,947,247,955,235,961,212,966,220,975,213,982,211,976,228,991,241,986,251,994,256,985,264,973,274,962,280,951,290,940,298,931,309,923,317,910,320,911,309,893,309,877,304,881,290,877,277,872,264" shape="poly">
+    
+	                                        <area target="" alt="Katihar (कटिहार)" title="Katihar (कटिहार)"  nohref="nohref" id="18" (click)="getid(18,'Katihar (कटिहार)')" coords="793,395,806,400,831,401,846,406,857,403,870,399,876,388,886,384,893,387,901,375,903,365,916,363,917,375,924,385,931,393,938,394,945,399,941,414,946,427,948,434,937,433,924,430,919,434,907,442,898,450,891,462,894,477,903,479,905,486,901,490,885,486,877,477,860,478,854,473,847,468,840,469,825,462,814,454,801,455,792,461,783,453,786,435,793,426,793,410" shape="poly">
+    
+	                                        <area target="" alt="Lakhisarai (लाखीसराय)" title="Lakhisarai (लाखीसराय)" nohref="nohref" id="19" (click)="getid(19,'Lakhisarai (लाखीसराय)')" coords="520,490,522,483,527,480,543,480,552,476,563,482,572,489,583,491,593,487,606,483,614,494,610,514,602,520,599,528,588,534,586,544,579,539,569,534,565,544,554,546,545,548,536,545,535,534,531,521,539,514,543,499,534,502,530,496" shape="poly">
+    
+	                                        <area target="" alt="Madhubani (मधुबनी)" title="Madhubani (मधुबनी)" nohref="nohref" id="20" (click)="getid(20,'Madhubani (मधुबनी)')" coords="531,193,548,189,565,197,580,202,609,199,634,212,650,220,664,230,681,237,677,247,663,256,650,265,640,276,637,282,623,286,622,295,643,296,640,303,628,307,625,315,614,322,603,299,586,286,568,282,559,287,548,289,545,277,541,266,527,264,520,268,507,272,506,261,506,247,492,244,492,232,500,232,500,224,506,218,504,205,511,210,520,207,524,202,530,202" shape="poly">
+    
+	                                        <area target="" alt="Munger (मुंगेर)" title="Munger (मुंगेर)" nohref="nohref" id="21" (click)="getid(21,'Munger (मुंगेर)')" coords="593,484,605,475,619,468,633,461,640,458,644,451,647,443,653,442,656,456,663,457,663,466,665,479,667,487,681,489,668,499,675,504,678,511,672,517,671,527,666,539,666,546,656,553,645,548,627,544,616,533,620,522,626,517,613,508,616,497,612,481" shape="poly">
+    
+	                                        <area target="" alt="Madhepura (मधेपुरा)" title="Madhepura (मधेपुरा)" nohref="nohref" id="22" (click)="getid(22,'Madhepura (मधेपुरा)')" coords="667,333,676,330,682,321,687,311,697,316,709,312,722,315,738,319,746,320,755,323,755,330,751,340,738,346,742,356,744,366,741,378,741,390,749,397,743,408,748,423,751,432,758,437,753,443,742,443,728,443,716,446,706,447,711,433,707,419,702,407,710,402,714,392,711,384,713,371,709,358,691,359,682,351,677,342,666,342" shape="poly">
+    
+	                                        <area target="" alt="Muzaffarpur (मुज़फ़्फ़रपुर)" title="Muzaffarpur (मुज़फ़्फ़रपुर)" nohref="nohref" id="23" (click)="getid(23,'Muzaffarpur (मुज़फ़्फ़रपुर)')"  coords="321,264,342,264,351,259,365,266,372,259,381,271,391,269,397,258,408,261,416,269,422,273,436,259,445,252,459,255,464,265,477,266,478,273,478,283,483,292,490,300,479,312,465,329,463,342,451,346,438,344,424,344,412,341,399,339,398,329,389,329,380,330,366,329,355,337,337,328,329,324,331,309,323,302,324,292,321,282,318,274" shape="poly">
+    
+	                                        <area target="" alt="Nalanda (नालन्दा)" title="Nalanda (नालन्दा)" nohref="nohref" id="24" (click)="getid(24,'Nalanda (नालन्दा)')"  coords="374,523,378,510,374,502,381,493,382,483,377,477,380,463,392,460,402,461,414,459,420,453,433,453,451,457,462,467,465,472,466,479,473,477,483,470,489,478,499,481,504,484,518,487,513,494,504,495,492,490,479,486,477,494,483,497,481,503,478,509,471,515,461,517,463,524,467,529,460,535,450,536,447,541,436,544,425,548,415,553,415,543,410,538,400,537,389,538,383,528" shape="poly">
+    
+	                                        <area target="" alt="Nawada (नवादा)" title="Nawada (नवादा)"  nohref="nohref" id="25" (click)="getid(25,'Nawada (नवादा)')" coords="397,598,404,583,413,573,416,566,418,554,439,545,451,550,451,540,463,537,470,532,472,526,481,527,491,527,491,539,486,543,491,549,497,552,504,550,505,563,514,569,520,576,529,575,536,581,544,591,537,599,528,602,521,592,510,586,502,587,487,581,481,595,479,609,469,614,471,623,472,632,461,631,451,632,450,638,442,643,431,640,423,644,407,635,403,627,407,613,407,606" shape="poly">
+    
+	                                        <area target="" alt="Patna (पटना)" title="Patna (पटना)" nohref="nohref" id="26" (click)="getid(26,'Patna (पटना)')"  coords="286,478,295,452,292,438,306,422,307,409,311,398,321,393,340,394,354,399,363,405,371,414,388,419,401,435,414,437,426,437,441,430,451,442,470,449,476,439,490,431,506,432,515,443,511,453,522,458,537,464,549,469,543,476,528,474,519,482,499,477,481,466,471,470,462,462,453,454,440,452,424,445,415,456,404,458,391,459,375,462,376,471,369,477,358,480,347,481,339,473,336,480,326,482,318,484,314,490,304,497,290,488" shape="poly">
+    
+	                                        <area target="" alt="Purnia (पूर्णिया)" title="Purnia (पूर्णिया)" nohref="nohref" id="27" (click)="getid(27,'Purnia (पूर्णिया)')" coords="740,345,760,340,776,346,787,341,795,340,812,341,821,334,839,336,852,335,863,328,865,318,874,316,885,308,894,312,907,312,908,322,901,332,895,341,897,348,900,357,896,368,899,378,892,385,880,381,870,395,854,397,839,400,820,400,807,397,788,388,785,399,786,410,787,425,780,433,780,444,775,448,766,448,755,450,757,438,751,428,748,411,746,403,749,396,741,388,746,372,746,360,743,350" shape="poly">
+    
+	                                        <area target="" alt="Rohtas (रोहतास)" title="Rohtas (रोहतास)" nohref="nohref" id="28" (click)="getid(28,'Rohtas (रोहतास)')" coords="121,484,142,488,151,487,152,473,154,465,178,468,196,473,203,479,205,490,205,502,219,507,231,512,225,525,218,533,203,538,197,548,185,561,177,574,162,589,150,603,140,623,131,636,120,643,109,643,91,648,63,651,46,645,71,643,90,636,92,622,97,601,94,583,91,572,104,563,105,551,110,541,105,526,105,520,105,512,107,502,113,497,119,494" shape="poly">
+   
+                                            <area target="" alt="Saharsa (सहरसा)" title="Saharsa (सहरसा)"  nohref="nohref" id="29" (click)="getid(29,'Saharsa (सहरसा)')"  coords="616,325,625,322,630,317,638,320,637,328,643,333,652,327,665,328,662,343,666,349,674,345,680,359,693,363,706,360,709,372,706,385,710,390,706,402,697,403,691,412,684,402,675,407,659,410,655,417,646,415,639,409,623,389,621,379,614,368,610,363,608,355,621,349,618,336" shape="poly">
+    
+	                                        <area target="" alt="Samastipur (समस्तीपुर)" title="Samastipur (समस्तीपुर)" nohref="nohref" id="30" (click)="getid(30,'Samastipur (समस्तीपुर)')" coords="467,330,481,318,499,324,510,328,525,339,540,345,554,351,570,354,583,355,585,364,583,375,591,385,601,386,615,392,604,403,593,407,580,404,573,392,560,379,561,385,551,388,540,392,540,403,541,416,530,405,520,408,507,406,507,418,495,421,486,429,474,441,461,442,448,442,445,426,449,414,460,395,465,379,462,364,468,351,467,340" shape="poly">
+    
+	                                        <area target="" alt="Sheohar (शिवहर)" title="Sheohar (शिवहर)" nohref="nohref" id="31" (click)="getid(31,'Sheohar (शिवहर)')" coords="394,192,408,192,411,203,415,212,419,222,410,228,412,239,412,249,414,256,406,256,396,253,397,243,384,239,379,227,386,215,392,204"  shape="poly">
+    
+	                                        <area target="" alt="Sheikhpura (शेखपुरा)" title="Sheikhpura (शेखपुरा)" nohref="nohref" id="32" (click)="getid(32,'Sheikhpura (शेखपुरा)')" coords="472,520,479,514,482,505,486,502,482,492,491,494,497,501,508,501,514,496,522,495,530,501,531,508,530,514,527,522,530,528,532,538,533,546,520,541,506,548,495,544,494,532,494,523,484,524" shape="poly">
+    
+	                                        <area target="" alt="Saran(सारण)" title="Saran(सारण)" nohref="nohref" id="33" (click)="getid(33,'Saran(सारण)')"  coords="229,330,251,328,258,318,276,319,282,314,287,304,296,298,298,288,318,288,322,299,324,309,327,316,329,329,334,334,342,332,352,339,362,359,371,370,374,379,378,395,386,414,371,410,362,402,357,395,342,389,328,395,310,395,294,393,273,392,270,383,263,370,251,368,251,357,234,357,235,345" shape="poly">
+    
+	                                        <area target="" alt="Sitamarhi(सीतामढ़ी)" title="Sitamarhi(सीतामढ़ी)" nohref="nohref" id="34" (click)="getid(34,'Sitamarhi(सीतामढ़ी)')" coords="392,170,406,171,418,166,432,165,442,160,456,147,465,146,483,156,486,170,485,192,501,201,505,215,499,223,494,229,490,236,482,238,479,248,478,257,482,261,469,261,457,251,443,248,433,257,428,272,418,262,414,246,416,229,421,218,415,199,403,189,396,189,389,185" shape="poly">
+    
+	                                        <area target="" alt="Siwan(सिवान)" title="Siwan(सिवान)" nohref="nohref" id="35" (click)="getid(35,'Siwan(सिवान)')" coords="176,255,191,264,204,261,211,269,214,252,231,254,243,259,250,269,259,267,269,266,271,275,277,281,290,286,292,295,285,303,280,311,272,313,261,314,254,322,240,324,223,323,226,340,231,352,216,342,201,341,190,333,181,333,174,322,162,311,151,308,150,300,147,291,148,283,158,282,171,279,178,275,178,263" shape="poly">
+    
+	                                        <area target="" alt="Supaul(सुपौल)" title="Supaul(सुपौल)" nohref="nohref" id="36" (click)="getid(36,'Supaul(सुपौल)')" coords="643,276,661,261,680,251,695,234,707,237,715,234,721,225,736,219,746,213,747,228,750,245,751,256,747,265,751,283,757,293,755,304,760,314,755,320,737,315,716,311,699,309,684,308,678,322,666,324,653,323,645,329,641,318,630,311,640,304,649,295,636,295,625,291,636,288,642,285" shape="poly">
+    
+	                                        <area target="" alt="Vaishali(वैशाली)" title="Vaishali(वैशाली)" nohref="nohref" id="37" (click)="getid(37,'Vaishali(वैशाली)')" coords="356,338,364,333,371,331,382,330,392,329,396,340,415,344,425,345,436,346,445,352,457,347,466,348,461,365,461,382,458,393,450,402,446,413,444,427,434,433,424,437,401,433,391,416,380,402,377,374,366,357,357,345" shape="poly">
+    
+	                                        <area target="" alt="West Champaran(पश्चिम चम्पारण)" title="West Champaran(पश्चिम चम्पारण)"  nohref="nohref" id="38" (click)="getid(38,'West Champaran(पश्चिम चम्पारण)')" coords="111,24,127,20,142,22,153,19,159,10,168,3,173,11,185,20,197,30,212,36,250,44,266,46,278,71,274,96,271,105,290,117,287,124,275,136,285,152,287,162,282,169,278,179,271,184,258,184,245,197,242,202,229,194,222,187,207,183,192,171,193,158,190,146,176,154,169,144,156,139,150,127,150,118,150,107,143,102,149,94,134,97,137,80,132,66,124,61,130,50,120,47,111,47,120,39"  shape="poly">
+                                        </map>
+                                        <br />
+                                        <br />
+                                        <a class="btn btn-link" id="all_state" (click)="getid(0, 'Entire State')" *ngIf="userRole=='Super Admin'">Entire State</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!--  -->
+                    <div class="col-md-12">
+                        <div class="container-fluid" >
+                            <div class="row section-heading"> {{title}}</div>
+                            <div class="row" >
+                                <div class="col-md-12 section">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped"  > 
+                                            <thead>
+                                                <tr>
+                                                    <td>Sl. No.</td>
+                                                    <td>District</td>
+                                                    <td>Project Name</td>
+                                                    <td>Project Code</td>
+                                                    <td>Phase</td>
+
+                                                    <td>Total Properties</td>
+                                                    <td>Vacant</td>
+                                                    <td>Blocked</td>
+                                                    <td>Allotted</td>
+                                                    <td>Others</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let a of AllProjectDetails | paginate: { id: 'pagination', itemsPerPage: itemsPerPage,
+                                                                   currentPage: currentPage, totalItems: totalItems }; let i=index">
+                                                    <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+                                                    <td class="text-left">{{a.DI_District}}</td>
+                                                    <td class="text-left">{{a.PD_Project_Name}}</td>
+                                                    <td class="text-right">{{a.PD_Id}}</td>
+                                                    <td class="text-left">{{a.Phase_Name}}</td>
+
+                                                    <td class="text-right">{{a.TotalProperties}}</td>
+                                                    <td class="text-right">
+                                                        <a href="#" style="text-decoration:underline;" data-toggle="modal"
+                                                            data-target="#myModal" (click)="GetProjectDetailforDashboard(a.PD_Id,'A')">{{a.Available}}</a>
+                                                    </td>
+                                                    <td class="text-right">{{a.Blocked}}</td>
+                                                    <td class="text-right">{{a.Allotted}}</td>
+                                                    <td class="text-right">
+                                                        <a href="#" style="text-decoration:underline;" data-toggle="modal"
+                                                            data-target="#myModal" (click)="GetProjectDetailforDashboard(a.PD_Id,'OA')">{{a.OtherAvailable}}</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="5" class="font-bold text-right">Grand Total :</td>
+                                                    <td class="font-bold text-right">{{TotalPropertiesCount}}</td>
+                                                    <td class="font-bold text-right">{{AvailableCount}}</td>
+                                                    <td class="font-bold text-right">{{BlockedCount}}</td>
+                                                    <td class="font-bold text-right">{{AllottedCount}}</td>
+                                                    <td class="font-bold text-right">{{OtherAvailableCount}}</td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+
+                                        <div class="row no-gutters text-left">
+                                            <div class="col-md-11">
+                                                <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)"
+                                                    maxSize="10" directionLinks="true" autoHide="false" previousLabel="Previous"
+                                                    nextLabel="Next" screenReaderPaginationLabel="Pagination"
+                                                    screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                                                </pagination-controls>
+                                            </div>
+                                            <div class="col-md-1">
+                                                Total:
+                                                <span>{{totalItems}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-container" *ngIf="id != 0 && project == undefined">
+                        <div id="pieChartDiv"></div>
+                      </div>
+                      
+                </div>
+
+
+
+                <!--  -->
+
+                <!-- </div> -->
+
+            </div>
+
+
+
+
+
+            <!-- <div class="row">
+                <div class="col-md-12">
+                    <p *ngIf="" ><b>Alert</b></p>
+                    <p class="justify-content-end d-flex"> <b> {{DistrictDisplay}} </b> </p>
+                    
+                </div>
+            </div> -->
+
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+<!-- <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <label for=""> Vacant Properties List </label>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div>
+                                    <label> Project: <i style="font-size:14px;"> {{projectdetails.PD_Project_Name}}</i>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div>
+                                    <label>District : <i style="font-size:14px;">{{projectdetails.DI_District}}</i>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div>
+                                    <label> Scheme : <i style="font-size:14px;">{{projectdetails.Sch_Name}}</i> </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div>
+                                    <label>Phase : <i style="font-size:14px;"> {{projectdetails.Phase_Name}} </i>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped" class="font-size">
+                        <thead>
+                            <tr>
+                                <td rowspan="2">Sl No.</td>
+                                <td rowspan="2">Site/House.</td>
+                                <td rowspan="2">Property No.</td>
+                                <td rowspan="2">Category</td>
+                                <td rowspan="2">Intermediate/Corner</td>
+                                <td rowspan="2">Odd/Regular</td>
+                                <td colspan="2" class="text-center">Measurement</td>
+                                <td rowspan="2">Plot Area in Sqmt</td>
+                                <td rowspan="2">Plinth Area in Sqmt</td>
+                                <td colspan="4" class="text-center">Boundary Schedule</td>
+                                <td colspan="2" class="text-center">GPS Data</td>
+                                <td rowspan="2">Status</td>
+                            </tr>
+                            <tr>
+                                <td>East to west</td>
+                                <td>North to South</td>
+                                <td>North</td>
+                                <td>South</td>
+                                <td>East</td>
+                                <td>West</td>
+                                <td>Longitude</td>
+                                <td>Latitude</td>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let prop of propertyall;let i = index">
+                                <td>{{i+1}}</td>
+                                <td>{{prop.PT_Property_Type}}</td>
+                                <td>{{prop.PR_Property_No}}</td>
+                                <td>{{prop.CA_CategoryName}}</td>
+                                <td>{{prop.IC_Name}}</td>
+                                <td>{{prop.OR_Name}}</td>
+                                <td>{{prop.PR_M_East_west}}</td>
+                                <td>{{prop.PR_M_North_South}}</td>
+                                <td>{{prop.PR_Plot_Area}}</td>
+                                <td>{{prop.PR_Plinth_Area}}</td>
+                                <td>{{prop.PR_B_North}}</td>
+                                <td>{{prop.PR_B_South}}</td>
+                                <td>{{prop.PR_B_East}}</td>
+                                <td>{{prop.PR_B_West}}</td>
+                                <td>{{prop.PR_Longitude}}</td>
+                                <td>{{prop.PR_Latitude}}</td>
+                                <td>{{prop.PR_Status}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <label for=""> Vacant Properties List </label>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div>
+                                    <label> Project: <i style="font-size:14px;"> {{projectdetails.PD_Project_Name}}</i>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div>
+                                    <label>District : <i style="font-size:14px;">{{projectdetails.DI_District}}</i>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div>
+                                    <label> Scheme : <i style="font-size:14px;">{{projectdetails.Sch_Name}}</i> </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div>
+                                    <label>Phase : <i style="font-size:14px;"> {{projectdetails.Phase_Name}} </i>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 
+                    <div class="table-responsive">
+                    <table class="table table-striped" class="font-size">
+                        <thead>
+                            <tr>
+                                <td rowspan="2">Sl No.</td>
+                                <td rowspan="2">Site/House.</td>
+                                <td rowspan="2">Property No.</td>
+                                <td rowspan="2">Category</td>
+                                <td rowspan="2">Intermediate/Corner</td>
+                                <td rowspan="2">Odd/Regular</td>
+                                <td colspan="2" class="text-center">Measurement</td>
+                                <td rowspan="2">Plot Area in Sqmt</td>
+                                <td rowspan="2">Plinth Area in Sqmt</td>
+                                <td colspan="4" class="text-center">Boundary Schedule</td>
+                                <td colspan="2" class="text-center">GPS Data</td>
+                                <td rowspan="2">Status</td>
+                            </tr>
+                            <tr>
+                                <td>East to west</td>
+                                <td>North to South</td>
+                                <td>North</td>
+                                <td>South</td>
+                                <td>East</td>
+                                <td>West</td>
+                                <td>Longitude</td>
+                                <td>Latitude</td>
+                            </tr>
+
+                        </thead>
+                        <tbody>
+                            <tr data-toggle="collapse" data-target="#i+2" *ngFor="let prop of propertyall;let i = index">
+                                <td>{{i+1}}</td>
+                                <td>{{prop.PT_Property_Type}}</td>
+                                <td>{{prop.PR_Property_No}}</td>
+                                <td>{{prop.CA_CategoryName}}</td>
+
+                                <td>{{prop.IC_Name}}</td>
+                                <td>{{prop.OR_Name}}</td>
+                                <td>{{prop.PR_M_East_west}}</td>
+                                <td>{{prop.PR_M_North_South}}</td>
+
+                                <td>{{prop.PR_Plot_Area}}</td>
+                                <td>{{prop.PR_Plinth_Area}}</td>
+                                <td>{{prop.PR_B_North}}</td>
+                                <td>{{prop.PR_B_South}}</td>
+
+                                <td>{{prop.PR_B_East}}</td>
+                                <td>{{prop.PR_B_West}}</td>
+                                <td>{{prop.PR_Longitude}}</td>
+                                <td>{{prop.PR_Latitude}}</td>
+
+                                <td>{{prop.PR_Status}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="17" class="hiddentablerow">
+                                    <div id="i+2" class="collapse">
+                                        <table style="width: 90%;margin: 20px auto;">
+                                            <thead>
+                                                <tr class="table-primary">
+                                                    <td>sl</td>
+                                                    <td>Modified By</td>
+                                                    <td>Modified Date</td>
+                                                    <td>Role</td>
+                                                    <td>View</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr data-toggle="collapse" class="clickable">
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td class="text-center">
+                                                        <a class="goview" href="javascript:void(0);">
+                                                            <i class="fa fa-lg fa-eye themecolor"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </div>
+             -->
+                <div class="table-responsive">
+                    <table class="table table-striped" class="font-size" style="width: 1075px;margin: 1px auto;">
+
+                        <thead>
+                            <tr>
+                                <td>Sl No.</td>
+                                <td>Property Type</td>
+                                <td>Vacant</td>
+                                <td>Blocked</td>
+                                <td>Allotted</td>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="propertylist == '' || propertylist == 'undefined' || propertylist == 'null'">
+                            <td colspan="15" class="text-center">No Data Found</td>
+                        </tbody>
+                        <tbody *ngFor="let propl of propertylist;let i = index">
+
+                            <tr data-toggle="collapse" data-target="#i+1" class="clickable" (click)="GetPropertiesforDashboard(propl.PR_PD_ID_FK,propl.PT_Id,i)">
+                                <td>{{i+1}}</td>
+                                <td>{{propl.PT_Property_Type}}</td>
+                                <td>{{propl.Available}}</td>
+                                <td>{{propl.Blocked}}</td>
+                                <td>{{propl.Allotted}}</td>
+                            </tr>
+                            <tr *ngIf="acc == i">
+                                <td colspan="17" class="hiddentablerow">
+                                    <div id="i+1" class="collapse">
+                                        <table style="width: 90%;margin: 20px auto;" class="table table-striped" class="font-size">
+                                            <thead>
+                                                <tr>
+                                                    <td rowspan="2">Sl No.</td>
+                                                    <td rowspan="2">Site/House.</td>
+                                                    <td rowspan="2">Property No.</td>
+                                                    <td rowspan="2">Category</td>
+                                                    <td rowspan="2">Intermediate/Corner</td>
+                                                    <td rowspan="2">Odd/Regular</td>
+                                                    <td colspan="2" class="text-center">Measurement</td>
+                                                    <td rowspan="2">Plot Area in Sqmt</td>
+                                                    <td rowspan="2">Plinth Area in Sqmt</td>
+                                                    <td colspan="4" class="text-center">Boundary Schedule</td>
+                                                    <td colspan="2" class="text-center">GPS Data</td>
+                                                    <td rowspan="2">Status</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>East to west</td>
+                                                    <td>North to South</td>
+                                                    <td>North</td>
+                                                    <td>South</td>
+                                                    <td>East</td>
+                                                    <td>West</td>
+                                                    <td>Longitude</td>
+                                                    <td>Latitude</td>
+                                                </tr>
+
+                                            </thead>
+                                            <tbody *ngIf="propertyall == '' || propertyall == 'undefined' || propertyall == 'null'">
+                                <td colspan="15" class="text-center">No Data Found</td>
+                        </tbody>
+                        <tbody>
+                            <tr data-toggle="collapse" *ngFor="let prop of propertyall;let i = index" class="clickable">
+                                <td>{{i+1}}</td>
+                                <td>{{prop.PT_Property_Type}}</td>
+                                <td>{{prop.PR_Property_No}}</td>
+                                <td>{{prop.CA_CategoryName}}</td>
+
+                                <td>{{prop.IC_Name}}</td>
+                                <td>{{prop.OR_Name}}</td>
+                                <td>{{prop.PR_M_East_west}}</td>
+                                <td>{{prop.PR_M_North_South}}</td>
+
+                                <td>{{prop.PR_Plot_Area}}</td>
+                                <td>{{prop.PR_Plinth_Area}}</td>
+                                <td>{{prop.PR_B_North}}</td>
+                                <td>{{prop.PR_B_South}}</td>
+
+                                <td>{{prop.PR_B_East}}</td>
+                                <td>{{prop.PR_B_West}}</td>
+                                <td>{{prop.PR_Longitude}}</td>
+                                <td>{{prop.PR_Latitude}}</td>
+
+                                <td>{{prop.PR_Status}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                </td>
+                </tr>
+                </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+    </div>
+</div>

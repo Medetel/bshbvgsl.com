@@ -1,0 +1,42 @@
+.row{
+    padding:10px;
+}
+
+/* .row:nth-child(odd){
+    background: #f2f2f2;
+} */
+
+.rowmarginfix{
+    margin: 0px -14px;
+}
+ .input-group {
+    position: relative;
+    margin: 10px 0;
+  }
+  
+input.custom-field,textarea.custom-field,select.custom-field {
+    font-size: 18px;
+    padding: 6px;
+    display: block;
+    width: 100%;
+    border: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .mandatory{
+    color:red;
+  }
+
+  .field-title{
+    width:200px;
+    display:inline-block;
+    color:#807f7f;
+  }
+  td{
+    border: 1px solid #ddd;
+}
+
+.mandatory{
+    color:red;
+}

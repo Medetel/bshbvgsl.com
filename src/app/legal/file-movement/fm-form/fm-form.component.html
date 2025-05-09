@@ -1,0 +1,95 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary float-right" [routerLink]="['/home/filemovement']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+
+
+  <form (ngSubmit)="mode=='edit'?UpdateFileMovement(FileMov):SaveFileMovement(FileMov)" #FileMov="ngForm" name="form1">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="custom-field" name="FM_Number" pattern="^[a-zA-Z0-9]*$" maxlength="50" [(ngModel)]="f.FM_Number" 
+          #FM_Number="ngModel" [disabled]="mode=='view'" required>
+          <label for="">File No.
+            <span class="mandatory">*</span>
+          </label>
+
+          <div class="error-msg" *ngIf="FM_Number.invalid && (FM_Number.dirty || FM_Number.touched || formInvalid)">
+            <span *ngIf="FM_Number.errors.required">File No is required</span>
+            <span *ngIf="FM_Number.errors?.pattern">Only AlphaNumeric should enter</span>
+          </div>         
+
+       </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <select class="custom-field" [(ngModel)]="f.FM_Dep_Id_FK" #FM_Dep_Id_FK="ngModel" name="FM_Dep_Id_FK" 
+          [disabled]="mode=='view'" required>
+            <option [value]="undefined" selected>---Select---</option>
+            <option [value]="d.Department_Id" *ngFor="let d of departmentlist;">
+              {{d.Department_Name}} 
+            </option>
+        </select>
+          <label for="">Dept / Section
+            <span class="mandatory">*</span>
+          </label>     
+          <div class="error-msg" *ngIf="FM_Dep_Id_FK.invalid && (FM_Dep_Id_FK.dirty || FM_Dep_Id_FK.touched || formInvalid)">
+            <span *ngIf="FM_Dep_Id_FK.errors.required">Department is required</span>            
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="date" class="custom-field" name="FM_DateTime"  [(ngModel)]="f.FM_DateTime" 
+          #FM_DateTime="ngModel" [disabled]="mode=='view'" required>
+          <label for="">Date and Time
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="FM_DateTime.invalid && (FM_DateTime.dirty || FM_DateTime.touched || formInvalid)">
+            <span *ngIf="FM_DateTime.errors.required">Date is required</span>            
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <textarea class="custom-field" name="FM_Note"  [(ngModel)]="f.FM_Note" 
+          #FM_Note="ngModel" [disabled]="mode=='view'" required></textarea>
+          <label for="">Note 
+              <span class="mandatory">*</span>
+         </label>       
+         <div class="error-msg" *ngIf="FM_Note.invalid && (FM_Note.dirty || FM_Note.touched || formInvalid)">
+            <span *ngIf="FM_Note.errors.required">Note is required</span>            
+          </div>      
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-1">
+        <label for="">Status</label>
+      </div>
+      <div class="col-md-5">
+        <div class="form-check-inline">
+          <label class="form-check-label">          
+            <input class="form-check-input" name="FM_Status" #FM_Status="ngModel" [(ngModel)]="f.FM_Status" type="radio" id="inlineRadio1" value="Sent" > Sent
+          </label>
+        </div>
+        <div class="form-check-inline">
+          <label class="form-check-label">
+              <input class="form-check-input" name="FM_Status" #FM_Status="ngModel" [(ngModel)]="f.FM_Status" type="radio" id="inlineRadio1" value="Received" > Received            
+          </label>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary">Save</button>
+      <button class="btn btn-primary">Cancel</button>
+    </div>
+  </div>
+  </form>
+</div>

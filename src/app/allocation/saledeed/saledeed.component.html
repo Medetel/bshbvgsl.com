@@ -1,0 +1,203 @@
+<!-- <app-soldproperty></app-soldproperty>
+<router-outlet></router-outlet> -->
+
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <!-- <div class="col-md-5">
+        <div class="input-group">
+          <select class="custom-field" #APP_No="ngModel" name="APP_No" [(ngModel)]="d.APP_No"
+            (change)="GetAllPropertylease(d.APP_No)" required>
+            <option [value]="undefined" selected>---Select Application No---</option>
+            <option *ngFor="let l of applicantlease" [value]="l.APP_Id">
+              {{ l.APP_No }}
+            </option>
+          </select>
+          <label for="">Application No.
+            <span class="mandatory">*</span>
+          </label>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="input-group">
+          <select class="custom-field" #PR_Property_No="ngModel" name="PR_Property_No" [(ngModel)]="d.PR_Property_No"
+            list="dynmicUserIds" required>
+            <option [value]="undefined" selected>---Select Project Name---</option>
+            <option [value]="q.PR_Id" *ngFor="let q of propertylease;">
+              {{q.PR_Property_No}}
+            </option>
+          </select>
+          <label for="">Property No.
+            <span class="mandatory">*</span>
+          </label>
+        </div>
+      </div> -->
+    
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Application No
+              <span class="mandatory">*</span>
+            </label>
+            <input type="text" class="custom-field" id="txtAppNo" maxlength="30" name="APP_No" value=""
+              #APP_No="ngModel" [(ngModel)]="d.APP_No" required>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="form-group">
+            <label>Property No
+              <span class="mandatory">*</span>
+            </label>
+            <input type="text" class="custom-field" id="txtPropertyNo" maxlength="20" name="PR_Property_No" value=""
+              #PR_Property_No="ngModel" [(ngModel)]="d.PR_Property_No" required>
+
+          </div>
+        </div>
+      
+      <div class="col-md-2" style="margin-top: 1.8%;">
+        <button class="btn btn-primary"  (click)="GeteaedeedLists(d.APP_No, d.PR_Property_No)">Go</button>
+      </div> 
+    </div>
+  </div>
+  
+
+    <div class="row">
+      <div class="col-md-6">
+        <label><span class="field-title">Name</span>: {{data.APP_PA_Name}}</label>
+      </div>
+      <div class="col-md-6">
+        <label><span class="field-title">DOB</span>: {{data.APP_PA_DOB}}</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label><span class="field-title">Age</span>: {{data.APP_PA_Age}}</label>
+      </div>
+      <div class="col-md-6">
+        <label><span class="field-title">Mobile Number</span>: {{data.APP_PA_MobileNo}}</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label><span class="field-title">Email ID</span>: {{data.APP_PA_Email}}</label>
+      </div>
+      <div class="col-md-6">
+        <label><span class="field-title">Address</span>: {{data.APP_Address1}}</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label><span class="field-title">Category</span>: {{data.CA_CategoryName}}</label>
+      </div>
+      <div class="col-md-6">
+        <label><span class="field-title">Applicant Type</span>: {{data.Applicant_Type}}</label>
+      </div>
+    </div>
+    <!-- <div class="row">
+      <div class="col-md-6">
+        <label><span class="field-title">Amount</span>: </label>
+      </div>
+      <div class="col-md-6">
+        <label><span class="field-title">Application Fee</span>: </label>
+      </div>
+    </div> -->
+
+    <!-- <mat-tab-group style="min-height:200px; height:auto; max-width:2000px;">
+        <mat-tab label="Installment">
+          <div class="Installment"> -->
+    <div class="title themeheading" style="padding: 5px;">{{title1}}
+      <div class="float-right">
+        Items per page:
+        <select>
+          <option [ngValue]="5">5</option>
+          <option [ngValue]="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="40">40</option>
+          <option value="50">50</option>
+        </select>
+        <!-- <a class="btn btn-primary " routerLink="/home/khbnotification/khbnotificationform">Add</a> -->
+      </div>
+      <span class="clearfix"></span>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped grid">
+        <thead>
+          <tr >
+            <td>Sl No.</td>
+            <td>Installment No.</td>
+            <td>Amount</td>
+            <td>Initial Deposit</td>
+            <td>Maintainance fee</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let m of data.Installment;let i=index;">
+            <td>{{i+1}}.</td>
+                <td>{{m.Installments_No}}</td>
+                <td>{{m.INS_Amt}}</td>
+                <td>{{m.Initial_Amount}}</td>
+                <td>{{m.MF_Amount}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- </div>
+        </mat-tab> -->
+    <!-- <mat-tab label="Schedule of Property">
+          <div class="ScheduleofProperty"> -->
+    <div class="title themeheading" style="padding: 5px;">{{title2}}
+      <div class="float-right">
+        Items per page:
+        <select>
+          <option [ngValue]="5">5</option>
+          <option [ngValue]="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="40">40</option>
+          <option value="50">50</option>
+        </select>
+        <!-- <a class="btn btn-primary " routerLink="/home/khbnotification/khbnotificationform">Add</a> -->
+      </div>
+      <span class="clearfix"></span>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped grid">
+        <thead>
+          <tr>
+            <td>Sl No.</td>
+            <td class="text-center">East.</td>
+            <td class="text-center">West.</td>
+            <td class="text-center">North.</td>
+            <td class="text-center">South.</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let s of data.SOPLeaseDeed;let i=index;">
+            <td>{{i+1}}</td>
+            <td>{{s.PR_B_East}}</td>
+            <td>{{s.PR_B_West}}</td>
+            <td>{{s.PR_B_North}}</td>
+            <td>{{s.PR_B_South}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- </div>
+        </mat-tab>
+      </mat-tab-group> -->
+
+
+
+
+    <div class="btn-wrapper text-center">
+
+      <button class="btn btn-primary" routerLink="/home/leasedeed/sale">Print Lease Deed</button>
+
+    </div>
+</div>

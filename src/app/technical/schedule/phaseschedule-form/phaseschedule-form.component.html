@@ -1,0 +1,146 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    Add Phase Schedule
+    <button class="btn btn-primary float-right" [routerLink]="['/home/schedule']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <form (ngSubmit)="mode=='edit'? UpdateSchedule(ScheduleForm):SaveSchedule(ScheduleForm)" #ScheduleForm="ngForm"
+  autocomplete="off">
+
+  <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <!-- <select class="custom-field" > -->
+            <select class="custom-field" #Project_Code="ngModel" name="Project_Code" [(ngModel)]="i.Project_Code"
+              list="dynmicUserIds" [disabled]="mode=='view'" required>
+              <!-- <datalist id="dynmicUserIds"> -->
+              <option [value]="undefined" selected>---Select Project Name---</option>
+              <option [value]="c.PD_Id" *ngFor="let c of projectcode;">
+                {{c.PD_Project_Code}} - {{c.PD_Project_Name}}
+              </option>
+              <!-- </datalist> -->
+            </select>
+            <label for="">Project Name
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="Project_Code.invalid && (Project_Code.dirty || Project_Code.touched || formInvalid)">
+              <span *ngIf="Project_Code.errors.required">Project Name is required</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field"  #Phase="ngModel" name="Phase" [(ngModel)]="i.Phase" pattern="^[a-zA-Z0-9 ]*$" [disabled]="mode=='view'" required>
+            <label for="">Phase
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Phase.invalid && (Phase.dirty || Phase.touched || formInvalid)">
+              <span *ngIf="Phase.errors.required">Phase is required</span>
+              <span *ngIf="Phase.errors?.pattern">Only AlphaNumeric should enter</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <textarea class="custom-field"  #Description="ngModel" name="Description" [(ngModel)]="i.Description"  [disabled]="mode=='view'" required> </textarea>
+            <label for="">Description
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Description.invalid && (Description.dirty || Description.touched || formInvalid)">
+              <span *ngIf="Description.errors.required">Description is required</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="date" class="custom-field" #Baseline_Start_Date="ngModel" name="Baseline_Start_Date" [(ngModel)]="i.Baseline_Start_Date"  [disabled]="mode=='view'" required>
+            <label for="">Baseline Start Date
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Baseline_Start_Date.invalid && (Baseline_Start_Date.dirty || Baseline_Start_Date.touched || formInvalid)">
+              <span *ngIf="Baseline_Start_Date.errors.required">Baseline Start Date is required</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="date" class="custom-field" #Baseline_End_Date="ngModel" name="Baseline_End_Date" [(ngModel)]="i.Baseline_End_Date"  [disabled]="mode=='view'" required>
+            <label for="">Baseline End Date
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Baseline_End_Date.invalid && (Baseline_End_Date.dirty || Baseline_End_Date.touched || formInvalid)">
+              <span *ngIf="Baseline_End_Date.errors.required">Baseline End Date is required</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="date" class="custom-field" #Actual_Start_Date="ngModel" name="Actual_Start_Date" [(ngModel)]="i.Actual_Start_Date"  [disabled]="mode=='view'" required>
+            <label for="">Actual Start Date
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Actual_Start_Date.invalid && (Actual_Start_Date.dirty || Actual_Start_Date.touched || formInvalid)">
+              <span *ngIf="Actual_Start_Date.errors.required">Actual Start Date is required</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="date" class="custom-field" #Actual_End_Date="ngModel" name="Actual_End_Date" [(ngModel)]="i.Actual_End_Date"  [disabled]="mode=='view'" required>
+            <label for="">Actual End Date
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Actual_End_Date.invalid && (Actual_End_Date.dirty || Actual_End_Date.touched || formInvalid)">
+              <span *ngIf="Actual_End_Date.errors.required">Actual End Date is required</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #ActivityJob_Cost="ngModel" name="ActivityJob_Cost" [(ngModel)]="i.ActivityJob_Cost" pattern = "^[0-9]*$" [disabled]="mode=='view'" required>
+            <label for="">Activity/Job Cost
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="ActivityJob_Cost.invalid && (ActivityJob_Cost.dirty || ActivityJob_Cost.touched || formInvalid)">
+              <span *ngIf="ActivityJob_Cost.errors.required">Activity Job Cost is required</span>
+              <span *ngIf="ActivityJob_Cost.errors?.pattern">Only Numeric should enter</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="i.Status" #Status="ngModel" name="Status"
+              [disabled]="mode=='view'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option value=3>Active</option>
+              <option value=4>Inactive</option>
+            </select>
+            <label for="">Status
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Status.invalid && (Status.dirty || Status.touched || formInvalid)">
+              <span *ngIf="Status.errors.required">Status is required</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <br>
+
+      <div class="text-center">
+        <button class="btn btn-primary"  [disabled]="mode=='view'" type="submit">Save</button>&nbsp;
+        <button class="btn btn-primary"  [disabled]="mode=='view'" type="reset">Cancel</button>
+      </div>
+  </div>
+  </form>
+</div>

@@ -1,0 +1,52 @@
+<div class="report-body">
+  <div class="report-title">
+    INTERMEDIATE AVAILABLE SITES AND HOUSES
+  </div>
+
+
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead class="text-center">
+        <tr>
+          <td rowspan="2">No.</td>
+          <td rowspan="2">District</td>
+          <td rowspan="2">Project</td>
+          <td rowspan="2">Phase</td>
+          <td colspan="5">Site</td>
+          <td colspan="5">House / Flat</td>
+        </tr>
+        <tr>
+          <td>EWS</td>
+          <td>LIG</td>
+          <td>MIG</td>
+          <td>HIG</td>
+          <td>Total Cost</td>
+          <td>EWS</td>
+          <td>LIG</td>
+          <td>MIG</td>
+          <td>HIG</td>
+          <td>Total Cost</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of datalist;let i = index;">
+          <td>{{i+1}}</td>
+          <td class="text-left">{{data.DI_District}}</td>
+          <td class="text-left">{{data.PD_Project_Name}}</td>
+          <td class="text-left">{{data.Phase_Name}}</td>
+          <td class="text-right">{{data.EWS_Intermediate_A}}</td>
+          <td class="text-right">{{data.LIG_Intermediate_A}}</td>
+          <td class="text-right">{{data.MIG_Intermediate_A}}</td>
+          <td class="text-right">{{data.HIG_Intermediate_A}}</td>
+          <td class="text-right">{{data.Intermediate_S_FinalCost | number :'2.2-5'}}</td>
+          <td class="text-right">{{data.EWS_Intermediate_A_H_F}}</td>
+          <td class="text-right">{{data.LIG_Intermediate_A_H_F}}</td>
+          <td class="text-right">{{data.MIG_Intermediate_A_H_F}}</td>
+          <td class="text-right">{{data.HIG_Intermediate_A_H_F}}</td>
+          <td class="text-right">{{data.Intermediate_H_F_FinalCost | number :'2.2-5'}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

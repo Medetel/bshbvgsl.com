@@ -1,0 +1,50 @@
+<div class="wrapper">
+  <div class="title themeheading">Pay Month
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-group">
+          <label>Select Pay Month    </label>
+          <select class="custom-field" [(ngModel)]="p.Month_id" #Month_id="ngModel"
+        name="Month_id" (change)="ChangeOfMonth(p.Month_id)" >
+        <option [value]="undefined" selected>---Select---</option>
+        <option [value]="c.Month_id" *ngFor="let c of CalendarList;">
+          {{c.monthCode}}
+        </option>
+      </select>
+        </div>        
+      </div>
+      <div class="col-md-6">
+        <label style="margin-top: 35px;">Calendar Year :{{year}}</label>
+        <span></span>
+      </div>
+    </div>    			
+    <div class="row">
+      <div class="col-md-6">
+        <label>Fiscal Year :</label>
+        <span></span>
+      </div>
+      <div class="col-md-6">
+        <label>Working Days :{{workingDays}}</label>
+        <span></span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label>Status : Initialized</label>
+        <span></span>
+      </div>
+      <div class="col-md-6">
+        <label>Data Locked : No</label>
+        <span></span>
+      </div>
+    </div>
+    <br>
+    <div class="text-center">
+      <button class="btn btn-primary" [routerLink]="['/home/payroll/payroll-process-details/payroll-attendace-leave',monthCode]" [disabled]="!isMonthSelected">Next</button>
+    </div>
+  </div>
+</div>
+
+ <!-- [routerLink]="['/home/leaveapp/leaveapp-form',e.LEAVE_APPL_ID,'view']" -->

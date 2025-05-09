@@ -1,0 +1,633 @@
+<div class="wrapper prallotment">
+  <div class="title themeheading">
+      Demand Survey
+      <a class="btn btn-primary float-right" routerLink="/home/demandsurvey">Back</a>
+      <span class="clearfix"></span>
+  </div>
+
+  <!-- <form (ngSubmit)="mode=='edit'?UpdateNotification(Notification):SaveNotification(Notification)" #Notification="ngForm" name="form1"
+   novalidate> -->
+   <form>
+        <!--  -->
+
+      <div class="container-fluid">
+
+
+          <!-- <div class="row">
+
+          <div class="col-md-6">
+              <div class="input-group">
+                  <select onclick="this.setAttribute('value', this.value);" value="" class="custom-field">
+                      <option value="">Select</option>
+                      <option value="">Demand Survey without Id</option>
+                      <option value="">Demand survey with Id</option>
+                      <option value="">Allotment Notification</option>
+                      <option value="">Auction Notification</option>
+                      <option value="">CA Site</option>
+                      <option value="">DQ Notification</option>
+                  </select>
+                  <label>Types of Notification</label>
+              </div>
+          </div>
+      </div> -->
+
+          <div class="row">
+              <div class="col-md-6">
+                  <div class="input-group">
+                      <input type="text" placeholder=" " name="DSWOId_NO_Number" class="custom-field">
+                      <label>Notification No.</label>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="input-group">
+                      <input type="date" placeholder=" " name="DSWOId_NO_Date" class="custom-field">
+                      <label>Notification Date.</label>
+                  </div>
+              </div>
+
+          </div>
+
+
+          <div class="row">
+              <div class="col-md-6">
+                  <div class="input-group">
+                      <input type="date" placeholder=" " name="DSWOId_NO_ApprovedDate" 
+                          class="custom-field">
+
+                      <label>Approved Date</label>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="input-group">
+                      <input type="date" placeholder=" " name="DSWOId_NO_LastDate" 
+                          class="custom-field">
+
+                      <label>Application last date</label>
+                  </div>
+              </div>
+
+
+          </div>
+          <!-- <div class="row">
+          <div class="col-md-6">
+              <div class="input-group">
+                  <select onclick="this.setAttribute('value', this.value);" value="" class="custom-field">
+                      <option value=""></option>
+                      <option value=""></option>
+                      <option value=""></option>
+                  </select>
+                  <label>Scheme</label>
+              </div>
+          </div>
+          <div class="col-md-6">
+              <div class="input-group">
+                  <select onclick="this.setAttribute('value', this.value);" value="" class="custom-field">
+                      <option value=""></option>
+                      <option value=""></option>
+                      <option value=""></option>
+                  </select>
+                  <label>Project</label>
+              </div>
+          </div>
+      </div> -->
+
+
+          <!-- <div class="row">
+          <div class="col-md-6">
+              <div class="input-group">
+                  <select onclick="this.setAttribute('value', this.value);" value="" class="custom-field">
+                      <option value=""></option>
+                      <option value=""></option>
+                      <option value=""></option>
+                  </select>
+                  <label>Phase</label>
+              </div>
+          </div>
+          <div class="col-md-6">
+              <div class="input-group">
+                  <select onclick="this.setAttribute('value', this.value);" value="" class="custom-field">
+                      <option value=""></option>
+                      <option value=""></option>
+                      <option value=""></option>
+                  </select>
+                  <label>No. of Properties</label>
+              </div>
+          </div>
+      </div> -->
+          <!-- <div class="row">
+
+          <div class="col-md-2">
+              Joint Venture
+          </div>
+          <div class="col-md-4">
+              <div class="form-check form-check-inline">
+                  <label class="form-check-label">
+                      <input class="form-check-input" type="radio" name="jv" id="inlineRadio1" value="jv"> Yes
+                  </label>
+              </div>
+              <div class="form-check form-check-inline">
+                  <label class="form-check-label">
+                      <input class="form-check-input" type="radio" name="jv" id="inlineRadio1" value="jv"> No
+                  </label>
+              </div>
+          </div>
+
+      </div> -->
+
+          <div class="row" style="margin-top:13px">
+
+              <div class="col-md-6">
+                  <div class="input-group">
+                      <input type="text" placeholder=" " name="DSWOId_NO_NewsPaper_Name" 
+                          class="custom-field">
+
+                      <label>News Paper Name</label>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="input-group">
+                      <input type="date" placeholder=" " name="DSWOId_NO_NewsPaper_Date" 
+                          class="custom-field">
+                      <label>News Paper Date</label>
+                  </div>
+              </div>
+          </div>
+
+      </div>
+
+      <!-- <div class="title text-center">
+      Set RF and ID Details
+  </div>
+
+  <div class="table-responsive grid">
+      <table class="table table-striped">
+          <thead>
+              <tr>
+                  <td>Sl No.</td>
+                  <td>Category.</td>
+                  <td>Dimension</td>
+                  <td>RF Amount(Rs)</td>
+                  <td>ID Amount(Rs)</td>
+                  <td>Add</td>
+                  <td>Delete</td>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>1</td>
+
+                  <td>
+                      <select onclick="this.setAttribute('value', this.value);" value="" class="custom-field">
+                          <option value="">EWS</option>
+                          <option value="">MIG</option>
+                          <option value="">LIG</option>
+                          <option value="">HIG-1</option>
+                          <option value="">HIG-2</option>
+                          
+                      </select>
+                  </td>
+                  <td>6*9</td>
+                  <td>
+                      <input type="text">
+                  </td>
+                  <td>
+                      <input type="text">
+                  </td>
+                  <td style="font-size: 30px">+</td>
+                  <td style="font-size: 30px">-</td>
+              </tr>
+          </tbody>
+      </table>
+  </div> -->
+
+      <div class="title themeheading">
+          Set RF,ID and Approximate Properties(With ID)
+      </div>
+
+
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-md-6">
+          <div class="input-group">
+              <select class="form-control"  name="DSWOId_NORF_CA_Id_FK"
+               class="custom-field">
+                 <option [value]="undefined" selected>---Select---</option>
+                 <option [ngValue]="ca.CA_Id" *ngFor="let ca of Categories;">
+                     </option>
+             </select>
+
+              <label>Category</label>
+          </div>
+      </div>
+      <div class="col-md-6">
+          <div class="input-group">
+              <input type="text" placeholder=" " name="DSWOId_NORF_Dimension"
+                  class="custom-field">
+
+              <label>Dimension</label>
+          </div>
+      </div>
+  </div>
+
+  <div class="row" hidden>
+          <div class="col-md-6">
+              <div class="input-group">
+                  <input type="text" placeholder=" " name="CA_CategoryName"
+                      class="custom-field">
+              </div>
+          </div>
+      </div>
+
+  <div class="row">
+      <div class="col-md-6">
+          <div class="input-group">
+              <input type="text" placeholder=" "  name="DSWOId_NORF_Amount"
+                  class="custom-field">
+
+              <label>Registration Fee Amount(Rs)</label>
+          </div>
+      </div>
+      <div class="col-md-6">
+          <div class="input-group">
+              <input type="text" placeholder=" "  name="DSWOId_NORF_ID_Amount"
+                  class="custom-field">
+
+              <label>Initial Deposit Amount(Rs)</label>
+          </div>
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-md-6">
+          <div class="input-group">
+              <input type="text" placeholder=" "  name="DSWOId_NORF_Sites"
+                  class="custom-field">
+
+              <label>Approximate Sites</label>
+          </div>
+      </div>
+      <div class="col-md-6">
+          <div class="input-group">
+              <input type="text" placeholder=" "  name="DSWOId_NORF_Houses"
+                  class="custom-field">
+
+              <label>Approximate Houses</label>
+          </div>
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-md-12 text-center">
+          <button class="btn btn-primary" type="button">Add</button>&nbsp;
+      </div>
+  </div>
+</div>
+<br>
+
+      <div class="table-responsive grid">
+          <table class="table table-striped">
+              <thead>
+                  <tr>
+                      <td>Sl No.</td>
+                      <td>Category.</td>
+                      <td>Dimension</td>
+                      <td>RF Amount(Rs)</td>
+                      <td>ID Amount(Rs)</td>
+                      <td>Approximate Sites</td>
+                      <td>Approximate Houses</td>
+                      <td>Remove</td>
+                  </tr>
+              </thead>
+              <tbody>
+                      <!-- <tr  *ngFor="let x of RFDetails;let i=index;">
+                              <td>{{i+1}}.</td>
+                              <td>{{x.categoryName}}</td>
+                              <td>{{x.DSWOId_NORF_Dimension}}</td>
+                              <td>{{x.DSWOId_NORF_Amount}}</td>
+                              <td>{{x.DSWOId_NORF_ID_Amount}}</td>
+                              <td>{{x.DSWOId_NORF_Sites}}</td>
+                              <td>{{x.DSWOId_NORF_Houses}}</td>
+                              <td>
+                                <i class="fa fa-minus" style="margin: 0px 3px;cursor: pointer !important;" (click)="RemoveRFDetails(i)" *ngIf="i>=0"></i>
+                              </td>
+                            </tr> -->
+              </tbody>
+          </table>
+      </div>
+
+      <div class="title themeheading">
+          Project Details
+      </div>
+
+<div class="container-fluid">
+  <div class="row">
+      <div class="col-md-6">
+          <div class="input-group">
+                  <select   name="DSWOId_NOPD_Pd_Id_FK"  class="custom-field">
+                      <option [ngValue]="undefined" selected>---Select---</option>
+                      
+                  </select>
+
+              <label>Project</label>
+          </div>
+      </div>
+      <div class="col-md-6">
+          <div class="input-group">
+              <input type="text" placeholder=" " name="District"
+                  class="custom-field">
+
+              <label>District</label>
+          </div>
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-md-6">
+          <div class="input-group">
+              <input type="text" placeholder=" "  name="Taluk"
+                  class="custom-field">
+
+              <label>Taluk</label>
+          </div>
+      </div>
+      <div class="col-md-6">
+          <div class="input-group">
+              <input type="text" placeholder=" " name="Hobli"
+                  class="custom-field">
+
+              <label>Hobli</label>
+          </div>
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-md-6">
+          <div class="input-group">
+              <input type="text" placeholder=" "  name="Village"
+                  class="custom-field">
+
+              <label>Village</label>
+          </div>
+      </div>
+      <div class="col-md-6">
+          <div class="input-group">
+              <input type="text" placeholder=" " name="DSWOId_NOPD_SurveyNo"
+                  class="custom-field">
+
+              <label>Survey No</label>
+          </div>
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-md-6">
+          <div class="input-group">
+              <input type="text" placeholder=" " name="DSWOId_NOPD_Acres"
+                  class="custom-field">
+
+              <label>Extent in Acres</label>
+          </div>
+      </div>
+      <div class="col-md-6">
+          <div class="input-group">
+              <input type="text" placeholder=" "  name="DSWOId_NOPD_Guntas"
+                  class="custom-field">
+
+              <label>Extent in Guntas</label>
+          </div>
+      </div>
+  </div>
+
+  <div class="row">
+      <div class="col-md-12 text-center">
+          <button class="btn btn-primary" type="button"  >Add</button>&nbsp;
+          <button type="button" class="btn btn-primary">Cancel</button>
+      </div>
+  </div>
+</div>
+
+<br>
+
+      <div class="table-responsive grid">
+          <table class="table table-striped">
+              <thead>
+                  <tr>
+                      <td rowspan="2">Sl No.</td>
+                      <td rowspan="2">Project</td>
+                      <td rowspan="2">District.</td>
+                      <td rowspan="2">Taluk</td>
+                      <td rowspan="2">Hobli</td>
+                      <td rowspan="2">Village</td>
+                      <td rowspan="2">Survey No</td>
+                      <td colspan="2" class="text-center">Extent</td>
+                      <td rowspan="2">Remove</td>
+                  </tr>
+                  <tr>
+                      <td>Acres</td>
+                      <td>Guntas</td>
+                  </tr>
+              </thead>
+              <tbody>
+                  <!-- <tr *ngFor="let y of PDDetails;let i=index;">
+                          <td>{{i+1}}.</td>
+                          <td>{{y.ProjectName}}</td>
+                          <td>{{y.District}}</td>
+                          <td>{{y.Taluk}}</td>
+                          <td>{{y.Hobli}}</td>
+                          <td>{{y.Village}}</td>
+                          <td>{{y.DSWOId_NOPD_SurveyNo}}</td>
+                          <td>{{y.DSWOId_NOPD_Acres}}</td>
+                          <td>{{y.DSWOId_NOPD_Guntas}}</td>
+                          <td>
+                          <i class="fa fa-minus" style="margin: 0px 3px;cursor: pointer !important;" (click)="RemovePDDetails(i)" *ngIf="i>=0"></i>
+                          </td>
+                  </tr> -->
+              </tbody>
+          </table>
+      </div>
+
+      <div class="title themeheading">
+          Set Bank Details
+      </div>
+      <div class="container-fluid">
+          <div class="row">
+              <div class="col-md-6">
+              <div class="input-group">
+                      <select    name="DSWOId_NOBD_Bank_Id_FK" class="custom-field">
+                          <option [ngValue]="undefined" selected>---Select---</option>
+                         
+                      </select>
+                      <label>Bank Name</label>
+              </div>
+
+              </div>
+              <div class="col-md-6">
+                  <div class="input-group">
+                      <input type="text" placeholder=" "  name="DSWOId_NOBD_Branch"
+                          class="custom-field">
+      
+                      <label>Branch</label>
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-6">
+                  <div class="input-group">
+                      <input type="text" placeholder=" "  name="DSWOId_NOBD_IFSC"
+                          class="custom-field">
+      
+                      <label>IFSC Code.</label>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="input-group">
+                      <input type="text" placeholder=" "  name="DSWOId_NOBD_Acc_No"
+                          class="custom-field">
+      
+                      <label>Account No.</label>
+                      <!-- <div class="error-msg" *ngIf="DSWOId_NOBD_Acc_No.invalid && (DSWOId_NOBD_Acc_No.dirty || DSWOId_NOBD_Acc_No.touched)">
+                          <span *ngIf="DSWOID_NOCD_ExtensionNo.errors.required">Latitude is required</span>
+                          <span *ngIf="DSWOId_NOBD_Acc_No.errors?.pattern">Account Number must be numeric</span>
+                        </div> -->
+                  </div>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-md-12 text-center">
+                  <button class="btn btn-primary" type="button" >Add</button>&nbsp;
+                  <button class="btn btn-primary" type="button">Cancel</button>
+              </div>
+          </div>
+      </div>
+
+      <!-- <div class="container-fluid">
+          <div class="row">
+              <div class="col-md-6">
+                  <div class="input-group">
+                      <input type="text" placeholder=" " name="DSWOId_NO_NewsPaper_Name" [(ngModel)]="f.DSWOId_NO_NewsPaper_Name" #DSWOId_NO_NewsPaper_Name="ngModel"
+                          class="custom-field">
+      
+                      <label>Extend in Guntas</label>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="input-group">
+                      <input type="text" placeholder=" " name="DSWOId_NO_NewsPaper_Name" [(ngModel)]="f.DSWOId_NO_NewsPaper_Name" #DSWOId_NO_NewsPaper_Name="ngModel"
+                          class="custom-field">
+      
+                      <label>Extend in Guntas</label>
+                  </div>
+              </div>
+          </div>
+      </div> -->
+<br>
+      <div class="table-responsive grid">
+          <table class="table table-striped">
+              <thead>
+                  <tr>
+                      <td rowspan="2">Sl No.</td>
+                      <td rowspan="2">Bank Name.</td>
+                      <td rowspan="2">Branch.</td>
+                      <td rowspan="2">IFSC Code.</td>
+                      <td rowspan="2">Account No.</td>
+                      <td rowspan="2">Remove</td>
+                  </tr>
+
+              </thead>
+              <tbody>
+                      <!-- <tr *ngFor="let z of BankDetails;let i=index;">
+                              <td>{{i+1}}.</td>
+                              <td>{{z.BankName}}</td>
+                              <td>{{z.DSWOId_NOBD_Branch}}</td>
+                              <td>{{z.DSWOId_NOBD_IFSC}}</td>
+                              <td>{{z.DSWOId_NOBD_Acc_No}}</td>
+                              <td>
+                              <i class="fa fa-minus" style="margin: 0px 3px;cursor: pointer !important;" (click)="RemoveBankDetails(i)" *ngIf="i>=0"></i>
+                              </td>
+
+                  </tr> -->
+              </tbody>
+          </table>
+
+      </div>
+
+      <div class="title themeheading">
+          Communication Details
+      </div>
+
+      <div class="container-fluid">
+          <div class="row">
+              <div class="col-md-6">
+                      <div class="input-group">
+                          <input type="text" placeholder=" " name="DSWOID_NOCD_Website"
+                              class="custom-field">
+          
+                          <label>Website</label>
+                      </div>
+              </div>
+              <div class="col-md-6">
+                      <div class="input-group">
+                          <input type="text" placeholder=" "  name="DSWOID_NOCD_ContactNo"
+                              class="custom-field">
+          
+                          <label>Contact No.</label>
+                          <!-- <div class="error-msg" *ngIf="DSWOID_NOCD_ContactNo.invalid && (DSWOID_NOCD_ContactNo.dirty || DSWOID_NOCD_ContactNo.touched)">
+                              <span *ngIf="DSWOID_NOCD_ExtensionNo.errors.required">Latitude is required</span>
+                              <span *ngIf="DSWOID_NOCD_ContactNo.errors?.pattern">Contact Number must be numeric</span>
+                            </div> -->
+                      </div>
+              </div>
+          </div>
+          <div class="row">
+                  <div class="col-md-6">
+                      <div class="input-group">
+                          <input type="text"  placeholder=" " name="DSWOID_NOCD_ExtensionNo"
+                              class="custom-field">
+          
+                          <label>Extension No.</label>
+                          <!-- <div class="error-msg" *ngIf="DSWOID_NOCD_ExtensionNo.invalid && (DSWOID_NOCD_ExtensionNo.dirty || DSWOID_NOCD_ExtensionNo.touched)">
+                              <span *ngIf="DSWOID_NOCD_ExtensionNo.errors.required">Latitude is required</span>
+                              <span *ngIf="DSWOID_NOCD_ExtensionNo.errors?.pattern">Extension Number must be numeric</span>
+                            </div> -->
+                      </div>
+                  </div>
+          </div>
+          <div class="row">
+              <div class="col-md-12 text-center">
+                      <button class="btn btn-primary" type="button"  >Add</button>&nbsp; 
+              </div>
+          </div>
+      </div>
+      <br>
+      <div class="table-responsive grid">
+          <table class="table table-striped">
+              <thead>
+                  <tr>
+                      <td rowspan="2">Sl No.</td>
+                      <td rowspan="2">Website.</td>
+                      <td rowspan="2">Contact No.</td>
+                      <td rowspan="2">Extension No.</td>
+                      <td rowspan="2">Delete</td>
+                  </tr>
+
+              </thead>
+              <tbody>
+                      <!-- <tr *ngFor="let a of CommunicationDetails;let i=index;">
+                              <td>{{i+1}}.</td>
+                              <td>{{a.DSWOID_NOCD_Website}}</td>
+                              <td>{{a.DSWOID_NOCD_ContactNo}}</td>
+                              <td>{{a.DSWOID_NOCD_ExtensionNo}}</td>
+                              <td>
+                      <i class="fa fa-minus" style="margin: 0px 3px;cursor: pointer !important;" (click)="RemoveCommunicationDetails(i)" *ngIf="i>=0"></i>
+                      </td>
+
+                  </tr> -->
+              </tbody>
+          </table>
+
+      </div>
+
+
+
+      <div class="btn-wrapper" style="margin-top:50px">
+          <button class="btn btn-primary" type="submit">Save</button>
+          <button class="btn btn-primary" type="button">Cancel</button>
+      </div>
+
+  </form>
+</div>

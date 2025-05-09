@@ -1,0 +1,41 @@
+<!-- <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2">
+        <div class="sidemenu">
+          <ul class="billmenu">
+            <li><a [routerLink]="['/home/deputation']">Deputation Out</a></li>
+            <li> <a [routerLink]="['deputation-authorization']">Deputation Approval</a> </li>   
+            <li> <a [routerLink]="['deputation-sanction']">Deputation Sanction</a> </li>  
+            <li> <a [routerLink]="['deputationin']">Deputation In</a> </li>              -->
+            <!-- <li> <a [routerLink]="['deputation-rec']">Deputation Records</a> </li>            -->
+          <!-- </ul>
+        </div>
+      </div>
+      <div class="col-md-10">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div> -->
+
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2">
+        <div class="sidemenu">
+          <!-- <ul class="billmenu" *ngFor="let p of subpageslist">
+            <li><a [ngClass]="{'alert-primary':p.KSP_Redirect_URL === localurl}" (click)="geturl(p.KSP_Redirect_URL)" routerLink="{{p.KSP_Redirect_URL}}">{{p.KSP_Name}}</a></li>             
+          </ul> -->
+          <ul class="billmenu">
+            <li><a [routerLink]="['/home/deputation']">Deputation Out</a></li>
+            <li> <a [routerLink]="['deputation-authorization']">Deputation Approval</a> </li>   
+            <li> <a [routerLink]="['deputation-sanction']">Deputation Sanction</a> </li>  
+            <li> <a [routerLink]="['deputationin']">Deputation In</a> </li>              
+             <li> <a [routerLink]="['deputation-rec']">Deputation Records</a> </li>           
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-10">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,285 @@
+<div class="wrapper">
+  <div class="title themeheading">Allotted Properties Detail 
+    <button class="btn btn-primary pull-right" [routerLink]="['/home/auctionedpropertiescancel']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <form (ngSubmit)="CancelProperty(CP)" #CP="ngForm" name="CP" autocomplete="off">
+
+<div class="container-fluid">
+    <!-- <div class="title themeheading">
+     Property Detail Description
+    <span class="clearfix"></span>
+    </div> -->
+
+<div class="row">
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">Project Name</span>: {{PropertyDet.Project_Name}} </label>
+    </div>
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">Scheme</span>: {{PropertyDet.PD_Scheme}}</label>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">Phase</span>: {{PropertyDet.PD_Phase}} </label>
+    </div>
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">District</span>: {{PropertyDet.DI_District}}</label>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">Taluk</span>: {{PropertyDet.TA_Taluk}} </label>
+    </div>
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">Village</span>: {{PropertyDet.PD_Village}} </label>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">Property Type</span>: {{PropertyDet.PT_Property_Type}}
+           
+        </label>
+    </div>
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">Property No</span>: {{PropertyDet.PR_Property_No}} 
+        </label>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">Category Name</span>: {{PropertyDet.CA_CategoryName}}
+        </label>
+    </div>
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">IC Name</span>: {{PropertyDet.IC_Name}} 
+        </label>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">Remarks</span>: {{PropertyDet.PR_Remarks}} </label>
+    </div>
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">Property Status</span>: {{PropertyDet.PR_Status}}</label>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">Bidder Id</span>: {{PropertyDet.B_BidderId}} </label>
+    </div>
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">Bidder Name</span>: {{PropertyDet.B_BName}}</label>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">Contact No</span>: {{PropertyDet.B_ContactNo}} </label>
+    </div>
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">Email Id</span>: {{PropertyDet.EmailId}}</label>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">Is Joint bidder</span>: {{PropertyDet.IsJoin}} </label>
+    </div>
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">Joint Names</span>: {{PropertyDet.B_JointNames}}</label>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">Address1</span>: {{PropertyDet.Address1}} </label>
+    </div>
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">Address2</span>: {{PropertyDet.Address2}}</label>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">Ins No</span>: {{PropertyDet.B_Ins_No}}
+        </label>
+    </div>
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">Ins Date</span>: {{PropertyDet.B_Ins_Date | date:'dd-MM-yyyy'}} 
+        </label>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">EMD Pay No</span>: {{PropertyDet.B_EMD_PayNo}}
+        </label>
+    </div>
+    <div class="col-md-6">
+        <label>
+            <span class="field-title"> EMD Urn</span>: {{PropertyDet.B_EMD_Urn}} 
+        </label>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">25% Payment Amt(Rs)</span>: {{PropertyDet.B_perc_payment | currency:'INR':true: '1.2-2'}}
+        </label>
+    </div>
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">DD No</span>: {{PropertyDet.B_DD_No}}
+        </label>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">DD Date</span>: {{PropertyDet.B_DD_Date | date:'dd-MM-yyyy'}}
+        </label>
+    </div>
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">Bidder Bank Name</span>: {{PropertyDet.B_Bidder_BankName}} 
+        </label>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">Bidder Branch</span>: {{PropertyDet.B_Bidder_Branch}}
+        </label>
+    </div>
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">Bidder Account No.</span>: {{PropertyDet.B_Bidder_AccNo}} 
+        </label>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">Bidder IFSC Code</span>: {{PropertyDet.B_Bidder_Ifsc_Code}}
+        </label>
+    </div>
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">Bidding Type</span>: {{PropertyDet.B_Bidding_Type}} 
+        </label>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">Base Price(Rs)</span>: {{PropertyDet.B_Base_Price | currency:'INR':true: '1.2-2'}}
+        </label>
+    </div>
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">Bid Price(Rs)</span>: {{PropertyDet.B_Bid_Rate_Per_Sqft | currency:'INR':true: '1.2-2'}} 
+        </label>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">Photo</span>:             
+            &nbsp;<a class="float-right"  target="_blank" href="{{PropertyDet.B_Photo_Sign}}"> view</a>
+        </label>
+    </div>
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">Address Proof</span>: 
+            &nbsp;<a class="float-right" target="_blank" href="{{PropertyDet.B_AddresProof}}"> view</a> 
+        </label>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <label>
+            <span class="field-title">Id Proof</span>:            
+            &nbsp;<a class="float-right"  target="_blank" href="{{PropertyDet.B_IdProof}}"> view</a> 
+        </label>
+    </div>
+    <div class="col-md-6">
+        <label>
+            <label>
+                <span class="field-title">Acutcion Ref No</span>: {{PropertyDet.B_Auc_RefNo}}</label>
+        </label>
+    </div>
+</div>
+
+ <div class="row">
+    <div class="col-md-6">
+        <label>
+            <label>
+                <span class="field-title">EMD amount</span>: {{PropertyDet.B_EMD_Amt | currency:'INR':true: '1.2-2'}}
+                <br>
+                <span class="field-title">25% forfeited</span>: {{PropertyDet.Forfeited_Amt | currency:'INR':true: '1.2-2'}}
+                <br>
+                <span class="field-title">Refund amount</span>: {{PropertyDet.Refund_Amt | currency:'INR':true: '1.2-2'}}
+
+            </label>
+        </label>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="">Cancel Remarks
+                <span class="mandatory">*</span>
+              </label>
+            <textarea type="text" class="form-control" cols="20" rows="10" name="Cancel_Remarks" maxlength="300" 
+            ngModel #Cancel_Remarks="ngModel"  required> </textarea>          
+
+          </div>
+    </div>   
+</div> 
+
+<br>
+<div class="text-center">
+    <button class="btn btn-primary" type="submit">Cancel Property</button>
+    <!-- <button class="btn btn-primary" type="reset" (click)="resetProperties()">Reset</button> -->
+</div>
+
+</div>
+</form>
+
+</div>

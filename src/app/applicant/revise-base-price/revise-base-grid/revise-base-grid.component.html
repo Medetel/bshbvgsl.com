@@ -1,0 +1,295 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    Property Revised Base Price Updation
+    <div class="float-right">
+      <a class="btn btn-primary" routerLink="/home/revise-base-price">Back</a>
+    </div>
+    <span class="clearfix"></span>
+  </div>
+
+  <form #searchForm="ngForm" (ngSubmit)="GetPropertiesforBPUpdation(s,revise.RBP_PD_Id_FK,revise.RBP_Cat_Id_Fk,revise.RBP_Prop_Id_Fk)">
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="input-group">
+            <select [disabled]="mode=='View'" [(ngModel)]="revise.RBP_PD_Id_FK" required #RBP_PD_Id_FK="ngModel" name="RBP_PD_Id_FK"
+              class="custom-field" (change)="ClearRevisedList(revise.RBP_PD_Id_FK,null,null)">
+              <option [ngValue]="undefined" selected>---Select---</option>
+              <option [ngValue]="p.PD_Id" *ngFor="let p of Projects;">
+                {{p.PD_Project_Code}}-{{p.PD_Project_Name}}-{{p.Phase_Name}}</option>
+            </select>
+            <label for="">Project
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="RBP_PD_Id_FK.invalid && (RBP_PD_Id_FK.dirty || RBP_PD_Id_FK.touched)">
+              <span *ngIf="RBP_PD_Id_FK.errors.required">Project is required</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group">
+            <select [disabled]="mode=='View'" [(ngModel)]="revise.RBP_Cat_Id_Fk" required #RBP_Cat_Id_Fk="ngModel" name="RBP_Cat_Id_Fk"
+              class="custom-field" (change)="ClearRevisedList(null,revise.RBP_Cat_Id_Fk,null)">
+              <option [ngValue]="undefined" selected>---Select---</option>
+              <option [value]="ca.CA_Id" *ngFor="let ca of Categories;">
+                {{ca.CA_CategoryName}}</option>
+            </select>
+            <label>Category
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="RBP_Cat_Id_Fk.invalid && (RBP_Cat_Id_Fk.dirty || RBP_Cat_Id_Fk.touched)">
+              <span *ngIf="RBP_Cat_Id_Fk.errors.required">Category is required</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group">
+              <select [disabled]="mode=='View'" [(ngModel)]="revise.RBP_Prop_Id_Fk" required #RBP_Prop_Id_Fk="ngModel" name="RBP_Prop_Id_Fk"
+                class="custom-field" (change)="ClearRevisedList(null,null,revise.RBP_Prop_Id_Fk)">
+                <option [ngValue]="undefined" selected>---Select---</option>
+                <option [value]="prop.PT_Id" *ngFor="let prop of Properties;">
+                  {{prop.PT_Property_Type}}</option>
+              </select>
+              <label>Property Type
+                <span class="mandatory">*</span>
+              </label>
+              <div class="error-msg" *ngIf="RBP_Prop_Id_Fk.invalid && (RBP_Prop_Id_Fk.dirty || RBP_Prop_Id_Fk.touched)">
+                <span *ngIf="RBP_Prop_Id_Fk.errors.required">Property Type is required</span>
+              </div>
+            </div>
+          </div>
+        <!-- <div class="col-md-4">
+          <button class="btn btn-primary" type="submit" style="margin-top:10px;">Go</button>
+        </div> -->
+      </div>
+
+
+      <div class="searchbar">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-1">
+              <label>Search</label>
+            </div>
+            <div class="col-md-4">
+              <select name="SearchCriteria" #SearchCriteria="ngModel" [(ngModel)]="s.SearchCriteria" class="form-control"
+                required>
+                <option [ngValue]="undefined" selected>---Select---</option>
+                <option value="propertyNo">Property No</option>
+                <option value="propertytype">Property Type</option>
+              </select>
+              <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)" class="error-msg">
+                <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <input type="text" name="SearchText" #SearchText="ngModel" [(ngModel)]="s.SearchText" class="form-control"
+                required>
+              <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+                <div *ngIf="SearchText.errors.required">Search text is required</div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <button class="btn btn-default" type="submit" [disabled]="mode=='view'">Search</button>
+              <button class="btn btn-default" type="reset" [disabled]="mode=='view'">Clear</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-responsive" style="height:250px;overflow-y:scroll;">
+        <table class="table fixed tableBodyScroll table-striped">
+          <thead>
+            <tr>
+              <td rowspan="2">Sl No.</td>
+              <td rowspan="2">Site / House</td>
+              <td rowspan="2">Property No.</td>
+              <td rowspan="2">Category</td>
+              <td rowspan="2">Intermediate / Corner</td>
+              <td rowspan="2">Odd / Regular</td>
+              <td class="text-center" colspan="2">Measurement</td>
+              <td rowspan="2">Plot area in sqm</td>
+              <td rowspan="2">Area in Sqft</td>
+              <!-- <td rowspan="2">Base Price</td> -->
+              <td rowspan="2">Total Amt</td>
+              <td rowspan="2">Select</td>
+            </tr>
+            <tr>
+              <td>East to West</td>
+              <td>North to South</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="Reviseproperties == '' || Reviseproperties == 'undefined' || Reviseproperties == 'null'">
+              <td colspan="14" class="text-center">No Data</td>
+            </tr>
+            <tr *ngFor="let rbp of Reviseproperties;let i=index">
+              <td>{{i+1}}</td>
+              <td>{{rbp.PT_Property_Type}}</td>
+              <td>{{rbp.PR_Property_No}}</td>
+              <td>{{rbp.CA_CategoryName}}</td>
+              <td>{{rbp.IC_Name}}</td>
+              <td>{{rbp.OR_Name}}</td>
+              <td>{{rbp.PR_M_East_west}}</td>
+              <td>{{rbp.PR_M_North_South}}</td>
+              <td>{{rbp.PR_Plot_Area}}</td>
+              <td>{{rbp.AreaSqft | number:'3.1-2'}}</td>
+              <td>{{rbp.PR_Prop_FinalCost | number:'3.1-2'}}</td>
+              <!-- <td>
+                    <span *ngIf="ap.Price!=null">₹</span>{{rbp.Price | number:'3.1-2'}}
+                    <span *ngIf="ap.Price!=null"><br>{{rbp.PR_LastEdited | date:'medium'}}</span></td>
+                <td>
+                    <span *ngIf="ap.baseAmt!=0">₹</span>{{rbp.baseAmt | number:'3.1-2'}}</td> -->
+
+              <td>
+                <input type="checkbox" [value]="rbp.PR_ReviseBaseprice" name="PR_ReviseBaseprice" [checked]="rbp.PR_ReviseBaseprice===true"
+                  (change)="changeCheckbox(rbp.PR_Id,rbp.PR_ReviseBaseprice)">
+              </td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="row">
+
+        <div class="form-group">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="sqft" [(ngModel)]="revise.RBP_Type" #RBP_Type="ngModel" name="RBP_Type">
+                <label class="form-check-label" for="inlineRadio1"> Rate per Sqft.</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="bulk" [(ngModel)]="revise.RBP_Type"
+                #RBP_Type="ngModel" name="RBP_Type">
+                <label class="form-check-label" for="inlineRadio2">Bulk Amount</label>
+              </div>
+        </div>
+
+        <!-- <div class="col-md-2">
+          <input type="radio" class="custom-field" value="sqft" [(ngModel)]="revise.RBP_Type" #RBP_Type="ngModel" name="RBP_Type">
+          Rate per Sqft.
+        </div>
+        <div class="col-md-2"><input type="radio" class="custom-field" value="bulk" [(ngModel)]="revise.RBP_Type"
+            #RBP_Type="ngModel" name="RBP_Type">
+          Bulk Amount
+        </div> -->
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <label style="color:blue;margin-top: 5px;"> Base Price Id :</label><span>{{revise.RBP_Id}}</span>
+        </div>
+        <div class="col-md-6">
+          <div class=" input-group">
+            <label>Update Base Price <span class="mandatory">*</span></label>
+            <input type="number" class="custom-field" [(ngModel)]="revise.RBP_BasePrice" #RBP_BasePrice="ngModel" name="RBP_BasePrice"
+              required>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="date" class="custom-field" [(ngModel)]="revise.RBP_ApproveDate" #RBP_ApproveDate="ngModel"
+              name="RBP_ApproveDate" required>
+            <label>Approval Date<span class="mandatory">*</span></label>
+          </div>
+        </div>
+        <div class="col-md-2" style="margin-top: 10px;">
+          <label>Upload Document<span class="mandatory">*</span></label>
+        </div>
+        <div class="col-md-4" style="margin-top: 10px;">
+          <input type="file" #Image accept="application/pdf" [(ngModel)]="revise.RBP_File" #RBP_File="ngModel" name="RBP_File"
+            (change)="RBPFileInput($event.target.files)" id="RBP_File" required>
+        </div>
+      </div>
+      <br>
+      <div class="text-center">
+        <button *ngIf="mode!='view'" [disabled]="revise.RBP_File==null || revise.RBP_File == '' || revise.RBP_File == 'undefined' ||
+        revise.RBP_Cat_Id_Fk==null || revise.RBP_Cat_Id_Fk == '' || revise.RBP_Cat_Id_Fk == 'undefined' ||
+        revise.RBP_PD_Id_FK==null || revise.RBP_PD_Id_FK == '' || revise.RBP_PD_Id_FK == 'undefined' ||
+        revise.RBP_ApproveDate==null || revise.RBP_ApproveDate == '' || revise.RBP_ApproveDate == 'undefined' || 
+        revise.RBP_BasePrice==null || revise.RBP_BasePrice == '' || revise.RBP_BasePrice == 'undefined'"
+          class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg" type="button" (click)="AddTotalPrice(revise.RBP_BasePrice,revise.RBP_Type)">Add</button>
+        <button class="btn btn-primary" *ngIf="mode=='view'" data-toggle="modal" data-target=".bd-example-modal-lg"
+          type="button">Add</button>
+        <button class="btn btn-primary" type="reset" *ngIf="mode!='view'">Cancel</button>
+      </div>
+
+    </div>
+  </form>
+</div>
+
+
+<!-- Modal -->
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title" id="exampleModalCenterTitle">Project Name-{{ProjName}}, Category-{{CatName}}, Property Type-{{PropType}} </h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <td rowspan="2">Sl No.</td>
+                <td rowspan="2">Site / House</td>
+                <td rowspan="2">Property No.</td>
+                <td rowspan="2">Category</td>
+                <td rowspan="2">Intermediate / Corner</td>
+                <td rowspan="2">Odd / Regular</td>
+                <td class="text-center" colspan="2">Measurement</td>
+                <td rowspan="2">Plot area in sqm</td>
+                <td rowspan="2">Area in Sqft</td>
+                <!-- <td rowspan="2">Base Price</td> -->
+                <td rowspan="2">Total Amt</td>
+                <td rowspan="2" class="text-center"> Remove </td>
+              </tr>
+              <tr>
+                <td>East to West</td>
+                <td>North to South</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let revised of Revisedproperties;let i=index">
+                <td>{{i+1}}</td>
+                <td>{{revised.PT_Property_Type}}</td>
+                <td>{{revised.PR_Property_No}}</td>
+                <td>{{revised.CA_CategoryName}}</td>
+                <td>{{revised.IC_Name}}</td>
+                <td>{{revised.OR_Name}}</td>
+                <td>{{revised.PR_M_East_west}}</td>
+                <td>{{revised.PR_M_North_South}}</td>
+                <td>{{revised.PR_Plot_Area}}</td>
+                <td>{{revised.AreaSqft | number:'3.1-2'}}</td>
+                <td>{{revised.baseAmt | number:'3.1-2'}}</td>
+
+
+                <!-- <td>{{revised.PR_Prop_FinalCost | number:'3.1-2'}}</td> -->
+                <!-- <td>
+                        <span *ngIf="ap.Price!=null">₹</span>{{rbp.Price | number:'3.1-2'}}
+                        <span *ngIf="ap.Price!=null"><br>{{rbp.PR_LastEdited | date:'medium'}}</span></td>
+                    <td>
+                        <span *ngIf="ap.baseAmt!=0">₹</span>{{rbp.baseAmt | number:'3.1-2'}}</td> -->
+                <td class="text-center">
+                  <button class="btn btn-primary" type="button" (click)="DeletePublishDetails(i,revised.PR_Id)">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" type="button" (click)="SaveRevisedProperties(revise)" *ngIf="mode!='view'">Confirm</button>
+        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Clear</button> -->
+      </div>
+    </div>
+  </div>
+</div>

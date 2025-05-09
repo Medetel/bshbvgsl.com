@@ -1,0 +1,48 @@
+
+
+.searchbar{
+    padding:10px;
+    background: #212121;
+}
+
+.searchbar label{
+    color:#fff;
+    margin-top:8px;
+}
+
+.form-control{
+    padding:4px;
+}
+
+select.form-control:not([size]):not([multiple]) {
+    height: calc(2rem + 2px);
+}
+
+button{
+    width:100px;
+    margin-right: 5px;
+}
+td{
+    border: 1px solid #ddd;
+}
+.modal {
+    background-color: transparent;
+ }
+
+
+ /* css */
+
+
+ .hiddentablerow{
+    padding: 0px 0px !important;
+
+}
+
+.table-info, .table-info>td, .table-info>th {
+    background-color: skyblue;
+    color: white;
+}
+.table-primary, .table-primary>td, .table-primary>th {
+    background-color: #6dd0c7;
+    color: white;
+}

@@ -1,0 +1,252 @@
+<div class="wrapper">
+  <form>
+    <div class="container-fluid">
+      <div class="title rowmarginfix themeheading">
+        View Medical Reimbursement / Mediclaim Record
+        <button class="btn btn-primary float-right"
+          [routerLink]="['/home/emp-claims/medical-reimbursment-records']">Back</button>
+        <span class="clearfix"></span>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <label for=""> Reimbursement No :</label> <span> {{Treatmentlist.DOC_CODE}} </span>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group">
+            <span for="">Date :</span> <span> {{Treatmentlist.DOC_DATE | date:'dd/MM/yyyy'}} </span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group ">
+            <span for="" *ngIf="Treatmentlist.DOC_STATUS=='G'">Status : Generated</span>
+            <span for="" *ngIf="Treatmentlist.DOC_STATUS=='A'">Status : Approved</span>
+            <span for="" *ngIf="Treatmentlist.DOC_STATUS=='S'">Status : Sanctioned</span>
+            <span for="" *ngIf="Treatmentlist.DOC_STATUS=='R'">Status : Rejected</span>
+          </div>
+        </div>
+      </div>
+      <br>
+
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="emp-details-tab" data-toggle="tab" href="#emp-details" role="tab"
+            aria-controls="emp-details" aria-selected="true">Employee Details</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="treatment-details-tab" data-toggle="tab" href="#treatment-details" role="tab"
+            aria-controls="treatment-details" aria-selected="false">Treatment Details</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="hospital-tab" data-toggle="tab" href="#hospital" role="tab" aria-controls="hospital"
+            aria-selected="false">Hospital</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="pharmacy-tab" data-toggle="tab" href="#pharmacy" role="tab" aria-controls="pharmacy"
+            aria-selected="false">Pharmacy</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="san-approve-tab" data-toggle="tab" href="#san-approve" role="tab"
+            aria-controls="san-approve" aria-selected="false">Sanction & Aapproval Details</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="emp-details" role="tabpanel" aria-labelledby="emp-details-tab">
+          <div class="row">
+            <div class="col-md-4 ">
+              <label for="">Division : </label> &nbsp; <span> {{Treatmentlist.DI_District}} </span>
+            </div>
+            <div class="col-md-4">
+              <label for="">Department : </label> &nbsp; <span> {{Treatmentlist.Department_Name}} </span>
+            </div>
+            <div class="col-md-4">
+              <label for="">Designation : </label> &nbsp; <span> {{Treatmentlist.desg_name}} </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <label for="">Employee Category : </label> &nbsp;<span> {{Treatmentlist.EMP_CATEGORY}} </span>
+            </div>
+            <div class="col-md-4">
+              <label for="">Employee Group : </label> &nbsp; <span> {{Treatmentlist.EMP_GROUP}} </span>
+            </div>
+            <div class="col-md-4">
+              <label for="">Employee Type : </label> &nbsp;<span> {{Treatmentlist.EMP_TYPE}} </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="treatment-details" role="tabpanel" aria-labelledby="treatment-details-tab">
+        <div class="row">
+          <div class="col-md-6">
+            <label for="">Mediclaim for :</label> &nbsp; <span> {{Treatmentlist.CLAIM_FOR}} </span>
+          </div>
+          <div class="col-md-6">
+            <label for="">Patients Name : </label> &nbsp; <span> {{Treatmentlist.PATIENT_NAME}} </span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label for="">Place of illness : </label> &nbsp; <span> {{Treatmentlist.PLACE_OF_ILLNESS}} </span>
+          </div>
+          <div class="col-md-6">
+            <label for=""> Nature of illness :</label> &nbsp; <span> {{Treatmentlist.ILLNESS_DESCRIPTION}} </span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label for="">Date :</label>  &nbsp; <span> {{Treatmentlist.ILLNESS_DATE | date:'dd/MM/yyyy'}} </span>
+          </div>
+          <div class="col-md-6">
+            <label for=""> Details of the amount Claimed :</label>  &nbsp; <span> {{Treatmentlist.AMOUNT_CLAIMED}} </span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label for=""> Total Amount(claimed) :</label>  &nbsp; <span> {{Treatmentlist.Total_AMOUNT_CLAIMED}} </span>
+          </div>
+          <div class="col-md-6">
+            <label for=""> Total Amount Sanctioned :</label>  &nbsp; <span> {{Treatmentlist.AMOUNT_SANCTIONED}} </span>
+          </div>
+        </div>        
+        <div class="row">
+          <div class="col-md-6">
+            <label for="">Health Status :</label> <span></span>  &nbsp; <span> {{Treatmentlist.HEALTH_STATUS}} </span>
+          </div>
+          <!-- <div class="col-md-6">
+            <label for="">Treatment Recomandations :</label>  &nbsp; <span> {{Treatmentlist.DI_District}} </span>
+          </div> -->
+        </div>
+      </div>
+
+      <div class="tab-pane fade" id="hospital" role="tabpanel" aria-labelledby="hospital-tab">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <td>SL.No</td>
+                <td>Name of The Hospital</td>
+                <td>Doctors Name</td>
+                <td>Consultation Date</td>
+                <td>Admitted Date</td>
+                <td>Discharge Date</td>
+                <td>Bill No</td>
+                <td>Bill Date</td>
+                <td>Bill Amount</td>
+                <td> MOU / A.H</td>
+                <td>Upload Document</td>
+                <td>View </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let H of HosptalDetails;let i=index;">          
+                <td>{{i+1}}</td>
+              <td *ngIf="H.HOSPITAL_ID==h.hsptl_id">{{h.hsptl_name}}</td>
+               <td>{{H.DOCTOR_NAME}}</td>
+               <td>{{H.CONSULT_DATE}}</td>
+
+               <td>{{H.ADMIT_DATE}}</td>
+               <td>{{H.DISCHARGE_DATE}}</td>
+               <td>{{H.BILL_NO}}</td>
+               <td>{{H.BILL_DATE}}</td>
+               <td>{{H.BILL_AMOUNT}}</td>
+                <td>{{H.MOU}}</td>
+            <td>
+                <a class="" target="_blank" href="{{H.HSP_DOC_UPLOAD_PATH}}">View</a>
+            </td>         
+                 
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="pharmacy" role="tabpanel" aria-labelledby="pharmacy-tab">       
+
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <td>SL.No</td>
+                <td> Pharmacy/MedicalShop </td>
+                <td>Bill No</td>
+                <td>Bill Date</td>
+                <td>Bill Amount</td>
+                <td>Upload Document</td>
+                <td>View </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let p of PharmcyDetails;let i=index;">          
+                <td>{{i+1}}</td>
+              <td>{{p.PHARMACY_NAME}}</td>
+               <td>{{p.BILL_NO}}</td>
+               <td>{{p.BILL_DATE}}</td>  
+               <td>{{p.BILL_AMOUNT}}</td>
+               <td>
+                  <a class="" target="_blank" href="{{p.PHAR_DOC_UPLOAD_PATH}}">View</a>
+               </td>        
+                           
+             
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="san-approve" role="tabpanel" aria-labelledby="san-approve-tab">
+        <div class="row">
+          <div class="col-md-4">
+            <div><label for="">Approved by :</label></div> &nbsp; <span> {{Treatmentlist.AUTH_BY}} </span>
+          </div>
+          <div class="col-md-4">
+            <div><label for=""> Approved Date : </label></div> &nbsp; <span> {{Treatmentlist.AUTH_DATE | date:'dd/MM/yyyy'}} </span>
+          </div>
+          <div class="col-md-4">
+            <div><label for="">Remarks :</label></div> &nbsp; <span> {{Treatmentlist.REMARKS}} </span>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <div><label for="">Sanctioned by :</label></div> &nbsp; <span> {{Treatmentlist.SANCTIONED_BY}} </span>
+          </div>
+          <div class="col-md-4">
+            <div><label for=""> Sanctioned Date : </label></div> &nbsp; <span> {{Treatmentlist.SANCTIONED_DATE | date:'dd/MM/yyyy'}} </span>
+          </div>
+          <div class="col-md-4">
+            <div><label for="">Remarks :</label></div> &nbsp; <span> {{Treatmentlist.REMARKS}} </span>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <div><label for="">Rejected by :</label></div> &nbsp; <span> {{Treatmentlist.MODIFIED_BY}} </span>
+          </div>
+          <div class="col-md-4">
+            <div><label for=""> Rejected Date : </label></div> &nbsp; <span> {{Treatmentlist.MODIFIED_DATE | date:'dd/MM/yyyy'}} </span>
+          </div>
+          <div class="col-md-4">
+            <div><label for="">Remarks :</label></div> &nbsp; <span> {{Treatmentlist.REMARKS}} </span>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <div><label for="">Proposed By :</label></div> &nbsp; <span> {{Treatmentlist.CREATED_BY}} </span>
+          </div>
+          <div class="col-md-4">
+            <div><label for=""> Proposed Date : </label></div>  &nbsp; <span> {{Treatmentlist.CREATED_DATE | date:'dd/MM/yyyy'}} </span>
+          </div>
+          <div class="col-md-4">
+            <div><label for=""> Remarks : </label></div> &nbsp; <span> {{Treatmentlist.REMARKS}} </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+
+    <br>
+
+  </form>
+</div>

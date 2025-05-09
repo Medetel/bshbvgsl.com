@@ -1,0 +1,625 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button *ngIf="!fromUtility" class="btn btn-primary pull-right" [routerLink]="['/home/caseregistration']">Back</button>
+    <button  *ngIf="fromUtility" class="btn btn-primary pull-right" [routerLink]="['/home/log-view/reroute','reroute']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+
+  <form (ngSubmit)="mode=='edit'?UpdateCaseReg(CaseReg):SaveCaseRegistration(CaseReg)" #CaseReg="ngForm" name="form1">
+
+  <div class="container-fluid">
+    <div class="row">
+
+        <div class="col-md-6">
+
+            <div class="input-group">
+                <input type="text" name="Case_No"  maxlength="50" [(ngModel)]="c.Case_No" #Case_No="ngModel" class="custom-field" [disabled]="mode=='view'" required>
+                <label for="">Case Number.
+                  <span class="mandatory">*</span>
+                </label>
+                <div class="error-msg" *ngIf="Case_No.invalid && (Case_No.dirty || Case_No.touched || formInvalid)">
+                  <span *ngIf="Case_No.errors.required">Case No is required</span>
+                  <!-- <span *ngIf="Case_No.errors?.pattern">Only AlphaNumeric should enter</span> -->
+              </div>
+              </div>           
+          </div>
+
+
+          <div class="col-md-6">
+              <div class="input-group">
+                <select class="custom-field" [(ngModel)]="c.Case_CaseType_Id_FK" #Case_CaseType_Id_FK="ngModel" name="Case_CaseType_Id_FK" 
+                  [disabled]="mode=='view'" required>
+                    <option [value]="undefined" selected>---Select---</option>
+                    <option [value]="c.CaseType_Id" *ngFor="let c of caseTypelist;">
+                      {{c.CaseType_Name}} 
+                    </option>
+                </select>
+                <label for="">Case Type
+                  <span class="mandatory">*</span>
+                </label>
+                <div class="error-msg" *ngIf="Case_CaseType_Id_FK.invalid && (Case_CaseType_Id_FK.dirty || Case_CaseType_Id_FK.touched || formInvalid)">
+                  <span *ngIf="Case_CaseType_Id_FK.errors.required">Case Type selection is required</span>
+              </div>
+              </div>      
+            </div>      
+
+      <!-- Previous CaseId Foriegn Key -->  
+
+    </div>    
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="input-group">
+              <input type="date" placeholder=" " name="Case_Reg_Date"  [(ngModel)]="c.Case_Reg_Date" #Case_Reg_Date="ngModel" class="custom-field"
+              [disabled]="mode=='view'" required>
+              <label for="">Reg Date
+                <span class="mandatory">*</span>
+              </label>
+              <div class="error-msg" *ngIf="Case_Reg_Date.invalid && (Case_Reg_Date.dirty || Case_Reg_Date.touched || formInvalid)">
+                <span *ngIf="Case_Reg_Date.errors.required">Reg Date is required</span>
+            </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+          <div class="input-group">
+              <input type="text" placeholder=" " name="Case_File_No"  maxlength="50" [(ngModel)]="c.Case_File_No" #Case_File_No="ngModel" class="custom-field"
+                                [disabled]="mode=='view'" required>
+              <label for="">BSHB File No.
+                <span class="mandatory">*</span>
+              </label>
+              <div class="error-msg" *ngIf="Case_File_No.invalid && (Case_File_No.dirty || Case_File_No.touched || formInvalid)">
+                <span *ngIf="Case_File_No.errors.required">File No is required</span>
+               
+            </div>
+            </div>
+      </div>
+    </div>
+
+
+
+    <div class="row">      
+        <div class="col-md-6">
+            <div class="input-group">
+              <select class="custom-field" [(ngModel)]="c.Case_OfficeLocation_FK" #Case_OfficeLocation_FK="ngModel" name="Case_OfficeLocation_FK" 
+              [disabled]="mode=='view'" required>
+                <option [value]="undefined" selected>---Select---</option>
+                <option [value]="lo.Id" *ngFor="let lo of officeslist;">
+                  {{lo.OfficeName}} 
+                </option>
+            </select>           
+            <!-- <input type="text" placeholder=" "  class="custom-field" [(ngModel)]="c.Case_OfficeLocation_FK" #Case_OfficeLocation_FK="ngModel" name="Case_OfficeLocation_FK"
+            [disabled]="mode=='view'" maxlength="100"> -->
+              <label for="">Office/DPO 
+                <span class="mandatory">*</span>
+              </label> 
+               <div class="error-msg" *ngIf="Case_OfficeLocation_FK.invalid && (Case_OfficeLocation_FK.dirty || Case_OfficeLocation_FK.touched || formInvalid)">
+            <span *ngIf="Case_OfficeLocation_FK.errors.required">Office is required</span>
+        </div>         
+            </div>
+          </div>
+
+          <div class="col-md-6">
+              <div class="input-group">
+                <!-- <select class="custom-field" [(ngModel)]="c.Case_Litigation_Officer_FK" #Case_Litigation_OffiCer_FK="ngModel" name="Case_Litigation_Officer_FK" 
+                [disabled]="mode=='view'" required>
+                  <option [value]="undefined" selected>---Select---</option>
+                  <option [value]="l.KHB_UserId" *ngFor="let l of litigationofficerslist;">
+                    {{l.FirstName}} &nbsp; {{l.LastName}}
+                  </option>
+              </select> -->
+              <input type="text" placeholder=" " class="custom-field" [(ngModel)]="c.Case_Litigation_Officer_FK" #Case_Litigation_OffiCer_FK="ngModel" name="Case_Litigation_Officer_FK"
+              [disabled]="mode=='view'" maxlength="100">
+                <label for="">Litigation Officer          
+                </label>         
+              </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                  <select class="custom-field" [(ngModel)]="c.Case_Court_Id_FK" #Case_Court_Id_FK="ngModel" name="Case_Court_Id_FK" 
+                    [disabled]="mode=='view'" required>
+                      <option [value]="undefined" selected>---Select---</option>
+                      <option [value]="c.Court_Id" *ngFor="let c of courtlist;">
+                        {{c.Court_Name}} 
+                      </option>
+                  </select>
+                  <label for="">Court
+                    <span class="mandatory">*</span>
+                  </label>
+                  <div class="error-msg" *ngIf="Case_Court_Id_FK.invalid && (Case_Court_Id_FK.dirty || Case_Court_Id_FK.touched || formInvalid)">
+                    <span *ngIf="Case_Court_Id_FK.errors.required">Court selection is required</span>
+                </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                  <div class="input-group">
+                     <select class="custom-field" [(ngModel)]="c.Case_Bench" #Case_Bench="ngModel" name="Case_Bench" 
+                    [disabled]="mode=='view'">
+                      <!-- <option [value]="undefined" selected>---Select---</option>
+                      <option [value]="Bengaluru_Bench" >Bengaluru Bench</option>            
+                      <option [value]="Dharwad_Bench" >Dharwad Bench</option> 
+                      <option [value]="Kalaburagi_Bench" >Kalaburagi Bench</option>   -->
+
+                      <option [value]="undefined" selected>---Select---</option>
+                      <option [value]="0" >Patna (पटना) Bench</option>            
+                      <option [value]="1" >Buxar(बक्सर) Bench</option> 
+                      <option [value]="2" >Kaimur (कैमूर) Bench</option>
+                  </select>
+                    <label for="">Select Bench.           
+                    </label>         
+                  </div>
+                </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-6">
+              <div class="input-group">
+                 <select class="custom-field" [(ngModel)]="c.DistrictId" #DistrictId="ngModel" name="DistrictId" 
+              [disabled]="mode=='view'" (change)="GetCourtComplexandEstablishment(c.DistrictId)" required>
+                <option [value]="undefined" selected>---Select---</option>
+                <option [value]="d.DI_Id" *ngFor="let d of DistrictsList;">
+                  {{d.DI_District}}
+                </option>
+            </select>
+                <label for="">District.   
+                  <span class="mandatory">*</span>          
+                </label>  
+                <div class="error-msg" *ngIf="DistrictId.invalid && (DistrictId.dirty || DistrictId.touched || formInvalid)">
+                    <span *ngIf="DistrictId.errors.required">District selection is required</span>
+                </div>          
+              </div>
+            </div>      
+      
+            <div class="col-md-6">
+                <div class="input-group">
+                   <select class="custom-field" [(ngModel)]="c.Case_Court_Complex_Id_FK" #Case_Court_Complex_Id_FK="ngModel" name="Case_Court_Complex_Id_FK" 
+                [disabled]="mode=='view'">
+                  <option [value]="undefined" selected>---Select---</option>
+                  <option [value]="co.Court_CE_Id" *ngFor="let co of CComplexlist;">
+                    {{co.ParamName}}
+                  </option>
+              </select>
+                  <label for="">Court Complex.             
+                  </label>            
+                </div>
+              </div>
+          </div>
+
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="input-group">
+               <select class="custom-field" [(ngModel)]="c.Case_Court_Establish_Id_FK" #Case_Court_Establish_Id_FK="ngModel" name="Case_Court_Establish_Id_FK" 
+            [disabled]="mode=='view'">
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="es.Court_CE_Id" *ngFor="let es of CEstablishList;">
+                  {{es.ParamName}}
+                </option>
+          </select>
+              <label for="">Court Establishment.           
+              </label>         
+            </div>
+          </div>
+
+        <div class="col-md-6">
+             <div class="input-group">
+              <select class="custom-field" [(ngModel)]="c.Case_PreviousCaseNo_FK" #Case_PreviousCaseNo_FK="ngModel" name="Case_PreviousCaseNo_FK" 
+              [disabled]="mode=='view'" required>
+                <option [value]="undefined" selected>---Select---</option>
+                <option [value]= 0>NO Previous Case</option>
+                <option [value]="p.Case_Id" *ngFor="let p of previouscaselist;">
+                 CaseNo: {{p.Case_No}} &nbsp; Reg.Date:{{p.Case_Reg_Date|date:'dd/MM/yyyy'}} &nbsp; Court:{{p.Court_Name}}
+                </option>
+            </select>
+              <label for="">Previous Case No in System.
+                <span class="mandatory">*</span>
+              </label>
+            </div>
+          </div>              
+    </div>
+
+    <div class="row">
+
+        <!-- <div class="col-md-6">
+            <div class="input-group">
+              <select class="custom-field" [(ngModel)]="c.Case_CourtType_Id_FK" #Case_CourtType_Id_FK="ngModel" name="Case_CourtType_Id_FK" 
+                [disabled]="mode=='view'" required>
+                  <option [value]="undefined" selected>---Select---</option>
+                  <option [value]=0 >Not Defined</option>
+                  <option [value]="ct.CourtT_Id" *ngFor="let ct of courttypelist;">
+                    {{ct.CourtT_Name}} 
+                  </option>
+              </select>
+              <label for="">Court Type
+                <span class="mandatory">*</span>
+              </label>
+              <div class="error-msg" *ngIf="Case_CourtType_Id_FK.invalid && (Case_CourtType_Id_FK.dirty || Case_CourtType_Id_FK.touched || formInvalid)">
+                <span *ngIf="Case_CourtType_Id_FK.errors.required">Court Type is required.</span>                
+            </div>
+            </div>
+          </div>   -->   
+     
+      </div>
+
+    <div class="row">   
+      
+        <div class="col-md-6">
+            <div class="input-group">
+              <input type="text" placeholder=" " name="Case_ExecutionAmount" pattern="^[0-9.]*$" maxlength="18" [(ngModel)]="c.Case_ExecutionAmount" #Case_ExecutionAmount="ngModel" class="custom-field"
+                                [disabled]="mode=='view'">
+              <label for="">Execution Amount.
+                <!-- <span class="mandatory">*</span> -->
+              </label>
+              <div class="error-msg" *ngIf="Case_ExecutionAmount.invalid && (Case_ExecutionAmount.dirty || Case_ExecutionAmount.touched || formInvalid)">
+                <!-- <span *ngIf="Case_ExecutionAmount.errors.required">Execution Amount is required</span> -->
+                <span *ngIf="Case_ExecutionAmount.errors?.pattern">Enter Valid ammount</span>
+            </div>
+            </div>
+          </div>
+    
+
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="date" placeholder=" " name="Case_Execution_Date"  [(ngModel)]="c.Case_Execution_Date" #Case_Execution_Date="ngModel" class="custom-field"
+                            [disabled]="mode=='view'">
+          <label for="">Execution Date.
+            <!-- <span class="mandatory">*</span> -->
+          </label>
+          <!-- <div class="error-msg" *ngIf="Case_Execution_Date.invalid && (Case_Execution_Date.dirty || Case_Execution_Date.touched || formInvalid)">
+            <span *ngIf="Case_Execution_Date.errors.required">Execution Date is required</span>
+        </div> -->
+        </div>
+      </div>
+    </div> 
+    
+    <div class="row">
+      <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" placeholder=" " name="Case_OldCaseNo"  [(ngModel)]="c.Case_OldCaseNo" #Case_OldCaseNo="ngModel" class="custom-field"
+            [disabled]="mode=='view'">          
+          <label for="">Old Case Number.          
+          </label>
+          <!-- <div class="error-msg" *ngIf="Case_OldCaseNo.invalid && (Case_OldCaseNo.dirty || Case_OldCaseNo.touched || formInvalid)">
+            <span *ngIf="Case_OldCaseNo.errors.required">Case Relation is Required.</span>
+        </div> -->
+      </div>
+    </div>
+
+
+    <div class="col-md-6">
+      <div class="input-group">
+    <select type="text" placeholder=" " name="CaseRelatedTo"  [(ngModel)]="c.CaseRelatedTo" #CaseRelatedTo="ngModel" class="custom-field"
+                        [disabled]="mode=='view'">
+      <!-- <option [value]="undefined" selected>---Select---</option>
+      <option [value]= "Land">Land</option>     
+      <option [value]= "Allotment">Allotment</option>
+      <option [value]= "Service">Service</option>
+      <option [value]= "District_Forum">District Forum</option>          -->
+      <option [value]="undefined" selected>---Select---</option>
+      <option [value]= "0">Land</option>     
+      <option [value]= "1">Allotment</option>
+      <option [value]= "2">Service</option>
+      <option [value]= "3">District Forum</option> 
+    </select>
+      <label for="">Case Related To.
+        <span class="mandatory">*</span>
+      </label>
+      <div class="error-msg" *ngIf="CaseRelatedTo.invalid && (CaseRelatedTo.dirty || CaseRelatedTo.touched || formInvalid)">
+        <span *ngIf="CaseRelatedTo.errors.required">Case Relation is Required.</span>
+    </div>
+  </div>
+</div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+          <div class="input-group">
+            <input name="" id="" [(ngModel)]="c.Case_TnterlocuratyApp"  #Case_TnterlocuratyApp="ngModel" name="Case_TnterlocuratyApp" 
+            [disabled]="mode=='view'" class="custom-field">
+            <label for="">Interlocutory Applications/s(I.A)</label>
+          </div>
+        </div>   
+
+    <div class="col-md-6">
+        <div class="input-group">
+          <textarea name="" id="" [(ngModel)]="c.ordersOnIAs" #ordersOnIAs="ngModel" name="ordersOnIAs" 
+          [disabled]="mode=='view'" cols="30" rows="10" class="custom-field"></textarea>
+          <label for="">Orders On I.A./s</label>
+        </div>
+      </div>    
+  </div>
+
+   <br>
+
+    <div class="title2 themeheading2">
+      Petitioner / Respondent Details
+    </div>
+
+    <br>
+
+    <div class="box1">
+    <div class="row" *ngIf="!hide">
+      <div class="col-md-4">
+        <div class="input-group">
+          <input type="text" placeholder=" " name="CasePeti_PetitionerName"  maxlength="50"  [(ngModel)]="p.CasePeti_PetitionerName" #CasePeti_PetitionerName="ngModel" class="custom-field"
+                            [disabled]="mode=='view'">
+          <label for="">Petitioner
+            <span class="mandatory">*</span>
+          </label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group">
+          <input type="text" placeholder=" " name="CasePeti_Respondent"  maxlength="50" [(ngModel)]="p.CasePeti_Respondent" #CasePeti_Respondent="ngModel" class="custom-field"
+          [disabled]="mode=='view'">
+          <label for="">Respondent
+            <span class="mandatory">*</span>
+          </label> 
+        </div>
+      </div>
+      <div class="col-md-4 text-center">
+        <button class="btn btn-primary" type="button" (click)="AddPDDetails(p)">Add</button>&nbsp;
+        <button type="button" class="btn btn-primary" (click)="ClearPDDetails()">Cancel</button>
+    </div>
+    </div>   
+
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td>Sl No.</td>
+            <td>Petitioner</td>
+            <td>Respondent</td>
+            <td *ngIf="!hide">Delete</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of petDetails;let i=index;">
+            <td>{{i+1}}</td>
+            <td>{{p.CasePeti_PetitionerName}}</td>
+            <td>{{p.CasePeti_Respondent}}</td>
+            <td *ngIf="!hide" (click)="PetDetailsremove(i)"><i class="fa fa-lg fa-trash themecolor"></i></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <br>
+    <div class="title2 themeheading2">
+      Advocate(s) Details
+    </div>
+
+    <br>
+
+<div class="box1">
+    <div class="row" *ngIf="!hide">      
+      <div class="col-md-5">
+        <div class="input-group">
+          <select class="custom-field" [(ngModel)]="adv.AC_Adv_Id_FK" #AC_Adv_Id_FK="ngModel" name="AC_Adv_Id_FK" 
+          [disabled]="mode=='View'">
+            <option [value]="undefined" selected>---Select---</option>            
+            <option [value]="adv.Adv_Id" *ngFor="let adv of allAdvocatelist;">
+              {{adv.Adv_Name}} 
+            </option>
+        </select>  
+          <label for="">Advocate</label>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <button class="btn btn-primary" type="button" (click)="AddAdvDetails(adv)">Add</button>&nbsp;
+        <button type="button" class="btn btn-primary" (click)="ClearAdvDetails()">Cancel</button>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td>Sl No.</td>
+            <td>Advocate</td>
+            <td *ngIf="!hide">Delete</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let a of advDetails;let i=index;">
+            <td>{{i+1}}</td>
+            <td>{{a.Adv_AdvocateName}}</td>
+            <td *ngIf="!hide" (click)="AdvDetailsremove(i)"><i class="fa fa-lg fa-trash themecolor"></i></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+<br>
+
+  <div class="title2 themeheading2">
+    Arbitration Details
+  </div>
+  <br>
+
+  <div class="box1">  
+    <div *ngIf="!hide">
+    <div class="row">      
+      <div class="col-md-6">
+        <div class="input-group">
+            <input type="date" placeholder=" " name="ArbitrationDate"  [(ngModel)]="arb.ArbitrationDate" #ArbitrationDate="ngModel" class="custom-field"
+            [disabled]="mode=='view'">
+          <label for="">Arbitration Date</label></div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+            <input type="text" placeholder=" " name="Amount" maxlength="18" [pattern]="numericpattern"  [(ngModel)]="arb.Amount" #Amount="ngModel" class="custom-field"
+            [disabled]="mode=='view'">
+          <label for="">Amount</label>          
+        </div>
+      </div>
+    </div>
+      <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+            <input type="text" placeholder=" " name="PayeeName"  maxlength="80" [(ngModel)]="arb.PayeeName" #PayeeName="ngModel" class="custom-field"
+            [disabled]="mode=='view'">
+          <label for="">Payee Name</label>         
+        </div>       
+      </div>
+      <div class="col-md-6">
+          <button class="btn btn-primary" type="button" (click)="AddArbDetails(arb)">Add</button>&nbsp;
+          <button type="button" class="btn btn-primary" (click)="ClearArbDetails()">Cancel</button>
+        </div>
+    </div> 
+  </div>  
+    <div class="row">
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <td>Sl No.</td>
+              <td>Arbitration Date</td>
+              <td>Payee Name</td>
+              <td>Amount</td>
+              <td *ngIf="!hide">Delete</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let a of arbDetails;let i=index;">
+              <td>{{i+1}}.</td>
+              <td>{{a.ArbitrationDate| date:'dd/MM/yyyy'}}</td>
+              <td>{{a.PayeeName}}</td>
+              <td>{{a.Amount}}</td>
+              <td *ngIf="!hide" (click)="ArbiDetailsremove(i)"><i class="fa fa-lg fa-trash themecolor"></i></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>  
+</div>
+
+  <div class="row">&nbsp;</div>
+
+  <div class="container-fluid">  
+
+    <div class="row">
+        <div class="col-md-6">
+        <div class="row" style="margin: -20px -15px -15px -15px;">
+          <div class="col-md-12">
+              <div class="input-group">
+              <select class="custom-field" [(ngModel)]="c.Case_ProjectCode_Id_FK" #Case_ProjectCode_Id_FK="ngModel" name="Case_ProjectCode_Id_FK" 
+              [disabled]="mode=='view'">
+                <option [value]="undefined" selected>---Select---</option>
+                <option [value]="pr.PD_Id" *ngFor="let pr of projectcodelist;">
+                  {{pr.PD_Project_Code}} - {{pr.PD_Project_Name}}
+                </option>
+            </select>
+              <label for="">Project Code           
+              </label>
+              </div>
+          </div>
+     &nbsp;
+          <div class="col-md-12">
+              <div class="input-group">
+              <select class="custom-field" [(ngModel)]="c.Case_Dep_Id_FK" #Case_Dep_Id_FK="ngModel" name="Case_Dep_Id_FK" 
+              [disabled]="mode=='view'">
+                <option [value]="undefined" selected>---Select---</option>
+                <option [value]="d.Department_Id" *ngFor="let d of departmentlist;">
+                  {{d.Department_Name}} 
+                </option>
+            </select>
+            <label for="">Dept / Section          
+            </label>
+          </div> 
+      </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+          <div class="input-group">
+          <textarea class="custom-field" [(ngModel)]="c.Case_Prayers" #Case_Prayers="ngModel" name="Case_Prayers" 
+          [disabled]="mode=='view'"> </textarea>             
+        <label for="">Prayers in Case          
+        </label>
+      </div>  
+      </div>
+        
+      </div>
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <div class="input-group">
+              <textarea name="" id="" [(ngModel)]="c.Case_Note"  #Case_Note="ngModel" name="Case_Note" 
+              [disabled]="mode=='view'" cols="30" rows="10" class="custom-field"></textarea>
+              <label for="">Description of Property</label>
+            </div>
+          </div>
+     
+
+      <div class="col-md-6">
+          <div class="input-group">
+            <textarea name="" id="" [(ngModel)]="c.Case_Remarks" #Case_Remarks="ngModel" name="Case_Remarks" 
+            [disabled]="mode=='view'" cols="30" rows="10" class="custom-field"></textarea>
+            <label for="">Remarks</label>
+          </div>
+        </div>
+      
+    </div>
+
+
+   
+
+
+    <div class="row">
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-md-4">
+              <label for="">Document 1</label>
+            </div>
+            <div class="col-md-6" >
+                <input *ngIf="!hide" type="file" #Image accept="application/pdf" (change)="imageUpload($event.target.files)" id="Case_UploadPath">
+                <a  class="" *ngIf="c.Case_UploadPath!=null && hide" target="_blank" href="{{c.Case_UploadPath}}">view</a>
+            </div>
+          </div>            
+      </div>
+         
+      <div class="col-md-4">   
+          <div class="row">     
+          <div class="col-md-4">
+              <label for="">Document 2</label>
+            </div>
+            <div class="col-md-6">
+                <input *ngIf="!hide" type="file" #Image accept="application/pdf" (change)="imageUploadtwo($event.target.files)" id="Case_UploadPath1">
+                <a class="" *ngIf="c.Case_UploadPath1!=null && hide" target="_blank" href="{{c.Case_UploadPath1}}">view</a>
+            </div>
+          </div> 
+      </div>
+      
+      <div class="col-md-4">
+        <div class="row"> 
+        <div class="col-md-4">
+            <label for="">Document 3</label>
+          </div>
+          <div class="col-md-6">
+              <input type="file" *ngIf="!hide" #Image accept="application/pdf" (change)="imageUploadthree($event.target.files)" id="Case_UploadPath2">
+                <a class="" *ngIf="c.Case_UploadPath2!=null && hide" target="_blank" href="{{c.Case_UploadPath2}}">view</a>
+          </div>
+        </div>
+      </div> 
+    </div>
+  </div>
+  <div class="row">&nbsp;</div>
+</div>
+  <div class="container-fluid text-center">
+    <button [disabled]="mode=='view'" type="submit" class="btn btn-primary">Save</button> &nbsp;
+    <button class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button>
+  </div>
+</form>
+</div>

@@ -1,0 +1,127 @@
+<div class="wrapper">
+    <form (ngSubmit)="Updatereminder(reminder)" #reminder="ngForm" name="reminder">
+  <div class="container-fluid">
+    <div class="title rowmarginfix themeheading">
+      Show Cause Notice Details
+      <button class="btn btn-primary float-right" [routerLink]="['/home/dept-enquiry/scn-remainer']">Back</button>
+      <span class="clearfix"></span>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-4">
+          <label for=""> SCN No : </label> &nbsp;<span> {{SCNReminderDetails.DOC_CODE}} </span>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group ">
+            <span for="">Date : </span>  &nbsp;<span> {{SCNReminderDetails.DOC_DATE | date:'dd/MM/yyyy'}} </span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group ">
+            <span for="">Status : Generated</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label for="">Due Date to Reply :</label>  &nbsp;<span> {{SCNReminderDetails.SCN_REPLY_DUE_DATE | date:'dd/MM/yyyy'}} </span>
+        </div>
+        <div class="col-md-6">
+          <label for="">Mode of Reply :</label>  &nbsp;<span> {{SCNReminderDetails.SCN_MODE_REPLY}} </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label for=""> Additional Details : </label>  &nbsp;<span> {{SCNReminderDetails.SCN_ADDL_DTL}} </span>
+        </div>
+        <div class="col-md-6">
+          <label for=""> Remarks :</label>  &nbsp;<span> {{SCNReminderDetails.SCN_REMARKS}} </span>
+        </div>
+      </div>
+      <!-- <div class="row">
+        <div class="col-md-6">
+          <a href=""> View OM Document </a>  &nbsp;<span> {{ComplaintDetails.COMPLAINT_TYPE}} </span>
+        </div>
+      </div> -->
+      <br>   
+
+    <div class="title rowmarginfix themeheading"> SCN Remainder Details </div>
+
+    <div class="row">
+      <div class="col-md-4">
+        <label for=""> SCN Remainder No. : </label>  &nbsp;<span> {{r.SCN_REMINDER_ID}} </span>
+      </div>
+      <div class="col-md-4">
+        <label for=""> Date : </label>  &nbsp;<span> {{r.DOC_DATE | date:'dd/MM/yyyy'}} </span>
+      </div>
+      <div class="col-md-4">
+        <label for=""> Status :  Generated</label> 
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Due Date to Reply </label>
+          <input type="Date" name="DATE" maxlength="50" [(ngModel)]="r.DATE"
+          #DATE="ngModel" class="form-control" [disabled]="mode=='View'">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Mode of Reply </label>
+          <!-- <input type="text" name="Reply" maxlength="50" [(ngModel)]="r.Reply"
+          #Reply="ngModel" class="form-control" [disabled]="mode=='View'" class="custom-field"> -->
+          <select [(ngModel)]="r.Reply" #Reply="ngModel"
+          name="Reply" [disabled]="mode=='View'" required class="custom-field">
+          <option value="undefined">--Select--</option>
+          <option value="By Hand"> By Hand </option>
+          <option value="Post">By Post</option>
+          <option value="Courrier">By Courrier</option>
+          <option value="Email">By Email</option>
+        </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for=""> Additional Details </label>
+          <input type="text" name="Additional" maxlength="50" [(ngModel)]="r.Additional"
+          #Additional="ngModel" class="form-control" [disabled]="mode=='View'" class="custom-field">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for=""> Remarks </label>
+          <textarea name="Remarks" maxlength="50" [(ngModel)]="r.Remarks"
+          #Remarks="ngModel" [disabled]="mode=='View'" class="custom-field"></textarea>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="row">
+      <div class="col-md-6">
+        <div class="form-inline">
+          <div class="form-group mb-2">
+            <label style="color: blue;"> OM Document Upload </label>
+          </div>
+          <div class="form-group mb-2 mx-sm-3">
+              <input *ngIf="!hide" type="file" #Image accept="application/pdf"
+              (change)="imageUpload1($event.target.files)" id="OM_UPLOAD_PATH" name="OM_UPLOAD_PATH">
+            <a class="" target="_blank" href="{{r.OM_UPLOAD_PATH}}">View</a>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <br>
+    <div class="d-flex justify-content-center">
+        <!-- <button [disabled]="mode=='View'" class="btn btn-primary" type="submit">{{mode=='Edit'?'Update':'Save'}}</button> &nbsp; -->
+        <button [disabled]="mode=='View'" class="btn btn-primary" type="submit" >Save</button>&nbsp;
+        <button [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button>&nbsp;
+      
+  
+      </div>
+    <br>
+  </div>
+</form>
+</div>

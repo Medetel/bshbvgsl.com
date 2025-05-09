@@ -1,0 +1,64 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary pull-right" [routerLink]="['/home/courttype']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <form (ngSubmit)="mode=='edit'?UpdateCourtType(CourtType):SaveCourtType(CourtType)" #CourtType="ngForm" name="CourtType">
+
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-md-4">
+          <!-- <div class="form-group input-group">
+            <input type="text" class="form-control custom-field">
+            <label for="">District Code</label>
+          </div> -->
+
+
+          <div class="input-group form-group">
+            <input type="text" class="custom-field" name="CourtT_Code" maxlength="10" [(ngModel)]="c.CourtT_Code"
+              #CourtT_Code="ngModel" [disabled]="mode=='view'" pattern="^[a-zA-Z0-9 ]*$" required>
+            <label for="">CourtType Code.
+              <span class="mandatory">*</span>
+            </label>
+
+            <div class="error-msg" *ngIf="CourtT_Code.invalid && (CourtT_Code.dirty || CourtT_Code.touched || formInvalid)">
+              <span *ngIf="CourtT_Code.errors.required">CourtType code is required</span>
+              <span *ngIf="CourtT_Code.errors?.pattern">Only AlphaNumeric should enter</span>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-md-4">
+          <!-- <div class="form-group input-group">
+            <input type="text" class="form-control custom-field">
+            <label for="">District</label>
+          </div> -->
+
+
+
+          <div class="input-group form-group">
+            <input type="text" class="custom-field" name="CourtT_Name" maxlength="50" [(ngModel)]="c.CourtT_Name"
+              #CourtT_Name="ngModel" [disabled]="mode=='view'" pattern="^[a-zA-Z0-9 ]*$" required>
+            <label for="">CourtType.
+              <span class="mandatory">*</span>
+            </label>
+
+            <div class="error-msg"
+              *ngIf="CourtT_Name.invalid && (CourtT_Name.dirty || CourtT_Name.touched || formInvalid)">
+              <span *ngIf="CourtT_Name.errors.required">CourtType is required</span>
+              <span *ngIf="CourtT_Name.errors?.pattern">Only AlphaNumeric should enter</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="btn-wrapper text-center">
+        <button [disabled]="mode=='view'"class="btn btn-primary" type="submit">Save</button><button [disabled]="mode=='view'" class="btn btn-primary" type="button"  (click)="Cancel()">Cancel</button>
+      </div>
+    </div>
+
+  </form>
+</div>

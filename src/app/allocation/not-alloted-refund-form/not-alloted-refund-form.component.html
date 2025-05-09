@@ -1,0 +1,224 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary float-right" [routerLink]="['/home/notallotedrefund']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <form (ngSubmit)="onSubmit(NAL)" #NAL="ngForm" autocomplete="off">
+    <div class="container-fluid">
+      
+      <!-- <div class="row">
+      <div class="col-md-5">
+          <div class="input-group">
+            <input type="text" #NAR_Remarks="ngModel" name="NAR_Remarks" [(ngModel)]="refund.NAR_Remarks" class="custom-field">
+            <label for="">Application No.</label>
+          </div>
+        </div>
+      </div> -->
+      <div class="row">
+
+        <div class="col-md-3">
+          <div class="input-group">
+            <select #NAR_Not_Id_Fk="ngModel" name="NAR_Not_Id_Fk" [(ngModel)]="refund.NAR_Not_Id_Fk" class="custom-field"
+              (change)="GetProjects(refund.NAR_Not_Id_Fk)">
+              <option [ngValue]="undefined" selected>---Select---</option>
+              <option [ngValue]="not.DSWOId_NO_Id" *ngFor="let not of notificationlist;">
+                {{not.DSWOId_NO_Number}}-{{not.DSWOId_NO_Id}}-{{not.PD_Project_Name}}-{{not.PD_Project_Code}}</option>
+            </select>
+            <label>Notification No.
+            </label>
+            <!-- <div class="error-msg" *ngIf="NAR_Not_Id_Fk.invalid && (NAR_Not_Id_Fk.dirty || NAR_Not_Id_Fk.touched || formSubmitted)">
+              <span *ngIf="NAR_Not_Id_Fk.errors.required">Notification is required</span>
+            </div> -->
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="input-group">
+            <select #NAR_Proj_Id_Fk="ngModel" name="NAR_Proj_Id_Fk" [(ngModel)]="refund.NAR_Proj_Id_Fk" class="custom-field"
+              >
+              <option [ngValue]="undefined" selected>---Select---</option>
+              <option *ngFor="let proj of projectlist" [ngValue]="proj.PD_Id">
+                {{proj.PD_Project_Code}} - {{proj.PD_Project_Name}} - {{proj.Phase_Name}}
+              </option>
+            </select>
+            <label>Project
+            </label>
+            <!-- <div class="error-msg" *ngIf="NAR_Proj_Id_Fk.invalid && (NAR_Proj_Id_Fk.dirty || NAR_Proj_Id_Fk.touched || formSubmitted)">
+              <span *ngIf="NAR_Proj_Id_Fk.errors.required">Project is required</span>
+            </div> -->
+          </div>
+        </div>
+        OR
+        <div class="col-md-3">
+          <div class="input-group">
+            <input type="text" #NAR_App_No="ngModel" name="NAR_App_No" [(ngModel)]="refund.NAR_App_No" class="custom-field">
+            <label for="">Application No.</label>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-primary" [disabled]="mode=='view'" type="button" (click)="GetProjectDetailsforRefund(refund.NAR_Proj_Id_Fk,refund.NAR_App_No)">Go</button>
+        </div>
+      </div>
+      <span style="font-family: red">Search by either Notification and Project or Application Number</span>
+      <div class="row">
+          <div class="col-md-6">
+            <label for="">Refund Id :
+              <span>{{NAR_Refund_Id}}</span>
+            </label>
+          </div>
+  
+        </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label for="">Project :
+            <span>{{projectDetails.PD_Project_Name}}</span>
+          </label>
+        </div>
+        <div class="col-md-6">
+          <label for="">Scheme :
+            <span>{{projectDetails.Sch_Name}}</span>
+          </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label for="">Phase :
+            <span>{{projectDetails.Phase_Name}}</span>
+          </label>
+        </div>
+        <div class="col-md-6">
+          <label for="">District :
+            <span>{{projectDetails.DI_District}}</span>
+          </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <label for="">Upload Doc(Pdf)</label>
+        </div>
+        <div class="col-md-4">
+          <input type="file" #Image accept="application/pdf" (change)="NAR_Upload_Doc($event.target.files)" id="NAR_Upload_Doc"
+            style=" margin-left: -75px;" name="NAR_Upload_Doc" [(ngModel)]="refund.NAR_Upload_Doc" #NAR_Upload_Doc="ngModel">
+
+        </div>
+
+        <!-- <div class="col-md-2" >
+            <a class="float-right" *ngIf="mode=='view'" target="_blank" href="{{refund.NAR_Upload_Doc}}">view</a>
+          </div> -->
+        <div class="col-md-6">
+          <div class="input-group">
+            <textarea #NAR_Remarks="ngModel" name="NAR_Remarks" [(ngModel)]="refund.NAR_Remarks" class="custom-field"></textarea>
+            <label for="">Remarks</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="title themeheading">
+        <span class="pull-left">Pre Allotment Cancellation and Refund </span> &nbsp;&nbsp;
+      </div>
+
+      <div>
+        <!-- <span class="pull-left">{{title1}} </span> &nbsp;&nbsp; -->
+        <div class="row">
+        <!-- <div class="row" [hidden]="refund.NAR_Not_Id_Fk==undefined || refund.NAR_Proj_Id_Fk==undefined 
+        || (refund.NAR_App_No == null && refund.NAR_App_No == '' && refund.NAR_App_No == undefined)"> -->
+          <div class="col-md-3">Cancellation Request by Applicant:</div>
+          <div class="col-md-3">
+            <!-- <div class="pull-left lot-type"> -->
+            <div class="form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" required type="radio" id="inlineRadio1" value="O_E" #NAR_Ref_Type="ngModel"
+                  name="NAR_Ref_Type" [(ngModel)]="refund.NAR_Ref_Type" (click)="GeteligibleCancelList(refund.NAR_Not_Id_Fk,refund.NAR_Proj_Id_Fk,refund.NAR_App_No)">Online
+              </label>
+            </div>
+            &nbsp;&nbsp;&nbsp;
+            <div class="form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" required type="radio" id="inlineRadio1" value="OF_E" #NAR_Ref_Type="ngModel"
+                  name="NAR_Ref_Type" [(ngModel)]="refund.NAR_Ref_Type" (click)="Geteligible(refund.NAR_Not_Id_Fk,refund.NAR_Proj_Id_Fk,refund.NAR_App_No)">Offline
+              </label>
+            </div>
+            <!-- </div> -->
+          </div>
+          <div class="col-md-3">InEligible List from Scrutiny:</div>
+          <div class="col-md-3">
+            <div class="form-check-inline">
+              <label class="form-check-label">
+                <input class="form-check-input" required type="radio" id="inlineRadio1" value="O_IE" #NAR_Ref_Type="ngModel"
+                  name="NAR_Ref_Type" [(ngModel)]="refund.NAR_Ref_Type" (click)="GetIneligible(refund.NAR_Not_Id_Fk,refund.NAR_Proj_Id_Fk,refund.NAR_App_No)">InEligible
+                List
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <span class="clearfix"></span>
+
+      </div>
+      <hr>
+      <div class="row">
+        <div class="col-md-3">
+          Total Eligible :{{applicantlist.TotalEligible}}
+          <span></span>
+        </div>
+        <div class="col-md-3">
+          Total Ineligible :{{applicantlist.TotalInEligible}}
+          <span></span>
+        </div>
+        <div class="col-md-3">
+          Total Allotted :{{applicantlist.TotalAllotted}}
+          <span></span>
+        </div>
+        <div class="col-md-3">
+          Total UnAllotted :{{applicantlist.TotalUnAllotted}}
+          <span></span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <table class="table table-striped grid">
+            <thead>
+              <tr>
+                <td>Sl No.</td>
+                <td>Applicant Name</td>
+                <td>Application No.</td>
+                <td>property Type</td>
+                <td>Category</td>
+                <td>Amount</td>
+                <td [hidden]="mode=='view'">Select</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let app of applicantlist.refundApplicantModel;let i=index">
+                <td>{{i+1}}</td>
+                <td>{{app.APP_PA_Name}}</td>
+                <td>{{app.APP_No}}</td>
+                <td>{{app.APP_PropertyType}}</td>
+                <td>{{app.CA_CategoryName}}</td>
+                <td>{{app.Amount==null?'0':app.Amount}}</td>
+                <td [hidden]="mode == 'view'">
+                  <input type="checkbox" 
+                  [checked]="false" 
+                         (change)="changeCheckbox(app.APP_Id, app.NAAR_Refund_Request)">
+                </td>
+                <!-- <td [hidden]="mode=='view'">
+                  <input type="checkbox" [value]="app.NAAR_Refund_Request" name="NAAR_Refund_Request" [checked]="app.NAAR_Refund_Request===true"
+                    (change)="changeCheckbox(app.APP_Id,app.PR_AuctionProperty)">
+                 
+                </td> -->
+                 <!-- (change)="changeCheckbox(sp.PR_Id,sp.PR_AuctionProperty)" -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+
+      <div class="btn-wrapper" style="margin-top: 10px;" [hidden]="mode=='view'">
+        <button class="btn btn-primary" type="submit">Cancellation and request Refund</button>
+        <!-- <button class="btn btn-primary" type="button" >Cancellation and request Refund</button> -->
+      </div>
+
+    </div>
+  </form>
+</div>

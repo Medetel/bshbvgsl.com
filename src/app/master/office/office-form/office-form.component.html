@@ -1,0 +1,169 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <a class="btn btn-primary float-right" [routerLink]="['/home/office']">Back</a>
+    <span class="clearfix"></span>
+  </div>
+
+  <div class="container-fluid">
+    <form (ngSubmit)="mode=='edit'?update(officeForm):onSubmit(officeForm)" #officeForm="ngForm" name="form2" id="form2">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #Off_OfficerName="ngModel" [(ngModel)]="office.Off_OfficerName" name="Off_OfficerName" [ngClass]="{'view-font-color':mode=='view'}"
+              [disabled]="mode=='view'" required>
+            <label>Officer Name <span class="mandatory">*</span></label>
+            <div class="error-msg" *ngIf="Off_OfficerName.invalid && (Off_OfficerName.dirty || Off_OfficerName.touched || formSubmitted)">
+              <div *ngIf="Off_OfficerName.errors.required">Officer Name is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #Off_Designation="ngModel" [(ngModel)]="office.Off_Designation" name="Off_Designation" [ngClass]="{'view-font-color':mode=='view'}"
+              [disabled]="mode=='view'" required>
+            <label>Designation <span class="mandatory">*</span></label>
+            <div class="error-msg" *ngIf="Off_Designation.invalid && (Off_Designation.dirty || Off_Designation.touched || formSubmitted)">
+              <div *ngIf="Off_Designation.errors.required">Designation is required</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #OfficeName="ngModel" [(ngModel)]="office.OfficeName" name="OfficeName" [ngClass]="{'view-font-color':mode=='view'}"
+              [disabled]="mode=='view'" required>
+            <label>OfficeName <span class="mandatory">*</span></label>
+            <div class="error-msg" *ngIf="OfficeName.invalid && (OfficeName.dirty || OfficeName.touched || formSubmitted)">
+              <div *ngIf="OfficeName.errors.required">OfficeName is required</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="office.Off_Level" #Off_Level="ngModel" name="Off_Level"  [disabled]="mode=='view'" required>
+              <option [value]="undefined">--Select--</option>
+              <option [value]="r.OL_Id" *ngFor="let r of officelevellist;">{{r.OL_Name}}</option>
+            </select>
+            <label>Office Level<span class="mandatory">*</span></label>
+            <div class="error-msg" *ngIf="Off_Level.invalid && (Off_Level.dirty || Off_Level.touched || formSubmitted)">
+              <div *ngIf="Off_Level.errors.required">Office Level is required</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="office.Off_District_Id_Fk" #Off_District_Id_Fk="ngModel" name="Off_District_Id_Fk"
+            [disabled]="mode=='view'" required>
+              <option [value]="undefined">--Select--</option>
+              <option [value]="dis.DI_Id" *ngFor="let dis of DistrictList;">{{dis.DI_District}}</option>
+            </select>
+            <label>District<span class="mandatory">*</span></label>
+            <div class="error-msg" *ngIf="Off_District_Id_Fk.invalid && (Off_District_Id_Fk.dirty || Off_District_Id_Fk.touched || formSubmitted)">
+              <div *ngIf="Off_District_Id_Fk.errors.required">District is required</div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #Off_Address1="ngModel" [(ngModel)]="office.Off_Address1" name="Off_Address1" [ngClass]="{'view-font-color':mode=='view'}"
+              [disabled]="mode=='view'" required>
+            <label>Address1<span class="mandatory">*</span></label>
+            <div class="error-msg" *ngIf="Off_Address1.invalid && (Off_Address1.dirty || Off_Address1.touched || formSubmitted)">
+              <div *ngIf="Off_Address1.errors.required">Address1 is required</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #Off_Address2="ngModel" [(ngModel)]="office.Off_Address2" name="Off_Address2" [ngClass]="{'view-font-color':mode=='view'}"
+              [disabled]="mode=='view'">
+            <label>Address2</label>
+            <!-- <div class="error-msg" *ngIf="Off_Address1.invalid && (Off_Address1.dirty || Off_Address1.touched || formSubmitted)">
+              <div *ngIf="Off_Address1.errors.required">Address1 is required</div>
+            </div> -->
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="email" class="custom-field" #Off_Email="ngModel" [(ngModel)]="office.Off_Email" name="Off_Email" 
+                   [ngClass]="{'view-font-color': mode=='view'}" [disabled]="mode=='view'" 
+                   pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required>
+            <label>Email<span class="mandatory">*</span></label>
+            <div class="error-msg" *ngIf="Off_Email.invalid && (Off_Email.dirty || Off_Email.touched || formSubmitted)">
+              <div *ngIf="Off_Email.errors.required">Email is required</div>
+              <div *ngIf="Off_Email.errors.pattern">Invalid email format</div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #Off_PhoneNumber="ngModel" [(ngModel)]="office.Off_PhoneNumber" name="Off_PhoneNumber"
+              [ngClass]="{'view-font-color': mode=='view'}" pattern="^(?!0{10})[0-9]+$" minlength="10" maxlength="10" [disabled]="mode=='view'"
+              required>
+            <label>Phone Number<span class="mandatory">*</span></label>
+            <div class="error-msg" *ngIf="Off_PhoneNumber.invalid && (Off_PhoneNumber.dirty || Off_PhoneNumber.touched || formSubmitted)">
+              <div *ngIf="Off_PhoneNumber.errors.required">PhoneNumber is required</div>
+              <div *ngIf="Off_PhoneNumber.errors.minlength || Off_PhoneNumber.errors.maxlength">PhoneNumber should be 10 digits</div>
+              <div *ngIf="Off_PhoneNumber.errors.pattern">PhoneNumber should not contain 10 consecutive zeroes</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #Off_Landline="ngModel" [(ngModel)]="office.Off_Landline" name="Off_Landline" [ngClass]="{'view-font-color':mode=='view'}"
+              [disabled]="mode=='view'">
+            <label>Landline No.</label>
+            <!-- <div class="error-msg" *ngIf="Off_Landline.invalid && (Off_Email.dirty || Off_Email.touched || formSubmitted)">
+              <div *ngIf="Off_Email.errors.required">Email is required</div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #Off_pincode="ngModel" [(ngModel)]="office.Off_pincode" name="Off_pincode" 
+                   [ngClass]="{'view-font-color': mode=='view'}" [disabled]="mode=='view'" pattern="[0-9]+" minlength="6" maxlength="6" required>
+            <label>Pincode</label>
+            <div class="error-msg" *ngIf="Off_pincode.invalid && (Off_pincode.dirty || Off_pincode.touched || formSubmitted)">
+              <div *ngIf="Off_pincode.errors.required">Pincode is required</div>
+              <div *ngIf="Off_pincode.errors.pattern">Pincode should contain only numbers</div>
+              <div *ngIf="Off_pincode.errors.minlength || Off_pincode.errors.maxlength">Pincode should be exactly 6 digits</div>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+
+      <div class="row" style="padding:20px 0px !important;" *ngIf="!(mode=='view')">
+        <div class="col-md-4 mx-auto text-center">
+          <button class="btn btn-primary btn-custom" type="submit">
+            {{mode=='edit'?'Update':'Save'}}
+          </button>
+          <button *ngIf="!(mode=='edit')" class="btn btn-primary btn-custom" type="reset" (click)="reset(officeForm)">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</div>

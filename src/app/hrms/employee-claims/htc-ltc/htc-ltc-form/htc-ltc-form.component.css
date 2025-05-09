@@ -1,0 +1,14 @@
+.row{
+    padding:20px 0px 0px;
+}
+
+.row:nth-child(odd){
+    background: #f3f3f3;
+}
+.button-add{
+    text-align: center;
+}
+.wrapper{overflow: hidden;}
+span{
+    font-weight: 700;
+}

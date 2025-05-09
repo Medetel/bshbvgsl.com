@@ -1,0 +1,25 @@
+
+
+.row{
+    padding:20px 0px 0px;
+}
+
+.row:nth-child(odd){
+    background: #f3f3f3;
+}
+.label-color{
+    color:blue;
+}
+.display-content{
+    margin: 10px 15px;
+    border: 1px solid gray;
+    padding: 15px;
+}
+.border-view{
+    margin: 5px;
+    padding: 5px 15px;
+    border: 1px solid gray;
+}
+span{
+    font-weight: 700;
+}

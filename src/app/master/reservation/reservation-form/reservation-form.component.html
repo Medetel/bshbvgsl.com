@@ -1,0 +1,189 @@
+<div class="wrapper">
+  <div class="title themeheading">{{title}}
+    <button class="btn btn-primary pull-right" [routerLink]="['/home/reservation-master']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+
+  <form (ngSubmit)="mode=='edit'?UpdateReservation(Reservation):saveData(Reservation)" #Reservation="ngForm" name="Reservation">
+
+    <!-- <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-md-4">
+          <div class="input-group form-group">
+            <input type="text" class="custom-field" name="RES_Name" maxlength="30" [(ngModel)]="r.RES_Name"
+              #RES_Name="ngModel" [disabled]="mode=='view'"  required pattern="^[A-Za-z\s]+$">
+            <label for="">Reservation Name
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="RES_Name.invalid && (RES_Name.dirty || RES_Name.touched || formInvalid)">
+              <span *ngIf="RES_Name.errors.required">Reservation Name is required</span>
+              <span *ngIf="RES_Name.errors.pattern">Reservation Name must be in alphabets</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-md-4">
+          <div class="input-group form-group">
+            <input type="text" class="custom-field" name="RES_Percentage" maxlength="50" [(ngModel)]="r.RES_Percentage"
+              #RES_Percentage="ngModel" [disabled]="mode=='view'" pattern="^[0-9]*$"  required>
+            <label for="">Reservation Percentage
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="RES_Percentage.invalid && (RES_Percentage.dirty || RES_Percentage.touched || formInvalid)">
+              <span *ngIf="RES_Percentage.errors.required">Reservation Percentage is required</span>
+              <span *ngIf="RES_Percentage.errors.pattern">Reservation Percentage must be in numbers</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="btn-wrapper text-center">
+        <button [disabled]="mode=='view'"class="btn btn-primary" type="submit">Save</button>
+        <button [disabled]="mode=='view'" class="btn btn-primary" type="reset">Cancel</button>
+      </div>
+    </div> -->
+
+
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-md-4">
+          <div class="input-group form-group">
+            <input type="date" class="custom-field" name="R_Created_Date" maxlength="30" [(ngModel)]="r.R_Created_Date"
+              #R_Created_Date="ngModel" [disabled]="mode=='view'" required>
+            <label for="">Reservation Date
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="R_Created_Date.invalid && (R_Created_Date.dirty || R_Created_Date.touched || formInvalid)">
+              <span *ngIf="R_Created_Date.errors.required">Reservation Date is required</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="container-fluid">
+      <!-- Table for Reservation Name, Reservation Percentage -->
+      <div class="row justify-content-center">
+        <div class="col-md-10">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th>Reservation Name </th>
+                <th>Reservation Percentage %</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Disabled Percentage -->
+              <tr>
+                <td>Handicapped (Person with Disability)</td>
+                <td>
+                  <input type="number" class="form-control" name="Disabled_Percentage" [(ngModel)]="r.Disabled_Percentage"
+                    #Disabled_Percentage="ngModel" min="0" max="100" (input)="calculateTotalPercentage()"
+                    [disabled]="mode=='view'" required>
+                  <div class="error-msg" *ngIf="Disabled_Percentage.invalid && (Disabled_Percentage.dirty || Disabled_Percentage.touched || formInvalid)">
+                    <span *ngIf="Disabled_Percentage.errors.required">Handicapped (Person with Disability) Percentage is required</span>
+                    <span *ngIf="Disabled_Percentage.errors.min || Disabled_Percentage.errors.max">Must be between 0 and 100</span>
+                  </div>
+                </td>
+              </tr>
+    
+              <!-- SC Percentage -->
+              <tr>
+                <td>SC (Scheduled Caste) </td>
+                <td>
+                  <input type="number" class="form-control" name="SC_Percentage" [(ngModel)]="r.SC_Percentage"
+                    #SC_Percentage="ngModel" min="0" max="100" (input)="calculateTotalPercentage()" [disabled]="mode=='view'" required>
+                  <div class="error-msg" *ngIf="SC_Percentage.invalid && (SC_Percentage.dirty || SC_Percentage.touched || formInvalid)">
+                    <span *ngIf="SC_Percentage.errors.required">SC (Scheduled Caste) Percentage is required</span>
+                    <span *ngIf="SC_Percentage.errors.min || SC_Percentage.errors.max">Must be between 0 and 100</span>
+                  </div>
+                </td>
+              </tr>
+    
+              <!-- ST Percentage -->
+              <tr>
+                <td>ST (Scheduled Tribe) </td>
+                <td>
+                  <input type="number" class="form-control" name="ST_Percentage" [(ngModel)]="r.ST_Percentage"
+                    #ST_Percentage="ngModel" min="0" max="100" (input)="calculateTotalPercentage()" [disabled]="mode=='view'" required>
+                  <div class="error-msg" *ngIf="ST_Percentage.invalid && (ST_Percentage.dirty || ST_Percentage.touched || formInvalid)">
+                    <span *ngIf="ST_Percentage.errors.required">ST (Scheduled Tribe) Percentage is required</span>
+                    <span *ngIf="ST_Percentage.errors.min || ST_Percentage.errors.max">Must be between 0 and 100</span>
+                  </div>
+                </td>
+              </tr>
+    
+              <!-- General Percentage -->
+              <tr>
+                <td>General </td>
+                <td>
+                  <input type="number" class="form-control" name="General_Percentage" [(ngModel)]="r.General_Percentage"
+                    #General_Percentage="ngModel" min="0" max="100" (input)="calculateTotalPercentage()" [disabled]="mode=='view'" required>
+                  <div class="error-msg" *ngIf="General_Percentage.invalid && (General_Percentage.dirty || General_Percentage.touched || formInvalid)">
+                    <span *ngIf="General_Percentage.errors.required">General Percentage is required</span>
+                    <span *ngIf="General_Percentage.errors.min || General_Percentage.errors.max">Must be between 0 and 100</span>
+                  </div>
+                </td>
+              </tr>
+    
+              <!-- Extremely Backward Class Percentage -->
+              <tr>
+                <td>Extremely Backward Class  </td>
+                <td>
+                  <input type="number" class="form-control" name="EBC_Percentage" [(ngModel)]="r.EBC_Percentage"
+                    #EBC_Percentage="ngModel" min="0" max="100" (input)="calculateTotalPercentage()" [disabled]="mode=='view'" required>
+                  <div class="error-msg" *ngIf="EBC_Percentage.invalid && (EBC_Percentage.dirty || EBC_Percentage.touched || formInvalid)">
+                    <span *ngIf="EBC_Percentage.errors.required">EBC Percentage is required</span>
+                    <span *ngIf="EBC_Percentage.errors.min || EBC_Percentage.errors.max">Must be between 0 and 100</span>
+                  </div>
+                </td>
+              </tr>
+    
+              <!-- Backward Class Percentage -->
+              <tr>
+                <td>Backward Class </td>
+                <td>
+                  <input type="number" class="form-control" name="BC_Percentage" [(ngModel)]="r.BC_Percentage"
+                    #BC_Percentage="ngModel" min="0" max="100" (input)="calculateTotalPercentage()" [disabled]="mode=='view'" required>
+                  <div class="error-msg" *ngIf="BC_Percentage.invalid && (BC_Percentage.dirty || BC_Percentage.touched || formInvalid)">
+                    <span *ngIf="BC_Percentage.errors.required">BC Percentage is required</span>
+                    <span *ngIf="BC_Percentage.errors.min || BC_Percentage.errors.max">Must be between 0 and 100</span>
+                  </div>
+                </td>
+              </tr>
+    
+              <!-- Total Percentage (Readonly) -->
+              <tr>
+                <td><strong>Total</strong></td>
+                <td>
+                  <input type="number" class="form-control" [value]="totalPercentage" readonly>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    
+          <!-- Buttons -->
+          <div class="btn-wrapper text-center">
+            <button [disabled]="mode=='view' || totalPercentage !== 100" class="btn btn-primary" type="submit">Save</button>
+            <button [disabled]="mode=='view'" class="btn btn-primary" type="reset">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+    
+
+
+
+
+
+
+
+  </form>
+</div>
+
+
+
+

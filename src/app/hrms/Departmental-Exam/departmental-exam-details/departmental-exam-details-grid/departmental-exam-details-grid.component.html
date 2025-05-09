@@ -1,0 +1,133 @@
+<div class="wrapper">
+    <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm,itemsPerPage,1)">
+        <div class="title themeheading">{{title}}
+            <div class="float-right">
+                Items per page:
+                <select name="SearchRows" #SearchRows="ngModel" [(ngModel)]="itemsPerPage" class="noofpage"
+                    (change)="itemsPerPageChanged(itemsPerPage, 1)">
+                    <option [ngValue]="5">5</option>
+                    <option [ngValue]="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                </select>
+                <!-- <a href="#" [routerLink]="['/home/nominationapp/nominationapp-form',Nomineelist.NMNT_ID]" class="btn btn-primary">Add</a> -->
+
+                <a class="btn btn-primary " [routerLink]="['/home/deptexam/deptexam-form']">Add</a>
+            </div>
+
+            <span class="clearfix"></span>
+        </div>
+        <div class="searchbar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label>Search</label>
+                    </div>
+                    <div class="col-md-4">
+                        <select name="SearchCriteria" #SearchCriteria="ngModel" [(ngModel)]="s.SearchCriteria"
+                            class="form-control" required>
+                            <option [ngValue]="undefined" selected>---Select---</option>
+                            <option value="DOC_CODE">Examination.No</option>
+                            <!-- <option value="EAXM_TYPE">Exam Type</option>                             -->
+                            <option value="EMP_EMPLOYEE_CODE">Employee Id</option>
+                            <option value="EMP_FIRST_NAME">Employee Name</option>
+                            <!-- <option value="EXAM_CATEGORY">Exam Category </option> -->
+                            <option value="Subj">Subject</option>
+                            <!-- <option value="DOC_DATE">Exam Date </option>
+                            <option value="District">District</option>
+                            <option value="Department_Name">Department</option> -->
+                        </select>
+                        <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)"
+                            class="error-msg">
+                            <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="SearchText" #SearchText="ngModel" [(ngModel)]="s.SearchText"
+                            class="form-control" placeholder="Search.." required>
+                        <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+                            <div *ngIf="SearchText.errors.required">Search text is required</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-default" type="submit">Search</button>
+                        <button class="btn btn-default" type="reset"
+                            (click)="GetAllExamDetails(itemsPerPage, 1)">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <table class="table table-striped grid">
+                <thead>
+                    <tr>
+                        <td>Sl No.</td>
+                        <td>Examination No</td>
+                        <td>Date</td> 
+                        <td>Employee Id</td> 
+                        <td>Employee Name</td>       
+                        <td>Exam type</td>
+                        <td>Exam Category</td>      
+                        <td>Subject</td> 
+                        <td>Status</td>                 
+                      <td class="text-center">View</td>
+                      <td class="text-center">Edit</td>
+                      <td class="text-center">Delete</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let E of Examlist | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index"
+                    [class.Blue]="E.DOC_STATUS == 'A'"
+                    [class.Red]="E.DOC_STATUS == 'R'"
+                    [class.DGreen]="E.DOC_STATUS == 'S'">             
+                    <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+                    <td>{{E.DOC_CODE}}</td>
+                    <td>{{E.DOC_DATE | date:'dd-MM-yyyy'}}</td>
+                    <td>{{E.EMP_EMPLOYEE_CODE}}</td>
+                    <td>{{E.EMP_FIRST_NAME}}</td>
+                    <td>{{E.EAXM_TYPE}}</td>
+                    <td>{{E.EXAM_CATEGORY}}</td>
+                    <td>{{E.Subj}}</td>
+                    <td>{{E.Doc_STATUSes}}</td>
+                    <td class="text-center" *ngIf="E.DOC_STATUS == 'G'">
+                        <a href="#" [routerLink]="['/home/deptexam/deptexam-form',E.EXAMINATION_ID,'View']">
+                            <i class="fa fa-lg fa-eye themecolor"></i>
+                        </a>
+                    </td>
+                    <td *ngIf="E.DOC_STATUS != 
+                    'G'">--</td>
+                    <td class="text-center" *ngIf="E.DOC_STATUS == 'G'">
+                        <a href="#" [routerLink]="['/home/deptexam/deptexam-form',E.EXAMINATION_ID,'Edit']">
+                            <i class="fa fa-lg fa-edit themecolor"></i>
+                        </a>
+                    </td>
+                    <td *ngIf="E.DOC_STATUS != 'G'">--</td>
+                    <td class="text-center" *ngIf="E.DOC_STATUS == 'G'"> 
+                        <a href="javascript:void(0);" (click)="delete(E.EXAMINATION_ID)">
+                            <i class="fa fa-lg fa-trash themecolor"></i>
+                        </a>
+                    </td>
+                    <td *ngIf="E.DOC_STATUS != 'G'">--</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-11">
+                        <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)"
+                            maxSize="9" directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+                            screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                            screenReaderCurrentLabel="You're on page">
+                        </pagination-controls>
+                    </div>
+                    <div class="col-md-1">
+                        Total:
+                        <span>{{totalItems}}</span>
+                    </div>
+                </div>
+            </div>
+       
+    </form>
+  </div>

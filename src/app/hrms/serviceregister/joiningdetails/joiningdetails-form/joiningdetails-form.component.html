@@ -1,0 +1,90 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary float-right" [routerLink]="['/home/serviceregister/joiningdetails']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-3">
+            <div class="input-group">
+              <input type="text" class="custom-field">
+              <label for="">Employee Id</label>
+            </div>
+          </div>
+          <div class="col-md-1"><button class="btn btn-primary">Go</button></div>
+        </div>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="input-group"><input type="text" class="custom-field"><label for="">Section Name</label></div>
+      </div>
+      <div class="col-md-3">
+          <div class="input-group"><select class="custom-field"><option value=""></option></select><label for="">Designation</label></div>
+        </div>
+        <div class="col-md-3">
+            <div class="input-group"><input type="text" class="custom-field"><label for="">Recruit Source</label></div>
+          </div>
+          <div class="col-md-3">
+              <div class="input-group"><input type="text" class="custom-field"><label for="">Joining Grade</label></div>
+            </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+          <div class="input-group"><input type="text" class="custom-field"><label for="">Starting Basic</label></div>
+        </div>
+        <div class="col-md-3">
+            <div class="input-group"><input type="date" class="custom-field"><label for="">Date of Joining</label></div>
+          </div>
+          <div class="col-md-3">
+              <div class="input-group"><input type="text" class="custom-field"><label for="">Probation From</label></div>
+            </div>
+            <div class="col-md-3">
+                <div class="input-group"><input type="text" class="custom-field"><label for="">Probation To</label></div>
+              </div>
+      </div>
+      <div class="row">
+          <div class="col-md-3">
+              <div class="input-group"><input type="date" class="custom-field"><label for="">Increment Due Date</label></div>
+            </div>
+      </div>
+
+
+      <div class="title themeheading rowmarginfix">
+        Joining Confirm Details
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="input-group"><input type="date" class="custom-field"><label for="">Date of Confirmation</label></div>
+        </div>
+        <div class="col-md-4">
+            <div class="input-group"><input type="text" class="custom-field"><label for="">Confirmed Basic</label></div>
+          </div>
+          <div class="col-md-4">
+              <div class="input-group"><input type="text" class="custom-field"><label for="">Confirmed Grade</label></div>
+            </div>
+      </div>
+
+
+      <div class="title themeheading rowmarginfix">
+          Leaving Details
+        </div>
+  
+        <div class="row">
+          <div class="col-md-4">
+            <div class="input-group"><input type="date" class="custom-field"><label for="">Date of Leaving</label></div>
+          </div>
+          <div class="col-md-4">
+              <div class="input-group"><textarea class="custom-field"></textarea><label for="">Reason for Leaving</label></div>
+            </div>
+        </div>
+
+
+        <br>
+        <div class="text-center">
+          <button class="btn btn-primary" type="button">Save</button>
+          <button class="btn btn-primary" type="button">Cancel</button>
+        </div>
+
+  </div>
+</div>

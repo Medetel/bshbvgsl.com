@@ -1,0 +1,253 @@
+<div class="header">
+    <img src="../assets/images/app-banner.jpg" class="img-responsive" />
+</div>
+<div class="title themeheading">
+
+    {{title}}<button class="btn btn-primary pull-right"  [routerLink]="['/login']">Back to login</button>
+    <!-- <div class="float-right">
+        Items per page:
+        <select name="SearchRows" #SearchRows="ngModel" [(ngModel)]="itemsPerPage" class="noofpage" (change)="itemsPerPageChanged(itemsPerPage, 1)">
+            <option [ngValue]="5">5</option>
+            <option [ngValue]="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+            <option value="50">50</option>
+        </select>
+        <a class="btn btn-primary " routerLink="/home/officeform">Add Office</a> 
+    </div>
+    <span class="clearfix"></span> -->
+</div>
+
+<div class="wrapper">
+    <!-- <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm,itemsPerPage,1)"> -->
+    <!-- <div class="searchbar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label>Search</label>
+                    </div>
+                    <div class="col-md-4">
+                        <select class="form-control" name="SearchCriteria" #SearchCriteria="ngModel" [(ngModel)]="s.SearchCriteria" required>
+                            <option [ngValue]="undefined" selected>---Select---</option>
+                            <option value="office-code">Notification No.</option>
+                            <option value="office-name">Notification Date</option>
+                        </select>
+                        <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)" class="error-msg">
+                              <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+                          </div>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="SearchText" #SearchText="ngModel" [(ngModel)]="s.SearchText" class="form-control" placeholder="Search.." required>
+                        <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+                              <div *ngIf="SearchText.errors.required">Search text is required</div>
+                          </div>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-default" type="submit">Search</button>
+                        <button class="btn btn-default" type="reset" (click)="GetAllNotificationList(itemsPerPage, 1)">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+    <div class="table-responsive">
+        <table class="table table-striped grid">
+            <thead>
+                <tr>
+                    <td>Sl No.</td>
+                    <td>Notification No.</td>
+                    <td>Notification Date</td>
+                    <td>Project</td>
+                    <td>View Notification</td>
+                    <td>Apply Now</td>
+                    <!-- <td>Bank Reference No.</td> -->
+                    <td>Scroll Verification</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let noti of notificationlist | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index">
+                    <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+                    <td>{{noti.DSWOId_NO_Number}}</td>
+                    <td>{{noti.DSWOId_NO_Date | date:'dd-MM-yyyy'}}</td>
+                    <td>{{noti.PD_Project_Name}}</td>
+                    <td>
+                        <a href="javascript:void(0);">View</a>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary" type="button" [routerLink]="['/apply-allotment/apply-application-form',noti.DSWOId_NO_Id,noti.PD_Id]">Apply Now</button>
+                    </td>
+                    <!-- <td>
+                        <button class="btn btn-primary" data-target="#cost-popup" data-toggle="modal">Update Bank Reference No</button>
+                    </td> -->
+                    <td>
+                        <button class="btn btn-primary" data-target="#scroll-popup" data-toggle="modal">Scroll Verification</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-11">
+                    <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)" maxSize="9" directionLinks="true"
+                        autoHide="false" previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                        screenReaderCurrentLabel="You're on page">
+                    </pagination-controls>
+                </div>
+                <div class="col-md-1">
+                    Total:
+                    <span>{{totalItems}}</span>
+                </div>
+            </div>
+        </div> -->
+    </div>
+    <!-- </form> -->
+    <router-outlet></router-outlet>
+</div>
+
+
+<div class="modal" id="cost-popup">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Add Payment Details</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="container-fluid">
+
+                    <div class="row" style="background:#fff !important;">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <input type="text" class="custom-field" name="APP_PA_MobileNo" [(ngModel)]="payment.APP_PA_MobileNo" #APP_PA_MobileNo="ngModel">
+                                <label for="">Mobile No.</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="background:#fff !important;">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <input type="text" class="custom-field" name="APP_OTP" [(ngModel)]="payment.APP_OTP" #APP_OTP="ngModel">
+                                <label for="">OTP</label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row" style="background:#fff !important;">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <input type="text" class="custom-field" name="APP_No" [(ngModel)]="payment.APP_No" #APP_No="ngModel">
+                                <label for="">Application No.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="background:#fff !important;">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <input type="text" class="custom-field" name="APP_UTR_No" [(ngModel)]="payment.APP_UTR_No" #APP_UTR_No="ngModel">
+                                <label for="">Bank Reference No./UTR No.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="background:#fff !important;">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <input type="text" class="custom-field" name="Total_Amount" [(ngModel)]="payment.Total_Amount" #Total_Amount="ngModel">
+                                <label for="">Amount.</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="background:#fff !important;">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <input type="date" class="custom-field" name="APP_Payment_Trans_Date" [(ngModel)]="payment.APP_Payment_Trans_Date" #APP_Payment_Trans_Date="ngModel">
+                                <label for="">Transaction date</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="background:#fff !important;">
+                        <div class="col-md-2">
+                            <input type="file" #Image accept="application/pdf" (change)="APPChallanDoc($event.target.files)" id="APP_Challan_Doc">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer" style="text-align:center !important;">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="UpdatePaymentDetails(payment)">Submit to KHB</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="scroll-popup">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Scroll Verification</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="container-fluid">
+
+                    <div class="row" style="background:#fff !important;">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <input type="text" class="custom-field" name="APP_No" [(ngModel)]="scroll.APP_No" #APP_No="ngModel">
+                                <label for="">Application No.</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="background:#fff !important;">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <input type="text" class="custom-field" name="APP_UTR_No" [(ngModel)]="scroll.APP_UTR_No" #APP_UTR_No="ngModel">
+                                <label for="">Bank Reference No./UTR No.</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="background:#fff !important;">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <input type="text" class="custom-field" name="Total_Amount" [(ngModel)]="scroll.Total_Amount" #Total_Amount="ngModel">
+                                <label for="">Amount.</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="background:#fff !important;">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <input type="date" class="custom-field" name="P_Finance_Confirmation_Date" [(ngModel)]="scroll.P_Finance_Confirmation_Date" #P_Finance_Confirmation_Date="ngModel">
+                                    <label for="">Date</label>
+                                </div>
+                            </div>
+                        </div>
+
+                </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer" style="text-align:center !important;">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="VerifyDetails(scroll)">Verify</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+            </div>
+
+        </div>
+    </div>
+</div>

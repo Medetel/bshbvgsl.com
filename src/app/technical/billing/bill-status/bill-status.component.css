@@ -1,0 +1,87 @@
+.stage-wrapper{
+    margin: 10px;
+    width: 85%;
+    /* padding: 10px; */
+     border: 1px solid #f0f0f0; 
+    background: #fff;
+    text-align: center;
+    display: inline-block;
+    font-size: 12px;            
+}
+
+.stage-wrapper .head{
+/*
+    background: lightgreen;
+    color:#fff;
+*/
+    padding:5px 10px;
+}
+
+.stage-wrapper .details{
+    padding:10px;
+/*            font-size:12px;*/
+}
+
+.cleared-stage{
+    background: lightgreen;
+    color:#fff;
+}
+
+.on-progress-stage{
+    background:orange;
+    color:#fff;
+}
+
+.uncleared-stage{
+    background: #ff0000;
+    color:#fff;
+}
+
+.row{
+    background: none !important;
+}
+
+.stage-details{
+    text-align: center;
+    border:1px solid #eee;
+    padding:20px;
+}
+
+.stage-details span{
+    display:block;
+    padding:5px;
+}
+
+.text-bold{
+    font-weight:600;
+}
+
+.legend{
+    padding:20px;
+    width:70%;
+    margin:0px auto;
+    border:1px solid #eee;
+    margin-top:40px;
+}
+
+.legend .stage{
+    display:inline-block;
+    margin-left:40px;
+    width:150px;
+    position: relative;
+}
+
+.legend span{
+    width:20px;
+    height:20px;
+    display:inline-block;
+}
+
+.stage .text{
+    display:inline-block;
+    top:2px;
+    left:30px;
+    position: absolute;
+    width:80%;
+    font-size:11px;
+}

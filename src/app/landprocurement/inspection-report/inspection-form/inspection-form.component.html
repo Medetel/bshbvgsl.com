@@ -1,0 +1,88 @@
+<div class="wrapper">
+    <div class="title themeheading">
+      {{title}}
+      <div class="float-right">
+          <button class="btn btn-primary" [routerLink]="['/home/inspectionreport']">Back</button>
+        </div>
+        <span class="clearfix"></span>
+    </div>
+
+    <form (ngSubmit)="mode=='edit'?UpdateInspectionReport(InspectionForm):SaveInspectionReport(InspectionForm)" #InspectionForm="ngForm" name="form1">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">       
+
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="i.IR_PR_Id_FK"  #IR_PR_Id_FK="ngModel" name="IR_PR_Id_FK" (change)="GetOtherrelatedinfo(i.IR_PR_Id_FK)"
+            [disabled]="mode =='view'" required>
+                  <option [value]="undefined" selected>---Select---</option>
+                  <option [value]="p.PR_Id_PK" *ngFor="let p of proposallist;">
+                    {{p.PR_Id}} </option>
+              </select>
+          <label for="">Proposal Id
+              <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="IR_PR_Id_FK.invalid && (IR_PR_Id_FK.dirty || IR_PR_Id_FK.touched || formInvalid)">
+              <span *ngIf="IR_PR_Id_FK.errors.required">Proposal Id is required.</span>
+            </div>
+        </div>         
+
+
+        </div>
+        <div class="col-md-6">
+            <label for="">Procurement Type : {{ProposalFor=='Mix'?'Acquisition/Purchase/Joint Ventures':ProposalFor}}</label>          
+          </div>
+      </div>
+      <div class="row"> 
+        <div class="col-md-3">
+          <label for="">District: {{district}}</label>
+        </div>
+        <div class="col-md-3">
+          <label for="">Block: {{Taluk}}</label>
+        </div>
+        <div class="col-md-3">
+            <label for="">Village/City/Colony: {{Village}}</label>
+        </div>
+        <div class="col-md-3"><a *ngIf="i.IR_PR_Id_FK > 0" href="#" [routerLink]="['/home/landprocurement/proposal-form',i.IR_PR_Id_FK,'view']">View Proposal</a>
+          <a *ngIf="i.VR_Id_PK > 0" href="#" [routerLink]="['/home/viabilityreport/viabilityform',i.VR_Id_PK,'view']">View Viability</a>
+        </div>        
+      </div>
+      <div class="row">        
+          <div class="col-md-6">
+            <!-- <div class="input-group"><input type="file" class="custom-field"><label for="">Inspection Report</label></div> -->
+
+            <div class="input-group">
+              <input *ngIf="!hide" type="file" #Image accept="application/pdf" (change)="imageUpload($event.target.files)" id="IR_ReportPath" name="IR_ReportPath"
+              [(ngModel)]="i.IR_ReportPath" #IR_ReportPath="ngModel">
+              <a class="" *ngIf="i.IR_ReportPath!=null && (mode=='view' || mode=='edit')" target="_blank" href="{{i.IR_ReportPath}}">view</a>
+            <label for="">Inspection Report
+              <span class="mandatory">*</span>
+            </label>            
+          </div>
+
+          </div>
+          <div class="col-md-6">
+           
+            <div class="input-group">
+              <textarea [disabled]="mode=='view'" [(ngModel)]="i.IR_Comments" maxlength="200" #IR_Comments="ngModel" name="IR_Comments" cols="30" rows="10" class="custom-field" required></textarea>
+              <label for=""> Comments  
+                  <span class="mandatory">*</span>   
+              </label>
+              <div class="error-msg" *ngIf="IR_Comments.invalid && (IR_Comments.dirty || IR_Comments.touched || formInvalid)">
+                  <span *ngIf="IR_Comments.errors.required">Comments is required.</span>
+                </div>
+          </div>
+
+          </div>
+      </div>
+  
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <button class="btn btn-primary" [disabled]="mode=='view'" type="submit">Save</button> &nbsp; 
+            <button class="btn btn-primary" [disabled]="mode=='view'" type="reset">Cancel</button>
+            <!-- <button (click)="Cancel()" class="btn btn-primary">Cancel</button> -->
+          </div>
+        </div>
+    </div>
+  </form>
+  </div>

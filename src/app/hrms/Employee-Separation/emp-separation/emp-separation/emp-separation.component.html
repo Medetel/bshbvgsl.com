@@ -1,0 +1,187 @@
+<div class="wrapper">
+
+    <form (ngSubmit)="mode=='edit'?UpdateSepeartions(EmplDetails):SaveSepeartions(EmplDetails)" #EmplDetails="ngForm"
+    name="form1">
+
+  <div class="container-fluid">
+    <div class="title rowmarginfix themeheading">
+      Add Employee Separation Details
+      <button class="btn btn-primary float-right" [routerLink]="['/home/empseparation/emp-separations']" *ngIf="ret==false">Back</button>
+      <button class="btn btn-primary float-right" [routerLink]="['/home/empseparation']" *ngIf="ret==true">Back</button>
+      <span class="clearfix"></span>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
+        <label for=""> EOS No : </label>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group ">
+          <span for="">Date : </span> <span> 11/11/18 </span>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group ">
+          <span for="">Status : Pending</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="title themeheading rowmarginfix">
+      Employee Details
+    </div>
+
+    <div class="row">
+      <div class="col-md-4" *ngIf="ret==false">
+        <div class="input-group">
+          <label for=""> Division code </label>
+          <select class="custom-field" [(ngModel)]="a.EMP_DIVISION_ID" #EMP_DIVISION_ID="ngModel"
+          name="EMP_DIVISION_ID" [disabled]="mode=='view'" (change)="ChangeOfDivision(a.EMP_DIVISION_ID)">
+          <option [value]="undefined" selected>---Select---</option>
+          <option [value]="d.DI_Id" *ngFor="let d of DistrictsList;">
+            {{d.DI_District}}
+          </option>
+        </select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group" *ngIf="ret==false">
+          <label for="">Emp Code </label>
+          <select select class="custom-field" [(ngModel)]="a.EMP_ID" #EMP_ID="ngModel" name="EMP_ID"
+          [disabled]="mode=='view'" (change)="ChangeOfEmployee(a.EMP_ID)">
+          <option [value]="" selected>--Select--</option>
+          <option [value]="emp.EMP_EMPLOYEE_ID" *ngFor="let emp of AllEmployeeList;">
+            {{emp.EMP_EMPLOYEE_CODE}} &nbsp; {{emp.EMP_FIRST_NAME}}
+          </option>
+        </select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <label for="">Name : </label> &nbsp; <span class="name">{{detailsEmployee.EmpName}}</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 ">
+        <label for="">Division : </label> &nbsp; <span class="name">{{detailsEmployee.DI_District}}</span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Department : </label> &nbsp; <span class="name">{{detailsEmployee.Department_Name}}</span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Designation : </label> &nbsp; <span class="name">{{detailsEmployee.desg_name}}</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label for="">Employee Category : </label> &nbsp; <span class="name">{{detailsEmployee.Category}}</span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Employee Group : </label> &nbsp; <span class="name">{{detailsEmployee.EmpGroup}}</span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Employee Type : </label> &nbsp; <span class="name">{{detailsEmployee.EmpType}}</span>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <label for="">Date of Appointment : {{detailsEmployee.EMP_D_O_J |date:'dd/MM/yyyy'}} </label>
+      </div>
+      <div class="col-md-6">
+        <label for="">Date of Retirement :{{retirementDate|date:'dd/MM/yyyy'}}</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <span for="">Total Service :</span>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <!-- <div class="input-group">
+          <label for="">Date of Retirement</label>
+          <input type="text" [(ngModel)]="a.PROMOTION_BASIC_PAY" #PROMOTION_BASIC_PAY ="ngModel"
+        name="PROMOTION_BASIC_PAY" [disabled]="mode=='view'" class="custom-field">
+        </div> -->
+      </div>
+    </div>
+
+    <br>
+
+    <div class="title rowmarginfix themeheading">
+      Type of Separation (Check any one)
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Reason for Separation </label>
+          <select class="custom-field" [(ngModel)]="a.REASON_SEPARATION" #REASON_SEPARATION="ngModel"
+          name="REASON_SEPARATION" [disabled]="mode=='view' || ret==true">
+          <option [value]="undefined" selected>---Select---</option>
+          <option [value]="eq.code_value" *ngFor="let eq of SeperationReasons;">
+              {{eq.code_value}}
+          </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Resignation Date </label>
+          <input type="date" [(ngModel)]="a.SEP_WEF" #SEP_WEF ="ngModel"
+          name="SEP_WEF" [disabled]="mode=='view'" class="custom-field">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6" *ngIf="ret==false">
+        <div class="input-group">
+          <label for=""> Releaving Date </label>
+          <input type="date" [(ngModel)]="a.REL_DATE" #REL_DATE ="ngModel"
+          name="REL_DATE" [disabled]="mode=='view' || ret==true" class="custom-field">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for=""> Last Working Date </label>
+          <input type="date" [(ngModel)]="a.LAST_WRK_DATE" #LAST_WRK_DATE ="ngModel"
+          name="LAST_WRK_DATE" [disabled]="mode=='view'" class="custom-field">
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="title rowmarginfix themeheading">
+      Management Actions
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <button class="btn btn-primary" type="button" (click)="Deactivate()" [disabled]="Deactiv=='Y'">Deactivate Employee</button>
+      </div>
+      <div class="col-md-6">
+        <button class="btn btn-primary" type="button" (click)="Vacant()" [disabled]="Vacan=='Y'"> Mark Post as Vacant </button>
+      </div>
+      <br>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for=""> Remarks </label>
+          <textarea type="text" [(ngModel)]="a.REMARKS" #REMARKS ="ngModel"
+          name="REMARKS" [disabled]="mode=='view'" class="custom-field"></textarea>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for=""> Employer Comments </label>
+          <textarea class="custom-field" cols="30" rows="5"></textarea>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="justify-content-center d-flex">
+      <button class="btn btn-primary" type="submit">save</button>
+    </div>
+    <br>
+  </div>
+    </form>
+</div>

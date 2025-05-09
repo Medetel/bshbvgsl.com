@@ -1,0 +1,190 @@
+<div class="wrapper">
+    <form (ngSubmit)="mode=='Edit'?UpdateCMPAuth(CMPAuth):SaveCMPAuth(CMPAuth)" #CMPAuth="ngForm" name="CMPAuth">
+  <div class="container-fluid">
+    <div class="title rowmarginfix themeheading">
+      Complaints Registration Authorization
+      <button class="btn btn-primary float-right" [routerLink]="['/home/dept-enquiry/complaint-reg-auth']">Back</button>
+      <span class="clearfix"></span>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
+        <label for=""> Complaint No : </label>       <span> {{E.DOC_CODE}} </span>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group ">
+          <span for="">Date : </span>   <span> {{E.Doc_Year | date:'dd/MM/yyyy'}} </span>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group ">        
+          <span for="" *ngIf="E.DOC_STATUS=='G'">Status : Generated</span>  
+          <span for="" *ngIf="E.DOC_STATUS=='A'">Status : Approved</span>  
+        </div>
+      </div>
+    </div>
+
+    <div class="title rowmarginfix themeheading">
+      DGo's Details
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label for=""> Division Code : </label> <span> {{EmployeeDetails.DI_Code}} </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Emp Code :</label> <span> {{EmployeeDetails.EMP_EMPLOYEE_CODE}} </span>
+      </div>
+      <div class="col-md-4">
+        <label for=""> Name :</label> &nbsp; <span> {{EmployeeDetails.EMP_FIRST_NAME}} </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label for="">Division : </label> &nbsp; <span> {{EmployeeDetails.DI_District}} </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Department : </label> &nbsp; <span> {{EmployeeDetails.Department_Name}} </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Designation : </label> &nbsp;<span> {{EmployeeDetails.desg_name}} </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label for="">Employee Category : </label> &nbsp;<span> {{EmployeeDetails.EMP_CATEGORY}} </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Employee Group : </label> &nbsp; <span> {{EmployeeDetails.EMP_GROUP}} </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Employee Type : </label> &nbsp;<span> {{EmployeeDetails.EMP_TYPE}} </span>
+      </div>
+    </div>
+    <br>
+
+
+    <br>
+
+    <div class="title rowmarginfix themeheading">
+      Complaint Details
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label for="">Complaint Type : </label> &nbsp;<span> {{ComplaintDetails.COMPLAINT_TYPE}} </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Intiated By : </label> &nbsp;<span> {{ComplaintDetails.COMPLAINT_INITIATED_BY}} </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label for="">Complaint date : </label> &nbsp;<span> {{ComplaintDetails.COMPLAINT_INITIATED_DATE}} </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Nature Of Complaint : </label> &nbsp;<span> {{ComplaintDetails.COMPLNT_NATURE}} </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label for="">Complainee's Name: </label> &nbsp;<span> {{ComplaintDetails.COMPLNT_COMP_NAME}} </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Complainee's Adress : </label> &nbsp;<span> {{ComplaintDetails.COMPLNT_COMP_ADD}} </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label for="">Complainee's Contact: </label> &nbsp;<span> {{ComplaintDetails.COMPLNT_COMP_CONTACT}} </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Complainee's AdressTo : </label> &nbsp;<span> {{ComplaintDetails.COMPLNT_ADDR_TO}} </span>
+      </div>
+    </div>
+    <div class="row">
+      <!-- <div class="col-md-4">
+        <label for="">Documnet : </label> &nbsp;<span> {{ComplaintDetails.EMP_TYPE}} </span>
+      </div> -->
+      <div class="col-md-4">
+        <label for="">Desctription/Details: </label> &nbsp;<span> {{ComplaintDetails.COMPLNT_DESC}} </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label for="">Remarks : </label> &nbsp;<span> {{ComplaintDetails.COMPLNT_REMARKS}} </span>
+      </div>
+    </div>
+
+    <div class="title rowmarginfix themeheading">
+      Witness Details
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-4">
+        <label for="">Witness Name : </label> &nbsp;<span> {{WitnessDetails.WITNESS_NAME}} </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Witness Adress : </label> &nbsp;<span> {{WitnessDetails.WITNESS_ADD}} </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Witness Contact No : </label> &nbsp;<span> {{WitnessDetails.WITNESS_CONTACT_NO}} </span>
+      </div>
+    </div>
+    <div class="title rowmarginfix themeheading">
+     Approval Details
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Approve ? <span style="color:red;">*</span> </label>
+          <select class="custom-field" [(ngModel)]="E.AUTH_BY" #AUTH_BY="ngModel" name="AUTH_BY"[disabled]="mode=='View'"
+          >
+            <option value="">--Select--</option>
+            <option value="1">Yes</option>
+            <option value="2">No</option>
+          </select>
+        </div>
+        <div class="error-msg" *ngIf="AUTH_BY.invalid && (AUTH_BY.dirty || AUTH_BY.touched || formInvalid)">
+          <span *ngIf="AUTH_BY.errors.required">Approve is required</span>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for=""> Approval Date:</label>
+        &nbsp;<span> {{E.AUTH_DATE | date:'dd/MM/yyyy'}} </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Reject ? </label>
+          <select class="custom-field" [(ngModel)]="E.MODIFIED_BY" #MODIFIED_BY="ngModel" name="MODIFIED_BY"[disabled]="mode=='View'|| E.AUTH_BY==1" 
+          >
+            <option value="">--Select--</option>
+            <option value="1">Yes</option>
+            <option value="2">No</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for=""> Rejection Date :</label>  
+        &nbsp;<span> {{E.MODIFIED_DATE | date:'dd/MM/yyyy'}} </span>     
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for=""> Remarks :</label>
+          <textarea name="AUTH_REMARKS" maxlength="50" [(ngModel)]="E.AUTH_REMARKS"
+          #AUTH_REMARKS="ngModel" [disabled]="mode=='View'" class="custom-field"></textarea>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="d-flex justify-content-center">
+      <button [disabled]="mode=='View'" class="btn btn-primary" type="submit">{{mode=='Edit'?'Update':'Save'}}</button> &nbsp;
+      <button [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button>&nbsp;
+    </div>
+    <br>
+  </div>
+</form>
+</div>

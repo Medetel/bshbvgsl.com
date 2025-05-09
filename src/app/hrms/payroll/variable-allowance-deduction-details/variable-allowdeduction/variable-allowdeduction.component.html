@@ -1,0 +1,263 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    Employee Details
+    <!-- <button class="btn btn-btn-change float-right" [routerLink]="['/home/nominationapp']">Back</button> -->
+    <span class="clearfix"></span>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="input-group">
+          <label for="">Emp Code </label>
+          <select class="custom-field">
+            <option>---Select---</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <label for="">Name : </label> &nbsp;
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 ">
+        <label for="">Division : </label> &nbsp;
+        <span> </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Department : </label> &nbsp;
+        <span> </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Designation : </label> &nbsp;
+        <span> </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label for="">Employee Category : </label> &nbsp;
+        <span> </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Employee Group : </label> &nbsp;
+        <span> </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Employee Type : </label> &nbsp;
+        <span> </span>
+      </div>
+    </div>
+    <!-- <div class="title themeheading rowmarginfix">
+      {{title}}
+      <span class="clearfix"></span>
+    </div> -->
+
+    <br>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="Variable-Allowance-Data-tab" data-toggle="tab" href="#Variable-Allowance-Data"
+          role="tab" aria-controls="Variable-Allowance-Data" aria-selected="true">
+          Variable Allowance Data
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="Variable-Deduction-Data-tab" data-toggle="tab" href="#Variable-Deduction-Data"
+          role="tab" aria-controls="Variable-Deduction-Data" aria-selected="false">
+          Variable Deduction Data
+        </a>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="Variable-Allowance-Data" role="tabpanel"
+        aria-labelledby="Variable-Allowance-Data-tab">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="input-group">
+              <select class="custom-field">
+                <option>---Select---</option>
+              </select>
+              <label for="">Allowance Code</label>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <label for="">Allowance Description :</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-group">
+              <input type="text" class="custom-field">
+              <label for="">Amount</label>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <label for="">Month :</label>
+          </div>
+          <div class="col-md-3">
+            <label for="">Year :</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="input-group">
+              <input type="text" class="custom-field">
+              <label for="">Reference Doc.No.</label>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="input-group">
+              <input type="date" class="custom-field">
+              <label for="">Reference Doc. Date</label>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="input-group">
+              <input type="text" class="custom-field">
+              <label for="">Reference Doc. Amount</label>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="input-group">
+              <input type="month" class="custom-field">
+              <label for="">Reference Doc. Month Year</label>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="text-center">
+          <button class="btn btn-change">Add</button>
+        </div>
+
+        <br>
+        <div class="table-responsive">
+          <table class="table table-striped grid">
+            <thead>
+              <tr>
+                <td>Sl No.</td>
+                <td>Employee Id </td>
+                <td>Allowance Code</td>
+                <td>Month</td>
+                <td>Year</td>
+                <td>Amount</td>
+                <td>Reference Doc.No.</td>
+                <td>Reference Month Year</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td> 1 </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="tab-pane fade" id="Variable-Deduction-Data" role="tabpanel"
+        aria-labelledby="Variable-Deduction-Data-tab">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="input-group">
+              <select class="custom-field">
+                <option>---Select---</option>
+              </select>
+              <label for="">Deduction Code</label>
+            </div>
+          </div>
+          <div class="col-md-8">
+            <label for="">Deduction Description :</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-group">
+              <input type="text" class="custom-field">
+              <label for="">Amount</label>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <label for="">Month :</label>
+          </div>
+          <div class="col-md-3">
+            <label for="">Year :</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">
+            <div class="input-group">
+              <input type="text" class="custom-field">
+              <label for="">Reference Doc.No.</label>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="input-group">
+              <input type="date" class="custom-field">
+              <label for="">Reference Doc. Date</label>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="input-group">
+              <input type="text" class="custom-field">
+              <label for="">Reference Doc. Amount</label>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <div class="input-group">
+              <input type="month" class="custom-field">
+              <label for="">Reference Doc. Month Year</label>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="text-center">
+          <button class="btn btn-change">Add</button>
+        </div>
+        <br>
+        <div class="table-responsive">
+          <table class="table table-striped grid">
+            <thead>
+              <tr>
+                <td>Sl No.</td>
+                <td>Employee Id </td>
+                <td>Deduction Code</td>
+                <td>Month</td>
+                <td>Year</td>
+                <td>Amount</td>
+                <td>Reference Doc.No.</td>
+                <td>Reference Month Year</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td> 1 </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+  <br>
+  <div class="text-center">
+    <button class="btn btn-change">Save</button> &nbsp;
+    <button class="btn btn-change">Cancel</button>
+  </div>
+
+</div>

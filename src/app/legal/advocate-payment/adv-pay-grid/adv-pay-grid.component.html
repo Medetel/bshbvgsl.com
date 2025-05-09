@@ -1,0 +1,201 @@
+<div class="wrapper">
+
+    <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm,itemsPerPage,1)">
+        <div class="title themeheading">{{title}}
+            <div class="float-right">
+                Items per page:
+                <select name="SearchRows" #SearchRows="ngModel" [(ngModel)]="itemsPerPage" class="noofpage" (change)="itemsPerPageChanged(itemsPerPage, 1)">
+                    <option [ngValue]="5">5</option>
+                    <option [ngValue]="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                </select>
+                <!-- <a class="btn btn-primary " [routerLink]="['/home/advocate-pay/advocate-pay-form']">Add</a> -->
+            </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+                                                                                                                
+            <span class="clearfix"></span>
+        </div>
+        <div class="searchbar">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-md-1">
+                          <label>Search</label>
+                      </div>
+                      <div class="col-md-4">
+                            <select name="SearchCriteria" #SearchCriteria="ngModel" [(ngModel)]="s.SearchCriteria"  class="form-control" required>
+                                    <option [ngValue]="undefined" selected>---Select---</option>  
+                                    <option value="Adv_Id_Number" >Enrollment No.</option> 
+                                    <option value="Adv_Name" >Advocate Name</option> 
+                                    <option value="Case_No" >Case Number</option>                                                         
+                                </select>
+                          <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)" class="error-msg">
+                              <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                            <input type="text" name="SearchText" #SearchText="ngModel"  [(ngModel)]="s.SearchText" class="form-control" placeholder="Search.."
+                            required>
+                          <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+                              <div *ngIf="SearchText.errors.required">Search text is required</div>
+                          </div>
+                      </div>
+                      <div class="col-md-3">
+                          <button class="btn btn-default" type="submit">Search</button>
+                          <button class="btn btn-default" type="reset" (click)="GetAllAdvocatesCases(itemsPerPage, 1)">Clear</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        <div class="table-responsive">
+            <table class="table table-striped grid">
+                <thead>
+                    <tr>
+                        <td>Sl No.</td>
+                        <td>Enrollment No.</td>
+                        <td>Advocate Name</td>
+                        <td>Case No</td>                                        
+                        <td>Add Bills</td>                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let a of AdvocateCaselist| paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems };  let i=index">
+                        
+                        <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+                        <td>{{a.Adv_Id_Number}}</td>
+                        <td>{{a.Adv_Name}}</td>
+                        <td>{{a.Case_No}}</td>                 
+                        <td *ngIf="!((AdvocateId == a.Adv_Id) && (CaseId == a.Case_Id))"> <a class="btn btn-primary"  (click)="GetBillDetails(a.Adv_Id,a.Case_Id)" >    
+                            Bills                                                             
+                        </a></td>
+                        <td *ngIf="((AdvocateId == a.Adv_Id) && (CaseId == a.Case_Id))"> <a  class="btn btn-success"  (click)="GetBillDetails(a.Adv_Id,a.Case_Id)" >    
+                            Bills                                                             
+                        </a></td>                                               
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="container-fluid" *ngIf="!isSearch">
+                <div class="row">
+                    <div class="col-md-11">
+                        <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)" maxSize="9" directionLinks="true"
+                            autoHide="false" previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination"
+                            screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                        </pagination-controls>
+                    </div>
+                    <div class="col-md-1">
+                        Total:
+                        <span>{{totalItems}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <br>
+
+    <form *ngIf="advBil" #searchForm2="ngForm" (ngSubmit)="onSearch2(searchForm2,itemsPerPage,1)">
+        <div class="title themeheading">Advocate Bill List
+
+
+            <div class="float-right">
+                <!-- Items per page:
+                <select name="SearchRows" #SearchRows="ngModel" [(ngModel)]="itemsPerPage" class="noofpage" (change)="itemsPerPageChanged(itemsPerPage, 1)">
+                    <option [ngValue]="5">5</option>
+                    <option [ngValue]="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                </select> -->
+                <a class="btn btn-primary" (click)="add()">    
+                    Add Bill                                                             
+                </a>
+            </div>
+
+
+            <span class="clearfix"></span>
+        </div>
+        <div class="searchbar">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-md-1">
+                          <label>Search</label>
+                      </div>
+                      <div class="col-md-4">
+                            <select name="SearchCriteria" #SearchCriteria="ngModel" [(ngModel)]="s2.SearchCriteria"  class="form-control" required>
+                                    <option [ngValue]="undefined" selected>---Select---</option>  
+                                    <option value="AP_Date" >Bill Date</option> 
+                                    <option value="AP_Amount" >Amount</option> 
+                                    <option value="AP_Purpose">Purpose</option>                                                         
+                                </select>
+                          <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)" class="error-msg">
+                              <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+                          </div>
+                      </div>
+                      <div class="col-md-4">
+                            <input type="text" name="SearchText" #SearchText="ngModel"  [(ngModel)]="s2.SearchText" class="form-control" placeholder="Search.."
+                            required>
+                          <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+                              <div *ngIf="SearchText.errors.required">Search text is required</div>
+                          </div>
+                      </div>
+                      <div class="col-md-3">
+                          <button class="btn btn-default" type="submit">Search</button>
+                          <button class="btn btn-default" type="reset" (click)="GetBillDetails(AdvocateId,CaseId)">Clear</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        <div class="table-responsive">
+            <table class="table table-striped grid">
+                <thead>
+                    <tr>
+                        <td>Sl No.</td>
+                        <td>Bill Date</td>
+                        <td>Bill Amount</td>
+                        <td>Purpose</td>                    
+                        <td class="text-center">View</td>
+                        <td class="text-center">Edit</td>
+                        <td class="text-center">Delete</td>                       
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let ab of AdvocatesCasesbilllist | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index">                        
+                        <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+                        <td>{{ab.AP_Date | date:'dd/MM/yyyy'}}</td>
+                        <td>{{ab.AP_Amount}}</td>                       
+                        <td class="warp2">{{ab.AP_Purpose}}</td>                     
+                        <td class="text-center">
+                            <a (click)="view(ab.AP_Id)">
+                                <i class="fa fa-lg fa-eye themecolor"></i>
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <a (click)="edit(ab.AP_Id)">
+                                <i class="fa fa-lg fa-edit themecolor"></i>
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <a href="javascript:void(0);" (click)="delete(ab.AP_Id)">
+                                <i class="fa fa-lg fa-trash themecolor"></i>
+                            </a>                            
+                        </td>
+                        <!-- <td><button class="btn btn-primary"> Send Request to Finance</button></td> -->
+                    </tr>
+                </tbody>
+            </table>
+
+           
+        </div>
+    </form>
+
+
+  </div>
+
+
+
+
+
+  

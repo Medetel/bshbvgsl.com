@@ -1,0 +1,104 @@
+<div class="wrapper">
+  <form #searchForm="ngForm">
+    <div class="title themeheading">{{title}}
+      <div class="float-right">
+        Items per page:
+        <select name="SearchRows" class="noofpage">
+          <option [ngValue]="5">5</option>
+          <option [ngValue]="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="40">40</option>
+          <option value="50">50</option>
+        </select>
+        <!-- <a class="btn btn-primary " [routerLink]="['/home/transfer/transferout-form']">Add</a> -->
+      </div>
+      <span class="clearfix"></span>
+    </div>
+    <div class="searchbar">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-1">
+            <label>Search</label>
+          </div>
+          <div class="col-md-4">
+            <select name="SearchCriteria" class="form-control" required>
+              <option [ngValue]="undefined" selected>---Select---</option>
+            </select>
+            <!-- <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)" class="error-msg">
+                                  <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+                              </div> -->
+          </div>
+          <div class="col-md-4">
+            <input type="text" name="SearchText" class="form-control" placeholder="Search.." required>
+            <!-- <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+                                  <div *ngIf="SearchText.errors.required">Search text is required</div>
+                              </div> -->
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-default" type="submit">Search</button>
+            <button class="btn btn-default" type="reset">Clear</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for=""> Division </label>
+            <select name="" id="" class="custom-field">
+              <option value="">---Select---</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped grid">
+        <thead>
+          <tr>
+            <td>Sl No.</td>
+            <td>Complaint No</td>
+            <td>Date</td>
+            <td>DGO's Name</td>
+            <td>Complaint Type</td>
+            <td>Initiated By</td>
+            <td class="text-center">View</td>
+            <td class="text-center">Edit</td>
+            <td class="text-center">Delete</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td> 1 </td>
+            <td>CMP-154</td>
+            <td>18/08/2019</td>
+            <td>Akash</td>
+            <td>Internal</td>
+            <td>Commissioner</td>
+            <td class="text-center">
+              <a href="javascript:void(0);">
+                <i class="fa fa-lg fa-eye themecolor"></i>
+              </a>
+            </td>
+            <td class="text-center">
+              <a href="javascript:void(0);"
+                [routerLink]="['/home/dept-enquiry/complaint-reg-sanction/complaint-reg-sanction-form']">
+                <i class="fa fa-lg fa-edit themecolor"></i>
+              </a>
+            </td>
+            <td class="text-center">
+              <a href="javascript:void(0);">
+                <i class="fa fa-lg fa-trash themecolor"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,105 @@
+<div class="dates-selector">
+  <form #searchForm="ngForm" (ngSubmit)="GetList(searchForm)">
+      <div class="row justify-content-center">  
+         <div class="col-md-2">
+             <label for="">District</label>
+              <select name="" id="" class="form-control" [(ngModel)]="r.District_Id_FK"  #District_Id_FK="ngModel" name="District_Id_FK" (change)="GetProjectNames(r.District_Id_FK)">
+                  <option [value]="undefined" selected>---Select---</option>
+                  <option [value]="d.DI_Id" *ngFor="let d of Districts;">
+                    {{d.DI_District}} </option>
+              </select>        
+          </div>
+          <div class="col-md-2">
+             <label for="">Project Name</label>               
+              <select name="" id="" class="form-control" [(ngModel)]="r.ProjectId"  #ProjectId="ngModel" name="ProjectId">
+                  <option [value]="undefined" selected>---Project Names---</option>
+                  <option [value]="p.PD_Id" *ngFor="let p of ProjectList;">
+                    {{p.PD_Project_Name}} </option>
+              </select>  
+          </div>         
+          <div class="col-md-2">
+              <label for="">Category</label>
+              <select name="" id="" class="form-control" [(ngModel)]="r.CategoryId"  #CategoryId="ngModel" name="CategoryId">
+                  <option [value]="undefined" selected>---Category---</option>
+                  <option [value]="c.CA_Id" *ngFor="let c of CategoryList;">
+                    {{c.CA_CategoryName}} </option>
+              </select>
+           </div> 
+          <div class="col-md-2">
+              <button class="btn btn-primary" type="submit">Search</button>
+              <button class="btn btn-primary" type="button">Cancel</button>
+          </div>
+      </div>
+  </form>
+  </div>
+<div class="title">Project Wise Vacant Property List
+  <span class="date float-right">29-04-2019</span>
+  <span class="clearfix"></span>
+</div>
+
+
+<div class="table-responsive" id="placewise-vacant">
+  <table class="table table-striped table-bordered">
+      <thead class="text-center">
+          <tr>
+              <td rowspan="3">Sl No.</td>
+              <td rowspan="3">District Name</td>
+              <td rowspan="3">Place/phase Name</td>
+              <td rowspan="3">Total formed</td>
+              <td rowspan="3">Total Alloted</td>
+              <td colspan="13">Vacant</td>
+              <td></td>
+              <td rowspan="3">Total Vacant</td>
+          </tr>
+          <tr>
+              <td colspan="4">Public</td>
+              <td colspan="2">Stray</td>
+              <td colspan="2">DQ</td>
+              <td colspan="2">Corner</td>
+              <td class="verticaltext" rowspan="2">CA</td>
+              <td class="verticaltext" rowspan="2">COMMERCIAL</td>
+              <td class="verticaltext" rowspan="2">SHOP</td>
+              <td class="verticaltext" rowspan="2">LAND LOOSER</td>
+          </tr>
+          <tr>
+              <td class="verticaltext">SITE</td>
+              <td class="verticaltext">BLOCKED SITE</td>
+              <td class="verticaltext">HOUSE/FLAT</td>
+              <td class="verticaltext">BLOCKED HOUSES</td>
+              <td class="verticaltext">SITE</td>
+              <td class="verticaltext">HOUSE</td>
+              <td class="verticaltext">SITE</td>
+              <td class="verticaltext">HOUSE</td>
+              <td class="verticaltext">SITE</td>
+              <td class="verticaltext">HOUSE</td>                    
+          </tr>
+      </thead>
+      
+      
+      <tbody>
+        <tr *ngFor="let g of RecordList;let i=index;"> 
+            <td>{{i+1}}.</td>
+            <td>{{g.DI_District}}</td>
+            <td>{{g.Phase_Name}}</td>
+            <td>{{g.TotalProperties}}</td>
+            <td>{{g.Total_Vacant}}</td>
+            <td>{{g.Public_S}}</td>
+            <td>{{g.Public_BL_S}}</td>
+            <td>{{g.Public_H_F}}</td>
+            <td>{{g.Public_BL_H}}</td>               
+            <td>{{g.Stray_S}}</td>
+            <td>{{g.Stray_H}}</td>
+            <td>{{g.DQ_S}}</td>
+            <td>{{g.DQ_H}}</td>
+            <td>{{g.corner_S}}</td>
+            <td>{{g.corner_H}}</td>
+            <td>{{g.CA}}</td>
+            <td>{{g.Commercial}}</td>
+            <td>{{g.Shop}}</td>
+            <td>{{g.Land_losers}}</td>
+            <td>{{g.Total_Allotted}}</td>
+        </tr>       
+    </tbody>         
+      
+  </table>
+</div>

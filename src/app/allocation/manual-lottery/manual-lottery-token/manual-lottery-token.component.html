@@ -1,0 +1,50 @@
+<div class="wrapper">
+  <!-- <app-header></app-header> -->
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary" (click)="myFunction()" style="float: right;">Print</button>
+  </div>
+
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3">
+        <label for=""><span>Notification No.:</span><span>{{NotificationDetails.DSWOId_NO_Number}}</span></label>
+      </div>
+      <div class="col-md-3">
+          <label for=""><span>Project:</span><span>{{NotificationDetails.PD_Project_Name}}</span></label>
+        </div>
+      <div class="col-md-3">
+          <label for=""><span>Category:</span><span>{{NotificationDetails.CA_CategoryName}}</span></label>
+      </div>
+      <div class="col-md-3">
+          <label for=""><span>Property Type:</span><span>{{NotificationDetails.PT_Property_Type}}</span></label>
+      </div>
+      <div class="col-md-3">
+          <label for=""><span>Reservation:</span><span>{{NotificationDetails.RES_Name}}</span></label>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="table-responsive">
+    <table class="table table-stripped">
+      <thead>
+        <tr>
+          <td>Sl No.</td>
+          <td>Token No.</td>
+          <td>Application No.</td>
+          <td>Applicant Name</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let tok of ApplicantTokenslist;let i=index ">
+          <td>{{i+1}}</td>
+          <td>{{tok.TokenNo}}</td>
+          <td>{{tok.APP_No}}</td>
+          <td>{{tok.APP_PA_Name}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

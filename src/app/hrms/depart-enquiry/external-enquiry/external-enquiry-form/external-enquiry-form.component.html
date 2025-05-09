@@ -1,0 +1,289 @@
+<div class="wrapper">
+  <form (ngSubmit)="mode=='Edit'?UpdateEXM(EXM):SaveExam(EXM)" #EXM="ngForm" name="EXM">
+  <div class="container-fluid">
+    <div class="title rowmarginfix themeheading">
+      Add External Enquiry
+      <button class="btn btn-primary float-right"
+        [routerLink]="['/home/dept-enquiry/external-enquiry-grid']">Back</button>
+      <span class="clearfix"></span>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label for=""> External.Enq No : </label> &nbsp;<span> {{E.DOC_CODE}} </span>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group ">
+          <span for="">Date : </span> &nbsp;<span> {{E.DOC_CODE}} </span>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group ">
+          <span for="" *ngIf="E.DOC_STATUS=='G'">Status : Generated</span> 
+        </div>
+      </div>
+    </div>
+
+    <div class="title themeheading rowmarginfix">
+      DGO's Details
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+          <div class="input-group">
+              <label for=""> Division code <span style="color:red;">*</span></label>
+              <select class="custom-field" [(ngModel)]="E.DivisionId" #DivisionId="ngModel" name="DivisionId"
+              [disabled]="mode=='View' || mode == 'Edit'" (change)="GetEmployee(E.DivisionId)" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="d.DI_Id" *ngFor="let d of Districtlist;">
+                {{d.DI_District}}
+              </option>
+            </select>
+          </div>
+          <div class="error-msg"
+          *ngIf="DivisionId.invalid && (DivisionId.dirty || DivisionId.touched || formInvalid)">
+          <span *ngIf="DivisionId.errors.required">Division is required</span>
+        </div>
+      </div>
+      <div class="col-md-4">
+          <div class="input-group">
+              <label for="">Emp Code <span style="color:red;">*</span></label>
+              <select class="custom-field" [(ngModel)]="E.EmpID" #EmpID="ngModel" name="EmpID"[disabled]="mode=='View' || mode == 'Edit'"
+              (change)="GetEmployeeForTheId(E.EmpID)" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="ee.EMP_EMPLOYEE_ID" *ngFor="let ee of Emplist;">
+                {{ee.EMP_EMPLOYEE_CODE}} &nbsp; {{ee.EMP_FIRST_NAME}}
+              </option>
+            </select>
+          </div>
+          <div class="error-msg"
+          *ngIf="EmpID.invalid && (EmpID.dirty || EmpID.touched || formInvalid)">
+          <span *ngIf="EmpID.errors.required">Employee Id is required</span>
+        </div>
+      </div>          
+      <div class="col-md-4">
+        <label for="">Name : </label> &nbsp;
+        <span> {{EmployeeDetails.EMP_FIRST_NAME}} </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 ">
+        <label for="">Division : </label> &nbsp;
+        <span> {{EmployeeDetails.DI_District}} </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Department : </label> &nbsp;
+        <span> {{EmployeeDetails.Department_Name}} </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Designation : </label> &nbsp;
+        <span> {{EmployeeDetails.desg_name}} </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label for="">Employee Category : </label> &nbsp;
+        <span> {{EmployeeDetails.EMP_CATEGORY}} </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Employee Group : </label> &nbsp;
+        <span> {{EmployeeDetails.EMP_GROUP}} </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Employee Type : </label> &nbsp;
+        <span> {{EmployeeDetails.EMP_TYPE}} </span>
+      </div>
+    </div>
+    <br>
+    <div class="title rowmarginfix themeheading">
+      Complaint Details
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Initiated By </label>
+          <select name="EEN_INTIAT_BY" #EEN_INTIAT_BY="ngModel" [(ngModel)]="E.EEN_INTIAT_BY" [disabled]="mode=='View'" class="custom-field">
+            <option value="undefined">--Select--</option>          
+            <option value="1">ACB</option>
+            <option value="2">Lokayukta</option>
+            <option value="3">CBI</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for=""> Complaint Date </label>
+          <input type="date" name="EEN_COMPLAIMNT_DATE" #EEN_COMPLAIMNT_DATE="ngModel" [(ngModel)]="E.EEN_COMPLAIMNT_DATE" [disabled]="mode=='View'"class="custom-field">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="input-group">
+          <label for=""> Nature of Complaint </label>
+          <input type="text" name="EEN_NATURE_COMP" #EEN_NATURE_COMP="ngModel" [(ngModel)]="E.EEN_NATURE_COMP" [disabled]="mode=='View'"class="custom-field" pattern="[A-Za-z]+">
+        </div>
+        <div class="error-msg"
+        *ngIf="EEN_NATURE_COMP.invalid && (EEN_NATURE_COMP.dirty || EEN_NATURE_COMP.touched || formInvalid)">
+        <span *ngIf="EEN_NATURE_COMP.errors.pattern">Nature of Complaint should enter alphabets</span>
+      </div>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group">
+          <label for=""> Charges Laid </label>
+          <input type="text" name="EEN_CHARGES_LAID" #EEN_CHARGES_LAID="ngModel" [(ngModel)]="E.EEN_CHARGES_LAID" [disabled]="mode=='View'"class="custom-field" pattern="[A-Za-z]+">
+        </div>
+        <div class="error-msg"
+        *ngIf="EEN_CHARGES_LAID.invalid && (EEN_CHARGES_LAID.dirty || EEN_CHARGES_LAID.touched || formInvalid)">
+        <span *ngIf="EEN_CHARGES_LAID.errors.pattern"> Charges Laid should enter alphabets</span>
+      </div>
+      </div>
+    </div>
+    <div class="row">
+      <!-- <div class="col-md-6">
+        <div class="input-group">
+          <label for=""> Severity </label>
+          <select name="EEN_SEVERTY" #EEN_SEVERTY="ngModel" [(ngModel)]="E.EEN_SEVERTY" [disabled]="mode=='View'" class="custom-field">
+            <option value="undefined">--Select--</option>
+            <option value="S">Severe</option>
+            <option value="M">Moderate</option>
+            <option value="N">Minimal</option>
+          </select>
+        </div>
+      </div> -->  
+     
+
+      <div class="col-md-4">
+        <div class="form-inline">
+          <div class="form-group">
+            <label for="" style="color: blue;">Persmission opted from BSHB/HB </label> &nbsp;
+            <!-- <input type="radio" name="Persmission" value="yes" >Yes &nbsp;
+            <input type="radio" name="Persmission" value="no" >No -->
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" (click)="toggle();"  name="EEN_Radio_Button1"
+              #EEN_Radio_Button1="ngModel" [(ngModel)]="E.EEN_Radio_Button1" type="radio"
+              id="inlineRadio1" value="Yes">
+              <label class="form-check-label" for="inlineRadio1">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" (click)="toggle();"  name="EEN_Radio_Button1"
+              #EEN_Radio_Button1="ngModel" [(ngModel)]="E.EEN_Radio_Button1" type="radio"
+              id="inlineRadio2" value="No">
+              <label class="form-check-label" for="inlineRadio2">No</label>
+            </div>
+          </div>
+        
+      </div>
+      </div>
+      
+    </div>
+    <div class="row" *ngIf="show1" >
+      <div class="col-md-4">
+        <div class="input-group">
+          <label for=""> 1)Ref.Doc.No </label>
+          <input type="text" name="EEN_REF_NO"  #EEN_REF_NO='ngModel' [(ngModel)]="E.EEN_REF_NO"  [disabled]="mode=='View'"class="custom-field">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group">
+          <label for="">2)Ref.Doc.Date </label>
+          <input type="date" name="EEN_REF_DATE" #EEN_REF_DATE='ngModel' [(ngModel)]="E.EEN_REF_DATE" [disabled]="mode=='View'"class="custom-field">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-inline">
+          <div class="form-group ">
+            <label for="" style="color:blue;"> Upload</label>
+          </div> &nbsp;
+          <div class="form-group ">
+            <input *ngIf="!hide" type="file" #Image accept="application/pdf"
+            (change)="imageUpload2($event.target.files)" id="EEN_UPLOAD" name="EEN_UPLOAD">
+          <a class=""  target="_blank" href="{{E.EEN_UPLOAD}}">View</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-inline">
+          <div class="form-group ">
+            <label for="" style="color:blue;"> BSHB/HB OM </label>
+          </div> &nbsp;
+          <div class="form-group ">
+            <input *ngIf="!hide" type="file" #Image accept="application/pdf"
+            (change)="imageUpload4($event.target.files)" id="EEN_OM_UPLOAD" name="EEN_OM_UPLOAD">
+            <a *ngIf="E.EEN_OM_UPLOAD" [href]="E.EEN_OM_UPLOAD" target="_blank" 
+            [class.disabled]="!E.EEN_OM_UPLOAD" tabindex="-1" aria-disabled="true">
+           View
+         </a>
+         
+         <!-- Optionally, you can also disable the link when DGO_Upload is null -->
+         <a *ngIf="!E.EEN_OM_UPLOAD" class="disabled" tabindex="-1" aria-disabled="true">
+           View
+         </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-inline">
+          <div class="form-group ">
+            <label for="" style="color:blue;">Complaint Document </label>
+          </div> &nbsp;
+          <div class="form-group ">
+            <input *ngIf="!hide" type="file" #Image accept="application/pdf"
+            (change)="imageUpload1($event.target.files)" id="EEN_COMP_UPLOAD" name="EEN_COMP_UPLOAD">
+            <a *ngIf="E.EEN_COMP_UPLOAD" [href]="E.EEN_COMP_UPLOAD" target="_blank" 
+            [class.disabled]="!E.EEN_COMP_UPLOAD" tabindex="-1" aria-disabled="true">
+           View
+         </a>
+         
+         <!-- Optionally, you can also disable the link when DGO_Upload is null -->
+         <a *ngIf="!E.EEN_COMP_UPLOAD" class="disabled" tabindex="-1" aria-disabled="true">
+           View
+         </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="form-inline">
+          <div class="form-group ">
+            <label for="" style="color:blue;">Other Document </label>
+          </div> &nbsp;
+          <div class="form-group ">
+            <input *ngIf="!hide" type="file" #Image accept="application/pdf"
+            (change)="imageUpload3($event.target.files)" id="EEN_Other_UPLOAD" name="EEN_Other_UPLOAD">
+            <a *ngIf="E.EEN_Other_UPLOAD" [href]="E.EEN_Other_UPLOAD" target="_blank" 
+            [class.disabled]="!E.EEN_Other_UPLOAD" tabindex="-1" aria-disabled="true">
+           View
+         </a>
+         
+         <!-- Optionally, you can also disable the link when DGO_Upload is null -->
+         <a *ngIf="!E.EEN_Other_UPLOAD" class="disabled" tabindex="-1" aria-disabled="true">
+           View
+         </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Remarks </label>
+          <textarea name="EEN_REMARKS" #EEN_REMARKS="ngModel" [(ngModel)]="E.EEN_REMARKS" [disabled]="mode=='View'" cols="30" rows="10" class="custom-field"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <br>
+    <!-- <div class="justify-content-center d-flex">
+      <button [disabled]="mode=='View'" class="btn btn-primary" type="submit">{{mode=='edit'?'Update':''Save'}}</button> &nbsp;
+      <button [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button>
+    </div> -->
+    <div class="d-flex justify-content-center">
+      <button [disabled]="mode=='View'" class="btn btn-primary" type="submit">{{mode=='edit'?'Update':'Save'}}</button> &nbsp;
+      <button [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button>&nbsp;
+    </div>
+    <br>
+  </div>
+</form>
+</div>

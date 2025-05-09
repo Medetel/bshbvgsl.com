@@ -1,0 +1,566 @@
+<div class="wrapper">
+    <div class="title themeheading">
+        {{title}}
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <select [(ngModel)]="s.S_NotificationID" required #S_NotificationID="ngModel" name="S_NotificationID" class="custom-field"
+                        (change)="GetNotificationProjects(s.S_NotificationID,null)">
+                        <option [ngValue]="undefined" selected>---Select---</option>
+                        <option [ngValue]="n.DSWOId_NO_Id" *ngFor="let n of Notifications;">
+                            {{n.DSWOId_NO_Number}}-{{n.DSWOId_NO_Id}}-{{n.PD_Project_Name}}-{{n.PD_Project_Code}}</option>
+                    </select>
+                    <label>Notification No.</label>
+                </div>
+            </div>
+            <!-- {{PD_Project_Name}} -->
+            <div class="col-md-6">
+                <div class="input-group">
+                    <select [(ngModel)]="s.S_ProjectID" required #S_ProjectID="ngModel" name="S_ProjectID" class="custom-field" 
+                    (change)="GetNotificationProjects(null,s.S_ProjectID)">
+                        <option [ngValue]="undefined" selected>---Select---</option>
+                        <option [ngValue]="p.PD_Id" *ngFor="let p of Projects;">
+                            {{p.PD_Project_Code}}-{{p.PD_Project_Name}}</option>
+                    </select>
+                    <label>Project</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <input disabled class="custom-field" style="background: rgba(0,0,0,.12)" type="text" [(ngModel)]="PND.DSWOId_NO_Date" #DSWOId_NO_Date="ngModel"
+                        name="DSWOId_NO_Date">
+
+                    <label>Notification Date</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <input disabled class="custom-field" style="background: rgba(0,0,0,.12)" type="text" [(ngModel)]="PND.DSWOId_NO_LastDate"
+                        #DSWOId_NO_LastDate="ngModel" name="DSWOId_NO_LastDate">
+                    <label>Application Last Date</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="title themeheading">
+        {{title1}}
+    </div>
+
+    <!-- <div class="container-fluid">
+        <div class="table-responsive grid">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <td>Sl No.</td>
+                        <td>Category.</td>
+                        <td>SC.</td>
+                        <td>ST.</td>
+                        <td>BT.</td>
+                        <td>Defence / Ex-serviceman.</td>
+                        <td>Central Govt.</td>
+                        <td>State Govt.</td>
+                        <td>Physically Handicapped.</td>
+                        <td>Senior Citizens.</td>
+                        <td>Others.</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>
+                            EWS
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>
+                            LIG
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div> -->
+
+    <!-- <div class="btn-wrapper text-right">
+        <button class="btn btn-primary">Continue to Scrutiny</button>
+    </div> -->
+    <div class="row">
+        <div class="col-md-3">
+            <div class="input-group">
+                <select [(ngModel)]="s.S_CA_Id_FK" required #S_CA_Id_FK="ngModel" name="S_CA_Id_FK" class="custom-field">
+                    <option [ngValue]="undefined" selected>---Select---</option>
+                    <option [ngValue]="ca.CA_Id" *ngFor="let ca of Categories;">
+                        {{ca.CA_CategoryName}}</option>
+                </select>
+                <label>Category</label>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="input-group">
+                <select [(ngModel)]="s.S_Reservation_Id_FK" required #S_Reservation_Id_FK="ngModel" name="S_Reservation_Id_FK" class="custom-field">
+                    <option [ngValue]="undefined" selected>---Select---</option>
+                    <option [ngValue]="r.RES_Id" *ngFor="let r of Reservations;">
+                        {{r.RES_Name}}</option>
+                </select>
+                <label>Reservation</label>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="input-group">
+                <select [(ngModel)]="s.S_Property_Type" required #S_Property_Type="ngModel" name="S_Property_Type" class="custom-field">
+                    <option [ngValue]="undefined" selected>---Select---</option>
+                    <option [ngValue]="p.PT_Id" *ngFor="let p of PropertyTypes;">
+                    <!-- <option [ngValue]="p.PT_Property_Type" *ngFor="let p of PropertyTypes;"> -->
+                        {{p.PT_Property_Type}}</option>
+                </select>
+                <label>Property Type</label>
+            </div>
+        </div>
+        <div class="col-md-3">
+
+            <button class="btn btn-primary" (click)="GETApplications(s.S_NotificationID,s.S_ProjectID,s.S_CA_Id_FK,s.S_Reservation_Id_FK,s.S_Property_Type)">Go
+            </button>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <td>Sl No.</td>
+                    <td>Application No.</td>
+                    <td>Applicant Name</td>
+                    <td>Applied Date</td>
+                    <td>Registration Payment</td>
+                    <td>Initial Payment</td>
+                    <td>Application Payment</td>
+                    <td>View</td>
+                    <td>Status</td>
+                    <td>Remarks</td>
+                    <td>Scrutinized</td>
+                </tr>
+            </thead>
+            <tbody *ngIf="Applications == '' || Applications == 'undefined' || Applications == 'null'">
+                <td colspan="11" class="text-center">No Data Found</td>
+            </tbody>
+            <tbody>
+                <tr *ngFor="let a of Applications;let i=index;">
+                    <td>{{i+1}}.</td>
+                    <td>{{a.APP_No}}</td>
+                    <td>{{a.APP_PA_Name}}</td>
+                    <td>{{a.APP_AppliedDate | date:'dd-MM-yyyy'}}</td>
+                    <td>{{a.Register_Amount}}</td>
+                    <td>{{a.ID_Paid_Amount}}</td>
+                    <td>{{a.Appfee_Paid_Amount}}</td>
+                    <td>
+                        <a *ngIf="a.APP_IsEligible==null" href="#" [routerLink]="['/home/scrutiny/scrutiny-view',a.APP_Id,s.S_NotificationID,s.S_ProjectID,s.S_CA_Id_FK,s.S_Reservation_Id_FK,s.S_Property_Type]">
+                            <i class="fa fa-lg fa-eye themecolor"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <i *ngIf="a.APP_IsEligible=='Y'" class="fa fa-check" aria-hidden="true">Eligible</i>
+                        <i *ngIf="a.APP_IsEligible=='N'" class="fa fa-times" aria-hidden="true">InEligible</i>
+                    </td>
+                    <td>
+                        <span *ngIf="a.APP_Note!=null">{{a.APP_Note}}</span>
+                    </td>
+                    <td>
+                        <span *ngIf="a.APP_IsEligible!=null">Yes</span>
+                        <span *ngIf="a.APP_IsEligible==null">No</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <!-- 
+    <div class="applicationformview">
+        <div class="wrapper">
+            <div style="padding:20px;font-size:20px;">Application View</div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Application No.</span> 001</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Form Type</span> HIG</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Property Type</span> Site</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Applicant Photo</span>
+                            <span></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">District Code</span> 001</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">District</span> Ramnagara</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Project place</span> Ramnagara</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Notification No.</span> 001</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Notification Date</span> 11-04-2018</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Applicant Name</span> Akilesh</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Date of Birth</span> 12-12-1987</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Age</span> 35</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Gender</span> M</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Father / Husband / Wife Name</span> Akilan</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Address</span>No10 3rd cross,Ramnagara</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Telephone Number</span> 080-25631478</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Mobile Number</span> 8899665544</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Email</span> abc@gmail.com</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Sub Category</span> Others</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Annual Income</span> 100000</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">PAN No.</span> HKLAMNS056412A</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Name of Bank</span> Indian Bank</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Account Number</span> 145225636985</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">IFSC Code</span> 0011254CD</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Other Details of House / Site / Flat</span> No</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">No. of Years in Karnataka</span> 001</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Reg Fee.</span> 100</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Challan / DD Date</span> 14-04-2018</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Bank</span> SBI Bank</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Challan / DD Date</span> 14-04-2018</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Branch</span> Jayanagar</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Challan / DD Account</span> 145236524785</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Place</span> Ramnagara</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Name of the Nominee</span> Jaya</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Relationship of the nominee</span> Mother</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Place of Sign</span> Ramanagara</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Applicant Signature</span> <a href='#'>view</a></label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Date</span> 14-04-2018</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="scrutinized">
+        <div class="container-fluid">
+            
+            <div style="padding:20px 10px;font-size:25px;">
+                <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        Eligible
+                        <input class="form-check-input acustom" type="radio" id="inlineRadio1" value="option1" name="Gender">
+                    </label>
+                </div>
+                <div style="margin-left: 331px;" class="form-check form-check-inline">
+                    <label class="form-check-label">
+                        <input class="form-check-input acustom" type="radio" id="inlineRadio1" value="option1" name="Gender"> InEligible
+                    </label>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <textarea style="height:179px;" class="custom-field"></textarea>
+                        <label>Note</label>
+                    </div>
+                </div>
+            </div> -->
+
+    <!-- <div class="title themeheading">
+        {{title2}}
+    </div> -->
+    <!-- <div class="table-responsive grid">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <td rowspan="2">Sl No.</td>
+                    <td rowspan="2">Category.</td>
+                    <td colspan="2" class="text-center">SC.</td>
+                    <td colspan="2" class="text-center">ST.</td>
+                    <td colspan="2" class="text-center">BT.</td>
+                    <td colspan="2" class="text-center">Defence / Ex-serviceman.</td>
+                    <td colspan="2" class="text-center">Central Govt.</td>
+                    <td colspan="2" class="text-center">State Govt.</td>
+                    <td colspan="2" class="text-center">Physically Handicapped.</td>
+                    <td colspan="2" class="text-center">Senior Citizens.</td>
+                    <td colspan="2" class="text-center">Others.</td>
+                </tr>
+                <tr>
+
+                    <td>Eligible</td>
+                    <td>InEligible</td>
+                    <td>Eligible</td>
+                    <td>InEligible</td>
+                    <td>Eligible</td>
+                    <td>InEligible</td>
+                    <td>Eligible</td>
+                    <td>InEligible</td>
+                    <td>Eligible</td>
+                    <td>InEligible</td>
+                    <td>Eligible</td>
+                    <td>InEligible</td>
+                    <td>Eligible</td>
+                    <td>InEligible</td>
+                    <td>Eligible</td>
+                    <td>InEligible</td>
+                    <td>Eligible</td>
+                    <td>InEligible</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td></td>
+                    <td>
+                    </td>
+
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td></td>
+
+
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div> -->
+    <!-- <div class="row">
+        <div class="col-md-6">
+            <div class="btn-wrapper text-left">
+                <button class="btn btn-primary">Move Eligible to Provisional list</button>
+
+            </div>
+        </div>
+        <div class="col-md-6">
+
+            <div class="btn-wrapper text-right">
+                <button class="btn btn-primary">Move InEligible to Refund</button>
+
+            </div>
+        </div>
+
+    </div> -->
+    <!-- <div class="btn-wrapper text-center">
+        <a class="btn btn-primary" [routerLink]="['/provisionlist/',s.S_NotificationID,s.S_ProjectID]">Provisional List</a>
+
+    </div> -->
+</div>

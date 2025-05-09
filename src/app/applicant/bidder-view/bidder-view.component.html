@@ -1,0 +1,347 @@
+<!-- <div class="wrapper">
+  
+</div>   -->
+<div class="wrapper">
+  <div class="title themeheading"> Bidding View </div>
+  <form #searchForm="ngForm">
+    <div class="searchbar">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-1">
+            <label for="">Search</label>
+          </div>
+          <div class="col-md-3">
+            <select name="SearchCriteria" class="form-control" name="Biddercriteria" value="" #Biddercriteria="ngModel"
+              [(ngModel)]="Bidder.Biddercriteria" required>
+              <option [ngValue]="undefined" selected>---Select---</option>
+              <option value="bidderno">Bidder No.</option>
+              <option value="biddername">Bidder Name</option>
+              <option value="ProjectName">Project Name</option>
+              <option value="PropNo">Property No.</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <input type="text" name="Biddersearch" class="form-control" placeholder="Search.." name="Biddersearch"
+              #Bidderno="ngModel" [(ngModel)]="Bidder.Biddersearch" required>
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-default" type="button" (click)="Getbidderdetails(Bidder)">Search</button>
+            <button class="btn btn-default" type="reset" (click)="clear()">Clear</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <td>Sl No.</td>
+        <td>Bidder No.</td>
+        <td>Name</td>
+        <td>Project Name</td>
+        <td>property No.</td>
+        <td>View</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let bidd of Bidderdetails; let i=index">
+        <td>{{i+1}}.</td>
+        <td>{{bidd.B_BidderId}}</td>
+        <td>{{bidd.B_BName}}</td>
+        <td>{{bidd.Proj_name}}</td>
+        <td>{{bidd.Prop_No}}-{{bidd.category}}</td>
+        <!-- <td>{{bidd.CA_CategoryName}}</td> -->
+        <td>
+          <button class="btn btn-primary" (click)="Getbidderdetailsbyid(bidd.B_Id)">View</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="tab-wrapper">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" href="#appdetails">Bidder Details</a>
+    </li>
+
+  </ul>
+
+  <div class="tab-content">
+    <div class="tab-pane active" id="appdetails">
+
+      <!--Application view starts-->
+
+      <div class="form">
+        <div class="header">
+
+        </div>
+        <div class="body">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-3">
+                <span class="field-title">Bidder No. : </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.B_BidderId}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">Bidder Name : </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.B_BName}}</span>
+              </div>
+
+              <div class="col-md-3">
+                <span class="field-title"> Mobile Number : </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.B_ContactNo}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">Address : </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.B_Address}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">Email : </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.B_EmailId}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">Bank Name </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.B_Bidder_BankName}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">Branch : </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.B_Bidder_Branch}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">Account Number : </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.B_Bidder_AccNo}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">IFSC Code : </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.B_Bidder_Ifsc_Code}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title"> Photo & Signature : </span>
+              </div>
+              <div class="col-md-3">
+
+                <span class="field-value"><a href="{{BidderDet.B_Photo_Sign}}" target="_blank" *ngIf="BidderDet.B_Photo_Sign!=null">View</a></span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">Address Proof : </span>
+              </div>
+              <div class="col-md-3">
+
+                <span class="field-value"><a href="{{BidderDet.B_AddresProof}}" target="_blank" *ngIf="BidderDet.B_AddresProof!=null">View</a></span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">Id Proof : </span>
+              </div>
+              <div class="col-md-3">
+
+                <span class="field-value"><a href="{{BidderDet.B_IdProof}}" target="_blank" *ngIf="BidderDet.B_IdProof!=null">View</a></span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">Joint Registration </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.B_IsJoint}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">Joint Applicant Name </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.B_JointNames}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">Bidder Type </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.B_Bidding_Type}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">Total Bidder </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.B_Total_Bidders}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">Notification No. : </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.AN_Number}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">Notification Date : </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.AN_Date | date:'dd-MM-yyyy'}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">District : </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.DI_District}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">Project Name :</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.PD_Project_Name}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">Property No. : </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.B_Prop_No}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">Category : </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.CA_CategoryName}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">Property Type : </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.PT_Property_Type}}</span>
+              </div>
+
+              <div class="col-md-3">
+                <span class="field-title">Area : </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.PR_Plot_Area}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">Auction Ref No. : </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.B_Auc_RefNo}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">Base Price : </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.B_Base_Price}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">Base Price Total: </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BaseTotal}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">Bid Rate per Sq.ft: </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.B_Bid_Rate_Per_Sqft}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">Bid Rate Total: </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidTotal}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">EMD Amount </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.B_EMD_Amt}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">Instrument No. </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.B_Ins_No}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">Instrument Date </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.B_Ins_Date | date:'dd-MM-yyyy'}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">Instrument Amount </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.B_Ins_Amt}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">25% Payment Including EMD </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.B_perc_payment}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">Payment Mode </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.B_Payment_Mode}}</span>
+              </div>
+
+              <div class="col-md-3">
+                <span class="field-title">DD No/ UTR No </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.B_DD_No}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title"> Payment Date </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.B_DD_Date | date:'dd-MM-yyyy'}}</span>
+              </div>
+
+              <div class="col-md-3">
+                <span class="field-title">Payment Branch </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.B_Payment_Branch}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">Status : </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.PR_Status}}</span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-title">Allotted Date : </span>
+              </div>
+              <div class="col-md-3">
+                <span class="field-value">{{BidderDet.PR_App_AllotDate | date:'dd-MM-yyyy'}}</span>
+              </div>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Application view ends-->
+    </div>
+
+    <br>
+    <!-- <div class="text-center">
+      <button class="btn btn-primary" type="button">Print</button>
+      <button class="btn btn-primary" type="reset">Clear</button>
+    </div> -->
+  </div>
+</div>

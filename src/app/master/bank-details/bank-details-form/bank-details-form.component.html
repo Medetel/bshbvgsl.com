@@ -1,0 +1,104 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary pull-right" [routerLink]="['/home/bank-details']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <form (ngSubmit)="mode=='edit'?UpdateBankDetails(BankDetails):SaveBankDetails(BankDetails)" #BankDetails="ngForm" name="BankDetails">
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="c.ba_id_fk" #ba_id_fk="ngModel" name="ba_id_fk" [disabled]="mode=='view'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [ngValue]="ba.BA_Id" *ngFor="let ba of Banks;"> {{ba.BA_BankName}}</option>
+            </select>
+            <label>
+              Bank Name <span class="mandatory">*</span>
+              <div class="error-msg"
+              *ngIf="ba_id_fk.invalid && (ba_id_fk.dirty || ba_id_fk.touched || formInvalid)">
+              <span *ngIf="ba_id_fk.errors.required"> Bank Name is required</span>
+            </div>
+            </label>
+          </div>
+        </div>
+        <div class="col-md-6">         
+          <div class="input-group form-group">
+            <input type="text" class="custom-field" [disabled]="mode=='view'" pattern="[A-Za-z]+" maxlength="20"  [(ngModel)]="c.branch_name" #branch_name="ngModel" name="branch_name" required>
+            <label for=""> Branch Name
+              <span class="mandatory">*</span>
+              <div class="error-msg"
+              *ngIf="branch_name.invalid && (branch_name.dirty || branch_name.touched || formInvalid)">
+              <span *ngIf="branch_name.errors.required"> Branch Name is required</span>
+              <span *ngIf="branch_name.errors.pattern"> Branch Name it should contain only characters.</span>
+            </div>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group form-group">
+            <input type="text" class="custom-field" [disabled]="mode=='view'" [(ngModel)]="c.IFSC_Code" #IFSC_Code="ngModel" name="IFSC_Code"  placeholder="AAAA0000000" minlength="11" maxlength="11" pattern="^[A-Z]{4}0\d{6}$" required>
+            <label for="">IFSC Code
+              <span class="mandatory">*</span>
+              <div class="error-msg"
+              *ngIf="IFSC_Code.invalid && (IFSC_Code.dirty || IFSC_Code.touched || formInvalid)">
+              <span *ngIf="IFSC_Code.errors.required"> IFSC code is required</span>
+              <span *ngIf="IFSC_Code.errors.pattern"> IFSC code is Invalid</span>
+              <span *ngIf="IFSC_Code.errors.minlength"> IFSC code must be 11 characters </span>
+            </div>
+            </label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group form-group">
+            <input type="text" class="custom-field" [disabled]="mode=='view'" [(ngModel)]="c.account_no" #account_no="ngModel" name="account_no" maxlength="15" minlength="15" pattern="^[0-9]*$" required>
+            <label for="">Account Number
+              <span class="mandatory">*</span>
+              <div class="error-msg"
+              *ngIf="account_no.invalid && (account_no.dirty || account_no.touched || formInvalid)">
+              <span *ngIf="account_no.errors.required">Account Number is required</span>
+              <span *ngIf="account_no.errors.pattern"> Account Number must be characters</span>
+              <span *ngIf="account_no.errors.minlength"> Account Number maximum 15 characters</span>
+            </div>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group form-group">
+            <input type="text" class="custom-field" [disabled]="mode=='view'" maxlength="10"   [(ngModel)]="c.branch_code" #branch_code="ngModel" name="branch_code" required>
+            <label for="">Branch Code
+              <span class="mandatory">*</span>
+              <div class="error-msg"
+              *ngIf="branch_code.invalid && (branch_code.dirty || branch_code.touched || formInvalid)">
+              <span *ngIf="branch_code.errors.required"> Branch Code is required</span>
+              <span *ngIf="branch_code.errors.pattern"> Branch Code must be Alphaumeric</span>
+            </div>
+            </label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group form-group">
+            <input type="text" class="custom-field" [disabled]="mode=='view'" [(ngModel)]="c.ba_address" #ba_address="ngModel" name="ba_address" required >
+            <label for="">Bank Address
+              <span class="mandatory">*</span>
+              <div class="error-msg"
+              *ngIf="ba_address.invalid && (ba_address.dirty || ba_address.touched || formInvalid)">
+              <span *ngIf="ba_address.errors.required"> Bank Address is required</span>
+            </div>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="btn-wrapper text-center">
+        <button [disabled]="mode=='view'"class="btn btn-primary" type="submit">Save</button>
+        <button [disabled]="mode=='view'" class="btn btn-primary" type="reset" >Cancel</button>
+      </div>
+    </div>
+
+  </form>
+</div>

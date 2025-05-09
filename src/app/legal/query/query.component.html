@@ -1,0 +1,298 @@
+<div class="querywrapper">
+  <div class="title themeheading">
+    {{title}}
+  </div>
+<form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm)"> 
+
+<div class="container-fluid">
+    <div class="row paddingtop20 justify-content-center">
+      <div class="col-md-3">
+        <div class="input-group">
+          <select name="" id="" class="custom-field" name="SearchCriteria" #SearchCriteria="ngModel" [(ngModel)]="s.SearchCriteria"  required>
+            <option value="Case_No">Case No.</option>
+            <option value="Adv_Name">Advocate Name</option>
+            <option value="Court">Court</option>
+            <option value="Petitioner">Petitioner</option>
+            <option value="Respondent">Respondent</option>
+            <option value="File_No">File No</option>
+          </select>
+          <label for="">Search By</label>
+          <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)" class="error-msg">
+              <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="input-group">
+          <input type="text" class="custom-field" name="SearchText" #SearchText="ngModel" [(ngModel)]="s.SearchText"  placeholder="Search.."
+          required>
+          <label for="">Search Text</label>
+
+          <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+              <div *ngIf="SearchText.errors.required">Search text is required</div>
+          </div>      
+        </div>
+      </div>
+      <div class="col-md-1">
+        <button  type="submit" class="btn btn-primary">Go</button>
+
+        <!-- <button mat-icon-button><mat-icon svgIcon="thumb-up"></mat-icon>Go</button> -->
+      </div>
+    </div>
+</div>
+
+<div *ngIf="CaseNosearch">
+<div class="title themeheading">
+  Case Details
+</div>
+
+<div class="container-fluid case-info">
+    
+
+
+    <div class="row">
+      <div class="col-md-3"><label for="">Case No.</label></div>
+      <div class="col-md-3"><label for="">{{CaseDetails.Case_No}}</label></div>
+      <div class="col-md-3"><label for="">KHB File No.</label></div>
+      <div class="col-md-3"><label for="">{{CaseDetails.Case_File_No}}</label></div>
+  </div>
+  <div class="row">
+      <div class="col-md-3"><label for="">Reg Date</label></div>
+      <div class="col-md-3"><label for="">{{CaseDetails.Case_Reg_Date | date:'dd/MM/yyyy'}}</label></div>
+      <div class="col-md-3"><label for="">CNR No.</label></div>
+      <div class="col-md-3"><label for="">{{CaseDetails.Case_CNR_No}}</label></div>
+  </div>
+  <div class="row">
+      <div class="col-md-3"><label for="">Previous Case No.</label></div>
+      <div class="col-md-3"><label for="">{{CaseDetails.PreviousCase}}</label></div>
+      <div class="col-md-3"><label for="">Court</label></div>
+      <div class="col-md-3"><label for="">{{CaseDetails.Court_Name}}</label></div>
+  </div>
+  <div class="row">
+      <div class="col-md-3"><label for="">Court type</label></div>
+      <div class="col-md-3"><label for="">{{CaseDetails.CourtT_Name}}</label></div>
+      <div class="col-md-3"><label for="">Litigation Officer</label></div>
+      <div class="col-md-3"><label for="">{{CaseDetails.Case_Litigation_Officer_FK}}</label></div>
+  </div>
+       <div class="row">
+      <div class="col-md-3"><label for="">Office / DPO</label></div>
+      <div class="col-md-3"><label for="">{{CaseDetails.OfficeName}}</label></div>
+      <div class="col-md-3"><label for="">Execution Date</label></div>
+      <div class="col-md-3"><label for="">{{CaseDetails.Case_Execution_Date | date:'dd/MM/yyyy'}}</label></div>
+  </div>
+       <div class="row">
+      <div class="col-md-3"><label for="">Execution Amount</label></div>
+      <div class="col-md-3"><label for=""></label>{{CaseDetails.Case_ExecutionAmount}}</div>
+      <div class="col-md-3"><label for=""><b>Bench</b></label></div>
+      <div class="col-md-3"><label for=""></label>{{CaseDetails.Case_Bench}}</div>
+  </div>
+   <div class="row">
+      <div class="col-md-3"><label for=""><b>Cout Complex.</b></label></div>
+      <div class="col-md-3"><label for=""></label>{{CaseDetails.Court_Complex_Name}}</div>
+      <div class="col-md-3"><label for=""><b>Court Establishment</b></label></div>
+      <div class="col-md-3"><label for=""></label>{{CaseDetails.Court_Establish_Name}}</div>
+  </div>
+
+   <div class="row">     
+
+       <div class="col-md-3"><label for="">Petitioner(s)</label></div>
+      <div class="col-md-3">
+          <div *ngFor="let p of petDetails"> 
+              <p  *ngIf="p.CasePeti_PetitionerName != null">{{p.CasePeti_PetitionerName}}</p>             
+          </div>
+      </div>
+      <div class="col-md-3"><label for="">Respondant(s)</label></div>
+      <div class="col-md-3">
+          <div *ngFor="let p of petDetails">
+              <p *ngIf="p.CasePeti_Respondent != null">{{p.CasePeti_Respondent}}</p>            
+          </div>
+       </div>
+  </div>  
+
+  
+  <div class="row">
+      
+
+      <div class="col-md-3"><label for="">Advocate name</label></div>
+      <div class="col-md-3">
+        <div *ngFor="let av of AdvocateDetails">
+         <p>{{av.Adv_Name}}</p>             
+        </div>
+  </div>
+      <div class="col-md-3"><label for="">Previous Advocate</label></div>
+      <div class="col-md-3">
+          <div *ngFor="let av of AdvocateDetails">
+              <p *ngIf="av.OldAdvocate!=null">{{av.OldAdvocate}}</p>   
+              <p *ngIf="av.OldAdvocate==null">--</p>             
+          </div>
+      </div>
+  </div>
+      
+      
+
+  
+  
+      
+      
+      <div class="row">
+      <div class="col-md-3"><label for="">Case Type</label></div>
+      <div class="col-md-3"><label for=""></label>{{CaseDetails.CaseType_Name}}</div>
+      <div class="col-md-3"><label for="">Project Code</label></div>
+      <div class="col-md-3"><label for="">{{CaseDetails.PD_Project_Name}}</label></div>
+  </div>
+      
+      <div class="row">
+      <div class="col-md-3"><label for="">Dept /  Section</label></div>
+      <div class="col-md-3"><label for="">{{CaseDetails.Department_Name}}</label></div>
+      <div class="col-md-3"><label for="">Prayers in Case</label></div>
+      <div class="col-md-3"><label for="" class="warp2">{{CaseDetails.Case_Prayers}}</label></div>
+  </div>
+      
+      <div class="row">
+      <div class="col-md-3"><label for="">Description</label></div>
+      <div class="col-md-3"><label for="" class="warp2">{{CaseDetails.Case_Note}}</label></div>
+      <div class="col-md-3"><label for="">Remarks</label></div>
+      <div class="col-md-3"><label for="" class="warp2">{{CaseDetails.Case_Remarks}}</label></div>
+  </div>
+
+  <div class="row">
+      <div class="col-md-3"><label for="">Document Name</label></div>
+      <div class="col-md-3"><a *ngIf="CaseDetails.Case_UploadPath!=null" target="_blank" href="{{CaseDetails.Case_UploadPath}}">View</a></div>
+      <div class="col-md-3"><label for="">Document Name</label></div>
+      <div class="col-md-3"><a *ngIf="CaseDetails.Case_UploadPath1!=null" target="_blank" href="{{CaseDetails.Case_UploadPath1}}">View</a></div>
+  </div>
+   <div class="row">
+      <div class="col-md-3"><label for="">Document Name</label></div>
+      <div class="col-md-3"><a *ngIf="CaseDetails.Case_UploadPath2!=null" target="_blank" href="{{CaseDetails.Case_UploadPath1}}">View</a></div>
+     
+  </div>
+ 
+  
+       
+    <div class="row">
+      <div class="col-md-3"><label for="">Court Attended? </label></div>
+      <div class="col-md-3">
+        <label for="" *ngIf="LastCaseProceedinglist.CaseProc_Courtattend=='Y'">Yes</label>
+        <label for="" *ngIf="LastCaseProceedinglist.CaseProc_Courtattend=='N'">No</label>
+      </div>
+      <div class="col-md-3"><label for="">Settlement Done</label></div>
+      <div class="col-md-3">
+          <label for="" *ngIf="LastCaseProceedinglist.CaseProc_SettlementDone=='Y'">Yes</label>
+          <label for="" *ngIf="LastCaseProceedinglist.CaseProc_SettlementDone=='N'">No</label>
+      </div>
+  </div>
+      
+       <div class="row">           
+      <div class="col-md-3"><label for="">Status</label></div>
+      <div class="col-md-3"><label for="">{{LastCaseProceedinglist.CaseProc_Status}}</label></div>
+      <div class="col-md-3">
+        <label for="">Next Hearing Date</label>
+      </div>
+      <div class="col-md-3" *ngIf="LastCaseProceedinglist.CaseProc_Status == 'Ongoing'">{{LastCaseProceedinglist.CaseProc_NextHearingDate | date:'dd/MM/yyyy'}}</div>
+  </div>
+      
+       <div class="row">
+      <div class="col-md-3"><label for="">Note </label></div>
+      <div class="col-md-3"></div>
+  </div>        
+  
+   </div>
+   
+   
+   
+   
+   <div class="container">
+      <div class="title row">
+       Payment Details
+   </div>
+       <div class="row">
+         <div *ngFor="let a of AdvocateDetails">
+           <div class="col-md-2">
+               <label for="">{{a.Adv_Name}}</label>
+           </div>
+           <div class="col-md-2">
+               <button class="btn btn-primary" (click)="GetBillDetails(CaseDetails.Case_Id,a.AC_Adv_Id_FK)" style="font-size:13px;padding:3px;">View Payment</button>
+           </div>
+          </div>           
+       </div>
+   </div>
+
+   <div *ngIf="paybill">
+    <div class="title2 themeheading2">
+     Advocate Payment
+    </div>
+    
+    <div class="container-fluid case-info">
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <td>Sl No.</td>
+              <td>Date</td>
+              <td>Amount</td>
+              <td>Purpose</td>          
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let q of AdvocatesCasesbilllist; let i=index">
+              <td>{{i+1}}</td>
+              <td>{{q.AP_Date | date:'dd/MM/yyyy'}}</td>
+              <td>{{q.AP_Amount}}</td>
+              <td class="warp2">{{q.AP_Purpose}}</td>                
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>    
+    </div>
+</div>
+
+
+<div *ngIf="CaseListsearch">
+<div class="title themeheading">
+  List of Cases
+</div>
+
+<div class="container-fluid case-info">
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <td>Sl no.</td>
+          <td>Case No.</td>
+          <td>File No.</td>
+          <td>Case reg Date</td>  
+          <td>Case Type</td>
+          <td>Court</td>
+          <td *ngIf="Name == 'Adv_Name'">Advocate</td>
+          <td *ngIf="Name == 'Petitioner'">Petitioner</td>
+          <td *ngIf="Name == 'Respondent'">Respondent</td>
+          <td>Office</td>   
+          <td>View</td>      
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let q of QueryCasesList; let i=index">
+          <td>{{i+1}}</td>
+          <td>{{q.Case_No}}</td>
+          <td>{{q.Case_File_No}}</td>
+          <td>{{q.Case_Reg_Date |date : 'dd/MM/yyyy'}}</td>
+          <td>{{q.CaseType_Name}}</td>
+          <td>{{q.Court_Name}}</td>
+          <td *ngIf="(Name == 'Adv_Name')||(Name == 'Petitioner')||(Name == 'Respondent')">{{q.NameOfP}}</td>
+          <td>{{q.OfficeName}}</td>        
+          <td class="text-center">
+            <a (click)="view(q.Case_No)">
+                <i class="fa fa-lg fa-eye themecolor"></i>
+            </a>
+        </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+
+
+</form>
+</div>

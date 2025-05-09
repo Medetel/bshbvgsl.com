@@ -1,0 +1,186 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary float-right" [routerLink]="['/home/landpurchase/land-pur-agreement']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+
+
+  <form (ngSubmit)="mode=='edit'?UpdateLandPurchase(LandPurchaseForm):SaveLandPurchase(LandPurchaseForm)"
+    #LandPurchaseForm="ngForm" name="form1">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <select #LP_PD_Id_FK="ngModel" name="LP_PD_Id_FK" [(ngModel)]="l.LP_PD_Id_FK" class="custom-field" required
+              (change)="GetProjectId(l.LP_PD_Id_FK)">
+              <option value="undefined">---Select---</option>
+              <option *ngFor="let project of projectlist" [value]="project.PD_Id">
+                {{project.PD_Project_Code}} - {{project.PD_Project_Name}} - {{project.Phase_Name}}
+              </option>
+            </select>
+            <span>Select Project OR Proposal.</span>
+            <label>Project<span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="LP_PD_Id_FK.invalid && (LP_PD_Id_FK.dirty || LP_PD_Id_FK.touched || formInvalid)">
+              <span *ngIf="LP_PD_Id_FK.errors.required">Project is required.</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="l.LP_PR_Id_FK" #LP_PR_Id_FK="ngModel" name="LP_PR_Id_FK" (change)="GetOtherrelatedinfo(l.LP_PR_Id_FK)"
+              [disabled]="mode =='view'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="p.PR_Id_PK" *ngFor="let p of proposallist;">
+                {{p.PR_Id}} </option>
+            </select>
+            <label for="">Proposal Id
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="LP_PR_Id_FK.invalid && (LP_PR_Id_FK.dirty || LP_PR_Id_FK.touched || formInvalid)">
+              <span *ngIf="LP_PR_Id_FK.errors.required">Proposal Id is required.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <label for="">Procurement Type : </label><span>{{ProposalFor}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Scheme : </label><span>{{Sch_Name}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">District : </label><span>{{district}}</span>
+        </div>
+
+
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <label for="">Village/City/Colony : </label><span> {{Village}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Proposal receipt date : </label><span>{{Submitted_Date | date:'dd-MM-yyyy'}}</span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Agreement No. <span class="mandatory">*</span></label>
+            <input type="text" class="custom-field" [(ngModel)]="l.LP_Note_No" #LP_Note_No="ngModel" name="LP_Note_No" required>
+          </div>
+          <div class="error-msg" *ngIf="LP_Note_No.invalid && (LP_Note_No.dirty || LP_Note_No.touched || formInvalid)">
+            <span *ngIf="LP_Note_No.errors.required">Agreement No. is required.</span>
+        </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Agreement Date<span class="mandatory">*</span></label>
+            <input type="date" class="custom-field" [(ngModel)]="l.LP_Note_Date" #LP_Note_Date="ngModel" name="LP_Note_Date" required>
+          </div>
+          <div class="error-msg" *ngIf="LP_Note_Date.invalid && (LP_Note_Date.dirty || LP_Note_Date.touched || formInvalid)">
+            <span *ngIf="LP_Note_Date.errors.required">Agreement Date is required.</span>
+        </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-1">
+          <div class="input-group" style="margin-top: 26px;text-align: end;">
+            <label for="">Document </label>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="input-group">
+            <input type="file" #Image accept="application/pdf" (change)="imageUpload($event.target.files)" id="LP_file"
+             [(ngModel)]="l.LP_file" #LP_file="ngModel" name="LP_file">
+             <a class="" [hidden]="l.LP_file==null" *ngIf="mode=='view' || mode=='edit'" target="_blank" href="{{l.LP_file}}">view</a>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Note </label>
+            <textarea name="" id="" cols="30" rows="3" class="custom-field" maxlength="300" [(ngModel)]="l.LP_Note" #LP_Note="ngModel" name="LP_Note"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+            <div class="input-group">
+                <!-- (change)="GetLandOwnerName(o.ON_LO_Id_Fk)" -->
+                <select class="custom-field" [(ngModel)]="l.LP_LOD_Id_Fk" #LP_LOD_Id_Fk="ngModel" name="LP_LOD_Id_Fk"
+                    [disabled]="mode =='view'" (change)="GetlanddetailsforLA(l.LP_PD_Id_FK,l.LP_Id_PK,l.LP_LOD_Id_Fk,'save')" required>
+                    <option [value]="undefined" selected>---Select---</option>
+                    <option [value]="ll.LOD_Id_PK" *ngFor="let ll of Landownerlist;">
+                        {{ll.LOD_LO_Name}} </option>
+                </select>
+                <label for="">Land Owner
+                    <span class="mandatory">*</span>
+                </label>
+                <div class="error-msg" *ngIf="LP_LOD_Id_Fk.invalid && (LP_LOD_Id_Fk.dirty || LP_LOD_Id_Fk.touched || formInvalid)">
+                    <span *ngIf="LP_LOD_Id_Fk.errors.required">Land Owner is required.</span>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table table-striped grid table-bordered">
+            <thead>
+              <tr>
+                <th rowspan="2">Sl.No</th>
+                <th rowspan="2"> Land Owner Name </th>
+                <th rowspan="2">Survey No</th>
+                <th rowspan="2">Procurement Type</th>
+                <th rowspan="2">Extent</th>
+                <th rowspan="2">Akar</th>
+                <th colspan="4" class="text-center">Schedule</th>
+                <th rowspan="2">Status</th>
+                <th rowspan="2" class="text-center"> Select </th>
+              </tr>
+              <tr>
+                <th>North</th>
+                <th>South</th>
+                <th>East</th>
+                <th>West</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let sur of LandDetailslist;let i=index" [hidden]="sur.LD_LPPId_Selected==1">
+                  <!-- [hidden]="sur.LD_Not6_Selected==1" -->
+                <td>{{i+1}}</td>
+                <td>{{sur.LOD_LO_Name}}</td>
+                <td>{{sur.LD_SurveyNo}}</td>
+                <td>{{sur.MOP_Name}}</td>
+                <td>{{sur.LD_Extents}}</td>
+                <td>{{sur.LD_Akar}}</td>
+                <td>{{sur.LD_North}}</td>
+                <td>{{sur.LD_South}}</td>
+                <td>{{sur.LD_East}}</td>
+                <td>{{sur.LD_West}}</td>
+                <td>{{sur.LD_LPAId_Selected=='1'?'Accepted':''}}</td>
+                <td class="text-center" *ngIf="mode=='save'">
+                  <button type="button" [hidden]="sur.LD_LPAId_Selected==1" (click)="selectexculdesurveynoforLa(sur.LD_Id,'in',i,l.LP_PD_Id_FK)">Select </button>
+                  <button type="button" [hidden]="sur.LD_LPAId_Selected!=1" (click)="selectexculdesurveynoforLa(sur.LD_Id,'ex',i,l.LP_PD_Id_FK)">Exclude </button>
+                </td>
+                <td class="text-center" *ngIf="mode!='save'">
+                  <button type="button" [hidden]="sur.LD_LPAId_Selected==1" (click)="selectexculdesurveyno(sur.LD_Id,'in',1,l.LP_PD_Id_FK,sur.LOD_Id_PK)">Select </button>
+                  <button type="button" [hidden]="sur.LD_LPAId_Selected!=1" (click)="selectexculdesurveyno(sur.LD_Id,'ex',1,l.LP_PD_Id_FK,sur.LOD_Id_PK)">Exclude </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div> 
+
+      <div class="text-center">
+        <button class="btn btn-primary" [disabled]="mode=='view'" type="submit">Save</button>
+        <!-- <button class="btn btn-primary" type="button">Cancel</button> -->
+        <button class="btn btn-primary" type="reset" [disabled]="mode=='view'">Cancel</button>
+      </div>
+
+    </div>
+  </form>
+</div>

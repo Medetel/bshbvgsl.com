@@ -1,0 +1,85 @@
+.row{
+    padding:10px;
+}
+
+/* .row:nth-child(odd){
+    background: #f2f2f2;
+} */
+
+
+ .input-group {
+    position: relative;
+    margin: 10px 0;
+  }
+  
+input.custom-field,textarea.custom-field,select.custom-field {
+    font-size: 18px;
+    padding: 6px;
+    display: block;
+    width: 100%;
+    border: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .mandatory{
+    color:red;
+  }
+
+  .field-title{
+    width:200px;
+    display:inline-block;
+    color:#807f7f;
+  }
+  td{
+    border: 1px solid #ddd;
+}
+
+.mandatory{
+    color:red;
+}
+
+/* .tableBodyScroll tbody {
+  display: block;
+  max-height: 400px;
+  overflow-y: scroll;
+}
+
+.tableBodyScroll thead,
+tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+} */
+
+/* .fixed {
+  width:350px;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+.fixed th {
+  text-decoration: underline;
+}
+.fixed th,
+.fixed td {
+  padding: 5px;
+  text-align: left;
+  min-width: 200px;
+}
+
+
+.fixed thead { 
+  color: #fdfdfd;
+}
+.fixed thead tr {
+  display: block;
+  position: relative;
+}
+.fixed tbody {
+  display: block;
+  overflow: auto;
+  width: 100%;
+  height: 100px;
+  overflow-y: scroll;
+    overflow-x: hidden;
+} */

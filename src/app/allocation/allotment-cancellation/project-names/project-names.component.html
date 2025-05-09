@@ -1,0 +1,125 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <div class="float-right">
+      <a class="btn btn-primary " routerLink="/home/allotmentcancellation">Back</a>
+    </div>
+  </div>
+  <div class="container-fluid">
+
+
+    <form>
+
+
+
+      <!-- <div class="title themeheading">{{title}}
+        <div class="float-right">
+          Items per page:
+          <select name="SearchRows" #SearchRows="ngModel" [(ngModel)]="itemsPerPage" class="noofpage" (change)="itemsPerPageChanged(itemsPerPage, 1)">
+            <option [ngValue]="5">5</option>
+            <option [ngValue]="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+            <option value="50">50</option>
+          </select>
+          <a class="btn btn-primary " routerLink="/home/allotmentcancellation">Back</a>
+        </div>
+        <span class="clearfix"></span>
+      </div> -->
+      <!-- <div class="searchbar">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-1">
+              <label>Search</label>
+            </div>
+            <div class="col-md-4">
+              <select name="SearchCriteria" class="form-control" required>
+                <option [ngValue]="undefined" selected>---Select---</option>
+                <option value="office-code">Scheme</option>
+                <option value="office-name">District</option>
+                <option value="address">Project</option>
+                <option value="address">Phase</option>
+              </select>
+              <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)" class="error-msg">
+                                  <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+                              </div>
+            </div>
+            <div class="col-md-4">
+              <input type="text" name="SearchText" class="form-control" placeholder="Search.." required>
+              <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+                                  <div *ngIf="SearchText.errors.required">Search text is required</div>
+                              </div>
+            </div>
+            <div class="col-md-3">
+              <button class="btn btn-default" type="submit">Search</button>
+              <button class="btn btn-default" type="reset" (click)="GetAllOffices(itemsPerPage, 1)">Clear</button>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <div class="table-responsive">
+        <table class="table table-striped grid">
+          <thead>
+            <tr>
+              <td rowspan="2">Sl No.</td>
+              <td rowspan="2">Place Name</td>
+              <td rowspan="2">Pl_Code</td>
+              <td rowspan="2">Phase</td>
+              <!-- <td rowspan="2">Ph_Code</td> -->
+
+              <td rowspan="2">VPub</td>
+              <td rowspan="2">VDQ</td>
+              <td rowspan="2">VCor</td>
+
+              <td rowspan="2">ALPub</td>
+
+              <td rowspan="2">AlDQ</td>
+              <td rowspan="2">ALCor</td>
+              <td rowspan="2">VTotal</td>
+              <td rowspan="2">ALTotal</td>
+              <td rowspan="2">Total</td>
+            </tr>
+
+          </thead>
+          <tbody>
+            <tr *ngFor="let canlay of cancellayoutlist;let i=index">
+              <td>{{i+1}}</td>
+              
+              <td><a href="#" style="text-decoration:underline;" [routerLink]="['/home/allotmentcancellation/allotted-vacant',canlay.PD_Id,canlay.PD_Project_Name,canlay.Phase_Name,Sch_Id]">{{canlay.PD_Project_Name}}</a></td>
+              <td>{{canlay.PD_Project_Code}}</td>
+              <!-- <td>{{canlay.}}</td> -->
+              <td>{{canlay.Phase_Name}}</td>
+              <td>{{canlay.VPub}}</td>
+              <td></td>
+              <td>{{canlay.VCor}}</td>
+              <td>{{canlay.ALPub}}</td>
+              <td></td>
+              <td>{{canlay.ALCor}}</td>
+              <td>{{canlay.VTotal}}</td>
+              <td>{{canlay.ALTotal}}</td>
+              <td>{{canlay.Total}}</td>
+            </tr>
+
+          </tbody>
+        </table>
+        <!-- <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-11">
+              <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)" maxSize="9" directionLinks="true"
+                autoHide="false" previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                screenReaderCurrentLabel="You're on page">
+              </pagination-controls>
+            </div>
+            <div class="col-md-1">
+              Total:
+              <span>{{totalItems}}</span>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </form>
+
+  </div>
+</div>

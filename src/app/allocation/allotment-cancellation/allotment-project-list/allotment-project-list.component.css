@@ -1,0 +1,38 @@
+/* .row{
+    padding: 1em 0px 0px 0px !important;
+    margin-bottom: -3px;
+} */
+
+
+/* .row:nth-child(odd){
+    background: #ececec;
+}
+.row:nth-child(even){
+    background: white;
+} */
+
+/* .searchbar{
+    padding:10px;
+    background: #212121;
+}
+
+label{
+    color:#fff;
+    margin-top:8px;
+}
+
+.form-control{
+    padding:4px;
+}
+
+select.form-control:not([size]):not([multiple]) {
+    height: calc(2rem + 2px);
+}
+
+button{
+    width:100px;
+    margin-right: 5px;
+} */
+td{
+    border: 1px solid #ddd;
+}

@@ -1,0 +1,525 @@
+<div class="wrapper" *ngIf="mode !== 'print'">
+  <div class="title themeheading">
+  {{title}}
+    <!-- <button class="btn btn-primary float-right" [routerLink]="['/home/submitrequest']">Back</button> -->
+    <span class="clearfix"></span>
+  </div>
+  <form #Rtionline="ngForm" (ngSubmit)="mode=='edit'? UpdateRTIApplicants(Rtionline):SaveRtionline(Rtionline)"
+    autocomplete="off">
+    <div class="container-fluid">&nbsp;
+      <div class="row" style="background-color: darkkhaki; ">
+        <div class="col-md-6">
+          <h5>Personal Details Of RTI Applicant</h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" name="rappname" [(ngModel)]="rti.rappname" #rappname="ngModel"
+              placeholder=" " pattern="[a-zA-Z ]*" required [disabled]="mode=='view' || mode=='edit'">
+            <label for="">Name
+              <span class="mandatory">*</span>
+            </label>
+          <div class="error-msg" *ngIf="rappname.invalid && (rappname.dirty || rappname.touched || formInvalid)">
+            <span *ngIf="rappname.errors.required">Name is required.</span>
+            <span *ngIf="rappname.errors.pattern">Name must contain only alphabets.</span>
+          </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" name="rappfname" [(ngModel)]="rti.rappfname" #rappfname="ngModel"
+              placeholder=" " pattern="[a-zA-Z ]*" [disabled]="mode=='view' || mode=='edit'" required>
+            <label for="">Father Name
+              <span class="mandatory">*</span>
+            </label>
+          <div class="error-msg" *ngIf="rappfname.invalid && (rappfname.dirty || rappfname.touched || formInvalid)">
+            <span *ngIf="rappfname.errors.required">Father Name is required.</span>
+            <span *ngIf="rappfname.errors.pattern">Father Name must contain only alphabets.</span>
+          </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <label>Gender
+            <span class="mandatory">*</span>
+            <div class="error-msg" *ngIf="rappgender.invalid && (rappgender.dirty || rappgender.touched || formInvalid)">
+              <span *ngIf="rappgender.errors.required">Gender is required</span>
+            </div>
+          </label>
+        </div>
+        <div class="col-md-3">
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="rappgender" value="M" [(ngModel)]="rti.rappgender"
+                #rappgender="ngModel" id="inlineRadio1" [disabled]="mode=='view' || mode=='edit'" required> Male
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="rappgender" value="F" [(ngModel)]="rti.rappgender"
+                #rappgender="ngModel" id="inlineRadio1" [disabled]="mode=='view' || mode=='edit'" required> Female
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="rappgender" value="O" [(ngModel)]="rti.rappgender"
+                #rappgender="ngModel" id="inlineRadio1" [disabled]="mode=='view' || mode=='edit'" required>Others
+            </label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+          <input type="text" class="custom-field" name="rappemail" [(ngModel)]="rti.rappemail" #rappemail="ngModel"
+            placeholder=" " pattern="^[a-zA-Z0-9._%-+]+@[a-z0-9.-]+\.[a-z]{2,3}$" required
+            [disabled]="mode=='view' || mode=='edit'" (input)="checkEmailMatch()">
+            <label for="">Email Id
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="rappemail.invalid && (rappemail.dirty || rappemail.touched || formInvalid)">
+              <span *ngIf="rappemail.errors.required">Email Id is required.</span>
+              <span *ngIf="rappemail.errors?.pattern">Email is invalid</span>
+              <span *ngIf="email.value !== rappemail.value">Emails do not match</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" placeholder=" " [disabled]="mode=='view' || mode=='edit'">
+            <label for="">Confirm Email-id
+              <span class="mandatory">*</span>
+            </label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" name="rappmobnum" [(ngModel)]="rti.rappmobnum" #rappmobnum="ngModel" minlength="10"
+             maxlength="10" pattern="^[0-9]*$" placeholder=" " required [disabled]="mode=='view' || mode=='edit'">
+            <label for="">Mobile Number
+              <!-- <span class="mandatory">*</span> -->
+            </label>
+          <div class="error-msg" *ngIf="rappmobnum.invalid && (rappmobnum.dirty || rappmobnum.touched || formInvalid)">
+            <span *ngIf="rappmobnum.errors.required">Mobile Number is required.</span>
+            <span *ngIf="rappmobnum.errors.pattern"> Mobile Number must be numeric
+              characters.</span>
+            <span *ngIf="rappmobnum.errors.minlength">Mobile Number must be atleast 10
+              characters</span>
+          </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" name="rappaltmobnum" [(ngModel)]="rti.rappaltmobnum" minlength="10"
+             maxlength="10" pattern="^[0-9]*$" #rappaltmobnum="ngModel" placeholder=" " required [disabled]="mode=='view' || mode=='edit'">
+            <label for="">Alternate Mobile Number
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="rappaltmobnum.invalid && (rappaltmobnum.dirty || rappaltmobnum.touched || formInvalid)">
+              <span *ngIf="rappaltmobnum.errors.required">Alternate Mobile Number is required.</span>
+              <span *ngIf="rappaltmobnum.errors.pattern">Alternate Mobile Number must be numeric
+                characters.</span>
+              <span *ngIf="rappaltmobnum.errors.minlength">Alternate Mobile Number must be atleast 10
+                characters</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <textarea name="" id="" cols="30" rows="10" [(ngModel)]="rti.rappaddress" #rappaddress="ngModel"
+              name="rappaddress" class="custom-field" required [disabled]="mode=='view' || mode=='edit'" ></textarea>
+            <label for="">Address
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="rappaddress.invalid && (rappaddress.dirty || rappaddress.touched || formInvalid)">
+              <span *ngIf="rappaddress.errors.required">Address is required.</span>
+            </div>
+          </div>
+          <!-- <div class="input-group">
+            <input type="text" class="custom-field" name="rappaddress" [(ngModel)]="rti.rappaddress" #rappaddress="ngModel"
+              placeholder=" " required [disabled]="mode=='view' || mode=='edit'">
+            <label for="">Address
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="rappaddress.invalid && (rappaddress.dirty || rappaddress.touched || formInvalid)">
+              <span *ngIf="rappaddress.errors.required">Address is required.</span>
+            </div>
+          </div> -->
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" name="rapppincode" [(ngModel)]="rti.rapppincode"
+              #rapppincode="ngModel" placeholder=" " [disabled]="mode=='view' || mode=='edit'" required>
+            <label for="">Pincode
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="rapppincode.invalid && (rapppincode.dirty || rapppincode.touched || formInvalid)">
+              <span *ngIf="rapppincode.errors.required">Pincode is required.</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label>Country
+            <span class="mandatory">*</span>
+            <div class="error-msg" *ngIf="rappcountry.invalid && (rappcountry.dirty || rappcountry.touched || formInvalid)">
+              <span *ngIf="rappcountry.errors.required">Country is required</span>
+            </div>
+          </label>
+        </div>
+        <div class="col-md-3">
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="rappcountry" [(ngModel)]="rti.rappcountry"
+                #rappcountry="ngModel" value="India" id="inlineRadio1" required
+                [disabled]="mode=='view' || mode=='edit'" [checked]="isIndiaSelected()"> India
+            </label>
+          </div>
+          <!-- <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="radio" name="country"> Other
+                </label>
+            </div> -->
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="rti.rappstate" #rappstate="ngModel" name="rappstate" required
+              [disabled]="mode=='view' || mode=='edit'" >
+              <!-- <option [value]="undefined" selected>---Select---</option> -->
+              <option [value]="Bihar" selected>Bihar</option>
+            </select>
+            <label for="">State</label>
+            <div class="error-msg" *ngIf="rappstate.invalid && (rappstate.dirty || rappstate.touched || formInvalid)">
+              <span *ngIf="rappstate.errors.required">State is required.</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label>Educational Status</label>
+          <div class="error-msg" *ngIf="rappedstatus.invalid && (rappedstatus.dirty || rappedstatus.touched || formInvalid)">
+            <span *ngIf="rappedstatus.errors.required">Educational Status is required</span>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="rappedstatus" [(ngModel)]="rti.rappedstatus"
+                #rappedstatus="ngModel" value="Literate" id="inlineRadio1" required [disabled]="mode=='view' || mode=='edit'">
+              Literate
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="rappedstatus" [(ngModel)]="rti.rappedstatus"
+                #rappedstatus="ngModel" value="Illiterate" id="inlineRadio1" required [disabled]="mode=='view' || mode=='edit'">
+              Illiterate
+            </label>
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <label>Status
+            <span class="mandatory">*</span>
+            <div class="error-msg" *ngIf="rappstatus.invalid && (rappstatus.dirty || rappstatus.touched || formInvalid)">
+              <span *ngIf="rappstatus.errors.required"> Status is required</span>
+            </div>
+          </label>
+        </div>
+        <div class="col-md-3">
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="rappstatus" [(ngModel)]="rti.rappstatus"
+                #rappstatus="ngModel" value="R" id="inlineRadio1" required [disabled]="mode=='view' || mode=='edit'"> Rural
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" name="rappstatus" [(ngModel)]="rti.rappstatus"
+                #rappstatus="ngModel" value="U" id="inlineRadio1" required [disabled]="mode=='view' || mode=='edit'"> Urban
+            </label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="rti.israppbpl" #israppbpl="ngModel" name="israppbpl" required
+              [disabled]="mode=='view' || mode=='edit'">
+              <option [value]="undefined" selected>---Select---</option>
+              <option value="Y">Yes</option>
+              <option value="N">No</option>
+            </select>
+            <label for="">Is the Applicant Below Poverty Line?
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="israppbpl.invalid && (israppbpl.dirty || israppbpl.touched || formInvalid)">
+              <span *ngIf="israppbpl.errors.required">Is the Applicant Below Poverty Line is required.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="mode !== 'edit'">
+        <div class="col-md-6">
+          <input type="file" #Image accept="rtionline/pdf" id="rappsupportingdoc" 
+            (change)="Supportingdocument($event.target.files)" name="rappsupportingdoc"
+            [(ngModel)]="rti.rappsupportingdoc" #rappsupportingdoc="ngModel" required
+            [disabled]="mode=='view' || mode=='edit'">
+          <a class="" *ngIf="rti.rappsupportingdoc!=null && hide" target="_blank"
+            href="{{rti.rappsupportingdoc}}">view</a>
+          <label for="">Supporting Document
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="rappsupportingdoc.invalid && (rappsupportingdoc.dirty || rappsupportingdoc.touched || formInvalid)">
+            <span *ngIf="rappsupportingdoc.errors.required"> Supporting Document is required</span>
+          </div>
+
+        </div>
+        <div class="col-md-12">
+          <label style="color: red">
+            <span style="font-size: 20px;color: black"></span>
+            Note: Do not upload Aadhar Card or PAN Card or any other personal Identification (Except BPL Card).
+            PDF file name should be less than 12 alpha-numeric characters only and shouldn't contain any blank spaces.
+          </label>
+        </div>
+      </div>
+      <!-- <div class="row" *ngIf="mode == 'edit' || mode == 'view'">
+        <div class="col-md-6">
+          <div class="input-group">
+                      <input type="text" class="custom-field" name="subject_text" [(ngModel)]="rti.subject_text" #subject_text="ngModel"
+                        placeholder=" " required [disabled]="mode=='view' || mode=='edit'">
+                      <label for="">Subject for RTI Request Application
+                        <span class="mandatory">*</span>
+                      </label>
+                     </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <textarea name="" id="" cols="30" rows="10" [(ngModel)]="rti.rapptextforapp" #rapptextforapp="ngModel"
+              name="rapptextforapp" class="custom-field" required [disabled]="mode=='view' || mode=='edit'"></textarea>
+            <label for="">Text for RTI Request Application
+              <span class="mandatory">*</span>
+            </label>
+          </div>
+        </div>
+      </div> -->
+      <div class="row" style="background-color: darkkhaki; ">
+        <div class="col-md-6">
+          <h5>Request Details</h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" maxlength="50" class="custom-field" name="subject_text" [(ngModel)]="rti.subject_text"
+              #subject_text="ngModel" placeholder=" " required [disabled]="mode=='view' || mode=='edit'">
+            <label for="">Subject for RTI Request Application
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="subject_text.invalid && (subject_text.dirty || subject_text.touched || formInvalid)">
+              <span *ngIf="subject_text.errors.required">Subject for RTI Request Application is required.</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <textarea name="" id="" cols="30" rows="10" [(ngModel)]="rti.rapptextforapp" #rapptextforapp="ngModel"
+              name="rapptextforapp" class="custom-field" required [disabled]="mode=='view' || mode=='edit'"></textarea>
+            <label for="">Text for RTI Request Application
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="rapptextforapp.invalid && (rapptextforapp.dirty || rapptextforapp.touched || formInvalid)">
+              <span *ngIf="rapptextforapp.errors.required">Text for RTI Request Application is required.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="mode === 'edit'">
+        <div class="col-md-6">
+          <div class="input-group">
+            <textarea name="" id="" cols="30" rows="10" [(ngModel)]="rti.textforofficer" #textforofficer="ngModel"
+              name="textforofficer" class="custom-field" required></textarea>
+            <label for="">Text for RTI Officer
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="textforofficer.invalid && (textforofficer.dirty || textforofficer.touched || formInvalid)">
+              <span *ngIf="textforofficer.errors.required">Text for RTI Officer is required.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="row" *ngIf="mode !== 'edit'">
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="rti.Payment_Mode" #Payment_Mode="ngModel" name="Payment_Mode"
+              required [disabled]="mode=='view'">
+              <option [value]="undefined" selected>---Select---</option>
+              <option value="Offline">Offline</option>
+              <option value="Online">Online</option>
+            </select>
+            <label for="">Payment Mode</label>
+            <div class="error-msg"
+              *ngIf="Payment_Mode.invalid && (Payment_Mode.dirty || Payment_Mode.touched || formInvalid)">
+              <span *ngIf="Payment_Mode.errors.required">Payment Mode is required.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row" *ngIf="rti.Payment_Mode === 'Offline' && mode !== 'edit'">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" name="Bank_Branch" [(ngModel)]="rti.Bank_Branch" #Bank_Branch="ngModel"
+              class="custom-field" placeholder=" " [disabled]="mode=='view'" required>
+            <label for="">Bank Name & Branch
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="Bank_Branch.invalid && (Bank_Branch.dirty || Bank_Branch.touched || formInvalid) &&rti.Payment_Mode === 'Offline'">
+              <span *ngIf="Bank_Branch.errors.required">Bank Name & Branch is required.</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" name="BankChallan_No" [(ngModel)]="rti.BankChallan_No"
+              #BankChallan_No="ngModel" placeholder=" " required [disabled]="mode=='view'">
+            <label for="">Bank Challan Number
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="BankChallan_No.invalid && (BankChallan_No.dirty || BankChallan_No.touched || formInvalid)&& rti.Payment_Mode === 'Offline'">
+              <span *ngIf="BankChallan_No.errors.required">Bank Challan Number is required.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="mode !== 'edit'">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="number" class="custom-field" placeholder=" " name="PAmount" [(ngModel)]="rti.PAmount"
+              #PAmount="ngModel" [disabled]="mode=='view'">
+            <label for="">Amount to be Paid(₹)
+              <span class="mandatory">*</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <label style="color: red">
+            <span style="font-size: 20px;color: black"></span>
+            Note:Please pay amount of Rs 150/-,for submisson of RTI request.
+          </label>
+        </div>
+      
+      </div>
+
+
+      <!-- <div class="row" *ngIf="mode !== 'edit'">
+        <div class="col-md-6">
+          <label>Security Code Captcha
+            <span class="mandatory">*</span>
+          </label>
+          <div>{{ securityCode }}</div>
+          <button (click)="refreshCode()">Refresh</button>
+          <form (ngSubmit)="submitForm()" style="margin-top: -30px; margin-left: 80px;">
+            <input type="text" [(ngModel)]="userInput" name="captchaInput" placeholder="Enter the code" />
+            <button type="submit">Submit</button>
+          </form>
+          <p *ngIf="message">{{ message }}</p>
+          <p *ngIf="successMessage">{{ successMessage }}</p>
+        </div>
+      </div> -->
+      <br>
+      <div class="text-center">
+        <button class="btn btn-primary" type="submit" [disabled]="mode=='view'">Submit</button>&nbsp;
+        <button class="btn btn-primary" (click)="goBack()">Back</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+
+
+<!-- submitrequest-form.component.html -->
+<!-- <div class="wrapper" *ngIf="mode === 'print'">
+<div class="letter-container" >
+  <div class="left-section">
+    <div class="applicant-details">
+      <p>hi</p>
+      <p>hello</p>
+      <p>me</p>
+    </div>
+    <div class="signature-date">
+      <p>Signature</p>
+      <p></p>
+    </div>
+  </div>
+  <div class="right-section">
+    <div class="subject">
+      <h2>Subject: RTI Request Application</h2>
+    </div>
+    <div class="rti-text">
+      <p>
+      
+        This is a sample text for the RTI request application. You can modify this according to your requirements.
+      </p>
+    </div>
+  </div>
+</div>
+</div> -->
+<!-- submitrequest-form.component.html -->
+
+
+<div class="letter" *ngIf="mode === 'print'">
+  <div class="top-right">
+    <p>Date: {{ getCurrentDate() | date:'dd/MM/yyyy' }}</p>
+  </div>
+  <div class="header">
+    <h4>To</h4>
+    <p>{{ rti.rappname }}</p>
+    <p>{{ rti.rappaddress }}</p>
+    <p>{{ rti.rapppincode }}</p>
+  </div>
+  <div class="body">
+  <h5 style="display: inline; margin-left: 3%;">Subject:</h5> <p style="display: inline;">{{ rti.subject_text }}</p>
+  <br>
+  <br>
+  <h6 style="margin-left: 3%;">Dear Applicant,</h6>
+    <h5 style="margin-left: 3%;">Request from Applicant</h5>
+
+    <p style="margin-left: 4%;">{{rti.rapptextforapp}}</p>
+
+    <h5 style="margin-left: 3%;">RTI Officer's Reply</h5>
+
+    <p style="margin-left: 4%;">{{rti.textforofficer}}</p>
+  </div>
+  <br>
+  <br>
+
+  <div class="bottom-right">
+    <p>Authorized Signatory</p>
+  </div>
+
+</div>
+
+<br>
+<div class="text-center" *ngIf="mode === 'print'">
+  <button class="btn btn-primary" type="button" (click)="printPage()">Print</button>
+</div>

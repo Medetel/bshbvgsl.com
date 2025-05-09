@@ -1,0 +1,30 @@
+<div class="report-body">
+  <div class="report-title">
+    Vacant Commercial Property Details
+  </div>
+
+
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr class="text-center">
+          <td>No.</td>
+          <td>District</td>
+          <td>Project</td>
+          <td>Phase</td>
+          <td>Property No.</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of datalist;let i = index;">
+          <td>{{i+1}}</td>
+          <td class="text-left">{{data.DI_District}}</td>
+          <td class="text-left">{{data.PD_Project_Name}}</td>
+          <td class="text-left">{{data.Phase_Name}}</td>
+          <td class="text-left">{{data.PR_Property_No}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

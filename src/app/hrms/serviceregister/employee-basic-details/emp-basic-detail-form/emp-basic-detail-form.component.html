@@ -1,0 +1,822 @@
+<div class="wrapper">
+    <div class="title themeheading">
+        {{title}}
+        <button class="btn btn-primary float-right" type="button" (click)="Back()">Back</button>
+        <span class="clearfix"></span>
+    </div>
+
+    <form (ngSubmit)="mode=='edit'?UpdateEmplDetails(EmplDetails):SaveEmplDetails(EmplDetails)" #EmplDetails="ngForm"
+        name="form1">
+        <div class="container-fluid">
+            <div class="row paddingtop25">
+                <!-- <div class="col-md-2">
+                    <div class="input-group">
+                        <label>EmpCode
+                            <span class="mandatory">*</span>
+                        </label>
+                        <br>
+                        <input type="text" class="custom-field" name="EMP_EMPLOYEE_CODE" maxlength="5"
+                            [(ngModel)]="e.EMP_EMPLOYEE_CODE" #EMP_EMPLOYEE_CODE="ngModel"
+                            [disabled]="mode=='view' || hide== true" pattern="^[0-9]{5}$" required>
+                    </div>
+                    <div class="error-msg pull-right"
+                        *ngIf="EMP_EMPLOYEE_CODE.invalid && (EMP_EMPLOYEE_CODE.dirty || EMP_EMPLOYEE_CODE.touched || formInvalid)">
+                        <span *ngIf="EMP_EMPLOYEE_CODE.errors.required">Employee Id required</span>
+                        <span *ngIf="EMP_EMPLOYEE_CODE.errors.pattern">5 digit number is allowed.</span>
+                    </div>
+                </div> -->
+                <div class="col-md-2">
+                    <div class="input-group">
+                        <label for="">First Name
+                            <span class="mandatory">*</span>
+                        </label>
+                        <input type="text" class="custom-field capitalize" name="EMP_FIRST_NAME" maxlength="50"
+                            [(ngModel)]="e.EMP_FIRST_NAME" #EMP_FIRST_NAME="ngModel"
+                            [disabled]="mode=='view' || hide== true" required pattern="[A-Za-z]+">
+                    </div>
+                    <div class="error-msg pull-right"
+                        *ngIf="EMP_FIRST_NAME.invalid && (EMP_FIRST_NAME.dirty || EMP_FIRST_NAME.touched || formInvalid)">
+                        <span *ngIf="EMP_FIRST_NAME.errors.required">Employee Name is required</span>
+                        <span *ngIf="EMP_FIRST_NAME.errors?.pattern">Employee first name should be alphabets.</span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="input-group">
+                        <label for="">Middle Name</label>
+                        <input type="text" class="custom-field capitalize" name="EMP_MIDDLE_NAME" maxlength="50"
+                            [(ngModel)]="e.EMP_MIDDLE_NAME" #EMP_MIDDLE_NAME="ngModel"
+                            [disabled]="mode=='view' || hide== true" pattern="[A-Za-z]+">
+                    </div>
+                    <div class="error-msg pull-right"
+                    *ngIf="EMP_MIDDLE_NAME.invalid && (EMP_MIDDLE_NAME.dirty || EMP_MIDDLE_NAME.touched || formInvalid)">
+                   
+                    <span *ngIf="EMP_MIDDLE_NAME.errors?.pattern">Employee Middle name should be alphabets.</span>
+                </div>
+
+
+
+
+                </div>
+                <div class="col-md-2">
+                    <div class="input-group">
+                        <label for="">Last Name</label>
+                        <input type="text" class="custom-field capitalize" name="EMP_LAST_NAME" maxlength="50"
+                            [(ngModel)]="e.EMP_LAST_NAME" #EMP_LAST_NAME="ngModel"
+                            [disabled]="mode=='view' || hide== true" pattern="[A-Za-z]+" >
+                    </div>
+                    <div class="error-msg pull-right"
+                    *ngIf="EMP_LAST_NAME.invalid && (EMP_LAST_NAME.dirty || EMP_LAST_NAME.touched || formInvalid)">
+                   
+                    <span *ngIf="EMP_LAST_NAME.errors?.pattern">Employee last name should be alphabets.</span>
+                </div>
+
+
+
+
+                </div>
+                <div class=" col-md-2 col-sm-2">
+                    <div class="input-group">
+                        <label>Signature</label>
+                        <input input *ngIf="!hide" type="file" #Image accept="image/*"
+                            (change)="imageUpload2($event.target.files)" id="SignaturePath">
+                        <a class="" *ngIf="e.SignaturePath!=null && (hide || mode=='edit')" target="_blank"
+                            href="{{e.SignaturePath}}">view</a>
+
+                        <!-- <a class="" *ngIf="mode=='edit'" target="_blank"
+                            href="{{e.SignaturePath}}">view</a> -->
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-2">
+                    <div class="input-group">
+                        <label>Employee Photo</label>
+                        <img src="{{e.PhotoUploadPath1}}" class="empphoto" alt=""> <br>
+                        <input input *ngIf="!hide" type="file" #Image accept="image/*"
+                            (change)="imageUpload($event.target.files)" id="PhotoUploadPath1">
+                        <!-- <a class="" *ngIf="e.PhotoUploadPath1!=null && hide" target="_blank"
+                        href="{{e.PhotoUploadPath1}}">view</a> -->
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!--  -->
+            <div class="row ">
+                <div class="col-md-4 ">
+                    <div class="input-group">
+                        <label>Gender
+                            <span class="mandatory">*</span>
+                        </label>
+                        <select class="custom-field" [(ngModel)]="e.EMP_GENDER" #EMP_GENDER="ngModel" name="EMP_GENDER"
+                            [disabled]="mode=='view' || hide== true" required>
+                            <option [value]="undefined" selected>---Select---</option>
+                            <option [value]="e.fix_code_id" *ngFor="let e of genderlist;">
+                                {{e.code_value}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="error-msg pull-right"
+                        *ngIf="EMP_GENDER.invalid && (EMP_GENDER.dirty || EMP_GENDER.touched || formInvalid)">
+                        <span *ngIf="EMP_GENDER.errors.required">Gender is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <label>Date of Birth
+                            <span class="mandatory">*</span>
+                        </label>
+                        <br>
+                        <input type="date" class="custom-field" name="EMP_DATE_OF_BIRTH"
+                            [(ngModel)]="e.EMP_DATE_OF_BIRTH" #EMP_DATE_OF_BIRTH="ngModel"
+                            [disabled]="mode=='view' || hide== true" (change)="dateChange(e.EMP_DATE_OF_BIRTH)"
+                            required>
+                    </div>
+                    <div class="error-msg pull-right"
+                        *ngIf="EMP_DATE_OF_BIRTH.invalid && (EMP_DATE_OF_BIRTH.dirty || EMP_DATE_OF_BIRTH.touched || formInvalid)">
+                        <span *ngIf="EMP_DATE_OF_BIRTH.errors.required">DOB is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <label>Place of Birth</label>
+                        <br>
+                        <input type="text" class="custom-field" name="EMP_PLACE" [(ngModel)]="e.EMP_PLACE"
+                            #EMP_PLACE="ngModel" [disabled]="mode=='view' || hide == true">
+                    </div>
+                    <div class="error-msg pull-right"
+                    *ngIf="EMP_PLACE.invalid && (EMP_PLACE.dirty || EMP_PLACE.touched || formInvalid)">
+                     <!-- <span *ngIf="EMP_PLACE.errors?.pattern">Place of birth should only be alphabets</span>  -->
+                   </div>
+
+
+
+
+                </div>
+            </div>
+            <div class="row">
+                <div class=" col-md-4">
+                    <div class="input-group">
+                        <label>Martial Status</label>
+                        <br>
+                        <select class="custom-field" [(ngModel)]="e.EMP_MARTIAL_STATUS" #EMP_MARTIAL_STATUS="ngModel"
+                            name="EMP_MARTIAL_STATUS" [disabled]="mode=='view' || hide== true">
+                            <option [value]="undefined" selected>---Select---</option>
+                            <option [value]="m.fix_code_id" *ngFor="let m of maritalStatuslist;">
+                                {{m.code_value}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <label>Height (in inches)</label>
+                        <br>
+                        <input type="number" class="custom-field" name="EMP_HEIGHT" [(ngModel)]="e.EMP_HEIGHT"
+                            #EMP_HEIGHT="ngModel" [disabled]="mode=='view' || hide== true">
+                    </div>
+                </div>
+                <div class=" col-md-4">
+                    <div class="input-group">
+                        <label>Weight (in Kg)</label>
+                        <br>
+                        <input type="number" class="custom-field" name="EMP_WEIGHT" [(ngModel)]="e.EMP_WEIGHT"
+                            #EMP_WEIGHT="ngModel" [disabled]="mode=='view' || hide== true">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class=" col-md-4">
+                    <div class="input-group">
+                        <label>Blood Group
+                            <span class="mandatory">*</span>
+                        </label>
+                        <br>
+                        <select class="custom-field" [(ngModel)]="e.EMP_BLOOD_GRP" #EMP_BLOOD_GRP="ngModel"
+                            name="EMP_BLOOD_GRP" [disabled]="mode=='view' || hide== true" required>
+                            <option [value]="undefined" selected>---Select---</option>
+                            <option [value]="b.fix_code_id" *ngFor="let b of bloodgrouplist;">
+                                {{b.code_value}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="error-msg pull-right"
+                        *ngIf="EMP_BLOOD_GRP.invalid && (EMP_BLOOD_GRP.dirty || EMP_BLOOD_GRP.touched || formInvalid)">
+                        <span *ngIf="EMP_BLOOD_GRP.errors.required">Blood Group is required</span>
+                    </div>
+                </div>
+                <div class=" col-md-4">
+                    <div class="input-group">
+                        <label> Whether Handicapped ?</label>
+                        <select class="custom-field" [(ngModel)]="e.EMP_HANDICAPPED_IND" #EMP_HANDICAPPED_IND="ngModel"
+                            name="EMP_HANDICAPPED_IND" [disabled]="mode=='view' || hide== true"
+                            (change)="ChangeHandi(e.EMP_HANDICAPPED_IND)">
+                            <option>--Select--</option>
+                            <option value="Y">Yes</option>
+                            <option value="N">No</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4" *ngIf="yes == true">
+                    <div class="input-group">
+                        <label>Handicapped Type
+                            <span class="mandatory">*</span>
+                        </label>
+                        <br>
+                        <input type="text" class="custom-field" name="EMP_HANDICAPPED_TYPE"
+                            [(ngModel)]="e.EMP_HANDICAPPED_TYPE" #EMP_HANDICAPPED_TYPE="ngModel"
+                            [disabled]="mode=='view' || hide== true || yes != true" required>
+                    </div>
+                    <div class="error-msg pull-right"
+                        *ngIf="EMP_HANDICAPPED_TYPE.invalid && (EMP_HANDICAPPED_TYPE.dirty || EMP_HANDICAPPED_TYPE.touched || formInvalid)">
+                        <span *ngIf="EMP_HANDICAPPED_TYPE.errors.required">Handicap Type is required.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <label>Caste</label>
+                        <br>
+                        <select class="custom-field" [(ngModel)]="e.EMP_CASTE_ID" #EMP_CASTE_ID="ngModel"
+                            name="EMP_CASTE_ID" [disabled]="mode=='view' || hide== true"
+                            (click)="onchangeCate(e.EMP_CASTE_ID)">
+                            <option [value]="c.caste_id" *ngFor="let c of castelist;">
+                                {{c.caste_name}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class=" col-md-4">
+                    <label>Caste Category :{{CasteCategory}}</label>
+                </div>
+                <div class=" col-md-4">
+                    <label>Religion :{{RelName}}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <label for="">Language 1
+                            <span class="mandatory">*</span>
+                        </label>
+                        <select class="custom-field" [(ngModel)]="e.Langauge1" #Langauge1="ngModel" name="Langauge1"
+                            [disabled]="mode=='view' || hide== true" (change)="ChangeofLangu1(e.Langauge1)" required>
+                            <option [value]="undefined" selected>---Select---</option>
+                            <option [value]="l.fix_code_id" *ngFor="let l of languagelist;">
+                                {{l.code_value}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="error-msg pull-right"
+                        *ngIf="Langauge1.invalid && (Langauge1.dirty || Langauge1.touched || formInvalid)">
+                        <span *ngIf="Langauge1.errors.required">Langauge1 is required</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" [(ngModel)]="e.Langauge1_MotherTo" #Langauge1_MotherTo="ngModel"
+                            name="Langauge1_MotherTo" [disabled]="mode=='view' || hide== true" type="checkbox"
+                            id="inlineCheckbox4" value="True">
+                        <label class="form-check-label" for="inlineCheckbox4">Mother Tongue </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" [(ngModel)]="e.Langauge1_Read" #Langauge1_Read="ngModel"
+                            name="Langauge1_Read" [disabled]="mode=='view' || hide== true" type="checkbox"
+                            id="inlineCheckbox1" value="True">
+                        <label class="form-check-label" for="inlineCheckbox1">Read</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" [(ngModel)]="e.Langauge1_Write" #Langauge1_Write="ngModel"
+                            name="Langauge1_Write" [disabled]="mode=='view' || hide== true" type="checkbox"
+                            id="inlineCheckbox2" value="True">
+                        <label class="form-check-label" for="inlineCheckbox2">Write</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" [(ngModel)]="e.Langauge1_Speak" #Langauge1_Speak="ngModel"
+                            name="Langauge1_Speak" [disabled]="mode=='view' || hide== true" type="checkbox"
+                            id="inlineCheckbox3" value="True">
+                        <label class="form-check-label" for="inlineCheckbox3">Speak </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <label for="">Language 2</label>
+                        <select class="custom-field" [(ngModel)]="e.Langauge2" #Langauge2="ngModel" name="Langauge2"
+                            [disabled]="mode=='view' || hide== true" (change)="ChangeofLangu2(e.Langauge2)">
+                            <option [value]="undefined" selected>---Select---</option>
+                            <option [value]="l.fix_code_id" *ngFor="let l of languagelist;">
+                                {{l.code_value}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" [(ngModel)]="e.Langauge2_Read" #Langauge2_Read="ngModel"
+                            name="Langauge2_Read" [disabled]="mode=='view' || hide== true" type="checkbox"
+                            id="inlineCheckbox5" value="True">
+                        <label class="form-check-label" for="inlineCheckbox5">Read</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" [(ngModel)]="e.Langauge2_Write" #Langauge2_Write="ngModel"
+                            name="Langauge2_Write" [disabled]="mode=='view' || hide== true" type="checkbox"
+                            id="inlineCheckbox6" value="True">
+                        <label class="form-check-label" for="inlineCheckbox6">Write</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" [(ngModel)]="e.Langauge2_Speak" #Langauge2_Speak="ngModel"
+                            name="Langauge2_Speak" [disabled]="mode=='view' || hide== true" type="checkbox"
+                            id="inlineCheckbox7" value="True">
+                        <label class="form-check-label" for="inlineCheckbox7">Speak </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <label for="">Language 3</label>
+                        <select class="custom-field" [(ngModel)]="e.Langauge3" #Langauge3="ngModel" name="Langauge3"
+                            [disabled]="mode=='view' || hide== true" (change)="ChangeofLangu3(e.Langauge3)">
+                            <option [value]="undefined" selected>---Select---</option>
+                            <option [value]="l.fix_code_id" *ngFor="let l of languagelist;">
+                                {{l.code_value}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" [(ngModel)]="e.Langauge3_Read" #Langauge3_Read="ngModel"
+                            name="Langauge3_Read" [disabled]="mode=='view' || hide== true" type="checkbox"
+                            id="inlineCheckbox8" value="True">
+                        <label class="form-check-label" for="inlineCheckbox8">Read</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" [(ngModel)]="e.Langauge3_Write" #Langauge3_Write="ngModel"
+                            name="Langauge3_Write" [disabled]="mode=='view' || hide== true" type="checkbox"
+                            id="inlineCheckbox9" value="True">
+                        <label class="form-check-label" for="inlineCheckbox9">Write</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" [(ngModel)]="e.Langauge3_Speak" #Langauge3_Speak="ngModel"
+                            name="Langauge3_Speak" [disabled]="mode=='view' || hide== true" type="checkbox"
+                            id="inlineCheckbox10" value="True">
+                        <label class="form-check-label" for="inlineCheckbox10">Speak </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class=" col-md-4 ">
+                    <div class="input-group">
+                        <label>Nature of Employement
+                            <span class="mandatory">*</span>
+                        </label>
+                        <br>
+                        <select class="custom-field" [(ngModel)]="e.EMP_CATEGORY" #EMP_CATEGORY="ngModel"
+                            name="EMP_CATEGORY" [disabled]="mode=='view' || hide== true" required>
+                            <option [value]="" selected>--Select--</option>
+                            <option [value]="l.fix_code_id" *ngFor="let l of employeeCategory;">
+                                {{l.code_value}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="error-msg pull-right"
+                        *ngIf="EMP_CATEGORY.invalid && (EMP_CATEGORY.dirty || EMP_CATEGORY.touched || formInvalid)">
+                        <span *ngIf="EMP_CATEGORY.errors.required">Nature of Employement is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4" *ngIf="((e.EMP_CATEGORY != 28) && (e.EMP_CATEGORY != 29))">
+                    <div class="input-group">
+                        <label>Employee Post
+                            <span class="mandatory">*</span>
+                        </label>
+                        <br>
+                        <select class="custom-field" [(ngModel)]="e.EMP_TYPE" #EMP_TYPE="ngModel" name="EMP_TYPE"
+                            [disabled]="mode=='view' || hide== true" required>
+                            <option [value]="">--Select--</option>
+                            <option [value]="undefined" selected>---Select---</option>
+                            <option [value]="l.fix_code_id" *ngFor="let l of employeetype;">
+                                {{l.code_value}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="error-msg pull-right"
+                        *ngIf="EMP_TYPE.invalid && (EMP_TYPE.dirty || EMP_TYPE.touched || formInvalid)">
+                        <span *ngIf="EMP_TYPE.errors.required">Employee Post is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4" *ngIf="((e.EMP_CATEGORY != 28) && (e.EMP_CATEGORY != 29))">
+                    <div class="input-group">
+                        <label>Employee Group
+                            <span class="mandatory">*</span>
+                        </label>
+                        <br>
+                        <select select class="custom-field" [(ngModel)]="e.EMP_GROUP" #EMP_GROUP="ngModel"
+                            name="EMP_GROUP" [disabled]="mode=='view' || hide== true" required>
+                            <option [value]="" selected>--Select--</option>
+                            <option [value]="l.fix_code_id" *ngFor="let l of employeegroup;">
+                                {{l.code_value}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="error-msg pull-right"
+                        *ngIf="EMP_GROUP.invalid && (EMP_GROUP.dirty || EMP_GROUP.touched || formInvalid)">
+                        <span *ngIf="EMP_GROUP.errors.required">Employee Group is required</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="title themeheading rowmarginfix">
+                Other Details
+            </div>
+            <div class="row">
+                <div class=" col-md-4">
+                    <div class="input-group">
+                        <label>Aadhar Card Number
+                            <span class="mandatory">*</span>
+                        </label>
+                        <br>
+                        <input type="number" class="custom-field" name="EMP_AADHAR_ID" [(ngModel)]="e.EMP_AADHAR_ID"
+                            #EMP_AADHAR_ID="ngModel" [disabled]="mode=='view' || hide== true" maxlength=12 minlength="12"
+                            pattern="^[0-9]{12}$" required>
+                    </div>
+                    <div class="error-msg pull-right"
+                        *ngIf="EMP_AADHAR_ID.invalid && (EMP_AADHAR_ID.dirty || EMP_AADHAR_ID.touched || formInvalid)">
+                        <span *ngIf="EMP_AADHAR_ID.errors.required">Adhar no is required</span>
+                        <span *ngIf="EMP_AADHAR_ID.errors?.pattern">Enter valid Adhar no.</span>
+                        <span *ngIf="EMP_AADHAR_ID.errors?.minlength">Enter valid Adhar no.</span>
+                    </div>
+                </div>
+                <div class="col-md-4 ">
+                    <div class="input-group">
+                        <label>Driving Licence No.
+                        </label>
+                        <br>
+                        <input type="text" class="custom-field" max="20" pattern="^[a-zA-Z0-9]{1,20}$" name="EMP_DL_ID"
+                            [(ngModel)]="e.EMP_DL_ID" #EMP_DL_ID="ngModel" [disabled]="mode=='view' || hide== true">
+                        <div class="error-msg pull-right"
+                            *ngIf="EMP_DL_ID.invalid && (EMP_DL_ID.dirty || EMP_DL_ID.touched || formInvalid)">
+                            <span *ngIf="EMP_DL_ID.errors?.pattern">Enter valid DL no.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class=" col-md-4  col-sm-6">
+                    <div class="input-group">
+                        <label>Voter ID No.</label>
+                        <br>
+                        <input type="text" class="custom-field" name="EMP_ELECTION_ID" maxlength="10" minlength="10" placeholder="AAA1114444" pattern="^[A-Z]{3}[0-9]{7}$"
+                            [(ngModel)]="e.EMP_ELECTION_ID" #EMP_ELECTION_ID="ngModel"
+                            [disabled]="mode=='view' || hide== true">
+                        <div class="error-msg pull-right"
+                            *ngIf="EMP_ELECTION_ID.invalid && (EMP_ELECTION_ID.dirty || EMP_ELECTION_ID.touched || formInvalid)">
+                            <span *ngIf="EMP_ELECTION_ID.errors?.pattern">Enter Voter Id no.</span>
+                            <span *ngIf="EMP_ELECTION_ID.errors?.minlength">Enter Voter Id no.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-sm-6">
+                    <div class="input-group">
+                        <label>PAN Card Number
+                            <span class="mandatory">*</span>
+                        </label>
+                        <br>
+                        <input type="text" class="custom-field" name="EMP_PAN_ID" [(ngModel)]="e.EMP_PAN_ID"
+                            #EMP_PAN_ID="ngModel" [disabled]="mode=='view' || hide== true" maxlength="10"
+                            pattern="^[A-Z]{5}[0-9]{4}[A-Z]$" placeholder="ABCTY1234D" required>
+                    </div>
+                    <div class="error-msg pull-right"
+                        *ngIf="EMP_PAN_ID.invalid && (EMP_PAN_ID.dirty || EMP_PAN_ID.touched || formInvalid)">
+                        <span *ngIf="EMP_PAN_ID.errors.required">PAN No is required</span>
+                        <span *ngIf="EMP_PAN_ID.errors.pattern">Enter Valid Pan No.</span>
+                    </div>
+                </div>
+                <div class=" col-md-4  col-sm-6">
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <br>
+                        <input type="text" class="custom-field" name="EMP_EMAIL_ID" [(ngModel)]="e.EMP_EMAIL_ID"
+                            #EMP_EMAIL_ID="ngModel" pattern="^[a-zA-Z0-9._%-+]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+                            [disabled]="mode=='view' || hide== true">
+
+                        <div class="error-msg"
+                            *ngIf="EMP_EMAIL_ID.invalid && (EMP_EMAIL_ID.dirty || EMP_EMAIL_ID.touched || formInvalid)">
+                            <span *ngIf="EMP_EMAIL_ID.errors.pattern">Email pattern mismatch</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4  col-sm-6">
+                    <!-- <div class="input-group">
+                        <label>Telephone/Mobile number</label>
+                        <br>
+                        <input type="text" class="custom-field" name="EMP_MOB_TEL1"  pattern="^[0-9]{10}$" [(ngModel)]="e.EMP_MOB_TEL1"
+                            #EMP_MOB_TEL1="ngModel" [disabled]="mode=='view' || hide== true" maxlength="10" >
+                            <div class="error-msg pull-right"  *ngIf="EMP_MOB_TEL1.invalid && (EMP_MOB_TEL1.dirty || EMP_MOB_TEL1.touched || formInvalid)">
+                              
+                                <span *ngIf="EMP_MOB_TEL1.errors?.pattern">Enter valid Adhar no.</span>                   
+                            </div>
+                    </div> -->
+
+
+                    <div class="input-group">
+                        <label>Telephone/Mobile number
+                            <span class="mandatory">*</span>
+                        </label>
+                        <br>
+                        <input type="number" class="custom-field" name="EMP_MOB_TEL1" [(ngModel)]="e.EMP_MOB_TEL1"
+                            #EMP_MOB_TEL1="ngModel" [disabled]="mode=='view' || hide== true" maxlength=10
+                            pattern="^[0-9]{10}$" required>
+                    </div>
+                    <div class="error-msg pull-right"
+                        *ngIf="EMP_MOB_TEL1.invalid && (EMP_MOB_TEL1.dirty || EMP_MOB_TEL1.touched || formInvalid)">
+                        <span *ngIf="EMP_MOB_TEL1.errors?.pattern">Enter valid Mobile no.</span>
+                        <span *ngIf="EMP_MOB_TEL1.errors.required">Mobile no is required</span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class=" col-md-4  col-sm-6">
+                    <div class="input-group">
+                        <label>Alternate Mobile Number</label>
+                        <br>
+                        <input type="number" class="custom-field" name="EMP_MOB_TEL2" [(ngModel)]="e.EMP_MOB_TEL2"
+                            #EMP_MOB_TEL2="ngModel" [disabled]="mode=='view' || hide== true" max="12"
+                            pattern="^[0-9]{10}$">
+                    </div>
+                    <div class="error-msg pull-right"
+                        *ngIf="EMP_MOB_TEL2.invalid && (EMP_MOB_TEL2.dirty || EMP_MOB_TEL2.touched || formInvalid)">
+                        <span *ngIf="EMP_MOB_TEL2.errors?.pattern">Enter valid Mobile no.</span>
+                    </div>
+                </div>
+            </div>
+            <!-- *ngIf="((mode!='view) && (mode!='edit'))" -->
+
+            <div *ngIf="((mode == 'view') ) && PresentData != null">
+                <div class="title themeheading rowmarginfix">
+                    Present Details
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Present Division :{{PresentData.DI_District}}</label>
+                        <span></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Present Department :{{PresentData.Department_Name}} </label>
+                        <span></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Present Designation : {{PresentData.desg_name}} </label>
+                        <span></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label> Present Scale : {{PresentData.Pay_Scale_Slab}} </label>
+                        <span></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Basic Salary : {{PresentData.EMP_BASIC_PAY}} </label>
+                        <span></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label>Last Increment Date : {{PresentData.EMP_Last_Increment_Date |date:'dd/MM/yyyy'}} </label>
+                        <span></span>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Last Promotion Date : {{PresentData.EMP_Last_Promotiont_Date |date:'dd/MM/yyyy'}}
+                        </label>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="title themeheading rowmarginfix">
+                Appointment & Joining Details
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <label>Employment Source
+                            <span class="mandatory">*</span>
+                        </label>
+                        <br>
+                        <select class="custom-field" [(ngModel)]="e.EMPLOYEMENT_SOURCE" #EMPLOYEMENT_SOURCE="ngModel"
+                            name="EMPLOYEMENT_SOURCE" [disabled]="mode=='view' || hide== true" required>
+                            <option [value]="undefined" selected>---Select---</option>
+                            <option [value]="e.fix_code_id" *ngFor="let e of employementsourcelist;">
+                                {{e.code_value}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="error-msg pull-right"
+                        *ngIf="EMPLOYEMENT_SOURCE.invalid && (EMPLOYEMENT_SOURCE.dirty || EMPLOYEMENT_SOURCE.touched || formInvalid)">
+                        <span *ngIf="EMPLOYEMENT_SOURCE.errors.required">Employement Source is required</span>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <label>Employment Quota
+                            <span class="mandatory">*</span>
+                        </label>
+                        <select class="custom-field" [(ngModel)]="e.EMPLOYEMENT_QUOTA" #EMPLOYEMENT_QUOTA="ngModel"
+                            name="EMPLOYEMENT_QUOTA" [disabled]="mode=='view' || hide== true" required>
+                            <option [value]="undefined" selected>---Select---</option>
+                            <option [value]="eq.fix_code_id" *ngFor="let eq of employementquotalist;">
+                                {{eq.code_value}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="error-msg pull-right"
+                        *ngIf="EMPLOYEMENT_QUOTA.invalid && (EMPLOYEMENT_QUOTA.dirty || EMPLOYEMENT_QUOTA.touched || formInvalid)">
+                        <span *ngIf="EMPLOYEMENT_QUOTA.errors.required">Employement Quota is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <label>Employement Reservation
+                            <span class="mandatory">*</span>
+                        </label>
+                        <select class="custom-field" [(ngModel)]="e.EMPLOYEMENT_RESERV" #EMPLOYEMENT_RESERV="ngModel"
+                            name="EMPLOYEMENT_RESERV" [disabled]="mode=='view' || hide== true" required>
+                            <option [value]="undefined" selected>---Select---</option>
+                            <option [value]="eq.fix_code_id" *ngFor="let eq of employemnetreslist;">
+                                {{eq.code_value}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="error-msg pull-right"
+                        *ngIf="EMPLOYEMENT_RESERV.invalid && (EMPLOYEMENT_RESERV.dirty || EMPLOYEMENT_RESERV.touched || formInvalid)">
+                        <span *ngIf="EMPLOYEMENT_RESERV.errors.required">Employement Reservation is required</span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-4 ">
+                    <div class="input-group">
+                        <label>Division
+                            <span class="mandatory">*</span>
+                        </label>
+                        <select class="custom-field" [(ngModel)]="e.EMP_APPNT_DIVISION_ID"
+                            #EMP_APPNT_DIVISION_ID="ngModel" name="EMP_APPNT_DIVISION_ID"
+                            [disabled]="(mode == 'view') || hide== true" required>
+                            <option [value]="undefined" selected>---Select---</option>
+                            <option [value]="d.DI_Id" *ngFor="let d of DistrictsList;">
+                                {{d.DI_District}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="error-msg pull-right"
+                        *ngIf="EMP_APPNT_DIVISION_ID.invalid && (EMP_APPNT_DIVISION_ID.dirty || EMP_APPNT_DIVISION_ID.touched || formInvalid)">
+                        <span *ngIf="EMP_APPNT_DIVISION_ID.errors.required">Division is required</span>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="input-group">
+                        <label>Department
+                            <span class="mandatory">*</span> </label>
+                        <select class="custom-field" [(ngModel)]="e.EMP_APPNT_DEPARTMENT"
+                            #EMP_APPNT_DEPARTMENT="ngModel" name="EMP_APPNT_DEPARTMENT"
+                            [disabled]="(mode == 'view') ||  hide== true" required>
+                            <option [value]="undefined" selected>---Select---</option>
+                            <option [value]="d.Department_Id" *ngFor="let d of departmentlist;">
+                                {{d.Department_Name}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="error-msg pull-right"
+                        *ngIf="EMP_APPNT_DEPARTMENT.invalid && (EMP_APPNT_DEPARTMENT.dirty || EMP_APPNT_DEPARTMENT.touched || formInvalid)">
+                        <span *ngIf="EMP_APPNT_DEPARTMENT.errors.required">Department is required</span>
+                    </div>
+                </div>
+                <div class=" col-md-4 col-sm-6">
+                    <div class="input-group">
+                        <label>Designation
+                            <span class="mandatory">*</span>
+                        </label>
+                        <select class="custom-field" [(ngModel)]="e.EMP_APPNT_DESIGNATION_ID"
+                            #EMP_APPNT_DESIGNATION_ID="ngModel" name="EMP_APPNT_DESIGNATION_ID"
+                            [disabled]="(mode == 'view') ||  hide== true" required>
+                            <option [value]="undefined" selected>---Select---</option>
+                            <option [value]="d.desg_id" *ngFor="let d of DesignationList;">
+                                {{d.desg_name}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="error-msg pull-right"
+                        *ngIf="EMP_APPNT_DESIGNATION_ID.invalid && (EMP_APPNT_DESIGNATION_ID.dirty || EMP_APPNT_DESIGNATION_ID.touched || formInvalid)">
+                        <span *ngIf="EMP_APPNT_DESIGNATION_ID.errors.required">Designation is required</span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class=" col-md-4 col-sm-6">
+                    <div class="input-group">
+                        <label>Scale
+                            <span class="mandatory">*</span>
+                        </label>
+                        <select class="custom-field" [(ngModel)]="e.EMP_Scale_FK" #EMP_Scale_FK="ngModel"
+                            name="EMP_Scale_FK" [disabled]="(mode == 'view') || hide== true"
+                            (change)="ChangeOfScale(e.EMP_Scale_FK)" required>
+                            <option [value]="undefined" selected>---Select---</option>
+                            <option [value]="s.scale_id" *ngFor="let s of ScaleList;">
+                                {{s.scale_name}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="error-msg pull-right"
+                        *ngIf="EMP_Scale_FK.invalid && (EMP_Scale_FK.dirty || EMP_Scale_FK.touched || formInvalid)">
+                        <span *ngIf="EMP_Scale_FK.errors.required">Scale is required</span>
+                    </div>
+                </div>
+                <div class=" col-md-4 col-sm-6">
+                    <label>Scale: &nbsp;{{slabeDet}}</label>
+                </div>
+
+                <div class=" col-md-4 col-sm-6">
+                    <label>Basic Salary: &nbsp;{{BasicSalary}}</label>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class=" col-md-4 col-sm-6">
+                    <div class="input-group">
+                        <label>Date of Joining
+                            <span class="mandatory">*</span>
+                        </label>
+                        <input type="date" class="custom-field" name="EMP_D_O_J" [(ngModel)]="e.EMP_D_O_J"
+                            #EMP_D_O_J="ngModel" [disabled]="mode=='view' || hide== true" required>
+                    </div>
+                    <div class="error-msg pull-right"
+                        *ngIf="EMP_D_O_J.invalid && (EMP_D_O_J.dirty || EMP_D_O_J.touched || formInvalid)">
+                        <span *ngIf="EMP_D_O_J.errors.required">DOJ is required</span>
+                    </div>
+                </div>
+
+                <div class=" col-md-4 col-sm-6">
+                    <div class="input-group">
+                        <label>Confirmation Order No</label>
+                        <input type="text" class="custom-field" name="EMP_CONF_ORD_NO" [(ngModel)]="e.EMP_CONF_ORD_NO"
+                            #EMP_CONF_ORD_NO="ngModel" [disabled]="mode=='view' || hide== true" >
+                    </div>
+                    <div class="error-msg pull-right"
+                        *ngIf="EMP_CONF_ORD_NO.invalid && (EMP_CONF_ORD_NO.dirty || EMP_CONF_ORD_NO.touched || formInvalid)">
+                        <!-- <span *ngIf="EMP_CONF_ORD_NO.errors?.pattern">Confirmation Order No. should </span> -->
+                    </div>
+                </div>
+
+
+                <div class=" col-md-4 col-sm-6">
+                    <div class="input-group">
+                        <label>Confirmation Date</label>
+                        <input type="date" class="custom-field" name="EMP_CONF_ORD_DATE"
+                            [(ngModel)]="e.EMP_CONF_ORD_DATE" #EMP_CONF_ORD_DATE="ngModel"
+                            [disabled]="mode=='view' || hide== true">
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="row">
+
+                <div class=" col-md-4 col-sm-6">
+                    <div class="input-group">
+                        <label>Upload Document</label>
+                        <input input *ngIf="!hide" type="file" #Image accept="application/pdf"
+                            (change)="imageUpload1($event.target.files)" id="DocumentUploadPath1">
+                        <a class="" *ngIf="e.DocumentUploadPath1!=null && (hide || mode=='edit')" target="_blank"
+                            href="{{e.DocumentUploadPath1}}">view</a>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <!--  -->
+            <br>
+            <div class="text-center">
+                <button [disabled]="mode=='view' || savedisable == true || hide == true"
+                    class="btn btn-primary">{{mode=='edit'?'Edit':'Save'}}</button> &nbsp;
+                <button [disabled]="mode=='view' || hide== true" class="btn btn-primary" type="button"
+                    (click)="Cancel()">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>

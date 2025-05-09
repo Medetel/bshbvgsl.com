@@ -1,0 +1,174 @@
+<div class="wrapper">
+  <div class="container-fluid">
+    <div class="title rowmarginfix themeheading">
+      Add Show Cause Notice  
+
+      <button *ngIf="back == 'SCN'" class="btn btn-primary float-right" [routerLink]="['/home/dept-enquiry/show-cause']">Back</button>
+      <button *ngIf="back == 'SCNAuth'" class="btn btn-primary float-right" [routerLink]="['/home/dept-enquiry/scn-auth']">Back</button> 
+      <button *ngIf="back == 'IDESCN'" class="btn btn-primary float-right" [routerLink]="['/home/dept-enquiry/initiative-depart-form',EnqId,'ENQ','mode']">Back</button>   
+      <button *ngIf="back == 'IDESCN1'" class="btn btn-primary float-right" [routerLink]="['/home/dept-enquiry/enquiry-proceeding-form']">Back</button>
+      <!-- <button *ngIf="back == 'SCN'" class="btn btn-primary float-right" [routerLink]="['/home/dept-enquiry/show-cause']">Back</button>
+      <button *ngIf="back == 'SCNAuth'" class="btn btn-primary float-right" [routerLink]="['/home/dept-enquiry/scn-auth']">Back</button>       -->
+      <span class="clearfix"></span>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label for=""> SCN No : </label>       <span> {{s.DOC_CODE}} </span>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group">
+          <span for="">Date : </span>   <span> {{s.Doc_Year | date:'dd/MM/yyyy'}} </span>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group ">        
+          <span for="" *ngIf="s.DOC_STATUS=='G'">Status : Generated</span>  
+          <span for="" *ngIf="s.DOC_STATUS=='R'">Status : Rejected</span> 
+          <span for="" *ngIf="s.DOC_STATUS=='A'">Status : Approved</span>  
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="title rowmarginfix themeheading">
+      Complaint Details
+    </div>
+    <br>
+
+    <div class="border-view">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <td class="text-center">Sl No.</td>
+              <td class="text-center">Complaint No</td>
+              <td class="text-center">Date</td>            
+              <td class="text-center"> DGO's Name </td>
+              <td class="text-center">Complaint Type</td>
+              <td class="text-center"> View </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let cr of Complaintdetils; let i=index">   
+              <td>{{(i+1)}}.</td>
+            <td>{{cr.DOC_CODE}}</td>
+            <td>{{cr.COMPLAINT_INITIATED_DATE  | date:'dd/MM/yyyy'}}</td>  
+            <td>{{cr.DGO_NAME}}</td>
+            <td>{{cr.code_value}}</td> 
+              <td class="text-center">
+                <a href="javascript:void(0)" (click)="AddScn()" [routerLink]="['/home/dept-enquiry/complaints-reg-form/',cr.COMPLAINT_ID,'scn','View']"  >
+                    
+                  <i class=" fa fa-lg fa-eye themecolor"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <br>
+    <div class="title rowmarginfix themeheading">
+      Show Cause Notice Details
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Due Date to Reply <span style="color:red;">*</span> </label>
+          <input type="Date" name="SCN_REPLY_DUE_DATE" [(ngModel)]="s.SCN_REPLY_DUE_DATE"
+          #SCN_REPLY_DUE_DATE="ngModel" class="form-control" [disabled]="mode=='View'">
+        </div>
+        <div class="error-msg"
+        *ngIf="SCN_REPLY_DUE_DATE.invalid && (SCN_REPLY_DUE_DATE.dirty || SCN_REPLY_DUE_DATE.touched || formInvalid)">
+        <span *ngIf="SCN_REPLY_DUE_DATE.errors.required">Date is required</span>
+      </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Mode of Reply <span style="color:red;">*</span> </label>
+          <!-- <input type="text" name="Reply" maxlength="50" [(ngModel)]="s.Reply"
+          #Reply="ngModel" class="form-control" [disabled]="mode=='View'" class="custom-field"> -->
+          <select [(ngModel)]="s.Reply" #Reply="ngModel"
+          name="Reply" [disabled]="mode=='View'" required class="custom-field">
+          <option value="undefined">--Select--</option>
+          <option value="By Hand">By Hand </option>
+          <option value="Post">By Post</option>
+          <option value="Courrier">By Courrier</option>
+          <option value="Email">By Email</option>
+        </select>
+        </div>
+        <div class="error-msg"
+        *ngIf="Reply.invalid && (Reply.dirty || Reply.touched || formInvalid)">
+        <span *ngIf="Reply.errors.required">Mode of Reply is required</span>
+      </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for=""> Additional Details  </label>
+          <input type="text" name="Additional" maxlength="50" [(ngModel)]="s.Additional"
+          #Additional="ngModel" class="form-control" [disabled]="mode=='View'" class="custom-field">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for=""> Remarks </label>
+          <textarea name="Remarks" maxlength="50" [(ngModel)]="s.Remarks"
+          #Remarks="ngModel" [disabled]="mode=='View'" class="custom-field"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-inline">
+          <div class="form-group mb-2">
+            <label style="color: blue;"> OM Document Upload </label>
+          </div>
+          <div class="form-group mb-2 mx-sm-3">
+            <input *ngIf="!hide" type="file" #Image accept="application/pdf"
+            (change)="imageUpload1($event.target.files)" id="REPLY_UPLOAD_PATH" name="REPLY_UPLOAD_PATH" [(ngModel)]="s.REPLY_UPLOAD_PATH"
+            #REPLY_UPLOAD_PATH="ngModel">
+            <a *ngIf="s.REPLY_UPLOAD_PATH" [href]="s.REPLY_UPLOAD_PATH" target="_blank" 
+            [class.disabled]="!s.REPLY_UPLOAD_PATH" tabindex="-1" aria-disabled="true">
+           View
+         </a>
+         
+         <!-- Optionally, you can also disable the link when DGO_Upload is null -->
+         <a *ngIf="!s.REPLY_UPLOAD_PATH" class="disabled" tabindex="-1" aria-disabled="true">
+           View
+         </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Acknowledgement No: </label>
+          <input type="text" name="SCN_ACK_NO" maxlength="50" [(ngModel)]="s.SCN_ACK_NO"
+          #SCN_ACK_NO="ngModel" class="form-control" [disabled]="mode=='View'">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-inline">
+          <div class="form-group mb-2">
+            <label for="">Acknowledgement Date </label>            
+          </div>
+          <div class="form-group mb-2 mx-xs-3">
+            <input type="date" name="SCN_ACK_DATE" maxlength="50" [(ngModel)]="s.SCN_ACK_DATE"
+            #SCN_ACK_DATE="ngModel" class="form-control" [disabled]="mode=='View'">
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="d-flex justify-content-center">
+      <!-- <button [disabled]="mode=='View'" class="btn btn-primary" type="submit">{{mode=='Edit'?'Update':'Save'}}</button> &nbsp; -->
+      <button [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="SaveUpdateSCN(s)">Save</button>&nbsp;
+      <button [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button>&nbsp;
+
+    </div>
+    <br>
+  </div>
+</div>

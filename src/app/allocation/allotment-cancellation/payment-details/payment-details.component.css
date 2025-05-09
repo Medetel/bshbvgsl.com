@@ -1,0 +1,26 @@
+.row{
+    padding: 1em 0px 0px 0px !important;
+    margin-bottom: -3px;
+}
+
+
+.row:nth-child(odd){
+    background: #ececec;
+}
+
+.collabel{
+    margin-left: 260px;
+}
+
+.inputalign{
+    margin-left: -61px;
+
+}
+
+
+/* .center {
+    margin: auto;
+    width: 40%;
+    padding: 10px;
+    
+} */

@@ -1,0 +1,2308 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <!-- <button class="btn btn-primary float-right" [routerLink]="['/home/land-procurement-details']">Back</button> -->
+    <span class="clearfix"></span>
+  </div>
+  <div class="container-fluid">
+    <!-- <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <select #PD_Id_FK="ngModel" name="PD_Id_FK" [(ngModel)]="pro.PD_Id_FK" class="custom-field" (change)="GetProjectId(pro.PD_Id_FK)">
+            <option value="undefined">---Select---</option>
+            <option *ngFor="let project of projectlist" [value]="project.PD_Id">
+              {{project.PD_Project_Code}} - {{project.PD_Project_Name}} - {{project.Phase_Name}}
+            </option>
+          </select>
+          <label>Project
+            <span class="mandatory">*</span>
+          </label>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <select class="custom-field" [(ngModel)]="pro.pro_PR_Id_FK" #pro_PR_Id_FK="ngModel" name="pro_PR_Id_FK" (change)="GetOtherrelatedinfo(pro.pro_PR_Id_FK)"
+            [disabled]="mode =='view'">
+            <option [value]="undefined" selected>---Select---</option>
+            <option [value]="p.PR_Id_PK" *ngFor="let p of proposallist;">
+              {{p.PR_Id}} </option>
+          </select>
+          <label for="">Proposal Id
+            <span class="mandatory">*</span>
+          </label>
+        </div>
+      </div>
+    </div> -->
+
+  </div>
+
+
+
+  <div>
+    <!-- <form (ngSubmit)="mode=='edit'?UpdateLandAquisition(AquisitionForm):SaveLandAquisition(AquisitionForm)" #AquisitionForm="ngForm"
+      name="form1"> -->
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-2">
+          <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <a class="nav-link active" id="v-pills-41-tab" data-toggle="pill" (click)="get41project(1)" href="#v-pills-41"
+              role="tab" aria-controls="v-pills-41" aria-selected="true">4(1)</a>
+            <a class="nav-link" id="v-pills-61-tab" data-toggle="pill" (click)="clearla(2)" href="#v-pills-61" role="tab"
+              aria-controls="v-pills-61" aria-selected="true">6(1)</a>
+            <a class="nav-link" id="v-pills-preparationAward-tab" (click)="clearla(3)" data-toggle="pill" href="#v-pills-preparationAward"
+              role="tab" aria-controls="v-pills-preparationAward" aria-selected="true">Preparation of Award</a>
+            <a class="nav-link" id="v-pills-approvalAward-tab" (click)="clearla(4)" data-toggle="pill" href="#v-pills-approvalAward"
+              role="tab" aria-controls="v-pills-approvalAward" aria-selected="false">Approval of Award</a>
+
+            <a class="nav-link" id="v-pills-modeAward-tab" (click)="clearla(5)" data-toggle="pill" href="#v-pills-modeAward"
+              role="tab" aria-controls="v-pills-modeAward" aria-selected="false">Mode of Award</a>
+            <a class="nav-link" id="v-pills-payment-tab" (click)="clearla(6)" data-toggle="pill" href="#v-pills-payment"
+              role="tab" aria-controls="v-pills-payment" aria-selected="false">Payment</a>
+
+            <a class="nav-link" id="v-pills-overPossession-tab" (click)="clearla(7)" data-toggle="pill" href="#v-pills-overPossession"
+              role="tab" aria-controls="v-pills-overPossession" aria-selected="false">Taking Over Possession</a>
+          </div>
+        </div>
+        <div class="col-md-10 border">
+          <div class="background-color ">
+            <div class="tab-content" id="v-pills-tabContent">
+              <div class="tab-pane fade show active" id="v-pills-41" role="tabpanel" aria-labelledby="v-pills-41-tab">
+
+                <div *ngIf="fourOneGrid">
+                  <div class="title themeheading rowmarginfix">
+                    4(1)
+                    <div class="float-right">
+                      <button class="btn btn-primary" type="button" (click)="fourOneContent();">Add</button>
+                    </div>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-striped grid table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Sl.No</th>
+                          <th>Project Name</th>
+                          <th>Proposal Id</th>
+                          <th>4(1) Notification No.</th>
+                          <th>Notication Date</th>
+
+                          <th class="text-center"> View </th>
+                          <th class="text-center">Edit</th>
+                          <th class="text-center">Delete</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngFor="let lad of Land41acquisition | paginate: { id:'pagination1',itemsPerPage:itemsPerPage1 ,currentPage:currentPage1 ,totalItems:totalItems1};let i=index">
+                        <tr *ngIf="lad.FO_Inactive!='Y'">
+                          <td>{{((currentPage1-1)*itemsPerPage1)+(i+1)}}</td>
+                          <td>{{lad.PD_Project_Name}}</td>
+                          <td>{{lad.PR_Id}}</td>
+                          <td>{{lad.LA_Noti4_Number}}</td>
+                          <td>{{lad.LA_Noti_Date | date:'dd-MM-yyyy'}}</td>
+                          <td class="text-center">
+                            <a href="javascript:void(0)" (click)="GetByIdLandAquisition(lad.LA_Id_PK,'view',1)">
+                              <i class="fa fa-lg fa-eye themecolor"></i>
+                            </a>
+                          </td>
+                          <td class="text-center">
+                            <a href="javascript:void(0)" (click)="GetByIdLandAquisition(lad.LA_Id_PK,'edit',1)">
+                              <i class="fa fa-lg fa-edit themecolor"></i>
+                            </a>
+                          </td>
+                          <td class="text-center">
+                            <a href="javascript:void(0)">
+                              <i class="fa fa-lg fa-trash themecolor" (click)="delete(lad.LA_Id_PK,1)"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col-md-11">
+                          <pagination-controls class="my-pagination" id="pagination1" (pageChange)="pageChanged1($event)"
+                            maxSize="9" directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+                            screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                            screenReaderCurrentLabel="You're on page">
+                          </pagination-controls>
+                        </div>
+                        <div class="col-md-1">
+                          Total:
+                          <span>{{totalItems1}}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <form (ngSubmit)="mode=='edit'?UpdateLandAquisition(la,1,null):SaveLandAquisition(la,1,null)" #fouroneform="ngForm"
+                  name="form1">
+                  <div *ngIf="fourOneForm">
+                    <div class="title themeheading rowmarginfix">
+                      4(1)
+                      <div class="float-right">
+                        <button class="btn btn-primary" type="button" (click)="fourOneContent1();">Back</button>
+                      </div>
+                    </div>
+                    <div class="row" hidden>
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="text" placeholder=" " name="LA_PD_Id_FK" [(ngModel)]="la.LA_PD_Id_FK"
+                            #LA_PD_Id_FK="ngModel" class="custom-field" hidden>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row" hidden>
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="text" placeholder=" " name="LA_PR_Id_FK" [(ngModel)]="la.LA_PR_Id_FK"
+                            #LA_PR_Id_FK="ngModel" class="custom-field" hidden>
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <select #PD_Id_FK="ngModel" name="PD_Id_FK" [(ngModel)]="pro.PD_Id_FK" class="custom-field"
+                            (change)="GetProjectId(pro.PD_Id_FK,la.LA_Id_PK)" [disabled]="mode=='view'">
+                            <option value="undefined">---Select---</option>
+                            <option *ngFor="let project of projectlist" [value]="project.PD_Id">
+                              {{project.PD_Project_Code}} - {{project.PD_Project_Name}} - {{project.Phase_Name}}
+                            </option>
+                          </select>
+                          <label>Project
+                            <span class="mandatory">*</span>
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <select class="custom-field" [(ngModel)]="pro.pro_PR_Id_FK" #pro_PR_Id_FK="ngModel" name="pro_PR_Id_FK"
+                            (change)="GetOtherrelatedinfo(pro.pro_PR_Id_FK)" [disabled]="mode=='view'" readonly>
+                            <option [value]="undefined" selected>---Select---</option>
+                            <option [value]="p.PR_Id_PK" *ngFor="let p of proposallist;">
+                              {{p.PR_Id}} </option>
+                          </select>
+                          <label for="">Proposal Id
+                            <span class="mandatory">*</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-4">
+                        <label for="">Procurement Type : </label>
+                        <span>{{ProposalFor=='Mix'?'Acquisition/Purchase/Joint Ventures':ProposalFor}}</span>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Scheme : </label>
+                        <span>{{Sch_Name}}</span>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">District : </label>
+                        <span>{{district}}</span>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <label for="">Village/City/Colony : </label>
+                        <span> {{Village}}</span>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Proposal receipt date : </label>
+                        <span>{{Submitted_Date | date:'dd-MM-yyyy'}}</span>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="text" placeholder=" " name="LA_Noti4_Number" [(ngModel)]="la.LA_Noti4_Number"
+                            #LA_Noti4_Number="ngModel" class="custom-field" [disabled]="mode=='view'" required>
+                          <label for="">4(1)Notification Number
+                            <span class="mandatory">*</span>
+                          </label>
+                          <div class="error-msg" *ngIf="LA_Noti4_Number.invalid && (LA_Noti4_Number.dirty || LA_Noti4_Number.touched || formInvalid)">
+                            <span *ngIf="LA_Noti4_Number.errors.required">Notification Number.</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="date" placeholder=" " name="LA_Noti_Date" [(ngModel)]="la.LA_Noti_Date"
+                            #LA_Noti_Date="ngModel" class="custom-field" [disabled]="mode=='view'" required>
+                          <label for="">Date of Notification
+                            <span class="mandatory">*</span>
+                          </label>
+                          <div class="error-msg" *ngIf="LA_Noti_Date.invalid && (LA_Noti_Date.dirty || LA_Noti_Date.touched || formInvalid)">
+                            <span *ngIf="LA_Noti_Date.errors.required">Date of Notification is required.</span>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="text" placeholder=" " name="LA_Noti4_1_AG" [(ngModel)]="la.LA_Noti4_1_AG"
+                            #LA_Noti4_1_AG="ngModel" class="custom-field" [disabled]="mode=='view'" required>
+                          <label for="">Extent of 4(1) Notification(A-G)
+                            <span class="mandatory">*</span>
+                          </label>
+                          <div class="error-msg" *ngIf="LA_Noti4_1_AG.invalid && (LA_Noti4_1_AG.dirty || LA_Noti4_1_AG.touched || formInvalid)">
+                            <span *ngIf="LA_Noti4_1_AG.errors.required">Extent of 4(1) Notification(A-G) is required.
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="date" placeholder=" " name="LA_5_A_Enquiry_Date" [(ngModel)]="la.LA_5_A_Enquiry_Date"
+                            #LA_5_A_Enquiry_Date="ngModel" class="custom-field" [disabled]="mode=='view'" required>
+                          <label for="">Date of 5(A) Enquiry
+                            <span class="mandatory">*</span>
+                          </label>
+                          <div class="error-msg" *ngIf="LA_5_A_Enquiry_Date.invalid && (LA_5_A_Enquiry_Date.dirty || LA_5_A_Enquiry_Date.touched || formInvalid)">
+                            <span *ngIf="LA_NoLA_5_A_Enquiry_Date.errors.required">Date of 5(A) Enquiry is required.
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="date" placeholder=" " name="LA_JMC_Date" [(ngModel)]="la.LA_JMC_Date"
+                            #LA_JMC_Date="ngModel" class="custom-field" [disabled]="mode=='view'" required>
+                          <label for="">Date of JMC
+                            <span class="mandatory">*</span>
+                          </label>
+                          <div class="error-msg" *ngIf="LA_JMC_Date.invalid && (LA_JMC_Date.dirty || LA_JMC_Date.touched || formInvalid)">
+                            <span *ngIf="LA_JMC_Date.errors.required">Date of JMC is required.</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-md-2">
+                        <label for="">Document</label>
+                      </div>
+                      <div class="col-md-4">
+                        <input type="file" #Image accept="application/pdf" (change)="imageUpload($event.target.files)"
+                          id="LA_Not_FilePath" name="LA_Not_FilePath" [(ngModel)]="la.LA_Not_FilePath" #LA_Not_FilePath="ngModel">
+                        <a class="" [hidden]="la.LA_Not_FilePath==null" *ngIf="mode=='view' || mode=='edit'" target="_blank"
+                          href="{{la.LA_Not_FilePath}}">view</a>
+                      </div>
+                    </div>
+                    <br>
+
+                    <div class="table-responsive">
+                      <table class="table table-striped grid table-bordered">
+                        <thead>
+                          <tr>
+                            <th rowspan="2">Sl.No</th>
+                            <th rowspan="2"> Land Owner Name </th>
+                            <th rowspan="2">Survey No</th>
+                            <th rowspan="2">Procurement Type</th>
+                            <th rowspan="2">Extent</th>
+                            <th rowspan="2">Akar</th>
+                            <th colspan="4" class="text-center">Schedule</th>
+                            <th rowspan="2">Status</th>
+                            <th rowspan="2" class="text-center"> Select </th>
+                          </tr>
+                          <tr>
+                            <th>North</th>
+                            <th>South</th>
+                            <th>East</th>
+                            <th>West</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let sur of LandDetailslist;let i=index" [hidden]="sur.LD_Not6_Selected==1">
+                            <td>{{i+1}}</td>
+                            <td>{{sur.LOD_LO_Name}}</td>
+                            <td>{{sur.LD_SurveyNo}}</td>
+                            <td>{{sur.MOP_Name}}</td>
+                            <td>{{sur.LD_Extents}}</td>
+                            <td>{{sur.LD_Akar}}</td>
+                            <td>{{sur.LD_North}}</td>
+                            <td>{{sur.LD_South}}</td>
+                            <td>{{sur.LD_East}}</td>
+                            <td>{{sur.LD_West}}</td>
+                            <td>{{sur.LD_Not4_Selected=='1'?'Accepted':''}}</td>
+                            <td class="text-center" *ngIf="mode=='save'">
+                              <button type="button" [hidden]="sur.LD_Not4_Selected==1" (click)="selectexculdesurveynoforLa(sur.LD_Id,'in',i,pro.PD_Id_FK)">Select
+                              </button>
+                              <button type="button" [hidden]="sur.LD_Not4_Selected!=1" (click)="selectexculdesurveynoforLa(sur.LD_Id,'ex',i,pro.PD_Id_FK)">Exclude
+                              </button>
+                            </td>
+                            <td class="text-center" *ngIf="mode!='save'">
+                              <button type="button" [hidden]="sur.LD_Not4_Selected==1" (click)="selectexculdesurveyno(sur.LD_Id,'in',4,pro.PD_Id_FK,la.LA_Id_PK)">Select
+                              </button>
+                              <button type="button" [hidden]="sur.LD_Not4_Selected!=1" (click)="selectexculdesurveyno(sur.LD_Id,'ex',4,pro.PD_Id_FK,la.LA_Id_PK)">Exclude
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="text-center">
+                      <button class="btn btn-primary" [disabled]="mode=='view'" type="submit">Save</button>
+                      <!-- <button class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button> -->
+                      <button class="btn btn-primary" type="reset" [disabled]="mode=='view'">Cancel</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+
+
+              <div class="tab-pane " id="v-pills-61" role="tabpanel" aria-labelledby="v-pills-61-tab">
+
+                <div *ngIf="sixOneGrid">
+                  <div class="title themeheading rowmarginfix">
+                    6(1)
+                    <div class="float-right">
+                      <button type="button" class="btn-primary" (click)="sixOneContent()">Add</button>
+                    </div>
+                  </div>
+
+
+                  <div class="table-responsive">
+                    <table class="table table-striped grid table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Sl.No</th>
+                          <th>Project Name</th>
+                          <th>Proposal Id</th>
+                          <th>4(1) Notification No.</th>
+                          <th>6(1) Notification No.</th>
+                          <th>Notication Date</th>
+
+                          <th class="text-center"> View </th>
+                          <th class="text-center">Edit</th>
+                          <th class="text-center">Delete</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngFor="let lad of Land61acquisition | paginate: { id:'pagination2' ,itemsPerPage:itemsPerPage2 ,currentPage:currentPage2 ,totalItems:totalItems2};let i=index">
+                        <!-- <tbody *ngFor="let lad of Land41acquisition; let i=index" [hidden]="lad.LA_Noti6_Number==null"> -->
+                        <tr *ngIf="lad.SO_Inactive!='Y'">
+                          <td>{{((currentPage2-1)*itemsPerPage2)+(i+1)}}</td>
+                          <td>{{lad.PD_Project_Name}}</td>
+                          <td>{{lad.PR_Id}}</td>
+                          <td>{{lad.LA_Noti4_Number}}</td>
+                          <td>{{lad.LA_Noti6_Number}}</td>
+                          <td>{{lad.LA_Noti_Date | date:'dd-MM-yyyy'}}</td>
+                          <td class="text-center">
+                            <a href="javascript:void(0)" (click)="GetByIdLandAquisition(lad.LA_Id_PK,'view',2)">
+                              <i class="fa fa-lg fa-eye themecolor"></i>
+                            </a>
+                          </td>
+                          <td class="text-center">
+                            <a href="javascript:void(0)" (click)="GetByIdLandAquisition(lad.LA_Id_PK,'edit',2)">
+                              <i class="fa fa-lg fa-edit themecolor"></i>
+                            </a>
+                          </td>
+                          <td class="text-center">
+                            <a href="javascript:void(0)">
+                              <i class="fa fa-lg fa-trash themecolor" (click)="delete(lad.LA_Id_PK,2)"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col-md-11">
+                          <pagination-controls class="my-pagination" id="pagination2" (pageChange)="pageChanged2($event)"
+                            maxSize="9" directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+                            screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                            screenReaderCurrentLabel="You're on page">
+                          </pagination-controls>
+                        </div>
+                        <div class="col-md-1">
+                          Total:
+                          <span>{{totalItems2}}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <form (ngSubmit)="mode=='edit'?UpdateLandAquisition(laso,2,LAS.PD_FO_Id_FK):UpdateLandAquisition(laso,2,LAS.PD_FO_Id_FK)"
+                  #fouroneform="ngForm" name="form1">
+                  <div *ngIf="sixOneForm">
+
+                    <div class="title themeheading rowmarginfix">
+                      6(1)
+                      <div class="float-right">
+                        <button type="button" class="btn-primary" (click)="sixOneContent1()">Back</button>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <select #PD_FO_Id_FK="ngModel" name="PD_FO_Id_FK" [(ngModel)]="LAS.PD_FO_Id_FK" class="custom-field"
+                            (change)="GetProjectIdfor61(LAS.PD_FO_Id_FK)" [disabled]="mode=='view'">
+                            <option value="undefined">---Select---</option>
+                            <option *ngFor="let LA4 of Land61acquisitionlist" [value]="LA4.LA_Id_PK">
+                              {{LA4.LA_Noti4_Number}}
+                            </option>
+                          </select>
+                          <label>4(1) Notification No.
+                            <span class="mandatory">*</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-4">
+                        <label for="">Project Name : </label>
+                        <span>{{Proj_Name}}</span>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Procurement Type : </label>
+                        <span>{{ProposalFor=='Mix'?'Acquisition/Purchase/Joint Ventures':ProposalFor}}</span>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Scheme : </label>
+                        <span>{{Sch_Name}}</span>
+                      </div>
+
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-4">
+                        <label for="">District : </label>
+                        <span>{{district}}</span>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Village/City/Colony : </label>
+                        <span> {{Village}}</span>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Proposal receipt date : </label>
+                        <span>{{Submitted_Date | date:'dd-MM-yyyy'}}</span>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="text" placeholder=" " name="LA_Noti6_Number" [(ngModel)]="laso.LA_Noti6_Number"
+                            #LA_Noti6_Number="ngModel" class="custom-field" [disabled]="mode=='view'" required>
+                          <label for="">6(1)Notification Number
+                            <span class="mandatory">*</span>
+                          </label>
+                          <div class="error-msg" *ngIf="LA_Noti6_Number.invalid && (LA_Noti6_Number.dirty || LA_Noti6_Number.touched || formInvalid)">
+                            <span *ngIf="LA_Noti6_Number.errors.required">Notification Number.</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="date" placeholder=" " name="LA_Notif_6_1_Date" [(ngModel)]="laso.LA_Notif_6_1_Date"
+                            #LA_Notif_6_1_Date="ngModel" class="custom-field" [disabled]="mode=='view'" required>
+                          <label for="">Date of 6(1) Notification
+                            <span class="mandatory">*</span>
+                          </label>
+                          <div class="error-msg" *ngIf="LA_Notif_6_1_Date.invalid && (LA_Notif_6_1_Date.dirty || LA_Notif_6_1_Date.touched || formInvalid)">
+                            <span *ngIf="LA_Notif_6_1_Date.errors.required">Date of 6(1) Notification is required.</span>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="text" placeholder=" " name="LA_ExtNotif_6_1_Date_AG" [(ngModel)]="laso.LA_ExtNotif_6_1_Date_AG"
+                            #LA_ExtNotif_6_1_Date_AG="ngModel" class="custom-field" [disabled]="mode=='view'" required>
+                          <label for="">Extent of 6(1) Notification(A-G)
+                            <span class="mandatory">*</span>
+                          </label>
+                          <div class="error-msg" *ngIf="LA_ExtNotif_6_1_Date_AG.invalid && (LA_ExtNotif_6_1_Date_AG.dirty || LA_ExtNotif_6_1_Date_AG.touched || formInvalid)">
+                            <span *ngIf="LA_ExtNotif_6_1_Date_AG.errors.required">Extent of 6(1) Notification(A-G) is
+                              required.
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="date" placeholder=" " name="LA_AwardEnq_9_10_Date" [(ngModel)]="laso.LA_AwardEnq_9_10_Date"
+                            #LA_AwardEnq_9_10_Date="ngModel" class="custom-field" [disabled]="mode=='view'" required>
+                          <label for="">Award Enquiry(9 & 10) date
+                            <span class="mandatory">*</span>
+                          </label>
+                          <div class="error-msg" *ngIf="LA_AwardEnq_9_10_Date.invalid && (LA_AwardEnq_9_10_Date.dirty || LA_AwardEnq_9_10_Date.touched || formInvalid)">
+                            <span *ngIf="LA_AwardEnq_9_10_Date.errors.required">Award Enquiry(9 & 10) date is required.
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <label for="">Document</label>
+                      </div>
+                      <div class="col-md-4">
+                        <input type="file" #Image accept="application/pdf" (change)="imageUpload1($event.target.files)"
+                          id="LA_Not6_File" name="LA_Not6_File" [(ngModel)]="laso.LA_Not6_File" #LA_Not6_File="ngModel">
+                        <a class="" [hidden]="laso.LA_Not6_File==null" *ngIf="mode=='view' || mode=='edit'" target="_blank"
+                          href="{{laso.LA_Not6_File}}">view</a>
+                      </div>
+                    </div>
+                    <br>
+
+                    <div class="table-responsive">
+                      <table class="table table-striped grid table-bordered">
+                        <thead>
+                          <tr>
+                            <th rowspan="2">Sl.No</th>
+
+                            <th rowspan="2"> Land Owner Name </th>
+                            <th rowspan="2">Survey No</th>
+                            <th rowspan="2">Procurement Type</th>
+                            <th rowspan="2">Extent</th>
+                            <th rowspan="2">Akar</th>
+                            <th colspan="4" class="text-center">Schedule</th>
+                            <th rowspan="2">4(1) Status</th>
+                            <th rowspan="2">6(1) Status</th>
+                            <th rowspan="2" class="text-center"> Select </th>
+                          </tr>
+                          <tr>
+                            <th>North</th>
+                            <th>South</th>
+                            <th>East</th>
+                            <th>West</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let sur of LandDetailslist;let i=index">
+                            <td>{{i+1}}</td>
+                            <td>{{sur.LOD_LO_Name}}</td>
+                            <td>{{sur.LD_SurveyNo}}</td>
+                            <td>{{sur.MOP_Name}}</td>
+                            <td>{{sur.LD_Extents}}</td>
+                            <td>{{sur.LD_Akar}}</td>
+                            <td>{{sur.LD_North}}</td>
+                            <td>{{sur.LD_South}}</td>
+                            <td>{{sur.LD_East}}</td>
+                            <td>{{sur.LD_West}}</td>
+                            <td>{{sur.LD_Not4_Selected=='1'?'Accepted':''}}</td>
+                            <td>{{sur.LD_Not6_Selected=='1'?'Accepted':''}}</td>
+                            <td class="text-center">
+                              <button type="button" *ngIf="sur.LD_Not6_Selected!=1" (click)="selectexculdesurveyno(sur.LD_Id,'in',6,pro.PD_Id_FK,LAS.PD_FO_Id_FK)">Select
+                              </button>
+                              <button type="button" *ngIf="sur.LD_Not6_Selected==1" (click)="selectexculdesurveyno(sur.LD_Id,'ex',6,pro.PD_Id_FK,LAS.PD_FO_Id_FK)">Exclude
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+
+                    <div class="text-center">
+                      <button class="btn btn-primary" [disabled]="mode=='view'" type="submit">Save</button>
+                      <!-- <button class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button> -->
+                      <button class="btn btn-primary" type="reset" [disabled]="mode=='view'">Cancel</button>
+                    </div>
+
+                  </div>
+                </form>
+              </div>
+              <div class="tab-pane " id="v-pills-preparationAward" role="tabpanel" aria-labelledby="v-pills-preparationAward-tab">
+
+                <div *ngIf="preparationAwardGrid">
+                  <div class="title themeheading rowmarginfix">
+                    Preparation of Award
+                    <div class="float-right">
+                      <button class="btn btn-primary" (click)="preparationAwardContent()">Add</button>
+                    </div>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-striped grid table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Sl.No</th>
+                          <th>POA Document No.</th>
+                          <th>Preparation Award Date</th>
+                          <th>6(1) Notification No.</th>
+
+                          <th class="text-center"> View </th>
+                          <th class="text-center">Edit</th>
+                          <th class="text-center">Delete</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngFor="let lad of LandPOA1acquisitionlist | paginate: { id:'pagination3' ,itemsPerPage:itemsPerPage3 ,currentPage:currentPage3 ,totalItems:totalItems3};let i=index">
+                        <!-- <tbody *ngFor="let lad of Land41acquisition;let i=index" [hidden]="lad.LA_POADoc_No==null"> -->
+                        <tr *ngIf="lad.POA_Inactive!='Y'">
+                          <td>{{((currentPage3-1)*itemsPerPage3)+(i+1)}}</td>
+                          <td>{{lad.LA_POADoc_No}}</td>
+                          <td>{{lad.LA_PrepAwardDate | date:'dd-MM-yyyy'}}</td>
+                          <td>{{lad.LA_Noti6_Number}}</td>
+
+                          <td class="text-center">
+                            <a href="javascript:void(0)" (click)="GetByIdLandAquisition(lad.LA_Id_PK,'view',3)">
+                              <i class="fa fa-lg fa-eye themecolor"></i>
+                            </a>
+                          </td>
+                          <td class="text-center">
+                            <a href="javascript:void(0)" (click)="GetByIdLandAquisition(lad.LA_Id_PK,'edit',3)">
+                              <i class="fa fa-lg fa-edit themecolor"></i>
+                            </a>
+                          </td>
+                          <td class="text-center">
+                            <a href="javascript:void(0)">
+                              <i class="fa fa-lg fa-trash themecolor" (click)="delete(lad.LA_Id_PK,3)"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col-md-11">
+                          <pagination-controls class="my-pagination" id="pagination3" (pageChange)="pageChanged3($event)"
+                            maxSize="9" directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+                            screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                            screenReaderCurrentLabel="You're on page">
+                          </pagination-controls>
+                        </div>
+                        <div class="col-md-1">
+                          Total:
+                          <span>{{totalItems3}}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <form (ngSubmit)="mode=='edit'?UpdateLandAquisition(lap,3,LAS.PD_FO_Id_FK):UpdateLandAquisition(lap,3,LAP.PD_FO_Id_FK)"
+                  #fouroneform="ngForm" name="form1">
+                  <div *ngIf="preparationAwardForm">
+                    <div class="title themeheading rowmarginfix">
+                      Preparation of Award
+                      <div class="float-right">
+                        <button class="btn btn-primary" (click)="preparationAwardContent1()">Back</button>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <select #PD_FO_Id_FK="ngModel" name="PD_FO_Id_FK" [(ngModel)]="LAP.PD_FO_Id_FK" class="custom-field"
+                            (change)="GetProjectIdfor61(LAP.PD_FO_Id_FK)" [disabled]="mode=='view'">
+                            <option value="undefined">---Select---</option>
+                            <option *ngFor="let LA4 of Land61acquisitionlist" [value]="LA4.LA_Id_PK">
+                              {{LA4.LA_Noti6_Number}}
+                            </option>
+                          </select>
+                          <label>6(1) Notification No.
+                            <span class="mandatory">*</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <label for="">Project Name : </label>
+                        <span>{{Proj_Name}}</span>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Procurement Type : </label>
+                        <span>{{ProposalFor=='Mix'?'Acquisition/Purchase/Joint Ventures':ProposalFor}}</span>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Scheme : </label>
+                        <span>{{Sch_Name}}</span>
+                      </div>
+
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-4">
+                        <label for="">District : </label>
+                        <span>{{district}}</span>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Village/City/Colony : </label>
+                        <span> {{Village}}</span>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Proposal receipt date : </label>
+                        <span>{{Submitted_Date | date:'dd-MM-yyyy'}}</span>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <label for="">6(1) Notication No.: </label>
+                        <span>{{LA_Noti6_Number}}</span>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">6(1) Notication Date : </label>
+                        <span> {{LA_Notif_6_1_Date | date:'dd-MM-yyyy'}}</span>
+                      </div>
+
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="text" placeholder=" " name="LA_POADoc_No" [(ngModel)]="lap.LA_POADoc_No"
+                            #LA_POADoc_No="ngModel" class="custom-field" [disabled]="mode=='view'" required>
+                          <label for="">POA Doc Number
+                            <span class="mandatory">*</span>
+                          </label>
+                          <div class="error-msg" *ngIf="LA_POADoc_No.invalid && (LA_POADoc_No.dirty || LA_POADoc_No.touched || formInvalid)">
+                            <span *ngIf="LA_POADoc_No.errors.required">POA Doc Number</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="date" placeholder=" " name="LA_PrepAwardDate" [(ngModel)]="lap.LA_PrepAwardDate"
+                            #LA_PrepAwardDate="ngModel" class="custom-field" [disabled]="mode=='view'" required>
+                          <label for="">Preperation Award Date
+                            <span class="mandatory">*</span>
+                          </label>
+                          <div class="error-msg" *ngIf="LA_PrepAwardDate.invalid && (LA_PrepAwardDate.dirty || LA_PrepAwardDate.touched || formInvalid)">
+                            <span *ngIf="LA_PrepAwardDate.errors.required">Preperation Award Date is required.</span>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="text" placeholder=" " name="LA_PrepAwardExtent" [(ngModel)]="lap.LA_PrepAwardExtent"
+                            #LA_PrepAwardExtent="ngModel" class="custom-field" [disabled]="mode=='view'" required pattern="^[0-9.]*$">
+                          <label for="">Preperation Award Extent
+                            <span class="mandatory">*</span>
+                          </label>
+                          <div class="error-msg" *ngIf="LA_PrepAwardExtent.invalid && (LA_PrepAwardExtent.dirty || LA_PrepAwardExtent.touched || formInvalid)">
+                            <span *ngIf="LA_PrepAwardExtent.errors.required">Preperation Award Extent is required.</span>
+                            <span *ngIf="LA_PrepAwardExtent.errors.pattern">Preperation Award Extent is invalid.</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="text" placeholder=" " name="LA_PrepAwardAmount" pattern="^[0-9.]*$" maxlength="12"
+                            [(ngModel)]="lap.LA_PrepAwardAmount" #LA_PrepAwardAmount="ngModel" class="custom-field"
+                            [disabled]="mode=='view'" required>
+                          <label for="">Preperation Award Amount
+                            <span class="mandatory">*</span>
+                          </label>
+                          <div class="error-msg" *ngIf="LA_PrepAwardAmount.invalid && (LA_PrepAwardAmount.dirty || LA_PrepAwardAmount.touched || formInvalid)">
+                            <span *ngIf="LA_PrepAwardAmount.errors.required">Preperation Award Amount is required.</span>
+                            <span *ngIf="LA_PrepAwardAmount.errors?.pattern">Enter Valid Amount.</span>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="row">
+                      <div class="col-md-2">
+                        <label for="">Document</label>
+                      </div>
+                      <div class="col-md-4">
+                        <input type="file" #Image accept="application/pdf" (change)="imageUpload2($event.target.files)"
+                          id="LA_NotPoa_File" name="LA_NotPoa_File" [(ngModel)]="lap.LA_NotPoa_File" #LA_NotPoa_File="ngModel">
+                        <a class="" [hidden]="lap.LA_NotPoa_File==null" *ngIf="mode=='view' || mode=='edit'" target="_blank"
+                          href="{{lap.LA_NotPoa_File}}">view</a>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <textarea [disabled]="mode=='view'" [(ngModel)]="lap.LA_POA_Note" maxlength="200"
+                            #LA_POA_Note="ngModel" name="LA_POA_Note" cols="30" rows="10" class="custom-field"></textarea>
+                          <label for=""> Note
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="text-center">
+                      <button class="btn btn-primary" [disabled]="mode=='view'" type="submit">Save</button>
+                      <!-- <button class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button> -->
+                      <button class="btn btn-primary" type="reset" [disabled]="mode=='view'">Cancel</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="tab-pane " id="v-pills-approvalAward" role="tabpanel" aria-labelledby="v-pills-approvalAward-tab">
+
+                <div *ngIf="approvalAwardGrid">
+                  <div class="title themeheading rowmarginfix">
+                    Approval of Award
+                    <div class="float-right">
+                      <button class="btn btn-primary" (click)="approvalAwardContent()">Add</button>
+                    </div>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-striped grid table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Sl.No</th>
+                          <th>AOA Document No.</th>
+                          <th>Approval Award Date</th>
+                          <th>6(1) Notification No.</th>
+                          <th>POA Document No.</th>
+                          <th class="text-center"> View </th>
+                          <th class="text-center">Edit</th>
+                          <th class="text-center">Delete</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngFor="let lad of LandAOAacquisitionlist | paginate: { id: 'pagination4' ,itemsPerPage:itemsPerPage4 ,currentPage:currentPage4 ,totalItems:totalItems4};let i=index">
+                        <!-- <tbody *ngFor="let lad of Land41acquisition;let i=index" [hidden]="lad.LA_AOADoc_No==null"> -->
+                        <tr *ngIf="lad.AOA_Inactive!='Y'">
+                          <td>{{((currentPage4-1)*itemsPerPage4)+(i+1)}}</td>
+                          <td>{{lad.LA_AOADoc_No}}</td>
+                          <td>{{lad.LA_AprovalAwardDate | date:'dd-MM-yyyy'}}</td>
+                          <td>{{lad.LA_Noti6_Number}}</td>
+                          <td>{{lad.LA_POADoc_No}}</td>
+
+                          <td class="text-center">
+                            <a href="javascript:void(0)" (click)="GetByIdLandAquisition(lad.LA_Id_PK,'view',4)">
+                              <i class="fa fa-lg fa-eye themecolor"></i>
+                            </a>
+                          </td>
+                          <td class="text-center">
+                            <a href="javascript:void(0)" (click)="GetByIdLandAquisition(lad.LA_Id_PK,'edit',4)">
+                              <i class="fa fa-lg fa-edit themecolor"></i>
+                            </a>
+                          </td>
+                          <td class="text-center">
+                            <a href="javascript:void(0)">
+                              <i class="fa fa-lg fa-trash themecolor" (click)="delete(lad.LA_Id_PK,4)"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col-md-11">
+                          <pagination-controls class="my-pagination" id="pagination4" (pageChange)="pageChanged4($event)"
+                            maxSize="9" directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+                            screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                            screenReaderCurrentLabel="You're on page">
+                          </pagination-controls>
+                        </div>
+                        <div class="col-md-1">
+                          Total:
+                          <span>{{totalItems4}}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <form (ngSubmit)="mode=='edit'?UpdateLandAquisition(laa,4,LAA.PD_FO_Id_FK):UpdateLandAquisition(laa,4,LAA.PD_FO_Id_FK)"
+                  #fouroneform="ngForm" name="form1">
+                  <div *ngIf="approvalAwardForm">
+                    <div class="title themeheading rowmarginfix">
+                      Approval of Award
+                      <div class="float-right">
+                        <button class="btn btn-primary" (click)="approvalAwardContent1()">Back</button>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <select #PD_FO_Id_FK="ngModel" name="PD_FO_Id_FK" [(ngModel)]="LAA.PD_FO_Id_FK" class="custom-field"
+                            (change)="GetProjectIdfor61(LAA.PD_FO_Id_FK)" [disabled]="mode=='view'">
+                            <option value="undefined">---Select---</option>
+                            <option *ngFor="let LA4 of Land61acquisitionlist" [value]="LA4.LA_Id_PK">
+                              {{LA4.LA_Noti6_Number}}-{{LA4.LA_POADoc_No}}
+                            </option>
+                          </select>
+                          <label>6(1) Notification No.
+                            <span class="mandatory">*</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-4">
+                        <label for="">Project Name : </label>
+                        <span>{{Proj_Name}}</span>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Procurement Type : </label>
+                        <span>{{ProposalFor=='Mix'?'Acquisition/Purchase/Joint Ventures':ProposalFor}}</span>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Scheme : </label>
+                        <span>{{Sch_Name}}</span>
+                      </div>
+
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-4">
+                        <label for="">District : </label>
+                        <span>{{district}}</span>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Village/City/Colony : </label>
+                        <span> {{Village}}</span>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Proposal receipt date : </label>
+                        <span>{{Submitted_Date | date:'dd-MM-yyyy'}}</span>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <label for="">6(1) Notication No.: </label>
+                        <span>{{LA_Noti6_Number}}</span>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">6(1) Notication Date : </label>
+                        <span> {{LA_Notif_6_1_Date | date:'dd-MM-yyyy'}}</span>
+                      </div>
+
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="text" placeholder=" " name="LA_AOADoc_No" [(ngModel)]="laa.LA_AOADoc_No"
+                            #LA_AOADoc_No="ngModel" class="custom-field" [disabled]="mode=='view'" required>
+                          <label for="">AOA Doc Number
+                            <span class="mandatory">*</span>
+                          </label>
+                          <div class="error-msg" *ngIf="LA_AOADoc_No.invalid && (LA_AOADoc_No.dirty || LA_AOADoc_No.touched || formInvalid)">
+                            <span *ngIf="LA_AOADoc_No.errors.required">POA Doc Number</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="date" placeholder=" " name="LA_AprovalAwardDate" [(ngModel)]="laa.LA_AprovalAwardDate"
+                            #LA_AprovalAwardDate="ngModel" class="custom-field" [disabled]="mode=='view'" required>
+                          <label for="">Approval Award Date
+                            <span class="mandatory">*</span>
+                          </label>
+                          <div class="error-msg" *ngIf="LA_AprovalAwardDate.invalid && (LA_AprovalAwardDate.dirty || LA_AprovalAwardDate.touched || formInvalid)">
+                            <span *ngIf="LA_AprovalAwardDate.errors.required">Approval Award Date is required.</span>
+                          </div>
+                        </div>
+                      </div>
+
+
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="text" placeholder=" " name="LA_AprovalAwardExtent" maxlength="50" [(ngModel)]="laa.LA_AprovalAwardExtent"
+                            #LA_AprovalAwardExtent="ngModel" class="custom-field" [disabled]="mode=='view'" required>
+                          <label for="">Approval Award Extent
+                            <span class="mandatory">*</span>
+                          </label>
+                          <div class="error-msg" *ngIf="LA_AprovalAwardExtent.invalid && (LA_AprovalAwardExtent.dirty || LA_AprovalAwardExtent.touched || formInvalid)">
+                            <span *ngIf="LA_AprovalAwardExtent.errors.required">Approval Award Extent is required.</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="text" placeholder=" " name="LA_AprovalAwardAmount" pattern="^[0-9.]*$" maxlength="12"
+                            [(ngModel)]="laa.LA_AprovalAwardAmount" #LA_AprovalAwardAmount="ngModel" class="custom-field"
+                            [disabled]="mode=='view'" required>
+                          <label for="">Approval Award Amount
+                            <span class="mandatory">*</span>
+                          </label>
+                          <div class="error-msg" *ngIf="LA_AprovalAwardAmount.invalid && (LA_AprovalAwardAmount.dirty || LA_AprovalAwardAmount.touched || formInvalid)">
+                            <span *ngIf="LA_AprovalAwardAmount.errors.required">Approval Award Amount is required.</span>
+                            <span *ngIf="LA_AprovalAwardAmount.errors?.pattern">Enter Valid Amount.</span>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="row">
+                      <div class="col-md-2">
+                        <label for="">Document</label>
+                      </div>
+                      <div class="col-md-4">
+                        <input type="file" #Image accept="application/pdf" (change)="imageUpload3($event.target.files)"
+                          id="LA_NotAoa_File" name="LA_NotAoa_File" [(ngModel)]="laa.LA_NotAoa_File" #LA_NotAoa_File="ngModel">
+                        <a class="" [hidden]="laa.LA_NotAoa_File==null" *ngIf="mode=='view' || mode=='edit'" target="_blank"
+                          href="{{laa.LA_NotAoa_File}}">view</a>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <textarea [disabled]="mode=='view'" [(ngModel)]="laa.LA_AOA_Note" maxlength="200"
+                            #LA_AOA_Note="ngModel" name="LA_AOA_Note" cols="30" rows="10" class="custom-field"></textarea>
+                          <label for=""> Note
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="text-center">
+                      <button class="btn btn-primary" [disabled]="mode=='view'" type="submit">Save</button>
+                      <!-- <button class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button> -->
+                      <button class="btn btn-primary" type="reset" [disabled]="mode=='view'">Cancel</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="tab-pane " id="v-pills-modeAward" role="tabpanel" aria-labelledby="v-pills-modeAward-tab">
+
+                <div *ngIf="modeAwardGrid">
+                  <div class="title themeheading rowmarginfix">
+                    Mode of Award
+                    <div class="float-right">
+                      <button class="btn btn-primary" (click)="modeAwardContent()">Add</button>
+                    </div>
+                  </div>
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>Sl No.</th>
+                          <th>MOM Document No.</th>
+                          <th>6(1) Notification No.</th>
+                          <th>POA Document No.</th>
+                          <th>AOA Document No.</th>
+                          <th class="text-center"> View </th>
+                          <th class="text-center">Edit</th>
+                          <th class="text-center">Delete</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngFor="let lad of LandMOA1acquisitionlist | paginate: { id:'pagination5' ,itemsPerPage:itemsPerPage5 ,currentPage:currentPage5 ,totalItems:totalItems5};let i=index">
+                        <!-- <tbody *ngFor="let lad of Land41acquisition;let i=index" [hidden]="lad.LA_MOADoc_No==null"> -->
+                        <tr *ngIf="lad.MOA_Inactive!='Y'">
+                          <td>{{((currentPage5-1)*itemsPerPage5)+(i+1)}}</td>
+                          <td>{{lad.LA_MOADoc_No}}</td>
+                          <td>{{lad.LA_Noti6_Number}}</td>
+                          <td>{{lad.LA_POADoc_No}}</td>
+                          <td>{{lad.LA_AOADoc_No}}</td>
+
+                          <td class="text-center">
+                            <a href="javascript:void(0)" (click)="GetByIdLandAquisition(lad.LA_Id_PK,'view',5)">
+                              <i class="fa fa-lg fa-eye themecolor"></i>
+                            </a>
+                          </td>
+                          <td class="text-center">
+                            <a href="javascript:void(0)" (click)="GetByIdLandAquisition(lad.LA_Id_PK,'edit',5)">
+                              <i class="fa fa-lg fa-edit themecolor"></i>
+                            </a>
+                          </td>
+                          <td class="text-center">
+                            <a href="javascript:void(0)">
+                              <i class="fa fa-lg fa-trash themecolor" (click)="delete(lad.LA_Id_PK,5)"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col-md-11">
+                          <pagination-controls class="my-pagination" id="pagination5" (pageChange)="pageChanged5($event)"
+                            maxSize="9" directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+                            screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                            screenReaderCurrentLabel="You're on page">
+                          </pagination-controls>
+                        </div>
+                        <div class="col-md-1">
+                          Total:
+                          <span>{{totalItems5}}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <form (ngSubmit)="mode=='edit'?UpdateLandAquisition(lam,5,LAM.PD_FO_Id_FK):UpdateLandAquisition(lam,5,LAM.PD_FO_Id_FK)"
+                  #fouroneform="ngForm" name="form1">
+                  <div *ngIf="modeAwardForm">
+                    <div class="title themeheading rowmarginfix">
+                      Mode of Award
+                      <div class="float-right">
+                        <button class="btn btn-primary" (click)="modeAwardContent1()">Back</button>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <select #PD_FO_Id_FK="ngModel" name="PD_FO_Id_FK" [(ngModel)]="LAM.PD_FO_Id_FK" class="custom-field"
+                            (change)="GetProjectIdfor61(LAM.PD_FO_Id_FK)" [disabled]="mode=='view'">
+                            <option value="undefined">---Select---</option>
+                            <option *ngFor="let LA4 of Land61acquisitionlist" [value]="LA4.LA_Id_PK">
+                              {{LA4.LA_Noti6_Number}}-{{LA4.LA_AOADoc_No}}
+                            </option>
+                          </select>
+                          <label>6(1) Notification No.
+                            <span class="mandatory">*</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-4">
+                        <label for="">Project Name : </label>
+                        <span>{{Proj_Name}}</span>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Procurement Type : </label>
+                        <span>{{ProposalFor=='Mix'?'Acquisition/Purchase/Joint Ventures':ProposalFor}}</span>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Scheme : </label>
+                        <span>{{Sch_Name}}</span>
+                      </div>
+
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-4">
+                        <label for="">District : </label>
+                        <span>{{district}}</span>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Village/City/Colony : </label>
+                        <span> {{Village}}</span>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Proposal receipt date : </label>
+                        <span>{{Submitted_Date | date:'dd-MM-yyyy'}}</span>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <label for="">6(1) Notication No.: </label>
+                        <span>{{LA_Noti6_Number}}</span>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">6(1) Notication Date : </label>
+                        <span> {{LA_Notif_6_1_Date | date:'dd-MM-yyyy'}}</span>
+                      </div>
+
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="text" placeholder=" " name="LA_MOADoc_No" [(ngModel)]="lam.LA_MOADoc_No"
+                            #LA_MOADoc_No="ngModel" class="custom-field" [disabled]="mode=='view'" required>
+                          <label for="">MOA Doc Number
+                            <span class="mandatory">*</span>
+                          </label>
+                          <div class="error-msg" *ngIf="LA_MOADoc_No.invalid && (LA_MOADoc_No.dirty || LA_MOADoc_No.touched || formInvalid)">
+                            <span *ngIf="LA_MOADoc_No.errors.required">POA Doc Number</span>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- <div class="col-md-6">
+                              <div class="input-group">
+                                <select #LA_MOAVi_Id_Fk="ngModel" name="LA_MOAVi_Id_Fk" [(ngModel)]="lam.LA_MOAVi_Id_Fk" class="custom-field" >
+                                  <option value="undefined" selected>---Select---</option>
+                                  <option *ngFor="let vill of projvillagelist" [value]="vill.PV_Id">
+                                    {{vill.PV_VillageName}}
+                                  </option>
+                                </select>
+                                <label>Village
+                                </label>
+                              
+                              </div>
+                            </div> -->
+                    </div>
+
+                    <!-- <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="text" placeholder=" " name="LA_GeneralAwardExtent" [(ngModel)]="lam.LA_GeneralAwardExtent" #LA_GeneralAwardExtent="ngModel"
+                            class="custom-field" [disabled]="mode=='view'" required>
+                          <label for="">General Award Extent
+                            <span class="mandatory">*</span>
+                          </label>
+                          <div class="error-msg" *ngIf="LA_GeneralAwardExtent.invalid && (LA_GeneralAwardExtent.dirty || LA_GeneralAwardExtent.touched || formInvalid)">
+                            <span *ngIf="LA_GeneralAwardExtent.errors.required">General Award Extent is required.</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="text" placeholder=" " name="LA_GeneralAwardExtent_Rate" [(ngModel)]="lam.LA_GeneralAwardExtent_Rate" #LA_GeneralAwardExtent_Rate="ngModel"
+                            class="custom-field" [disabled]="mode=='view'" required>
+                          <label for="">Rate / acre
+                            <span class="mandatory">*</span>
+                          </label>
+                          <div class="error-msg" *ngIf="LA_GeneralAwardExtent_Rate.invalid && (LA_GeneralAwardExtent_Rate.dirty || LA_GeneralAwardExtent_Rate.touched || formInvalid)">
+                            <span *ngIf="LA_GeneralAwardExtent_Rate.errors.required">Rate / acre is required.</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="text" placeholder=" " name="LA_ConsentAwardExtent" [(ngModel)]="lam.LA_ConsentAwardExtent" #LA_ConsentAwardExtent="ngModel"
+                            class="custom-field" [disabled]="mode=='view'">
+                          <label for="">Consent Award extent
+
+                          </label>
+
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="text" placeholder=" " name="LA_ConsentAwardExtent_Rate" [(ngModel)]="lam.LA_ConsentAwardExtent_Rate" #LA_ConsentAwardExtent_Rate="ngModel"
+                            class="custom-field" [disabled]="mode=='view'">
+                          <label for="">Rate / acre
+
+                          </label>
+
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="text" placeholder=" " name="LA_ExtentwithouAward" [(ngModel)]="lam.LA_ExtentwithouAward" #LA_ExtentwithouAward="ngModel"
+                            class="custom-field" [disabled]="mode=='view'">
+                          <label for="">Extent without award
+
+                          </label>
+
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="text" placeholder=" " name="LA_TotalAmount" pattern="^[0-9.]*$" maxlength="12" [(ngModel)]="lam.LA_TotalAmount"
+                            #LA_TotalAmount="ngModel" class="custom-field" [disabled]="mode=='view'">
+                          <label for="">Total Amount
+                          </label>
+                          <div class="error-msg" *ngIf="LA_TotalAmount.invalid && (LA_TotalAmount.dirty || LA_TotalAmount.touched || formInvalid)">
+                            <span *ngIf="LA_TotalAmount.errors?.pattern">Enter Valid Amount.</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  <div class="row">
+                      <div class="col-md-6">
+                          <div class="input-group">
+                              <textarea [disabled]="mode=='view'" [(ngModel)]="lam.LA_MOA_Note" maxlength="200" #LA_MOA_Note="ngModel" name="LA_MOA_Note"
+                                cols="30" rows="10" class="custom-field"></textarea>
+                              <label for=""> Note
+                              </label>
+                            </div>
+                        </div>
+                    <div class="col-md-2">
+                        <label for="">Document</label>
+                      </div>
+                      <div class="col-md-4">
+                        <input type="file" #Image accept="application/pdf" (change)="imageUpload($event.target.files)" id="LA_NotMoa_File"
+                          name="LA_NotMoa_File" [(ngModel)]="lam.LA_NotMoa_File" #LA_NotMoa_File="ngModel">
+                        <a class="" [hidden]="lam.LA_NotMoa_File==null" *ngIf="mode=='view' || mode=='edit'" target="_blank" href="{{lam.LA_NotMoa_File}}">view</a>
+                      </div>
+                    </div> -->
+
+                    <div class="box1">
+                      <div class="row">
+
+                        <div class="col-md-6">
+                          <div class="input-group">
+                            <select #LA_MOAVi_Id_Fk="ngModel" name="LA_MOAVi_Id_Fk" [(ngModel)]="e.LA_MOAVi_Id_Fk"
+                              class="custom-field">
+                              <option value="undefined" selected>---Select---</option>
+                              <option *ngFor="let vill of projvillagelist" [value]="vill.PV_Id">
+                                {{vill.PV_VillageName}}
+                              </option>
+                            </select>
+                            <label>Village/City/Colony
+                            </label>
+
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="input-group">
+                            <input type="text" placeholder=" " name="LA_GeneralAwardExtent" [(ngModel)]="e.LA_GeneralAwardExtent"
+                              #LA_GeneralAwardExtent="ngModel" class="custom-field" [disabled]="mode=='view'">
+                            <label for="">General Award Extent
+                              <!-- <span class="mandatory">*</span> -->
+                            </label>
+                            <!-- <div class="error-msg" *ngIf="LA_GeneralAwardExtent.invalid && (LA_GeneralAwardExtent.dirty || LA_GeneralAwardExtent.touched || formInvalid)">
+                                  <span *ngIf="LA_GeneralAwardExtent.errors.required">General Award Extent is required.</span>
+                                </div> -->
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="input-group">
+                            <input type="number" placeholder=" " name="LA_GeneralAwardExtent_Rate" [(ngModel)]="e.LA_GeneralAwardExtent_Rate"
+                              #LA_GeneralAwardExtent_Rate="ngModel" class="custom-field" [disabled]="mode=='view'">
+                            <label for="">Rate Per Acre
+                              <!-- <span class="mandatory">*</span> -->
+                            </label>
+                            <!-- <div class="error-msg" *ngIf="LA_GeneralAwardExtent_Rate.invalid && (LA_GeneralAwardExtent_Rate.dirty || LA_GeneralAwardExtent_Rate.touched || formInvalid)">
+                                  <span *ngIf="LA_GeneralAwardExtent_Rate.errors.required">Rate / acre is required.</span>
+                                </div> -->
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="input-group">
+                            <input type="text" placeholder=" " name="LA_ConsentAwardExtent" [(ngModel)]="e.LA_ConsentAwardExtent"
+                              #LA_ConsentAwardExtent="ngModel" class="custom-field" [disabled]="mode=='view'">
+                            <label for="">Consent Award extent
+
+                            </label>
+
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="input-group">
+                            <input type="number" placeholder=" " name="LA_ConsentAwardExtent_Rate" [(ngModel)]="e.LA_ConsentAwardExtent_Rate"
+                              #LA_ConsentAwardExtent_Rate="ngModel" class="custom-field" [disabled]="mode=='view'">
+                            <label for="">Rate Per Acre
+
+                            </label>
+
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="input-group">
+                            <input type="text" placeholder=" " name="LA_ExtentwithouAward" [(ngModel)]="e.LA_ExtentwithouAward"
+                              #LA_ExtentwithouAward="ngModel" class="custom-field" [disabled]="mode=='view'">
+                            <label for="">Extent without award
+
+                            </label>
+
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="input-group">
+                            <input type="number" placeholder=" " name="LA_TotalAmount" pattern="^[0-9.]*$" maxlength="12"
+                              [(ngModel)]="e.LA_TotalAmount" #LA_TotalAmount="ngModel" class="custom-field" [disabled]="mode=='view'">
+                            <label for="">Total Amount
+                            </label>
+
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="input-group">
+                            <textarea [disabled]="mode=='view'" [(ngModel)]="e.LA_MOA_Note" maxlength="200"
+                              #LA_MOA_Note="ngModel" name="LA_MOA_Note" cols="30" rows="10" class="custom-field"></textarea>
+                            <label for=""> Note
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <label for="">Document</label>
+                        </div>
+                        <div class="col-md-4">
+                          <input type="file" #Image accept="application/pdf" (change)="imageUpload4($event.target.files)"
+                            id="LA_NotMoa_File" name="LA_NotMoa_File" [(ngModel)]="e.LA_NotMoa_File" #LA_NotMoa_File="ngModel">
+                          <!-- <a class="" [hidden]="e.LA_NotMoa_File==null" *ngIf="mode=='view' || mode=='edit'" target="_blank" href="{{e.LA_NotMoa_File}}">view</a> -->
+                        </div>
+                      </div>
+
+
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="input-group">
+                            <input type="text" placeholder=" " name="LA_16_2_Extent_16_2" maxlength="50" [(ngModel)]="e.LA_16_2_Extent_16_2"
+                              #LA_16_2_Extent_16_2="ngModel" class="custom-field" [disabled]="mode=='view'">
+                            <label for="">Extent of 16(2)
+                              <span class="mandatory">*</span>
+                            </label>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="input-group">
+                            <input type="date" placeholder=" " name="LA_LA_16_2_Date_16_2" [(ngModel)]="e.LA_LA_16_2_Date_16_2"
+                              #LA_LA_16_2_Date_16_2="ngModel" class="custom-field" [disabled]="mode=='view'">
+                            <label for="">Date of 16(2)
+                              <span class="mandatory">*</span>
+                            </label>
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6 text-center">
+                          <button class="btn btn-primary" [disabled]="mode=='view'" type="button" (click)="AddExtent(e)">Add</button>&nbsp;
+                          <button type="button" class="btn btn-primary" (click)="ClearExtent()">Cancel</button>
+                        </div>
+
+                      </div>
+
+
+                      <div class="table-responsive">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <td>Sl No.</td>
+                              <td>Village/City/Colony</td>
+                              <td>General Award Extent</td>
+                              <td>Rate/Acre</td>
+                              <td>Consent Award Extent</td>
+                              <td>Rate/Acre</td>
+                              <td>Total Amount</td>
+                              <td>Extent of 16(2)</td>
+                              <td>Date of 16(2)</td>
+                              <td *ngIf="!hide">Delete</td>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let la of LandDetails;let i=index;">
+                              <td>{{i+1}}</td>
+                              <td>{{la.PV_VillageName}}</td>
+                              <td>{{la.LA_GeneralAwardExtent}}</td>
+                              <td>{{la.LA_GeneralAwardExtent_Rate}}</td>
+                              <td>{{la.LA_ConsentAwardExtent}}</td>
+                              <td>{{la.LA_ConsentAwardExtent_Rate}}</td>
+                              <td>{{la.LA_TotalAmount}}</td>
+                              <td>{{la.LA_16_2_Extent_16_2}}</td>
+                              <td>{{la.LA_LA_16_2_Date_16_2 | date : 'dd/MM/yyyy'}}</td>
+                              <td *ngIf="!hide" (click)="LandDetailsremove(i)">
+                                <i class="fa fa-lg fa-trash themecolor"></i>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <!-- <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="date" placeholder=" " name="LA_DateOfSubmission" [(ngModel)]="lam.LA_DateOfSubmission" #LA_DateOfSubmission="ngModel"
+                            class="custom-field" [disabled]="mode=='view'" required>
+                          <label for="">Date of Submission to Planning Department
+                            <span class="mandatory">*</span>
+                          </label>
+                          <div class="error-msg" *ngIf="LA_DateOfSubmission.invalid && (LA_DateOfSubmission.dirty || LA_DateOfSubmission.touched || formInvalid)">
+                            <span *ngIf="LA_DateOfSubmission.errors.required">Date of Submission to Planning Department is required.
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <textarea type="text" placeholder=" " name="LA_Remarks" [(ngModel)]="lam.LA_Remarks" #LA_Remarks="ngModel" class="custom-field"
+                            [disabled]="mode=='view'"></textarea>
+                          <label for="">Remarks</label>
+                        </div>
+                      </div>
+                    </div> -->
+                    <br>
+                    <div class="text-center">
+                      <button class="btn btn-primary" [disabled]="mode=='view'" type="submit">Save</button>
+                      <!-- <button class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button> -->
+                      <button class="btn btn-primary" type="reset" [disabled]="mode=='view'">Cancel</button>
+                    </div>
+
+                  </div>
+                </form>
+              </div>
+              <div class="tab-pane " id="v-pills-payment" role="tabpanel" aria-labelledby="v-pills-payment-tab">
+                <div *ngIf="paymentGrid">
+                  <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm,itemsPerPage,1)">
+                    <div class="title themeheading">Payment
+                      <div class="float-right">
+                        <!-- Items per page:
+                          <select name="SearchRows" class="noofpage" (change)="itemsPerPageChanged(itemsPerPage, 1)">
+                            <option [ngValue]="5">5</option>
+                            <option [ngValue]="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="50">50</option>
+                          </select>                         -->
+                        <button class="btn btn-primary" (click)="paymentContent()"> Add </button>
+
+                      </div>
+                      <span class="clearfix"></span>
+                    </div>
+
+                    <div class="searchbar">
+                      <div class="container">
+                        <div class="row">
+                          <div class="col-md-1">
+                            <label>Search</label>
+                          </div>
+                          <div class="col-md-4">
+                            <select name="SearchCriteria" #SearchCriteria="ngModel" [(ngModel)]="s.SearchCriteria"
+                              class="form-control" required>
+                              <option [ngValue]="undefined" selected>---Select---</option>
+                              <option value="projectname">Project Name</option>
+
+                            </select>
+                            <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)"
+                              class="error-msg">
+                              <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+                            </div>
+                          </div>
+                          <div class="col-md-4">
+                            <input type="text" name="SearchText" #SearchText="ngModel" [(ngModel)]="s.SearchText" class="form-control"
+                              placeholder="Search.." required>
+                            <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+                              <div *ngIf="SearchText.errors.required">Search text is required</div>
+                            </div>
+                          </div>
+                          <div class="col-md-3">
+                            <button class="btn btn-default" type="submit">Search</button>
+                            <button class="btn btn-default" type="reset" (click)="GetAllPaymentProjects(itemsPerPage, 1)">Clear</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="table-responsive">
+                      <table class="table table-striped grid">
+                        <thead>
+                          <tr>
+                            <th>Sl No.</th>
+                            <th>Project</th>
+                            <th>Proposal Id</th>
+                            <th>Payment Id</th>
+                            <th>Payment Date</th>
+                            <th>Payment Request No.</th>
+                            <th>Land Owner Name.</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                            <th>Delete</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let pd of paymentprojectlist | paginate: { id:'pagination' ,itemsPerPage:itemsPerPage ,currentPage:currentPage ,totalItems:totalItems}; let i=index">
+                            <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+                            <td>{{pd.PD_Project_Name}}</td>
+                            <td>{{pd.pr_id}}</td>
+                            <td></td>
+                            <td></td>
+                            <td><span [hidden]="pd.LOP_Id_PK==null">REQ-</span>{{pd.LOP_Id_PK}}</td>
+                            <!--hidden="pd.LOP_Id_PK==null"-->
+                            <td>{{pd.LOD_LO_Name}}</td>
+                            <td>{{pd.LOP_Amount}}</td>
+                            <td>Pending</td>
+                            <td class="text-center">
+                              <a href="javascript:void(0)">
+                                <i class="fa fa-lg fa-trash themecolor"></i>
+                              </a>
+                            </td>
+                          </tr>
+
+                        </tbody>
+                      </table>
+                      <div class="container-fluid">
+                        <div class="row">
+                          <div class="col-md-11">
+                            <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)"
+                              maxSize="9" directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+                              screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                              screenReaderCurrentLabel="You're on page">
+                            </pagination-controls>
+                          </div>
+                          <div class="col-md-1">
+                            Total:
+                            <span>{{totalItems}}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </form>
+                </div>
+                <div *ngIf="paymentForm">
+                  <div class="title themeheading">
+                    Payment                     <div class="float-right">
+                      <button class="btn btn-primary" (click)="paymentContent1()">Back</button>
+                    </div>
+                    <span class="clearfix"></span>
+                  </div>
+
+                  <form (ngSubmit)="mode=='edit'?UpdateLandOwnerPayment(LandOwnerPayment):SaveLandOwnerPayment(LandOwnerPayment)"
+                    #LandOwnerPayment="ngForm" name="form1">
+
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <select #PD_FO_Id_FK="ngModel" name="PD_FO_Id_FK" [(ngModel)]="LAPA.PD_FO_Id_FK" class="custom-field"
+                            (change)="GetProjectDetailsforPayment(LAPA.PD_FO_Id_FK)">
+                            <option value="undefined">---Select---</option>
+                            <option *ngFor="let LA4 of Land61acquisitionlist" [value]="LA4.LA_Id_PK">
+                              {{LA4.LA_Noti6_Number}}-{{LA4.LA_AOADoc_No}}
+                            </option>
+                          </select>
+                          <label>6(1) Notification No.
+                            <span class="mandatory">*</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="table-responsive" style="margin-top:15px">
+                      <table class="table table-bordered" style="width: 1800px;">
+                        <thead>
+                          <tr>
+                            <td rowspan="2">Sl No.</td>
+                            <!-- <td rowspan="2">LTP Id</td> -->
+                            <td rowspan="2">Survey No.</td>
+                            <td rowspan="2">Land Owner</td>
+                            <td rowspan="2"> Extends </td>
+
+                            <td rowspan="2"> Latitude </td>
+                            <td rowspan="2"> Longitude </td>
+                            <td rowspan="2">Akar </td>
+                            <td rowspan="2">Land Type</td>
+
+                            <td rowspan="2"> North </td>
+                            <td rowspan="2"> East </td>
+                            <td rowspan="2">West </td>
+                            <td rowspan="2">South</td>
+
+                            <td rowspan="2">Sharing Pattern </td>
+                            <td rowspan="2"> CAD </td>
+                            <td rowspan="2">Sketch </td>
+
+
+                            <td colspan="2" class="text-center">Extent</td>
+                            <td colspan="2" class="text-center">Tippani</td>
+                            <td rowspan="2">Atlas</td>
+                            <td rowspan="2">Khatha</td>
+                            <td rowspan="2">EC</td>
+                            <td rowspan="2">RTC</td>
+                            <td rowspan="2">Revenue Sketch</td>
+                            <td rowspan="2">PT sheet</td>
+                            <td rowspan="2">Akar Bandh</td>
+                            <td rowspan="2">JMC</td>
+                            <td rowspan="2">Select</td>
+                            <!-- <td rowspan="2">Note</td> -->
+                          </tr>
+                          <tr>
+                            <td class="text-center">Acres</td>
+                            <td class="text-center">Guntas</td>
+                            <td>No</td>
+                            <td>Date</td>
+                          </tr>
+                        </thead>
+
+                        <tbody class="data-grid">
+                          <tr *ngFor="let info of LandRecordDetailswithLTP;let i=index" [ngClass]="{'planning':info.LR_From =='Planning'}">
+                            <td>{{i+1}} </td>
+                            <!-- <td>{{info.LR_LTP_Id_Fk}}</td> -->
+                            <td>{{info.LR_SurveyNo}}</td>
+                            <td>{{info.LR_Owner}}</td>
+                            <td>{{info.LD_Extents}}</td>
+                            <td>{{info.LD_Latitude}}</td>
+                            <td>{{info.LD_Longitude}}</td>
+                            <td>{{info.LD_Akar}}</td>
+                            <td>{{info.LandType_Name}}</td>
+                            <td>{{info.LD_North}}</td>
+                            <td>{{info.LD_East}}</td>
+                            <td>{{info.LD_West}}</td>
+                            <td>{{info.LD_South}}</td>
+                            <td>{{info.SharingPattern_Name}}</td>
+                            <td>
+                              <span *ngIf="info.LD_Cad != null">
+                                <a href="javascript:void(0);">Yes</a>
+                              </span>
+                              <span *ngIf="info.LD_Cad == null">No</span>
+                            </td>
+                            <td>
+                              <span *ngIf="info.LD_Sketch != null">
+                                <a href="javascript:void(0);">Yes</a>
+                              </span>
+                              <span *ngIf="info.LD_Sketch == null">No</span>
+                            </td>
+                            <td>{{info.LR_ExtentinAcres}}</td>
+                            <td>{{info.LR_ExtentinGuntas}}</td>
+                            <td>{{info.LR_Tippani_No}}</td>
+                            <td>{{info.LR_Tippani_Date | date:'dd-MM-yyyy'}}</td>
+
+                            <td>
+                              <span *ngIf="info.LR_Atlas != null">
+                                <a href="javascript:void(0);">Yes</a>
+                              </span>
+                              <span *ngIf="info.LR_Atlas == null">No</span>
+                            </td>
+                            <td>
+                              <span *ngIf="info.LR_Khatha != null">
+                                <a href="javascript:void(0);">Yes</a>
+                              </span>
+                              <span *ngIf="info.LR_Khatha == null">No</span>
+                            </td>
+                            <td>
+                              <span *ngIf="info.LR_EC != null">
+                                <a href="javascript:void(0);">Yes</a>
+                              </span>
+                              <span *ngIf="info.LR_EC == null">No</span>
+                            </td>
+                            <td>
+                              <span *ngIf="info.LR_RTC != null">
+                                <a href="javascript:void(0);">Yes</a>
+                              </span>
+                              <span *ngIf="info.LR_RTC == null">No</span>
+                            </td>
+                            <td>
+                              <span *ngIf="info.LR_Revenue_Sketch != null">
+                                <a href="javascript:void(0);">Yes</a>
+                              </span>
+                              <span *ngIf="info.LR_Revenue_Sketch == null">No</span>
+                            </td>
+                            <td>
+                              <span *ngIf="info.LR_PTSheet != null">
+                                <a href="javascript:void(0);">Yes</a>
+                              </span>
+                              <span *ngIf="info.LR_PTSheet == null">No</span>
+                            </td>
+                            <td>
+                              <span *ngIf="info.LR_Akar_Bandh != null">
+                                <a href="javascript:void(0);">Yes</a>
+                              </span>
+                              <span *ngIf="info.LR_Akar_Bandh == null">No</span>
+                            </td>
+                            <td>
+                              <span *ngIf="info.LR_JMC != null">
+                                <a href="javascript:void(0);">Yes</a>
+                              </span>
+                              <span *ngIf="info.LR_JMC == null">No</span>
+                            </td>
+
+                            <td>
+                              <input type="checkbox" [value]="info.Select" name="Select" [checked]="info.Select===true"
+                                (change)="changeCheckbox(info.LR_Id,info.Select,info.LR_LOD_Id_Fk)">
+                            </td>
+
+                          </tr>
+                          <!-- <tr>
+                                  <td colspan="3" style="text-align: right;font-size: 20px;">Total</td>
+                                  <td colspan="2" style="text-align: right;font-size: 20px;">{{total | number}}</td>
+                                </tr> -->
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div class="border-box">
+                      <div class="title themeheading">
+                        Payments Made
+                        <span class="clearfix"></span>
+                      </div>
+                      <div class="table-responsive">
+                        <table class="table table-striped">
+                          <thead>
+                            <tr>
+                              <td>Sl No</td>
+                              <!-- <td>Survey No</td> -->
+                              <td>Land owner Name</td>
+                              <td>Payment Id</td>
+                              <td>Amount</td>
+                              <td>Status</td>
+                              <td>Payment type</td>
+                              <td>UTR No</td>
+                              <td>Payment Date</td>
+                              <td>Note</td>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let Lo of LandOwner;let i=index">
+                              <td>{{i+1}}</td>
+                              <!-- <td>{{Lo.LD_SurveyNo}}</td> -->
+                              <td>{{Lo.LOD_LO_Name}}</td>
+                              <td></td>
+                              <td>{{Lo.LOP_Amount}}</td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td>{{Lo.LOP_Notes}}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+
+                    <div class="title themeheading">
+                      Payment Advice
+                      <span class="clearfix"></span>
+                    </div>
+                    <div class="container-fluid">
+                      <!-- <div class="row">
+                          <div class="col-md-6">
+                            <div class="input-group">
+                              <input type="text" class="custom-field">
+                              <label for="">Bank Name</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="input-group">
+                              <input type="text" class="custom-field">
+                              <label for="">Bank Branch</label>
+                            </div>
+                          </div>
+                        </div> -->
+                      <!-- <div class="row">
+                          <div class="col-md-6">
+                            <div class="input-group">
+                              <input type="text" class="custom-field">
+                              <label for="">Account No.</label>
+                            </div>
+                          </div>
+                          <div class="col-md-6">
+                            <div class="input-group">
+                              <input type="text" class="custom-field">
+                              <label for="">IFSC Code</label>
+                            </div>
+                          </div>
+                        </div> -->
+
+
+                      <div class="row">
+                        <div class="col-md-3">
+                          <label for="">Land Procurement Payment Id:</label>
+                          <label>&nbsp;{{LODetails.LOP_Id_PK}}</label>
+                        </div>
+                        <div class="col-md-3">
+                          <label for="">District:</label>
+                          <label>&nbsp;{{LODetails.DI_District}}</label>
+                        </div>
+                        <div class="col-md-3">
+                          <label for="">Village/City/Colony:</label>
+                          <label>&nbsp;{{LODetails.PD_Village}}</label>
+                        </div>
+                        <div class="col-md-3">
+                          <label for="">Taluk:</label>
+                          <label>&nbsp;{{LODetails.TA_Taluk}}</label>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <!-- <div class="col-md-3"><label for="">Survey No :</label><label>&nbsp;{{LODetails.LD_SurveyNo}}</label></div> -->
+                        <div class="col-md-3">
+                          <label for="">Land Owner Name:</label>
+                          <label>&nbsp;{{LODetails.LOD_LO_Name}}</label>
+                        </div>
+                        <div class="col-md-3">
+                          <label for="">Account No.:</label>
+                          <label>&nbsp;{{LODetails.LOD_Acc_No}}</label>
+                        </div>
+                        <div class="col-md-3">
+                          <label for="">Bank name:</label>
+                          <label>&nbsp;{{LODetails.LOD_BankName}}</label>
+                        </div>
+                        <div class="col-md-3">
+                          <label for="">Branch:</label>
+                          <label>&nbsp;{{LODetails.LOD_Branch}}</label>
+                        </div>
+                      </div>
+                      <div class="row">
+
+                        <div class="col-md-3">
+                          <label for="">IFSC Code:</label>
+                          <label>&nbsp;{{LODetails.LOD_IFSCCode}}</label>
+                        </div>
+                        <div class="col-md-3">
+                          <label for="">Procurement Type : {{LODetails.PR_For=='Mix'?'Acquisition/Purchase/Joint
+                            Ventures':LODetails.PR_For}}</label>
+                        </div>
+                      </div>
+                      <div class="row">
+
+                        <div class="col-md-6">
+                          <div class="input-group">
+                            <input [disabled]="mode=='view'" [(ngModel)]="p.LOP_Amount" maxlength="18" pattern="^[0-9.]*$"
+                              #LOP_Amount="ngModel" name="LOP_Amount" class="custom-field" required>
+                            <label for="">Amount
+                              <span class="mandatory">*</span>
+                            </label>
+                            <div class="error-msg" *ngIf="LOP_Amount.invalid && (LOP_Amount.dirty || LOP_Amount.touched || formInvalid)">
+                              <span *ngIf="LOP_Amount.errors.required">Amount is required.</span>
+                              <span *ngIf="LOP_Amount.errors?.pattern">Enter Valid ammount</span>
+                            </div>
+                          </div>
+                        </div>
+
+
+
+                        <div class="col-md-6">
+                          <div class="input-group">
+                            <textarea [disabled]="mode=='view'" [(ngModel)]="p.LOP_Notes" maxlength="100" #LOP_Notes="ngModel"
+                              name="LOP_Notes" class="custom-field" required></textarea>
+                            <label for="">Notes
+                              <span class="mandatory">*</span>
+                            </label>
+                            <div class="error-msg" *ngIf="LOP_Notes.invalid && (LOP_Notes.dirty || LOP_Notes.touched || formInvalid)">
+                              <span *ngIf="LOP_Notes.errors.required">Note is required.</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-4">
+                          <div class="input-group">
+                            <label for="">File Upload</label>
+                            <input type="file" #LOP_File="ngModel" name="LOP_File" [(ngModel)]="p.LOP_File" #Image
+                              accept="application/pdf" [disabled]="mode=='view'" (change)="LOPFileInput($event.target.files)"
+                              id="LOP_File">
+                          </div>
+                        </div>
+                        <div class="col-md-2">
+                          <a class="float-right" [hidden]="Pay_File_Show=='hide'" target="_blank" href="{{p.LOP_File}}">view</a>
+                        </div>
+                      </div>
+
+                      <!-- <div class="table-responsive grid">
+                        <table class="table table-striped">
+                            <thead>
+                              <tr>
+                                <td>Sl no.</td>
+                                <td>Installment No.</td>
+                                <td>Account No.</td>
+                                <td>Name</td>
+                                <td>Amount</td>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                              </tr>
+                            </tbody>
+                        </table>
+                      </div> -->
+                      <!-- <div class="row">
+                        <div class="col-md-12 text-center">
+                          <button class="btn btn-primary">Pay Now</button>
+                        </div>  
+                      </div> -->
+                      <div class="row">
+                        <div class="col-md-12 text-center">
+                          <!-- [disabled]="p.LOP_Amount!=null" -->
+                          <button class="btn btn-primary" type="button" [disabled]="mode=='view'" (click)="SaveLopPayment(p)">Send
+                            to Finance</button>
+                          &nbsp;
+                          <button class="btn btn-primary" type="button">Cancel</button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div class="tab-pane " id="v-pills-overPossession" role="tabpanel" aria-labelledby="v-pills-overPossession-tab">
+
+                <div *ngIf="overPossessionGrid">
+                  <div class="title themeheading rowmarginfix">
+                    Taking Over Possession
+                    <div class="float-right">
+                      <button class="btn btn-primary" (click)="overPossessionContent()"> Add </button>
+                    </div>
+                  </div>
+
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>Sl No.</th>
+                          <th>6(1) Notification No.</th>
+                          <th>Possession No.</th>
+                          <th>Possession date</th>
+                          <th>View</th>
+                          <th>Edit</th>
+                          <th>Delete</th>
+                        </tr>
+                      </thead>
+                      <tbody *ngFor="let lad of LandTOP1acquisitionlist | paginate: { id:'pagination6' ,itemsPerPage:itemsPerPage6 ,currentPage:currentPage6 ,totalItems:totalItems6};let i=index">
+                        <!-- <tbody *ngFor="let lad of Land41acquisition;let i=index" [hidden]="lad.LA_TOPDoc_No==null"> -->
+                        <tr *ngIf="lad.TOP_Inactive!='Y'">
+                          <td>{{((currentPage6-1)*itemsPerPage6)+(i+1)}}</td>
+                          <td>{{lad.LA_Noti6_Number}}</td>
+                          <td>{{lad.LA_TOPDoc_No}}</td>
+                          <td>{{lad.LA_POC_Date | date:'dd-MM-yyyy'}}</td>
+
+                          <td class="text-center">
+                            <a href="javascript:void(0)" (click)="GetByIdLandAquisition(lad.LA_Id_PK,'view',6)">
+                              <i class="fa fa-lg fa-eye themecolor"></i>
+                            </a>
+                          </td>
+                          <td class="text-center">
+                            <a href="javascript:void(0)" (click)="GetByIdLandAquisition(lad.LA_Id_PK,'edit',6)">
+                              <i class="fa fa-lg fa-edit themecolor"></i>
+                            </a>
+                          </td>
+                          <td class="text-center">
+                            <a href="javascript:void(0)">
+                              <i class="fa fa-lg fa-trash themecolor" (click)="delete(lad.LA_Id_PK,6)"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col-md-11">
+                          <pagination-controls class="my-pagination" id="pagination6" (pageChange)="pageChanged6($event)"
+                            maxSize="9" directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+                            screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                            screenReaderCurrentLabel="You're on page">
+                          </pagination-controls>
+                        </div>
+                        <div class="col-md-1">
+                          Total:
+                          <span>{{totalItems6}}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <form (ngSubmit)="mode=='edit'?UpdateLandAquisition(lat,6,LAT.PD_FO_Id_FK):UpdateLandAquisition(lat,6,LAT.PD_FO_Id_FK)"
+                  #fouroneform="ngForm" name="form1">
+                  <div *ngIf="overPossessionForm">
+                    <div class="title themeheading rowmarginfix">
+                      Taking Over Possession
+                      <div class="float-right">
+                        <button class="btn btn-primary" (click)="overPossessionContent1()"> Back </button>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <select #PD_FO_Id_FK="ngModel" name="PD_FO_Id_FK" [(ngModel)]="LAT.PD_FO_Id_FK" class="custom-field"
+                            (change)="GetProjectIdfor61(LAT.PD_FO_Id_FK)">
+                            <option value="undefined">---Select---</option>
+                            <option *ngFor="let LA4 of Land61acquisitionlist" [value]="LA4.LA_Id_PK">
+                              {{LA4.LA_Noti6_Number}}
+                            </option>
+                          </select>
+                          <label>6(1) Notification No.
+                            <span class="mandatory">*</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <label for="">Project Name : </label>
+                        <span>{{Proj_Name}}</span>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Procurement Type : </label>
+                        <span>{{ProposalFor=='Mix'?'Acquisition/Purchase/Joint Ventures':ProposalFor}}</span>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Scheme : </label>
+                        <span>{{Sch_Name}}</span>
+                      </div>
+
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-4">
+                        <label for="">District : </label>
+                        <span>{{district}}</span>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Village/City/Colony : </label>
+                        <span> {{Village}}</span>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">Proposal receipt date : </label>
+                        <span>{{Submitted_Date | date:'dd-MM-yyyy'}}</span>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4">
+                        <label for="">6(1) Notication No.: </label>
+                        <span>{{LA_Noti6_Number}}</span>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="">6(1) Notication Date : </label>
+                        <span> {{LA_Notif_6_1_Date | date:'dd-MM-yyyy'}}</span>
+                      </div>
+
+                    </div>
+
+
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="text" placeholder=" " name="LA_TOPDoc_No" [(ngModel)]="lat.LA_TOPDoc_No"
+                            #LA_TOPDoc_No="ngModel" class="custom-field" [disabled]="mode=='view'" required>
+                          <label for="">Possession No.
+                            <span class="mandatory">*</span>
+                          </label>
+                          <div class="error-msg" *ngIf="LA_TOPDoc_No.invalid && (LA_TOPDoc_No.dirty || LA_TOPDoc_No.touched || formInvalid)">
+                            <span *ngIf="LA_TOPDoc_No.errors.required">Possession No. is required.</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="date" placeholder=" " name="LA_POC_Date" [(ngModel)]="lat.LA_POC_Date"
+                            #LA_POC_Date="ngModel" class="custom-field" [disabled]="mode=='view'" required>
+                          <label for="">Possession Date
+                            <span class="mandatory">*</span>
+                          </label>
+                          <div class="error-msg" *ngIf="LA_POC_Date.invalid && (LA_POC_Date.dirty || LA_POC_Date.touched || formInvalid)">
+                            <span *ngIf="LA_POC_Date.errors.required">Possession Date Date is required.</span>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-2">
+                        <label for="">Document</label>
+                      </div>
+                      <div class="col-md-4">
+                        <input type="file" #Image accept="application/pdf" (change)="imageUpload5($event.target.files)"
+                          id="LA_NotPos_File" name="LA_NotPos_File" [(ngModel)]="lat.LA_NotPos_File" #LA_NotPos_File="ngModel">
+                        <a class="" [hidden]="lat.LA_NotPos_File==null" *ngIf="mode=='view' || mode=='edit'" target="_blank"
+                          href="{{lat.LA_NotPos_File}}">view</a>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <textarea type="text" placeholder=" " name="LA_TOC_Note" [(ngModel)]="lat.LA_TOC_Note"
+                            #LA_TOC_Note="ngModel" class="custom-field" [disabled]="mode=='view'"></textarea>
+                          <label for="">Note</label>
+                        </div>
+                      </div>
+                    </div>
+                    <hr>
+                    <!-- <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <select class="custom-field" [(ngModel)]="t.TOP_SurveyNo" #TOP_SurveyNo="ngModel" name="TOP_SurveyNo">
+                            <option [value]="undefined" selected>---Select---</option>
+                            <option [value]="sur.LD_Id" *ngFor="let sur of Surveylist;">
+                              {{sur.LD_SurveyNo}} </option>
+                          </select>
+                          <label for="">Survey No
+                            <span class="mandatory">*</span>
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="text" placeholder=" " name="TOP_Extent" maxlength="100" [(ngModel)]="t.TOP_Extent" #TOP_Extent="ngModel" class="custom-field"
+                            [disabled]="mode=='view'">
+                          <label for="">Extent
+                            <span class="mandatory">*</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="input-group">
+                          <input type="date" placeholder=" " name="TOP_Date" [(ngModel)]="t.TOP_Date" #TOP_Date="ngModel" class="custom-field" [disabled]="mode=='view'">
+                          <label for="">Date
+                            <span class="mandatory">*</span>
+                          </label>
+                        </div>
+                      </div>
+                      <div class="col-md-4 text-center">
+                        <button class="btn btn-primary" type="button" (click)="AddTopExtent(t)">Add</button>&nbsp;
+                        <button type="button" class="btn btn-primary" (click)="ClearTopExtent()">Cancel</button>
+                      </div>
+                    </div>
+                    <div class="table-responsive">
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <td>Sl No.</td>
+                            <td>Survey No</td>
+                            <td>Extent</td>
+                            <td>Date</td>
+                            <td *ngIf="!hide">Delete</td>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let t of topExtentList;let i=index;">
+                            <td>{{i+1}}</td>
+                            <td>{{t.TOP_SurveyName}}</td>
+                            <td>{{t.TOP_Extent}}</td>
+                            <td>{{t.TOP_Date | date : 'dd/MM/yyyy'}}</td>
+                            <td *ngIf="!hide" (click)="TopExtentRemove(i)">
+                              <i class="fa fa-lg fa-trash themecolor"></i>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div> -->
+                    <br>
+                    <div class="table-responsive">
+                      <table class="table table-striped grid table-bordered">
+                        <thead>
+                          <tr>
+                            <th rowspan="2">Sl.No</th>
+
+                            <th rowspan="2"> Land Owner Name </th>
+                            <th rowspan="2">Survey No</th>
+                            <th rowspan="2">Procurement Type</th>
+                            <th rowspan="2">Extent</th>
+                            <th rowspan="2">Akar</th>
+                            <th colspan="4" class="text-center">Schedule</th>
+                            <th rowspan="2">4(1) Status</th>
+                            <th rowspan="2">6(1) Status</th>
+                            <th rowspan="2" class="text-center"> Select </th>
+                          </tr>
+                          <tr>
+                            <th>North</th>
+                            <th>South</th>
+                            <th>East</th>
+                            <th>West</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let sur of LandDetailslist;let i=index" [hidden]="sur.LD_Not6_Selected!=1">
+                            <td>{{i+1}}</td>
+                            <td>{{sur.LOD_LO_Name}}</td>
+                            <td>{{sur.LD_SurveyNo}}</td>
+                            <td>{{sur.MOP_Name}}</td>
+                            <td>{{sur.LD_Extents}}</td>
+                            <td>{{sur.LD_Akar}}</td>
+                            <td>{{sur.LD_North}}</td>
+                            <td>{{sur.LD_South}}</td>
+                            <td>{{sur.LD_East}}</td>
+                            <td>{{sur.LD_West}}</td>
+                            <td>{{sur.LD_Not4_Selected=='1'?'Accepted':''}}</td>
+                            <td>{{sur.LD_Not6_Selected=='1'?'Accepted':''}}</td>
+                            <td class="text-center">
+                              <button type="button" *ngIf="sur.LD_Not6_Selected==1 && sur.LD_TOP_Selected!=1" (click)="selectexculdesurveyno(sur.LD_Id,'in',7,pro.PD_Id_FK,LAT.PD_FO_Id_FK)">Select
+                              </button>
+                              <button type="button" disabled *ngIf="sur.LD_TOP_Selected==1" (click)="selectexculdesurveyno(sur.LD_Id,'ex',7,pro.PD_Id_FK,LAS.PD_FO_Id_FK)">Selected
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <br>
+                    <div class="text-center">
+                      <button class="btn btn-primary" [disabled]="mode=='view'" type="submit">Save</button>
+                      <!-- <button class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button> -->
+                      <button class="btn btn-primary" type="reset" [disabled]="mode=='view'">Cancel</button>
+                    </div>
+                  </div>
+                </form>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- </form> -->
+  </div>
+
+
+</div>

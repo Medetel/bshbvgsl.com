@@ -1,0 +1,119 @@
+<div class="wrapper">
+    <form>
+      <div class="title themeheading">{{title}}
+        <div class="float-right">
+          <!-- Items per page:
+          <select class="noofpage">
+            <option [ngValue]="5">5</option>
+            <option [ngValue]="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+            <option value="50">50</option>
+          </select> -->
+          <a class="btn btn-primary " [routerLink]="['/home/landpurchase/land-pur-agreement/land-pur-purchase/land-pur-purchase-form']">Add</a>
+  
+        </div>
+        <span class="clearfix"></span>
+      </div>
+  
+      <!-- <div class="searchbar">
+          <div class="container">
+              <div class="row">
+                  <div class="col-md-1">
+                      <label>Search</label>
+                  </div>
+                  <div class="col-md-4">
+                      <select name="SearchCriteria" #SearchCriteria="ngModel" [(ngModel)]="s.SearchCriteria" class="form-control" required>
+                          <option [ngValue]="undefined" selected>---Select---</option>
+                          <option value="Proposal_Id">Proposal Id</option>
+                          <option value="LP_GO_Number">Gov Order Number</option>
+                          <option value="LP_GO_Date">Gov Order Date</option>
+                          <option value="LP_BA_Date">Borad Approval Date</option>
+                      </select>
+                      <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)" class="error-msg">
+                          <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+                      </div>
+                  </div>
+                  <div class="col-md-4">
+                      <input type="text" name="SearchText" #SearchText="ngModel" [(ngModel)]="s.SearchText" class="form-control" placeholder="Search.."
+                          required>
+                      <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+                          <div *ngIf="SearchText.errors.required">Search text is required</div>
+                      </div>
+                  </div>
+                  <div class="col-md-3">
+                      <button class="btn btn-default" type="submit">Search</button>
+                      <button class="btn btn-default" type="reset" (click)="GetAllLandPurchase(itemsPerPage, 1)">Clear</button>
+                  </div>
+              </div>
+          </div>
+      </div> -->
+  
+      <div class="table-responsive">
+          <table class="table table-striped grid">
+              <thead>
+                  <tr>
+                    <th>Sl.No</th>
+                    <th>Project Name</th>
+                    <th>Proposal Id</th>
+                    <th>Agreement No.</th>
+                    <th>Agreement Date</th>
+                    <th>Purchase No.</th>
+                    <th>Purchase Date</th>
+                    <th>Land Owner Name</th>
+                    <th>Total Extent</th>
+                    <th class="text-center"> View </th>
+                    <th class="text-center">Edit</th>
+                    <th class="text-center">Delete</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let lp of LandPurchaseList | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index">                        
+                      <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+                      <td>{{lp.PD_Project_Name}}</td>
+                      <td>{{lp.PR_Id}}</td>
+                      <td>{{lp.LP_Note_No}}</td>
+                      <td>{{lp.LP_Note_Date | date:'dd/MM/yyyy'}}</td>
+                      <td>{{lp.LP_Purchase_Id}}</td>
+                      <td>{{lp.LP_Purchase_Date | date:'dd/MM/yyyy'}}</td>
+                      <td>{{lp.LOD_LO_Name}}</td> 
+                      <td>{{lp.TotalExtent}}</td>                   
+                      <td>
+                          <a href="#" [routerLink]="['/home/landpurchase/land-pur-agreement/land-pur-purchase/land-pur-purchase-form',lp.LP_Id_PK,'view']">
+                              <i class="fa fa-lg fa-eye themecolor"></i>
+                          </a>
+                      </td>
+                      <td>
+                          <a href="#" [routerLink]="['/home/landpurchase/land-pur-agreement/land-pur-purchase/land-pur-purchase-form',lp.LP_Id_PK,'edit']">
+                              <i class="fa fa-lg fa-edit themecolor"></i>
+                          </a>
+                      </td>
+                      <td>
+                          <a href="javascript:void(0);" (click)="delete(lp.LP_Id_PK)">
+                              <i class="fa fa-lg fa-trash themecolor"></i>
+                          </a>
+                      </td>
+                  </tr>
+              </tbody>
+          </table>
+          <div class="container-fluid">
+              <div class="row">
+                  <div class="col-md-11">
+                      <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)" maxSize="9" directionLinks="true"
+                          autoHide="false" previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination"
+                          screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                      </pagination-controls>
+                  </div>
+                  <div class="col-md-1">
+                      Total:
+                      <span>{{totalItems}}</span>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </form>
+  </div>
+  
+  
+  

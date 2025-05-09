@@ -1,0 +1,99 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary pull-right" [routerLink]="['/home/serviceregister/leave-bal-details']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4">
+        <label for=""> Emp Code : {{detailsEmployee.EMP_EMPLOYEE_CODE}}</label>
+      </div>
+      <div class="col-md-4">
+        <label for=""> Name :</label> &nbsp; <span class="name"> {{detailsEmployee.EmpName}}   </span>
+      </div>
+      <div class="col-md-4">
+        <label for=""> Date of joining :</label> &nbsp; <span class="name"> {{detailsEmployee.EMP_D_O_J}} </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 ">
+        <label for="">Division : </label> &nbsp; <span class="name">{{detailsEmployee.DI_District}}</span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Department : </label> &nbsp; <span class="name">{{detailsEmployee.Department_Name}} </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Designation : </label> &nbsp; <span class="name">{{detailsEmployee.desg_name}}</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label for="">Employee Category : </label> &nbsp; <span class="name">{{detailsEmployee.Category}}</span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Employee Group : </label> &nbsp; <span class="name">{{detailsEmployee.EmpGroup}}</span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Employee Type : </label> &nbsp; <span class="name">{{detailsEmployee.EmpType}}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="title themeheading">
+    Leave Balance Details
+    <span class="clearfix"></span>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-stripped ">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Opening Balance</th>
+          <th>Credit</th>
+          <th>Debit</th>
+          <th>Closing Balance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of LeaveBalance">
+          <td>{{e.leave_name}}</td>
+          <td><input type="text" [(ngModel)]="e.Leave_opening_balance" #Leave_opening_balance="ngModel" disabled class="form-control"></td>
+          <td><input type="text" [(ngModel)]="e.Leave_Credi" #Leave_Credi="ngModel" disabled class="form-control"> </td>
+          <td><input type="text" [(ngModel)]="e.Leave_Debit" #Leave_Debit="ngModel" disabled class="form-control"></td>
+          <td><input type="text" [(ngModel)]="e.Leave_Closing_balance" #Leave_Closing_balance="ngModel" disabled class="form-control"></td>
+        
+     </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="title themeheading">
+    Attendence Details
+    <span class="clearfix"></span>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="">Attendence(till date)</label>
+          <input type="text" disabled class="form-control">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="">Attendence(from D.O.J)</label>
+          <input type="text" disabled class="form-control">
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="">Attendence(Present) </label>
+          <input type="text" disabled class="form-control">
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>

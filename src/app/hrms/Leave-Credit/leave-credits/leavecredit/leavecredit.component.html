@@ -1,0 +1,141 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    Add Leave Credit
+    <button class="btn btn-primary float-right" [routerLink]="['/home/leavecredit']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <div class="container-fluid">
+    <div class="row" *ngIf="getbyIdlist.length>0">
+      <div class="col-md-4">
+        <label>Leave Credit No :{{getbyIdlist[0].DOC_CODE}}</label>
+      </div>
+      <div class="col-md-4">
+        <label for="">Date : <span>{{getbyIdlist[0].DOC_DATE | date:'dd/MM/yyyy'}}</span></label>
+      </div>
+      <div class="col-md-4">
+        <label for="">Status : <span>{{getbyIdlist[0].DOC_STATUS}}</span></label>
+      </div>
+    </div>
+    <div class="title rowmarginfix themeheading">
+      Employee Details
+    </div>
+    <div class="row">
+      <div class="col-md-4" *ngIf="FormList.length == 0">
+        <div class="input-group">
+          <label for=""> Division code </label>
+          <select class="custom-field" [(ngModel)]="a.EMP_DIVISION_ID" #EMP_DIVISION_ID="ngModel" name="EMP_DIVISION_ID"
+             (change)="ChangeOfDivision(a.EMP_DIVISION_ID)">
+            <option [value]="undefined" selected>---Select---</option>
+            <option [value]="d.DI_Id" *ngFor="let d of DistrictsList;">
+              {{d.DI_District}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-4" *ngIf="FormList.length == 0">
+        <div class="input-group">
+          <label for="">Emp Code</label>
+          <select select class="custom-field" [(ngModel)]="a.EMP_ID_FK" #EMP_ID_FK="ngModel" name="EMP_ID_FK"
+            [disabled]="mode=='view'" (change)="ChangeOfEmployee(a.EMP_ID_FK)">
+            <option [value]="" selected>--Select--</option>
+            <option [value]="emp.EMP_EMPLOYEE_ID" *ngFor="let emp of AllEmployeeList;">
+              {{emp.EMP_EMPLOYEE_CODE}} &nbsp; {{emp.EMP_FIRST_NAME}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <label for="">Name : </label> &nbsp; <span class="name">{{detailsEmployee.EmpName}} </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 ">
+        <label for="">Division : </label> &nbsp; <span class="name">{{detailsEmployee.DI_District}} </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Department : </label> &nbsp; <span class="name">{{detailsEmployee.Department_Name}}</span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Designation : </label> &nbsp; <span class="name">{{detailsEmployee.desg_name}}</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label for="">Employee Category : </label> &nbsp; <span class="name">{{detailsEmployee.Category}}</span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Employee Group : </label> &nbsp; <span class="name">{{detailsEmployee.EmpGroup}}</span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Employee Type : </label> &nbsp; <span class="name">{{detailsEmployee.EmpType}}</span>
+      </div>
+    </div>
+
+    <div *ngIf="mode!='view'">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td>Sl No.</td>
+            <td>Employee Id</td>
+            <td>Employee Name</td>
+            <td>Leave Type</td>
+            <td>Credit Leaves</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1.</td>
+            <td><input type="text" disabled [(ngModel)]="detailsEmployee.EMP_EMPLOYEE_CODE" #EMP_EMPLOYEE_CODE="ngModel"
+                class="form-control"></td>
+            <td><input type="text" disabled [(ngModel)]="detailsEmployee.EmpName" EmpName="ngModel" class="form-control"></td>
+            <td>
+              <select class="custom-field" [(ngModel)]="a.leaveType" #leaveType="ngModel"
+                name="leaveType" [disabled]="mode=='view'">
+                <option [value]="undefined" selected>---Select---</option>
+                <option [value]="lt.Leave_id" *ngFor="let lt of leavetypelist;">
+                  {{lt.Leave_name}}
+                </option>
+              </select>
+            </td>
+            <td><input type="number" max="100" [(ngModel)]="a.leavecredit" #leavecredit="ngModel"
+              name="leavecredit" class="form-control" ></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br>
+    <div class="justify-content-end d-flex"><button class="btn btn-primary" (click)="Add(a)">Add</button></div>
+    <br>
+  </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td>Sl No.</td>
+            <td>Employee Id</td>
+            <td>Employee Name</td>
+            <td>Leave Type</td>
+            <td>Credit Leaves</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let f of FormList; let i=index">
+            <td>{{i+1}}.</td>
+            <td>{{f.EMP_EMPLOYEE_CODE}}</td>
+            <td>{{f.EmpName}}</td>
+            <td>{{f.leaveName}}</td>
+            <td>{{f.Leave_Credi}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br>
+    <div class="text-center" *ngIf="mode!='view'">
+      <button class="btn btn-primary" type="button" (click)="Save()">Save</button>
+      <button class="btn btn-primary" type="button" (click)="cancel()"> Cancel</button>
+    </div>
+    <br>
+  </div>
+</div>

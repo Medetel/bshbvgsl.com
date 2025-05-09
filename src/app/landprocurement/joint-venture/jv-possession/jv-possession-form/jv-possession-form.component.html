@@ -1,0 +1,369 @@
+<!-- <div class="wrapper">
+  <div class="title themeheading">
+   
+    Possession
+    <button class="btn btn-primary float-right" [routerLink]="['/home/joint-venture/jv-possession']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+
+
+  <form (ngSubmit)="mode=='edit'?UpdateLandAquisition(lat,6,LAT.PD_FO_Id_FK):UpdateLandAquisition(lat,6,LAT.PD_FO_Id_FK)"
+    #fouroneform="ngForm" name="form1">
+    <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-6">
+              <div class="input-group">
+                <select #PD_Id_FK="ngModel" name="PD_Id_FK" [(ngModel)]="pro.PD_Id_FK" class="custom-field" (change)="GetProjectId(pro.PD_Id_FK)">
+                  <option value="undefined">---Select---</option>
+                  <option *ngFor="let project of projectlist" [value]="project.PD_Id">
+                    {{project.PD_Project_Code}} - {{project.PD_Project_Name}} - {{project.Phase_Name}}
+                  </option>
+                </select>
+                <label>Project
+                  <span class="mandatory">*</span>
+                </label>
+              </div>
+            </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <select #PD_FO_Id_FK="ngModel" name="PD_FO_Id_FK" [(ngModel)]="LAT.PD_FO_Id_FK" class="custom-field"
+              (change)="GetProjectIdfor61(LAT.PD_FO_Id_FK)">
+              <option value="undefined">---Select---</option>
+              <option *ngFor="let LA4 of Land61acquisitionlist" [value]="LA4.LA_Id_PK">
+                {{LA4.LA_Noti6_Number}}
+              </option>
+            </select>
+            <label>Agreement No.
+              <span class="mandatory">*</span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <label for="">Project Name : </label>
+          <span>{{Proj_Name}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Procurement Type : </label>
+          <span>{{ProposalFor=='Mix'?'Acquisition/Purchase/Joint Ventures':ProposalFor}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Scheme : </label>
+          <span>{{Sch_Name}}</span>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <label for="">District : </label>
+          <span>{{district}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Village : </label>
+          <span> {{Village}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Proposal receipt date : </label>
+          <span>{{Submitted_Date | date:'dd-MM-yyyy'}}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <label for="">Agreement No.: </label>
+          <span>{{LA_Noti6_Number}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Agreement Date : </label>
+          <span> {{LA_Notif_6_1_Date}}</span>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" placeholder=" " name="LA_TOPDoc_No" [(ngModel)]="lat.LA_TOPDoc_No" #LA_TOPDoc_No="ngModel"
+              class="custom-field" [disabled]="mode=='view'" required>
+            <label for="">Possession No.
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="LA_TOPDoc_No.invalid && (LA_TOPDoc_No.dirty || LA_TOPDoc_No.touched || formInvalid)">
+              <span *ngIf="LA_TOPDoc_No.errors.required">Possession No. is required.</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="date" placeholder=" " name="LA_POC_Date" [(ngModel)]="lat.LA_POC_Date" #LA_POC_Date="ngModel"
+              class="custom-field" [disabled]="mode=='view'" required>
+            <label for="">Possession Date
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="LA_POC_Date.invalid && (LA_POC_Date.dirty || LA_POC_Date.touched || formInvalid)">
+              <span *ngIf="LA_POC_Date.errors.required">Possession Date Date is required.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <label for="">Document</label>
+        </div>
+        <div class="col-md-4">
+          <input type="file" #Image accept="application/pdf" (change)="imageUpload($event.target.files)" id="LA_Not_FilePath"
+            name="LA_Not_FilePath" [(ngModel)]="lat.LA_Not_FilePath" #LA_Not_FilePath="ngModel">
+          <a class="" *ngIf="lat.LA_Not_FilePath!=null && hide" target="_blank" href="{{lat.LA_Not_FilePath}}">view</a>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <textarea type="text" placeholder=" " name="LA_TOC_Note" [(ngModel)]="lat.LA_TOC_Note" #LA_TOC_Note="ngModel"
+              class="custom-field" [disabled]="mode=='view'"></textarea>
+            <label for="">Note</label>
+          </div>
+        </div>
+      </div>
+      <hr>
+
+      <br>
+      <div class="table-responsive">
+        <table class="table table-striped grid table-bordered">
+          <thead>
+            <tr>
+              <th rowspan="2">Sl.No</th>
+
+              <th rowspan="2"> Land Owner Name </th>
+              <th rowspan="2">Survey No</th>
+              <th rowspan="2">Procurement Type</th>
+              <th rowspan="2">Extent</th>
+              <th rowspan="2">Akar</th>
+              <th colspan="4" class="text-center">Schedule</th>
+              <th rowspan="2">4(1) Status</th>
+              <th rowspan="2">6(1) Status</th>
+              <th rowspan="2" class="text-center"> Select </th>
+            </tr>
+            <tr>
+              <th>North</th>
+              <th>South</th>
+              <th>East</th>
+              <th>West</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let sur of LandDetailslist;let i=index">
+              <td>{{i+1}}</td>
+              <td>{{sur.LOD_LO_Name}}</td>
+              <td>{{sur.LD_SurveyNo}}</td>
+              <td>{{sur.MOP_Name}}</td>
+              <td>{{sur.LD_Extents}}</td>
+              <td>{{sur.LD_Akar}}</td>
+              <td>{{sur.LD_North}}</td>
+              <td>{{sur.LD_South}}</td>
+              <td>{{sur.LD_East}}</td>
+              <td>{{sur.LD_West}}</td>
+              <td>{{sur.LD_Not4_Selected=='1'?'Accepted':''}}</td>
+              <td>{{sur.LD_Not6_Selected=='1'?'Accepted':''}}</td>
+              <td class="text-center">
+                <button type="button" *ngIf="sur.LD_Not6_Selected==1 && sur.LD_TOP_Selected!=1" (click)="selectexculdesurveyno(sur.LD_Id,'in',7,pro.PD_Id_FK,LAT.PD_FO_Id_FK)">Select
+                </button>
+                <button type="button" disabled *ngIf="sur.LD_TOP_Selected==1" (click)="selectexculdesurveyno(sur.LD_Id,'ex',7,pro.PD_Id_FK,LAS.PD_FO_Id_FK)">Selected
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <br>
+      <div class="text-center">
+        <button class="btn btn-primary" [disabled]="mode=='view'" type="submit">Save</button>
+        <button class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button>
+      </div>
+    </div>
+
+
+  </form>
+</div> -->
+
+<div class="wrapper">
+    <div class="title themeheading">
+      {{title}}
+      <button class="btn btn-primary float-right" [routerLink]="['/home/joint-venture/jv-possession']">Back</button>
+      <span class="clearfix"></span>
+    </div>
+  
+  
+    <form (ngSubmit)="mode=='edit'?UpdateLandPurchase(LandPurchaseForm):UpdateLandPurchase(LandPurchaseForm)"
+    #LandPurchaseForm="ngForm" name="form1">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-group">
+              <select #JV_PD_Id_FK="ngModel" name="JV_PD_Id_FK" [(ngModel)]="l.JV_PD_Id_FK" class="custom-field" required
+                (change)="GetProjectId(l.JV_PD_Id_FK)">
+                <option value="undefined">---Select---</option>
+                <option *ngFor="let project of projectlist" [value]="project.PD_Id">
+                  {{project.PD_Project_Code}} - {{project.PD_Project_Name}} - {{project.Phase_Name}}
+                </option>
+              </select>
+              <label>Project Name.<span class="mandatory">*</span>
+              </label>
+              <div class="error-msg" *ngIf="JV_PD_Id_FK.invalid && (JV_PD_Id_FK.dirty || JV_PD_Id_FK.touched || formInvalid)">
+                <span *ngIf="JV_PD_Id_FK.errors.required">Project is required.</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="input-group">
+              <select #JV_Id_PK="ngModel" name="JV_Id_PK" [(ngModel)]="l.JV_Id_PK" class="custom-field" 
+                (change)="GetProjectproposaldetails(l.JV_Id_PK)" required>
+                <option value="undefined">---Select---</option>
+                <option *ngFor="let agree of Agreementlist" [value]="agree.JV_Id_PK">
+                  {{agree.JV_Note_No}} 
+                </option>
+              </select>
+              <label>Agreement No.<span class="mandatory">*</span>
+              </label>
+              <div class="error-msg" *ngIf="JV_Id_PK.invalid && (JV_Id_PK.dirty || JV_Id_PK.touched || formInvalid)">
+                <span *ngIf="JV_Id_PK.errors.required">Agreement No. is required.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <label for="">Procurement Type : </label><span>{{ProposalFor=='Mix'?'Acquisition/Purchase/Joint Ventures':ProposalFor}}</span>
+          </div>
+          <div class="col-md-4">
+            <label for="">Scheme : </label><span>{{Sch_Name}}</span>
+          </div>
+          <div class="col-md-4">
+            <label for="">District : </label><span>{{district}}</span>
+          </div>
+    
+    
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <label for="">Village/City/Colony : </label><span> {{Village}}</span>
+          </div>
+          <div class="col-md-4">
+            <label for="">Proposal receipt date : </label><span>{{Submitted_Date | date:'dd-MM-yyyy'}}</span>
+          </div>
+          <div class="col-md-4">
+            <label for="">Agreement Number : </label><span>{{Agreement_Number}}</span>
+          </div>
+        </div>
+    
+        <div class="row">
+          <div class="col-md-4">
+            <label for="">Agreement Date : </label><span> {{Agree_Date | date:'dd-MM-yyyy'}}</span>
+          </div>
+        
+        </div>
+    
+    
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-group">
+              <input type="text" placeholder=" " name="JV_Possession_No" [(ngModel)]="l.JV_Possession_No" #JV_Possession_No="ngModel"
+                class="custom-field" [disabled]="mode=='view'" required>
+              <label for="">Possession No.
+                <span class="mandatory">*</span>
+              </label>
+              <div class="error-msg" *ngIf="JV_Possession_No.invalid && (JV_Possession_No.dirty || JV_Possession_No.touched || formInvalid)">
+                <span *ngIf="JV_Possession_No.errors.required">Possession No. is required.</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="input-group">
+              <input type="date" placeholder=" " name="JV_Possession_Date" [(ngModel)]="l.JV_Possession_Date" #JV_Possession_Date="ngModel"
+                class="custom-field" [disabled]="mode=='view'" required>
+              <label for="">Possession Date
+                <span class="mandatory">*</span>
+              </label>
+              <div class="error-msg" *ngIf="JV_Possession_Date.invalid && (JV_Possession_Date.dirty || JV_Possession_Date.touched || formInvalid)">
+                <span *ngIf="JV_Possession_Date.errors.required">Possession Date Date is required.</span>
+              </div>
+            </div>
+          </div>
+  
+        </div>
+        <div class="row">
+          <div class="col-md-2">
+            <label for="">Document</label>
+          </div>
+          <div class="col-md-4">
+            <input type="file" #Image accept="application/pdf" (change)="imageUpload($event.target.files)" id="JV_POSfile_path"
+              name="JV_POSfile_path" [(ngModel)]="l.JV_POSfile_path" #JV_POSfile_path="ngModel">
+              <a class="" [hidden]="l.JV_POSfile_path==null" *ngIf="mode=='view' || mode=='edit'" target="_blank" href="{{l.JV_POSfile_path}}">view</a>
+          </div>
+          <div class="col-md-6">
+            <div class="input-group">
+              <textarea type="text" placeholder=" " name="JV_Possession_note" [(ngModel)]="l.JV_Possession_note" #JV_Possession_note="ngModel"
+                class="custom-field" [disabled]="mode=='view'"></textarea>
+              <label for="">Note</label>
+            </div>
+          </div>
+        </div>
+        <hr>
+  
+        <br>
+        <div class="table-responsive">
+          <table class="table table-striped grid table-bordered">
+            <thead>
+              <tr>
+                <th rowspan="2">Sl.No</th>
+  
+                <th rowspan="2"> Land Owner Name </th>
+                <th rowspan="2">Survey No</th>
+                <th rowspan="2">Procurement Type</th>
+                <th rowspan="2">Extent</th>
+                <th rowspan="2">Akar</th>
+                <th colspan="4" class="text-center">Schedule</th>
+                <th rowspan="2">Agreement Status</th>
+                <th rowspan="2">JV Status</th>
+                <th rowspan="2" class="text-center"> Select </th>
+              </tr>
+              <tr>
+                <th>North</th>
+                <th>South</th>
+                <th>East</th>
+                <th>West</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let sur of LandDetailslist;let i=index">
+                <td>{{i+1}}</td>
+                <td>{{sur.LOD_LO_Name}}</td>
+                <td>{{sur.LD_SurveyNo}}</td>
+                <td>{{sur.MOP_Name}}</td>
+                <td>{{sur.LD_Extents}}</td>
+                <td>{{sur.LD_Akar}}</td>
+                <td>{{sur.LD_North}}</td>
+                <td>{{sur.LD_South}}</td>
+                <td>{{sur.LD_East}}</td>
+                <td>{{sur.LD_West}}</td>
+                <td>{{sur.LD_JVAId_Selected=='1'?'Accepted':''}}</td>
+                <td>{{sur.LD_JVPId_Selected=='1'?'Accepted':''}}</td>
+                <td class="text-center">
+                  <button type="button" *ngIf="sur.LD_JVPId_Selected==1 && sur.LD_JVPos_Selected!=1" (click)="selectexculdesurveyno(sur.LD_Id,'in',3,l.JV_PD_Id_FK,l.JV_Id_PK,sur.LOD_Id_PK)">Select
+                  </button>
+                  <button type="button" disabled *ngIf="sur.LD_JVPos_Selected==1" (click)="selectexculdesurveyno(sur.LD_Id,'in',3,l.JV_PD_Id_FK,l.JV_Id_PK,sur.LOD_Id_PK)">Selected
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <br>
+        <div class="text-center">
+          <button class="btn btn-primary" [disabled]="mode=='view'" type="submit">Save</button>
+          <!-- <button class="btn btn-primary" type="button">Cancel</button> -->
+          <button class="btn btn-primary" type="reset" [disabled]="mode=='view'">Cancel</button>
+        </div>
+      </div>
+  
+  
+    </form>
+  </div>

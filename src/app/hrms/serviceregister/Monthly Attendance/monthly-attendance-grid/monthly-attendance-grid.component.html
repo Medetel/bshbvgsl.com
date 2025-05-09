@@ -1,0 +1,91 @@
+<div class="wrapper">
+
+  <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm,itemsPerPage,1)">
+      <div class="title themeheading">{{title}}
+          <div class="float-right">
+              Items per page:
+              <select name="SearchRows" class="noofpage">
+                  <option [ngValue]="5">5</option>
+                  <option [ngValue]="10">10</option>
+                  <option value="20">20</option>
+                  <option value="30">30</option>
+                  <option value="40">40</option>
+                  <option value="50">50</option>
+              </select>
+              <a class="btn btn-primary " [routerLink]="['/home/monthlyattendance/monthlyattendance-form']">Add</a>
+          </div>
+          <span class="clearfix"></span>
+      </div>
+      <div class="searchbar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label>Search</label>
+                    </div>
+                    <div class="col-md-4">
+                        <select name="SearchCriteria" #SearchCriteria="ngModel" [(ngModel)]="s.SearchCriteria" class="form-control"  required>
+                            <option [ngValue]="undefined" selected>---Select---</option>
+                            <option value="DI_District">District Name</option>
+                            <option value="desg_name">Designation</option>  
+                           <option value="year_month">Month & Year </option>                          
+                        </select>
+                        <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)" class="error-msg">
+                            <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+                        </div>
+                        
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" class="form-control" placeholder="Search.." name="SearchText" #SearchText="ngModel" [(ngModel)]="s.SearchText"
+                            required>
+                        <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+                            <div *ngIf="SearchText.errors.required">Search text is required</div>
+                        </div>
+                        </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-default" type="submit">Search</button>
+                        <button class="btn btn-default" type="reset" (click)=" getAllmonthlyist(itemsPerPage, 1)">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+      <div class="table-responsive">
+          <table class="table table-striped grid">
+              <thead>
+                  <tr>
+                        <td>Sl No.</td>       
+                        <td>District Name</td>
+                        <td>Designation</td>
+                        <td>Month & Year</td>
+                    <td class="text-center">View</td>
+                    <!-- <td class="text-center">Edit</td> -->
+                    <!-- <td class="text-center">Delete</td> -->
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let m of monthlyList;let i=index">                        
+                      <td> {{i+1}}. </td>
+                      <td>{{m.DI_District}}</td>
+                      <td>{{m.desg_name}}</td> 
+                      <td>{{m.year_month}}</td>
+                      <td class="text-center">
+                          <a href="javascript:void(0);" (click)="view(m.MA_ID)">
+                              <i class="fa fa-lg fa-eye tdemecolor"></i>
+                          </a>
+                      </td>
+                      <!-- <td class="text-center">
+                          <a href="javascript:void(0);" >
+                              <i class="fa fa-lg fa-edit tdemecolor"></i>
+                          </a>
+                      </td>
+                      <td class="text-center">
+                          <a href="javascript:void(0);">
+                              <i class="fa fa-lg fa-trash tdemecolor"></i>
+                          </a>
+                          
+                      </td> -->
+                  </tr>
+              </tbody>
+          </table>
+      </div>
+  </form>
+</div>

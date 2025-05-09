@@ -1,0 +1,817 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    Applicant Id Payment Updation
+
+    <div style="display:inline-block;margin-left:20px;color:#fff;font-size:14px;">
+      <div class="form-check-inline">
+        <label class="form-check-label">
+        </label>
+      </div>
+      <div class="form-check-inline">
+        <label class="form-check-label">
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!--Application Section Start-->
+
+  <!--Application Grid Start-->
+
+  <form #Application="ngForm">
+    <div class="container-fluid">
+
+      <!--Application filter starts-->
+
+      <div class="selector" id="app-filter">
+        <div class="row justify-content-center">
+          <div class="col-md-2">
+            <div class="form-group input-group">
+              <input type="text" [(ngModel)]="applicant.App_No" #App_No="ngModel" name="App_No" class="form-control custom-field"
+                id="txtAppNo" name="App_No">
+              <label for="">App No.</label>
+            </div>
+          </div>
+          <!-- <div class="col-md-2">
+              <div class="form-group input-group">
+                <input type="text" class="form-control custom-field" id="txtRegNo" name="RegNo" value="" #RegNo="ngModel"
+                  [(ngModel)]="a.RegNo">
+                <label for="">Reg No.</label>
+              </div>
+            </div> -->
+          <!-- <div class="col-md-2">
+              <div class="form-group input-group">
+                <input type="text" class="form-control custom-field" id="txtPhoneNo" name="PhoneNo" value="" #PhoneNo="ngModel"
+                  [(ngModel)]="a.MobileNumber">
+                <label for="">Phone No.</label>
+              </div>
+            </div> -->
+          <!-- <div class="col-md-2">
+              <div class="form-group input-group">
+                <input type="text" class="form-control custom-field" id="txtName" name="Name" value="" #Name="ngModel"
+                  [(ngModel)]="a.ApplicantName">
+                <label for="">Name</label>
+              </div>
+            </div> -->
+          <div class="col-md-1">
+            <button class="btn btn-primary" type="button" (click)="GetApplicationDetails(applicant.App_No)">Go</button>
+          </div>
+        </div>
+      </div>
+
+      <!--Application filter ends-->
+
+      <!-- <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <td>Sl No.</td>
+                <td>App Photo</td>
+                <td>App No.</td>
+                <td>Reg No.</td>
+                <td>Name</td>
+                <td>Nominee Name</td>
+                <td>Category</td>
+                <td>View</td>
+              </tr>
+            </thead>
+            <tbody >
+              <td colspan="11" class="text-center">No Data Found</td>
+            </tbody>
+            <tbody>
+              <tr >
+                <td></td>
+                <td>
+                  
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                  <button class="btn btn-primary" >View</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div> -->
+
+      <!--Application Grid ends-->
+
+      <!-- Tabs Start-->
+
+      <div class="main-wrapper" *ngIf="show=='N'">
+
+        <div class="form">
+          <div class="header">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="container-fluid">
+                  <div class="row no-gutters">
+                    <div class="col-md-6">
+                      <span class="field-title">Applicant No. : </span>
+                    </div>
+                    <div class="col-md-6">
+                      <span class="field-value"> {{AFD.APP_No}}</span>
+                    </div>
+
+                    <div class="col-md-6">
+                      <span class="field-title">Joint Application : </span>
+                    </div>
+                    <div class="col-md-6">
+                      <span class="field-value">{{AFD.APP_IsJoint}}</span>
+                    </div>
+
+                    <div class="col-md-6">
+                      <span class="field-title">Applied Project Name : </span>
+                    </div>
+                    <div class="col-md-6">
+                      <span class="field-value">{{AFD.PD_Project_Name}}</span>
+                    </div>
+
+                    <div class="col-md-6">
+                      <span class="field-title">Project Place : </span>
+                    </div>
+                    <div class="col-md-6">
+                      <span class="field-value">{{AFD.PD_Village}}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 text-center">
+                <img src="{{AFD.APP_PA_Photo}}" class="applicant-img" alt="">
+                <br>
+                <img src="{{AFD.APP_PA_Signature}}" class="applicant-img">
+              </div>
+              <div class="col-md-3 text-center" *ngIf="AFD.APP_IsJoint=='Y'">
+                <span>Secondary Applicant</span>
+                <img src="{{AFD.APP_SA_Photo}}" class="applicant-img" alt="">
+                <span *ngIf="AFD.APP_IsJoint!='Y'">NA</span>
+                <br>
+                <img src="{{AFD.APP_SA_Signature}}" class="applicant-img">
+                <span *ngIf="AFD.APP_IsJoint!='Y'">NA</span>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="body">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-3">
+                  <span class="field-title">Property Type : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value">{{AFD.APP_PropertyType}}</span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Category : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value">{{AFD.Categories.CA_CategoryName}}</span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">District : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value">{{AFD.DistrictandTaluks.DI_District}}</span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Applied Date : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value">{{AFD.AppliedDate | date:'dd-MM-yyyy'}}</span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Notification No. : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value">{{AFD.Not_Number}}</span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Notification Date : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value">{{AFD.Not_Date| date:'dd-MM-yyyy'}}</span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Applicant Name : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value">{{AFD.APP_PA_Name}}</span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Secondary Applicant Name : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value" *ngIf="AFD.APP_IsJoint=='Y'">{{AFD.APP_SA_Name}}</span>
+                  <span class="field-value" *ngIf="AFD.APP_IsJoint!='Y'">NA</span>
+                </div>
+                <!-- <div class="col-md-3">
+                  <span class="field-title">Secondary Applicant Relationship : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value" *ngIf="AFD.APP_IsJoint=='Y'">{{AFD.APP_SA_Relation_Name}}</span>
+                  <span class="field-value" *ngIf="AFD.APP_IsJoint!='Y'">NA</span>
+                </div> -->
+                <div class="col-md-3">
+                  <span class="field-title">Father/Mother
+                    <br>/Husband/Wife : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value">{{AFD.APP_PA_Relation_Name}}</span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Date of Birth : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value">{{AFD.APP_PA_DOB| date:'dd-MM-yyyy'}}</span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Age : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value">{{AFD.APP_PA_Age}}</span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Gender : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value">{{AFD.APP_PA_Gender}}</span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Primary Mobile Number : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value">{{AFD.APP_PA_MobileNo}}</span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title"> Alternate Mobile Number : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value">{{AFD.APP_PA_AlternateNo}}</span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Email : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value">{{AFD.APP_PA_Email}}</span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Secondary Applicant Date of Birth : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value" *ngIf="AFD.APP_IsJoint=='Y'">{{AFD.APP_SA_DOB | date:'dd-MM-yyyy'}}</span>
+                  <span class="field-value" *ngIf="AFD.APP_IsJoint!='Y'">NA</span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Secondary Applicant Age : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value" *ngIf="AFD.APP_IsJoint=='Y'">{{AFD.APP_SA_Age}}</span>
+                  <span class="field-value" *ngIf="AFD.APP_IsJoint!='Y'">NA</span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Secondary Applicant Gender : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value" *ngIf="AFD.APP_IsJoint=='Y'">{{AFD.APP_SA_Gender}}</span>
+                  <span class="field-value" *ngIf="AFD.APP_IsJoint!='Y'">NA</span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">PAN No. : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value">{{AFD.APP_PA_PanNo}}</span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Aadhar Card No. : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value">{{AFD.APP_PA_AdharNo}}</span>
+                </div>
+
+                <!-- <div class="col-md-3">
+                  <span class="field-title">Secondary Applicant Mobile Number : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value" *ngIf="AFD.APP_IsJoint=='Y'">{{AFD.APP_SA_MobileNo}}</span>
+                  <span class="field-value" *ngIf="AFD.APP_IsJoint!='Y'">NA</span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Secondary Applicant Email : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value" *ngIf="AFD.APP_IsJoint=='Y'">{{AFD.APP_SA_Email}}</span>
+                  <span class="field-value" *ngIf="AFD.APP_IsJoint!='Y'">NA</span>
+                </div> -->
+                <div class="col-md-3">
+                  <span class="field-title">Secondary Applicant PAN No. : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value" *ngIf="AFD.APP_IsJoint=='Y'">{{AFD.APP_SA_PanNo}}</span>
+                  <span class="field-value" *ngIf="AFD.APP_IsJoint!='Y'">NA</span>
+                </div>
+                <!-- <div class="col-md-3">
+                  <span class="field-title">Secondary Applicant Adhar No : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value" *ngIf="AFD.APP_IsJoint=='Y'">{{AFD.APP_SA_PanNo}}</span>
+                  <span class="field-value" *ngIf="AFD.APP_IsJoint!='Y'">NA</span>
+                </div> -->
+                <!-- <div class="col-md-3">
+                  <span class="field-title">Religion : </span>
+                </div> -->
+                <!-- <div class="col-md-3">
+                  <span class="field-value">{{AFD.Relegions.Relegion_Name}}</span>
+                </div> -->
+                <div class="col-md-3">
+                  <span class="field-title">Reservation : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value">{{AFD.Reservations.RES_Name}}</span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Annual Income : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value">{{AFD.APP_AnnualIncome}}</span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Address : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value">
+                    {{AFD.APP_VI_Name_PERM}}
+                    <br>{{AFD.Post_Office_PERM}}
+                    <br> {{AFD.Police_Station_PERM}}
+                    <br>{{AFD.AppPermdist}}
+                    <br> {{AFD.APP_Pincode_PERM}}
+                  </span>
+                </div>               
+                <div class="col-md-3">
+                  <span class="field-title">Bank : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value">{{AFD.APP_BankName}}</span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Branch : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value">{{AFD.APP_BankBranch}}</span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Account Number : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value">{{AFD.APP_AccountNo}}</span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">IFSC Code : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value">{{AFD.APP_IFSC}}</span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Name of the Nominee : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value">{{AFD.APP_NomineeName}}</span>
+                </div>
+                <!-- <div class="col-md-3">
+                  <span class="field-title">Relationship of the nominee : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value">{{AFD.APP_Nominee_Relation_Name}}</span>
+                </div> -->
+                <!-- <div class="col-md-3">
+                  <span class="field-title">ESW Cerficate : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value" *ngIf="AFD.APP_ESW_Certificate!=null">
+                    <a target="_Blank" href="{{AFD.APP_ESW_Certificate}}">View</a>
+                  </span>
+                  <span class="field-value" *ngIf="AFD.APP_ESW_Certificate==null">NA</span>
+                </div> -->
+
+                <div class="col-md-3">
+                  <span class="field-title">Caste Cerficate : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value" *ngIf="AFD.APP_Caste_Certificate!=null">
+                    <a target="_Blank" href="{{AFD.APP_Caste_Certificate}}">View</a>
+                  </span>
+                  <span class="field-value" *ngIf="AFD.APP_Caste_Certificate==null">NA</span>
+                </div>
+                <!-- <div class="col-md-3">
+                  <span class="field-title"> SA Photo : </span>
+                </div>
+                <div class="col-md-3">
+                  <img *ngIf="AFD.APP_PA_AdharCard==null" src="{{AFD.APP_SA_Photo}}" style="width:120px;">
+                  <span class="field-value" *ngIf="AFD.APP_SA_Photo==null">NA</span>
+                </div> -->
+                <div class="col-md-3">
+                  <span class="field-title">Aadhar Card : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value">{{AFD.APP_PA_AdharNo}}</span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Secondary Applicant Aadhar Card : </span>
+                </div>
+                <div class="col-md-3">
+                  <img *ngIf="AFD.APP_PA_AdharCard==null" src="{{AFD.APP_SA_AdharCard}}" style="width:120px;">
+                  <span class="field-value" *ngIf="AFD.APP_SA_AdharCard==null">NA</span>
+                </div>
+                <div class="col-md-3" *ngIf="AFD.CanDate!=null">
+                  <span class="field-title">Cancellation Date : </span>
+                </div>
+                <div class="col-md-3" *ngIf="AFD.CanDate!=null">
+                  <span class="field-value">{{AFD.CanDate | date:'dd-MM-yyyy'}}</span>
+                </div>
+                <div class="col-md-3" *ngIf="AFD.CanDate!=null">
+                  <span class="field-title">Cancellation Reason : </span>
+                </div>
+                <div class="col-md-3" *ngIf="AFD.CanDate!=null">
+                  <span class="field-value">{{AFD.CanReason}}</span>
+                </div>
+                <div class="col-md-3" *ngIf="AFD.CanDate!=null">
+                  <span class="field-title">Cancellation Type : </span>
+                </div>
+                <div class="col-md-3" *ngIf="AFD.CanDate!=null">
+                  <span class="field-value">{{AFD.CanType}}</span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Application Fee : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value">{{AFD.App_Fee}}</span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Registration Fee : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value">{{AFD.Reg_Fee}}</span>
+                </div>
+
+                <div class="col-md-3">
+                  <span class="field-title">Id Amount : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value">{{AFD.ID_Amount}}</span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Total Amount : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value">{{AFD.Tot_Amount}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="title themeheading rowmarginfix">
+          New Notification
+        </div>
+        <div class="form">
+          <div class="row">
+            <!-- <div class="col-md-6">
+              <div class="input-group">
+                <select [(ngModel)]="applicant.S_NotificationID" required #S_NotificationID="ngModel" name="S_NotificationID"
+                  class="custom-field">
+                  <option [ngValue]="undefined" selected>---Select---</option>
+                  <option [ngValue]="n.DSWOId_NO_Id" *ngFor="let n of Notifications;">
+                    {{n.DSWOId_NO_Number}}-{{n.DSWOId_NO_Id}}-{{n.PD_Project_Name}}-{{n.PD_Project_Code}}</option>
+                </select>
+                <label>Select New Notification</label>
+              </div>
+            </div> -->
+
+            <div class="col-md-3">
+              <div class="input-group">
+                <select [(ngModel)]="applicant.S_NotificationID" required #S_NotificationID="ngModel" name="S_NotificationID"
+                  class="custom-field" (change)="GetNotificationProjects(applicant.S_NotificationID,null)">
+                  <option [ngValue]="undefined" selected>---Select---</option>
+                  <option [ngValue]="n.DSWOId_NO_Id" *ngFor="let n of Notifications;">
+                    {{n.DSWOId_NO_Number}}-{{n.DSWOId_NO_Id}}-{{n.PD_Project_Name}}-{{n.PD_Project_Code}}</option>
+                </select>
+                <label>Notification No.</label>
+              </div>
+            </div>
+            <!-- {{PD_Project_Name}} -->
+            <div class="col-md-3">
+              <div class="input-group">
+                <select [(ngModel)]="applicant.S_ProjectID" required #S_ProjectID="ngModel" name="S_ProjectID" class="custom-field"
+                  (change)="GetNotificationProjects(null,applicant.S_ProjectID)">
+                  <option [ngValue]="undefined" selected>---Select---</option>
+                  <option [ngValue]="p.PD_Id" *ngFor="let p of Projects;">
+                    {{p.PD_Project_Code}}-{{p.PD_Project_Name}}</option>
+                </select>
+                <label>Project</label>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="form-group input-group">
+                <input type="text" [(ngModel)]="applicant.Balance_Amt" #Balance_Amt="ngModel" name="Balance_Amt" id="txtAppNo"
+                  name="Balance_Amt" (keyup)="AddTotal(applicant.Balance_Amt,AFD.ID_Amount)" class="custom-field" style="text-align:right">
+                <label>Balance Amount To Be Paid:</label>
+              </div>
+            </div>
+
+            <div class="col-md-3">
+              <div class="form-group input-group">
+                <input type="text" [(ngModel)]="applicant.Tot_Amt" #Tot_Amt="ngModel" name="Tot_Amt" id="txtAppNo" name="Tot_Amt"
+                  readonly class="custom-field" style="text-align:right">
+                <label>Total Amount:</label>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <br>
+        <div class="text-center">
+          <button class="btn btn-primary" [disabled]="applicant.Balance_Amt==null || applicant.Balance_Amt == '' || applicant.Balance_Amt == 'undefined' ||
+          applicant.S_ProjectID==null || applicant.S_ProjectID == '' || applicant.S_ProjectID == 'undefined' ||
+          applicant.S_NotificationID==null || applicant.S_NotificationID == '' || applicant.S_NotificationID == 'undefined'"
+            type="button" (click)="UpdateApplicantPayment(applicant,AFD.APP_No)">Update Payment</button>
+        </div>
+      </div>
+
+    </div>
+
+  </form>
+  <!--Application Section ends-->
+
+  <!--Property Details Start-->
+
+  <!-- <form #Project="ngForm" >
+      <div id="property-section" >
+        <div class="container-fluid selector" id="property-filter">
+          <div class="row justify-content-center">
+            <div class="col-md-2">
+              <div class="form-group input-group">
+                <select class="form-control" id="PDId" name="PD_Id" #PD_Id="ngModel" [(ngModel)]="p.PD_Id">
+                  <option value="">---select---</option>
+                  <option [value]="p.PD_Id" *ngFor="let p of ProjectNameList">
+                    </option>
+                </select>
+                <label for="">Project</label>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group input-group">
+                <input type="text" class="form-control custom-field" id="txtPropNo" name="PropertyNum" value=""
+                 >
+                <label for="">Property No.</label>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group input-group">
+                <select class="form-control custom-field" id="CA_CategoryName" name="CA_CategoryName" >
+                  <option value="">---select---</option>
+                  <option [value]="p.CA_CategoryName">
+                     </option>
+                </select>
+                <label for="">Category.</label>
+              </div>
+            </div>
+            <div class="col-md-1">
+              <button class="btn btn-primary">Go</button>
+            </div>
+          </div>
+        </div>
+     
+  
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <td>Sl No</td>
+                <td>Property No.</td>
+                <td>Project</td>
+                <td>Property Type</td>
+                <td>Category</td>
+                <td>View</td>
+              </tr>
+            </thead>
+            <tbody>
+              <td colspan="11" class="text-center">No Data Found</td>
+            </tbody>
+            <tbody>
+              <tr >
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                  <button class="btn btn-primary">View</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-11">
+                <pagination-controls class="my-pagination" id="pagination" 
+                  directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+                  screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                </pagination-controls>
+              </div>
+              <div class="col-md-1">
+                Total:
+                <span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="property-details" >
+          <div class="form">
+            <div class="body">
+              <div class="row no-gutters">
+                
+                <div class="col-md-3">
+                  <span class="field-title">Project : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value"></span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Property No. : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value"></span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Scheme : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value"></span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">District : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value"></span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Taluk : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value"></span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Hobli : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value"></span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Village : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value"></span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Phase : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value"></span>
+                </div>
+  
+                <div class="col-md-3">
+                  <span class="field-title">Property Type : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value"></span>
+                </div>
+  
+                <div class="col-md-3">
+                  <span class="field-title">Category : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value"></span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Intermediate/Corner : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value"></span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Odd / Regular : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value"></span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Measurement (East to West) : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value"></span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Measurement (North to South) : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value"></span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Latitude : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value"></span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Longitude : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value"></span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Plot Area(in sqmt) : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value"></span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Plinth Area(in sqmt) : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value"></span>
+                </div>
+                <div class="col-md-12">
+                  <span class="field-title">Boundary Schedule</span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">North : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value"></span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">South : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value"></span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">East : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value"></span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">West : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value"></span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Property Status : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value"><b></b></span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Application No. : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value"><b></b></span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Allotted date : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value"><b></b></span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Applicant Name : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value"><b></b></span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-title">Remarks : </span>
+                </div>
+                <div class="col-md-3">
+                  <span class="field-value"><b></b></span>
+                </div>
+              </div>
+  
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="text-center">
+          <button class="btn btn-primary" type="reset" >Clear</button>
+        </div>
+      </div>
+    </form> -->
+  <!--Property Details end-->
+</div>

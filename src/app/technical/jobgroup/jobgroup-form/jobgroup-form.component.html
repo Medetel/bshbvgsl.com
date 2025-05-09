@@ -1,0 +1,86 @@
+<div class="wrapper">
+  <div class="title themeheading">
+   {{title}}
+    <button class="btn btn-primary float-right" [routerLink]="['/home/jobgroup']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <form (ngSubmit)="mode=='edit'? UpdateProjectActivity(JobgroupForm):SaveJobgroup(JobgroupForm)" #JobgroupForm="ngForm"
+  autocomplete="off">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="custom-field" #Group_code="ngModel" name="Group_code" [(ngModel)]="i.Group_code" pattern="^[a-zA-Z0-9 ]*$" [disabled]="mode=='view'" required>
+          <label for="">Group Code
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Group_code.invalid && (Group_code.dirty || Group_code.touched || formInvalid)">
+            <span *ngIf="Group_code.errors.required">Group Code is required</span>
+            <span *ngIf="Group_code.errors?.pattern">Only AlphaNumeric should enter</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="custom-field" #Group_name="ngModel" name="Group_name" [(ngModel)]="i.Group_name" pattern="^[a-zA-Z0-9 ]*$" [disabled]="mode=='view'" required>
+          <label for="">Group
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Group_name.invalid && (Group_name.dirty || Group_name.touched || formInvalid)">
+            <span *ngIf="Group_name.errors.required">Group Name is required</span>
+            <span *ngIf="Group_name.errors?.pattern">Only AlphaNumeric should enter</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <textarea class="custom-field" #Description="ngModel" name="Description" [(ngModel)]="i.Description" [disabled]="mode=='view'" required></textarea>
+          <label for="">Description
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Description.invalid && (Description.dirty || Description.touched || formInvalid)">
+            <span *ngIf="Description.errors.required">Description is required</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="custom-field" #Class="ngModel" name="Class" [(ngModel)]="i.Class" pattern="^[a-zA-Z0-9 ]*$" [disabled]="mode=='view'" required>
+          <label for="">Class
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Class.invalid && (Class.dirty || Class.touched || formInvalid)">
+            <span *ngIf="Class.errors.required">Class is required</span>
+            <span *ngIf="Class.errors?.pattern">Only AlphaNumeric should enter</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <select class="custom-field" [(ngModel)]="i.Status" #Status="ngModel" name="Status"
+            [disabled]="mode=='view'" required>
+            <option [value]="undefined" selected>---Select---</option>
+            <option value=3>Active</option>
+            <option value=4>Inactive</option>
+          </select>
+          <label for="">Status
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Status.invalid && (Status.dirty || Status.touched || formInvalid)">
+            <span *ngIf="Status.errors.required">Status is required</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center">
+        <button class="btn btn-primary" type="submit" [disabled]="mode=='view'">Save</button> &nbsp;
+         <button class="btn btn-primary" type="reset" [disabled]="mode=='view'">Cancel</button>
+      </div>
+
+  </div>
+</form>
+</div>

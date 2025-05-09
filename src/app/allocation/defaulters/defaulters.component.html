@@ -1,0 +1,95 @@
+<div class="wrapper propertyregister">
+  <div class="title themeheading">{{title}}<span class="clearfix"></span></div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <select class="custom-field" #PD_Project_Name="ngModel" name="PD_Project_Name"
+            [(ngModel)]="i.PD_Project_Name" list="dynmicUserIds"  required >
+            <option [value]="undefined" selected>---Select Project Name---</option>        
+            <option [value]="c.PD_Id" *ngFor="let c of defaultprojectcode;">
+              {{c.PD_Project_Code}} - {{c.PD_Project_Name}}
+            </option>
+          </select>
+          <label for="">Project Name
+            <span class="mandatory">*</span>
+          </label>
+        </div>
+
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <select class="custom-field" #Phase_Name="ngModel" name="Phase_Name"
+            [(ngModel)]="i.Phase_Name" list="dynmicUserIds" required >
+            <option [value]="undefined" selected>---Select Phase Name---</option>        
+            <option [value]="p.Phase_Id" *ngFor="let p of defaultphase;">
+              {{p.Phase_Name}}
+            </option>
+          </select>
+          <label for="">Phase Name
+            <span class="mandatory">*</span>
+          </label>
+          
+        </div>
+
+      </div>
+    </div>
+
+      <!-- <div class="row">
+              <div class="col-md-6">
+                  <div class="input-group">
+                          <input type="text" placeholder=" " class="custom-field " >
+                      <label>Alloted Waiting List No</label>
+                  </div>
+              </div>
+              <div class="col-md-6">
+                  <div class="input-group">
+                          <input type="date" placeholder=" " class="custom-field " >
+                      <label>Date</label>
+                  </div>
+              </div>
+          </div> -->
+
+      
+
+      <div class="btn-wrapper">
+          <button class="btn btn-primary"  (click)="GETAllDefaultersList(i.PD_Project_Name, i.Phase_Name)">Generate list</button>
+      </div>
+  </div>
+
+  <div class="table-responsive grid">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td>Sl No.</td>
+            <td>Application No.</td>
+            <td>Registration No.</td>
+            <td>Installment No.</td>
+            <td>Property No.</td>
+            <td>Amount.</td>
+            <td>Due Date.</td>
+            <td>Name.</td>    
+            <td>Mobile No.</td>          
+            <td>Age.</td>
+            <td>DOB.</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let d of defaulter;let i=index">
+            <td>{{i+1}}.</td>
+            <td>{{d.App_No}}</td>
+            <td>{{d.APP_Reg_No}}</td>
+            <td>{{d.Installments_No}}</td>
+            <td>{{d.PR_Property_No}}</td>
+            <td>{{d.Amount}}</td>
+            <td>{{d.DueDate}}</td>
+            <td>{{d.APP_PA_Name}}</td>
+            <td>{{d.APP_PA_MobileNo}}</td>
+            <td>{{d.APP_PA_Age}}</td>
+            <td>{{d.APP_PA_DOB}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+</div>

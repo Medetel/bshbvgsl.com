@@ -1,0 +1,139 @@
+<div class="wrapper">
+  <div class="title print-no-display themeheading">
+    {{title}}
+  </div>
+  <div class="container-fluid print-no-display">
+
+    <div class="row">
+      <div class="col-md-4">
+        <div class="input-group">
+          <select [(ngModel)]="s.S_ProjectID" #S_ProjectID="ngModel" name="S_ProjectID" class="custom-field" (change)="GetNotificationProjects(null,s.S_ProjectID)">
+            <option [ngValue]="undefined" selected>---Select---</option>
+            <option [ngValue]="p.PD_Id" *ngFor="let p of Projects;">
+              {{p.PD_Project_Code}}-{{p.PD_Project_Name}}</option>
+          </select>
+          <label>Project</label>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="input-group">
+          <select [(ngModel)]="s.S_NotificationID" #S_NotificationID="ngModel" name="S_NotificationID" class="custom-field"
+            (change)="GetNotificationProjects(s.S_NotificationID,null)">
+            <option [ngValue]="undefined" selected>---Select---</option>
+            <option [ngValue]="n.DSWOId_NO_Id" *ngFor="let n of Notifications;">
+              {{n.DSWOId_NO_Number}}-{{n.DSWOId_NO_Id}}-{{n.PD_Project_Name}}-{{n.PD_Project_Code}}</option>
+          </select>
+          <label>Notification No.</label>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="input-group">
+          <input type="date" class="custom-field" [(ngModel)]="s.LotDate" #LotDate="ngModel" name="LotDate">
+          <label for="">Lottery Date </label>
+        </div>
+      </div>
+      <div class="col-md-1">
+        <div class="text-center"><button class="btn btn-primary" (click)="GetLotteryApplications(s.S_NotificationID,s.S_ProjectID,s.LotDate)">Go</button></div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="title themeheading-new">
+    Allotted Applicant List
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-grid table-bordered">
+      <thead>
+
+        <!-- <tr>
+          <th> Sl.No </th>
+          <th> Application No. </th>
+          <th> Application Name </th>
+          <th> Mobile Number </th>
+
+          <th> Project Name </th>
+          <th>Alloted Property No.</th>
+          <th> Category </th>
+
+          <th> Property Type </th>
+          <th>Reservation </th>
+          <th>Select </th>
+        </tr> -->
+
+        <tr>
+          <th> Sl.No </th>
+          <th> Application No. </th>
+          <th> Applicant Name </th>
+          <th> Mobile Number </th>
+
+          <th> Project Name </th>
+          <th>Alloted Property No.</th>
+          <th> Category </th>
+
+          <th> Property Type </th>
+          <th>Reservation </th>
+          <th>Select </th>
+        </tr>
+
+      </thead>
+      <!-- <tbody *ngIf="Applications.AllottedReservationModel.AllottedApplicantLotteryModels == '' || Applications.AllottedReservationModel.AllottedApplicantLotteryModels == 'undefined' || Applications.AllottedReservationModel.AllottedApplicantLotteryModels == 'null'">
+          <td colspan="11" class="text-center">No Data Found</td>
+      </tbody> -->
+      <tbody *ngFor="let lott of Applications;let j=index;">
+        <tr class="text-center" style="background-color:#2196F3;">
+          <td colspan="10"> {{j+1}}. {{lott.CA_CategoryName}} </td>
+        </tr>
+
+        <tr class="text-center" *ngFor="let res of lott.AllottedReservationModel;let k=index;">
+          <!-- <td colspan="10" *ngIf="res.AllottedApplicantLotteryModels != '' || res.AllottedApplicantLotteryModels != 'undefined' || res.AllottedApplicantLotteryModels != 'null'"> -->
+
+          <td colspan="10" [hidden]="res.AllottedApplicantLotteryModels == null">
+            <table style="width:100%;">
+              <tbody>
+                <tr class="text-center" style="background-color:#7dafd6;">
+                  <td colspan="10"> {{k+1}}. {{res.RES_Name}} </td>
+                </tr>
+                <tr *ngFor="let applicant of res.AllottedApplicantLotteryModels;let i=index;">
+                  <td>{{i+1}}.</td>
+                  <td>{{applicant.APP_No}}</td>
+                  <td>{{applicant.APP_PA_Name}}</td>
+                  <td>{{applicant.APP_PA_MobileNo}}</td>
+                  <td>{{applicant.PD_Project_Name}}</td>
+                  <td>{{applicant.PR_Property_No}}</td>
+                  <td>{{applicant.CA_CategoryName}}</td>
+                  <td>{{applicant.PT_Property_Type}}</td>
+                  <td>{{applicant.RES_Name}}</td>
+                  <td>
+                    <input type="checkbox" [value]="applicant.SMS" name="SMS" [checked]="applicant.SMS===true" (change)="changeCheckbox(j,k,i)">
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+
+        </tr>
+
+        <!-- <tr *ngFor="let applicant of res.AllottedApplicantLotteryModels;let i=index;">
+          <td>{{i+1}}.</td>
+          <td>{{applicant.APP_No}}</td>
+          <td>{{applicant.APP_PA_Name}}</td>
+          <td>{{applicant.APP_PA_MobileNo}}</td>
+          <td>{{applicant.PD_Project_Name}}</td>
+          <td>{{applicant.PR_Property_No}}</td>
+          <td>{{applicant.CA_CategoryName}}</td>
+          <td>{{applicant.PT_Property_Type}}</td>
+          <td>{{applicant.RES_Name}}</td>
+          <td><input type="checkbox"></td>
+        </tr> -->
+
+      </tbody>
+    </table>
+    <div class="text-center">
+      <button class="btn btn-primary" (click)="SendElotterySms()">Send SMS</button>
+      <button class="btn btn-primary" (click)="myFunction()">Print</button>
+    </div>
+  </div>
+</div>

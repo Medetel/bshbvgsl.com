@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>BSHB</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <style>
+    .header-center {
+      margin: 0% auto;
+      text-align: justify;
+    }
+  </style>
+
+</head>
+
+<body *ngFor="let b of PrintNoticeList;let i=index">
+  <div style="display: flex;
+   justify-content: center;
+   align-items: center;
+   height: 100vh; 
+   text-align: center;">
+    <h4>Details Need to Show</h4>
+  </div>
+  <!-- <div *ngFor="let notificationDetails of b.NoticeLetterDetailModel;">
+    <section class="container">
+      <h2 class="text-center">
+        <b>
+          ಕರ್ನಾಟಕ ಗೃಹ ಮಂಡಳಿ
+        </b>
+      </h2>
+      <h4 class="text-center">
+        <b>
+          ನೋಂದಾಯಿತ ಅಂಚೆ ಮೂಲಕ
+        </b>
+      </h4>
+      <br>
+      <div class="row" style="text-align:center;">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+          <p>
+            ಸಂ/ ಕಗೃಮಂ /____/____/____/ {{notificationDetails.Years}}
+          </p>
+        </div>
+        <div class="col-md-6 col-sm-6 col-xs-6">
+          <p>
+            ಸಹಾಯಕ ಕಾರ್ಯಪಾಲಕ ಅಭಿಯಂತರ ಕಛೇರಿ <br>
+            ಕರ್ನಾಟಕ ಗೃಹ ಮಂಡಳಿ <br>
+            {{notificationDetails.DI_District}}. ದಿನಾಂಕ: <span [hidden]="NType!='I'">{{ notificationDetails.N_Ist_Notice_Date | date:'dd-MM-yyyy' }}</span><span [hidden]="NType!='II'">{{ notificationDetails.N_IIst_Notice_Date | date:'dd-MM-yyyy' }}</span><span [hidden]="NType!='III'">{{ notificationDetails.N_IIIst_Notice_Date | date:'dd-MM-yyyy' }}</span>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section style=" width:90%;margin: 0% auto;">
+      <h3 class="text-center">
+        <b> ನೋಟೀಸ್ - {{NType}} </b>
+      </h3>
+      <div class="row container">
+        <div class="col-md-1"></div>
+        <div class="col-md-4">
+          <p> ಗೆ,</p>
+          <p>
+            ಶ್ರೀ/ಶ್ರೀಮತಿ. <span class="text-block">{{notificationDetails.APP_PA_Name}}</span><br>
+            <span class="text-block">{{notificationDetails.APP_Address1}}-{{notificationDetails.APP_Address2}}</span><br>
+            <span class="text-block">{{notificationDetails.VI_Village}}-{{notificationDetails.HO_Name}}</span><br>
+            <span class="text-block">{{notificationDetails.TA_Taluk}}</span>
+            <span class="text-block">{{notificationDetails.DI_District}}-{{notificationDetails.APP_Pincode}}</span>
+          </p>
+        </div>
+
+      </div>
+      <div class="row container">
+        <div class="col-md-1"></div>
+        <div class="col-md-1">
+          <b> ಮಾನ್ಯರೆ, </b>
+        </div>
+        <div class="col-md-9">
+          <br>
+          <p>
+            <b> ವಿಷಯ: </b> 100 ವಸತಿ ಯೋಜನೆಯು {{notificationDetails.DI_District}} ಜಿಲ್ಲೆ, {{notificationDetails.PD_Project_Name}} ಬಡಾವಣೆಯಲ್ಲಿ ಹಂಚಿಕೆಯಾಗಿರುವ ಮನೆ/ನಿವೇಶನ
+            ಸಂಖ್ಯೆ: {{notificationDetails.LOD_Property_No}} EWS/LIG/MIG/HIG-I,II ಇದರ ಬಾಕಿ ಹಣವನ್ನು ಪಾವತಿಸುವ ಬಗ್ಗೆ.
+          </p>
+          <p>
+            <b> ಉಲ್ಲೆಖ: </b>1) ಗೃಹ ಆಯುಕ್ತರು, ಕಗೃಮಂ, ಬೆಂಗಳೂರು, ಇವರ ಹಂಚಿಕೆ ತಿಳುವಳಿಕೆ ಪತ್ರದ ದಿನಾಂಕ: {{ notificationDetails.PR_App_AllotDate | date:'dd-MM-yyyy' }}.
+          </p>
+        </div>
+      </div>
+    </section>
+    <p class="text-center"><b> *********** </b> </p>
+    <br><br>
+    <section>
+      <div class="container">
+        <p style="text-align: justify;">
+          &nbsp; &nbsp; ಈ ಮೂಲಕ ನಿಮಗೆ ತಿಳಿಯಪಡಿಸುವುದೇನೆಂದರೆ 100 ವಸತಿ ಯೋಜನೆಯುಡಿ {{notificationDetails.DI_District}} ಜಿಲ್ಲೆ, {{notificationDetails.PD_Project_Name}}
+          ಬಡಾವಣೆಯಲ್ಲಿ ಮನೆ/ನಿವೇಶನ ಸಂಖ್ಯೆ: {{notificationDetails.LOD_Property_No}} EWS/LIG/MIG/HIG-I,II ಅನ್ನು ಒಟ್ಟು ರೂ {{notificationDetails.PFC_Final_Cost}} /- ಗಳಿಗೆ ಉಲ್ಲೇಖಿತ ಪತ್ರದಲ್ಲಿ
+          ಹಂಚಿಕೆ ಮಾಡಲಾಗಿದೆ. ತಿಳುವಳಿಕೆ ಪತ್ರದನುಸಾರ ಸದರಿ ಮನೆ/ನಿವೇಶನದ ಬೆಲೆಯಲ್ಲಿ 4 ಸಮಾನ ಕಂತುಗಳಲ್ಲಿ ಪಾವತಿಸಲು ಸೂಚಿಸಲಾಗಿತ್ತು.
+          ಅದರಂತೆ ನೀವು ಸದರಿ ಮನೆ/ನಿವೇಶನದ ಬೆಲೆಯಲ್ಲಿ ಈವರೆಗೆ ರೂ: {{notificationDetails.PC_InitialDeposit}} /- ಗಳನ್ನು ಪಾವತಿಸಿದ್ದು, ಬಾಕಿ ಕಂತಿನ ಹಣದ ಮೊತ್ತ ರೂ:
+          {{notificationDetails.PFC_Final_Cost-notificationDetails.PC_InitialDeposit | number}} /- ಗಳನ್ನು ನೀವು ಪಾವತಿಸಬೇಕಾಗಿದೆ. ಈ ಹಣವನ್ನು ತಾವುಗಳು ಇದುವರೆಗೂ ಪಾವತಿಸಿರುವದಿಲ್ಲ. ಆದುದರಿಂದ ತಾವುಗಳು ಬಾಕಿ
+          ಕಂತಿನ
+          ಹಣ ರೂ: {{notificationDetails.PFC_Final_Cost-notificationDetails.PC_InitialDeposit | number}} /- ಗಳನ್ನು ಈ ಅಂತಿಮ ತಿಳುವಳಿಕೆ ಪತ್ರ ತಲುಪಿದ 07 ದಿನಸದೊಳಗಾಗಿ ಪಾವತಿಸಲು ತಿಳಿಸಲಾಗಿದೆ. ಬಾಕಿ ಮೊತ್ತವನ್ನು
+          ಸಂದಾಯ ಮಾಡಿದ ನಂತರ ತಡವಾದ ಅವಧಿಗೆ ಬಡ್ಡಿದರ ತಿಳಿಸಲಾಗುವುದು.
+        </p>
+        <p style="text-align: justify;">
+          &nbsp; &nbsp;ಒಂದು ವೇಳೆ ತಾವು ಕಂತಿನ ಬಾಕಿ ಹಣವನ್ನು ಮೇಲಕ್ಕಂಡ ಅವಧಿಯೊಳಗೆ ಪಾವತಿಸದೇ ಹೋದಲ್ಲಿ ನಿಮಗೆ ಹಂಚಿಕೆಯಾಗಿರುವ
+          ಮನೆ/ನಿವೇಶನವನ್ನು ಮಂಡಳಿ ನಿಯಾಮಾನುಸಾರ ರದ್ದುಪಡಿಸಲಾಗುವುದು, ಹಾಗು ತಾವು ಪಾವತಿಸಿರುವ ಆರಂಬಿಕ ಠೇವಣೆಯ __% ಹಣವನ್ನು
+          ಮುಟ್ಟುಗೋಲು
+          ಹಾಕಿ ಕೆಳ್ಳಲಾಗುವುದು.
+        </p>
+        <p style="text-align: justify;">
+          ಒಂದು ವೇಳೆ ತಾವು ಸದರಿ ಪೂರ್ಣ ಹಣವನ್ನು ಪಾವತಿಸಿದ್ದಲ್ಲಿ ಪಾವತಿಸಿದ ಚಲನ್ ಪ್ರತಿಯನ್ನು ಕೂಡಲೇ ಈ ಕಛೇರಿಗೆ ಸಲ್ಲಿಸಲು ಕೋರಲಾಗಿದೆ.
+        </p>
+      </div>
+
+    </section>
+    <br>
+    <section>
+      <div class="container row">
+        <div class="col-md-8">
+
+        </div>
+        <div class="col-md-4">
+          <p class="text-center">
+            ಸಹಾಯಕ ಕಂದಾಯ ಅಧಿಕಾರಿ <br>
+            ಕರ್ನಾಟಕ ಗೃಹ ಮಂಡಳಿ <br>
+            {{notificationDetails.DI_District}}
+          </p>
+        </div>
+      </div>
+    </section>
+  </div> -->
+</body>
+
+</html>

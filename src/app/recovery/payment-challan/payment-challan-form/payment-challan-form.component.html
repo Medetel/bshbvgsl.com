@@ -1,0 +1,75 @@
+<div class="wrapper">
+    <div class="title themeheading">
+        Add Payment Challan / Pre-Receipt
+        <button class="btn btn-primary float-right" [routerLink]="['/home/paymentchallan']" *ngIf="BackId!='1'">Back</button>
+        <button class="btn btn-primary float-right" [routerLink]="['/home/paymentchallan/payment-chall-app-grid']" *ngIf="BackId=='1'">Back</button>
+        <span class="" clearfix></span>
+    </div>
+    <form (ngSubmit)="mode=='Edit'?UpdateChallan(PaymentChallan):CreateChallan(PaymentChallan)" #PaymentChallan="ngForm">
+    <div class="add-click container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <label> Agreement No. </label>
+                    <select class="custom-field" [(ngModel)]="PC.Agrmnt_Id" #Agrmnt_Id="ngModel" name="Agrmnt_Id" [disabled]="mode=='View'"
+                     required (change)="GetAgreementDetailsById(PC.Agrmnt_Id)">
+                    <option [value]="undefined" selected>---Select---</option>
+                    <option [value]="AL.Agrmnt_Id" *ngFor="let AL of Agreementlist;">
+                      {{AL.Agrmnt_Code}}
+                    </option>
+                  </select> 
+                </div>
+            </div>
+        </div>    
+        <div class="row">
+            <div class="col-md-6">
+                <label> Property Numbers : </label> &nbsp; <span> <b>{{PC.PR_Property_No}}</b> </span>
+            </div>
+            <div class="col-md-6">
+                <label> Lessee Details :</label> &nbsp; <span> <b>{{PC.CUST_F_NAME}}</b> </span>
+            </div>
+        </div>  
+        <div class="row">
+            <div class="col-md-6">
+                <label> Rent / Lease Amount :</label> &nbsp; <span> <b>{{PC.TOTAL_RATE}}</b> </span>
+            </div>
+            <div class="col-md-6">
+                <label> Maintenenace Cost :</label> &nbsp; <span> <b>{{PC.TOTAL_Maintenace_Cost}}</b> </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label> Total Amount :</label> &nbsp; <span> <b>{{PC.Total_Amount}}</b> </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label> GST% :</label> &nbsp; <span> <b>{{PC.TOTAL_GST}}</b> </span>
+            </div>
+            <div class="col-md-6">
+                <label> TDS% :</label> &nbsp; <span> <b>{{PC.TOTAL_TDS}}</b> </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label> Gross Amount : </label> &nbsp; <span> <b>{{PC.Gross_Amount}}</b> </span>
+            </div>
+            <div class="col-md-6">
+                <label> Amount in Words :</label> &nbsp; <span> <b>{{PC.Gross_Amount_Words}}</b> </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <label> Naration </label>
+                    <input class="custom-field" type="text" [(ngModel)]="PC.Naration" #Naration="ngModel" name="Naration" [disabled]="mode=='View'" required>
+                </div>
+            </div>
+        </div>       
+        <div class="d-flex justify-content-center">
+            <button [disabled]="mode=='View'" class="btn btn-primary" type="submit"> {{mode=='Edit'?'Update':'Save'}} </button> &nbsp;
+            <button [disabled]="mode=='View'" class="btn btn-primary" class="btn btn-primary" type="button" (click)="Cancel()"> Cancel </button>
+        </div>
+    </div>
+</form>
+</div>

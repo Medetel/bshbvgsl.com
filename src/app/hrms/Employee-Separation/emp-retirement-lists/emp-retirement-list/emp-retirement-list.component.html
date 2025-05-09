@@ -1,0 +1,130 @@
+<div class="wrapper">
+  <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm,itemsPerPage,1)">
+    <div class="title themeheading">{{title}}
+      <div class="float-right">
+        Items per page:
+        <select name="SearchRows" #SearchRows="ngModel" [(ngModel)]="itemsPerPage" class="noofpage"
+          (change)="itemsPerPageChanged(itemsPerPage, 1)">
+          <option [ngValue]="5">5</option>
+          <option [ngValue]="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="40">40</option>
+          <option value="50">50</option>
+        </select>
+        <!-- <a class="btn btn-primary " [routerLink]="['/home/empseparation/emp-separations-form']">Add</a> -->
+      </div>
+      <span class="clearfix"></span>
+    </div>
+    <div class="searchbar">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-1">
+            <label>Search</label>
+          </div>
+          <div class="col-md-4">
+            <select name="SearchCriteria" class="form-control" required>
+              <option [ngValue]="undefined" selected>---Select---</option>
+              <option value="">Division Code</option>
+              <option value="">Department Code</option>
+              <option value="">Employee Id</option>
+              <option value="">Employee Name</option>
+              <option value="">Document No</option>
+              <option value="">Document Date</option>
+              <option value="">Document Status</option>
+              <option value="">Type of Separation </option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <input type="text" name="SearchText" class="form-control" placeholder="Search.." required>
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-default" type="submit">Search</button>
+            <button class="btn btn-default" type="reset">Clear</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid background-color">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Select Division</label>
+            <select class="custom-field" [(ngModel)]="a.EMP_DIVISION_ID" #EMP_DIVISION_ID="ngModel"
+          name="EMP_DIVISION_ID" [disabled]="mode=='view'">
+          <option [value]="undefined" selected>---Select---</option>
+          <option [value]="d.DI_Id" *ngFor="let d of DistrictsList;">
+            {{d.DI_District}}
+          </option>
+        </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for=""> Select Date</label>
+            <input type="date" [(ngModel)]="a.Date" #Date="ngModel"
+            name="Date" [disabled]="mode=='view'" class="custom-field" (change)="Change(a.EMP_DIVISION_ID,a.Date)">
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="table-responsive">
+      <table class="table table-striped grid">
+        <thead>
+          <tr>
+            <td>Sl No.</td>
+            <td>Employee Id</td>
+            <td>Employee Name</td>
+            <td>Division</td>
+            <td>Department</td>
+            <td>Date of Birth</td>
+            <td>Date of Joining</td>
+            <td>Retirement Date</td>
+            <td> Process Retirement</td>
+            <td class="text-center">View</td>
+            <!-- <td class="text-center">Edit</td>
+                      <td class="text-center">Delete</td> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let e of detailsEmployee ; let i=index"> 
+            <td> {{i+1}} </td>
+            <td>{{e.EMP_EMPLOYEE_CODE}}</td>
+            <td>{{e.EmpName}}</td>
+            <td>{{e.DI_District}}</td>
+            <td>{{e.Department_Name}}</td>
+            <td>{{e.EMP_DATE_OF_BIRTH |date:'dd/MM/yyyy'}}</td>
+            <td>{{e.EMP_D_O_J |date:'dd/MM/yyyy'}}</td>
+            <td>{{e.Retirment|date:'dd/MM/yyyy'}}</td>
+            <td>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1"  [routerLink]="['/home/empseparation/emp-separation-form',e.EMP_EMPLOYEE_ID]" >
+                <!-- <label class="form-check-label" for="exampleRadios1">
+                </label> -->
+              </div>
+            </td>
+
+            <!-- <td class="text-center">
+                          <a href="javascript:void(0);">
+                              <i class="fa fa-lg fa-eye themecolor"></i>
+                          </a>
+                      </td> -->
+            <td class="text-center">
+              <a href="javascript:void(0);">
+                <i class="fa fa-lg fa-edit themecolor"></i>
+              </a>
+            </td>
+            <!-- <td class="text-center">
+                          <a href="javascript:void(0);">
+                              <i class="fa fa-lg fa-trash themecolor"></i>
+                          </a>
+                      </td> -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </form>
+</div>

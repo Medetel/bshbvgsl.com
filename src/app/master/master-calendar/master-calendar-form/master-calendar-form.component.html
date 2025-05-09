@@ -1,0 +1,147 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary pull-right" [routerLink]="['/home/masters/master-calendar']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <form (ngSubmit)="mode=='Edit'?UpdateCasteDetails(Caste):SaveCaste(Caste)" #Caste="ngForm" name="Caste">
+
+    <div class="container-fluid">
+      <div class="row ">
+        <div class=" col-md-6 ">
+          <div class="input-group">
+            <label>Calendar Year
+              <span class="mandatory">*</span>
+            </label>
+            <select name="year" id="year" class="form-control" placeholder="Select" [(ngModel)]="c.year" #year="ngModel"
+              disabled required (change)="GetCalendar(c.year)"> </select>
+          </div>
+          <div class="error-msg pull-right" *ngIf="year.invalid && (year.dirty || year.touched || formInvalid)">
+            <span *ngIf="year.errors.required">Year is required</span>
+          </div>
+        </div>
+
+      </div>
+      <div class="row ">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Start Month
+              <span class="mandatory">*</span>
+            </label><br>
+            <select class="custom-field" [(ngModel)]="c.code_value" #code_value="ngModel" name="code_value"
+              [disabled]="mode=='View'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="r.fix_code_id" *ngFor="let r of MonthList;">
+                {{r.code_value}}
+              </option>
+            </select>
+          </div>
+          <div class="error-msg pull-right"
+            *ngIf="code_value.invalid && (code_value.dirty || code_value.touched || formInvalid)">
+            <span *ngIf="code_value.errors.required"> Start Month is required</span>
+          </div>
+        </div>
+        <div class=" col-md-6 ">
+          <div class="input-group">
+            <label>End Month
+              <span class="mandatory">*</span>
+            </label><br>
+            <select class="custom-field" [(ngModel)]="c.code_value1" #code_value1="ngModel" name="code_value1"
+              [disabled]="mode=='View'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="r.fix_code_id1" *ngFor="let r of EndMonthList;">
+                {{r.code_value1}}
+              </option>
+            </select>
+          </div>
+          <div class="error-msg pull-right"
+            *ngIf="code_value1.invalid && (code_value1.dirty || code_value1.touched || formInvalid)">
+            <span *ngIf="code_value1.errors.required">End Month is required</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class=" col-md-6">
+          <div class="input-group">
+            <label>Weekly Off
+              <span class="mandatory">*</span>
+            </label><br>
+            <select class="custom-field" [(ngModel)]="c.code_value2" #code_value2="ngModel" name="code_value2"
+              [disabled]="mode=='View'" required (change)="First(c.code_value2)">
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="r.code_value2" *ngFor="let r of FristWeekOfList">
+                {{r.code_value2}}
+              </option>
+            </select>
+          </div>
+          <div class="error-msg pull-right"
+            *ngIf="code_value2.invalid && (code_value2.dirty || code_value2.touched || formInvalid)">
+            <span *ngIf="code_value2.errors.required">Week off is required</span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Weekly Off (2)</label><br>
+            <select class="custom-field" [(ngModel)]="c.code_value3" #code_value3="ngModel" name="code_value3"
+              [disabled]="mode=='View'" (change)="Second(c.code_value3)">
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="r.code_value2" *ngFor="let r of SecondWeekOfList">
+                {{r.code_value2}}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Weekly Off (3)</label><br>
+            <select class="custom-field" [(ngModel)]="c.code_value4" #code_value4="ngModel" name="code_value4"
+              [disabled]="mode=='View'" (change)="Third(c.code_value4)">
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="r.code_value2" *ngFor="let r of ThiredWeekOfList">
+                {{r.code_value2}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Half Day</label><br>
+            <select class="custom-field" [(ngModel)]="c.code_value5" #code_value5="ngModel" name="code_value5"
+              [disabled]="mode=='View'">
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="r.code_value2" *ngFor="let r of fourthWeekOf">
+                {{r.code_value2}}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Finalized Indicator
+              <span class="mandatory">*</span>
+            </label>
+            <select class="custom-field" [(ngModel)]="c.fin_ind" #fin_ind="ngModel" name="fin_ind"
+              [disabled]="mode=='View'" required>
+              <option value="Yes">Yes</option>
+              <option value="No">No</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <button class="btn btn-primary" type="button" *ngIf="c.fin_ind == 'Yes' && c.AddToholiday == 0"
+            name="calendar_year" (click)="Doo(c.year)">Generate Holiday List</button>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="text-center" *ngIf="!((mode=='Edit') && (c.fin_ind == 'Yes'))">
+      <button class="btn btn-primary" type="submit">{{mode=='Edit'?'Edit':'Save'}}</button> &nbsp;
+      <button class="btn btn-primary" [disabled]="mode=='View'" class="btn btn-primary" type="button"
+        (click)="Cancel()">Cancel</button>
+    </div>
+  </form>
+</div>

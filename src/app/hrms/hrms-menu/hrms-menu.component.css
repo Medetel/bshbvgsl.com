@@ -1,0 +1,46 @@
+.menu{
+    width:90%;
+    margin:10px auto 0px;
+    overflow: scroll;
+    white-space: nowrap;
+    /* position: relative; */
+    list-style: none;
+    padding:0px;
+}
+
+#u-menu{
+    scroll-behavior: smooth;
+}    
+
+.menu li{
+    display: table-cell;
+}    
+::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+}
+::-webkit-scrollbar-thumb {
+    background: transparent;/*hides the scrollbar*/
+    height:0px;
+    top:10px;
+}    
+.menu a{
+    display:block;
+    padding: 10px;
+    text-decoration:none;
+    text-align:center;
+    float:left;
+}    
+
+button.arrow{height: 50px;width: 35px !important;cursor:pointer;background: transparent;border:1px solid #e8e2e2;z-index:1;position: absolute;background: #fff;}    
+button.move-left{left: 0px;top: 2px;box-shadow: 5px 1px 7px #B5A422;}
+button.move-right{right:15px;top:0px;box-shadow: -5px 1px 7px #B5A422;}
+
+.menu img{
+    width:40px;
+}
+
+@media(max-width:480px){
+    button.move-left{left: 10px;}
+    button.move-right{right: 10px;}
+}

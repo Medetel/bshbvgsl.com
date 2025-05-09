@@ -1,0 +1,120 @@
+<div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary float-right" routerLink="/home/offline-application-grid/offline-application">ADD</button>
+    <label for="" class="float-right" *ngIf="userRole=='Applicant'">Reg No. :
+        <span></span>
+    </label>
+    <span class="clearfix"></span>
+</div>
+
+<!--Applicant Search section start-->
+<div class="wrapper">
+    <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm,itemsPerPage,1)">
+        <div class="searchbar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label for="">Search</label>
+                    </div>
+                    <div class="col-md-3">
+                        <select name="SearchCriteria" #SearchCriteria="ngModel" [(ngModel)]="s.SearchCriteria" class="form-control"
+                            required>
+                            <option [ngValue]="undefined" selected>---Select---</option>
+                            <option value="Appno">App. No.</option>
+                            <option value="Applicant_Name">Applicant Name</option>
+                            <option value="ProjectName">Project Name</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="SearchText" #SearchText="ngModel" [(ngModel)]="s.SearchText" class="form-control"
+                            placeholder="Search.." required>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-default" type="submit">Search</button>
+                        <button class="btn btn-default" type="reset" (click)="GetApplicantDraftDetails(itemsPerPage, 1)">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!--Applicant Search section end-->
+
+<div class="title" style="margin-bottom: -20px;">
+    Applied Properties
+</div>
+<div class="table-responsive">
+    <table class="table table-striped grid">
+        <thead>
+            <tr>
+                <td>Sl No.</td>
+                <td>App No.</td>
+                <td>App Name</td>
+                <td>Notification No.</td>
+                <td>Project Name</td>
+                <td>Category</td>
+                <td>Property Type</td>
+                <td>Application Fee</td>
+                <td>Registration Fee</td>
+                <td>ID Amount</td>
+                <td>Send to Finance</td>
+                <td>Edit</td>
+                <!-- <td *ngIf="userRole=='Super Admin'">Payments</td>
+              <td colspan="2" *ngIf="userRole!='CASE WORKER'">Application</td> -->
+            </tr>
+        </thead>
+        <tbody *ngIf="Applicantlist == '' || Applicantlist == 'undefined' || Applicantlist == 'null'">
+            <td colspan="15" class="text-center">No Data Found</td>
+        </tbody>
+        <tbody>
+            <tr *ngFor="let appl of Applicantlist | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index">
+                <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+                <td>{{appl.APP_No}}</td>
+                <td>{{appl.APP_PA_Name}}</td>
+                <td>{{appl.DSWOId_NO_Number}}</td>
+                <td>{{appl.PD_Project_Name}}</td>
+                <td>{{appl.CA_CategoryName}}</td>
+                <td>{{appl.PT_Property_Type}}</td>
+                <td>{{appl.App_Fee}}</td>
+                <td>{{appl.Reg_Fee}}</td>
+                <td>{{appl.ID_Amt}}</td>
+                <td>
+                    <button class="btn btn-primary" (click)="SendtoFinance(appl.APP_No)">Send</button>
+                </td>
+                <td class="text-center">
+                    <a href="#" [routerLink]="['/home/offline-application-grid/offline-application',appl.APP_No,'Edit']">
+                        <i class="fa fa-lg fa-edit themecolor"></i>
+                    </a>
+                </td>
+              <!--<td>
+                  <button class="btn btn-primary" [routerLink]="['/home/appstatus/applicantview',appl.APP_Id,appl.DSWOId_NO_Id,'Appview']">View</button>
+              </td>
+              <td *ngIf="userRole=='Super Admin'">
+                  <button class="btn btn-primary" [routerLink]="['/home/appstatus/instapay',appl.APP_Id,appl.APP_No,appl.APP_Status]">Pay</button>
+              </td>
+              <td *ngIf="appl.LOD_Property_No==null && userRole!='CASE WORKER'">
+                  <button  class="btn btn-primary"  [routerLink]="['/home/appstatus/cancellation',appl.APP_Id,appl.APP_Status]" [disabled]="appl.RefundCount!=0 || appl.CanDate!=null">Refund</button>
+              </td>
+              <td *ngIf="appl.LOD_Property_No!=null && userRole!='CASE WORKER'">
+                  <button  class="btn btn-primary"  [routerLink]="['/home/appstatus/cancellation',appl.APP_Id,appl.APP_Status]" [hidden]="appl.APP_Status!='Allotted'" (click)="GetPrId(appl.PR_Id)" [disabled]="appl.CanCount!=0 || appl.APP_Status!='Allotted'">Cancellation</button>
+                  <button  class="btn btn-primary"  [routerLink]="['/home/appstatus/cancellation',appl.APP_Id,appl.APP_Status]" [hidden]="appl.APP_Status!='EXCNG'" (click)="GetPrId(appl.PR_Id)" [disabled]="appl.CanCount!=0 || appl.APP_Status!='EXCNG'">Cancellation</button>
+              </td> -->
+
+            </tr>
+        </tbody>
+    </table>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-11">
+                <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)" maxSize="9"
+                    directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+                    screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                </pagination-controls>
+            </div>
+            <div class="col-md-1">
+                Total:
+                <span>{{totalItems}}</span>
+            </div>
+        </div>
+    </div>
+</div>

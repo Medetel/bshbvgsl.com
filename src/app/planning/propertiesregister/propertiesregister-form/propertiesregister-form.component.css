@@ -1,0 +1,17 @@
+.row:nth-child(odd){
+    background: #ececec;   
+}
+
+.row{
+    padding: 1em 0px 0px 0px !important;
+}
+
+.mat-form-field-wrapper{
+    padding-bottom:0px !important;
+}
+
+.field-title{
+    width:113px;
+    display:inline-block;
+    color:#807f7f;
+}

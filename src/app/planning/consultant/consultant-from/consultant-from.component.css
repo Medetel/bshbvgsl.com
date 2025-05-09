@@ -1,0 +1,35 @@
+/* .row{
+    padding: 1em 0px 0px 0px !important;
+    margin-bottom: -10px;
+}
+.row:nth-child(odd){
+    background: #ececec;
+}
+.row:nth-child(even){
+    background: white;
+} */
+
+.field-title{
+    width:129px;
+    display:inline-block;
+    color:#807f7f;
+}
+
+
+.row{
+    padding:10px;
+}
+
+.row:nth-child(odd){
+    background: #f2f2f2;
+}
+
+
+ .input-group {
+    position: relative;
+    margin: 10px 0;
+  }
+  
+  .mandatory{
+    color:red;
+}

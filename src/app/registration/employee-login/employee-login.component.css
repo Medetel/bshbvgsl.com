@@ -1,0 +1,63 @@
+/* @font-face{
+    src:url(assets/Fonts/Cinzel-Regular.otf);
+    font-family: 'Cinzel';
+} */
+
+body{
+    padding:0px !important;
+    position:relative;
+    min-height:100vh;
+    /* background: #083269; */
+    background: url(/assets/images/loginbg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.login-wrapper{
+    background:#fff;
+    padding:20px;
+    position: absolute;
+    top:30%;
+    right:17%;
+    border:1px solid #fff;
+    width:300px;
+    box-shadow:11px 12px 20px 0px #04234a;
+}
+
+
+.field-wrapper{
+    margin-top:10px;
+}
+
+label{
+    padding:0px;
+    font-size:14px;
+}
+
+
+
+.link-holder{
+    text-align: justify;
+}
+
+.link-holder a{
+    color:#04234a;
+    text-decoration:none;
+    font-size:12px;
+}
+.link-holder a:nth-child(1){
+    float:left;
+}
+.link-holder a:nth-child(2){
+    float:right;
+}
+
+.text-title{
+    font-family: 'Cinzel';
+    color: #fff;
+    position: absolute;
+    font-size: 2em;
+    top: 40%;
+    transform: rotate(-15deg);
+    left: 20%;
+}

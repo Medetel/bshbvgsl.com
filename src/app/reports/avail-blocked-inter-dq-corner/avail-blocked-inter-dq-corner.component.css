@@ -1,0 +1,5 @@
+@media print{
+    .table-responsive table td{
+        font-size:0.8em;
+    }
+}

@@ -1,0 +1,193 @@
+<div class="wrapper">
+	<div class="title themeheading">
+		{{title}}
+		<button class="btn btn-primary float-right" [routerLink]="['/home/serviceregister/leavedetails']">Back</button>
+		<span class="clearfix"></span>
+	</div>
+	<form (ngSubmit)="mode=='edit'?UpdateEmplLeaveDetails(EmplDetails):SaveEmplLeaveDetails(EmplDetails)"
+		#EmplDetails="ngForm" name="form1">
+
+		<div class="container">
+			<div class="row">
+				<!-- <div class="col-md-4">
+					<div class="input-group">
+						<label for=""> Division code </label>
+						<select class="custom-field" [(ngModel)]="l.EMP_DIVISION_ID" #EMP_DIVISION_ID="ngModel"
+							name="EMP_DIVISION_ID" [disabled]="mode=='view'"
+							(change)="ChangeOfDivision(l.EMP_DIVISION_ID)">
+							<option [value]="undefined" selected>---Select---</option>
+							<option [value]="d.DI_Id" *ngFor="let d of DistrictsList;">
+								{{d.DI_District}}
+							</option>
+						</select>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="input-group">
+						<label for="">Emp Code </label>
+						<select select class="custom-field" [(ngModel)]="l.EMP_ID_FK" #EMP_ID_FK="ngModel"
+							name="EMP_ID_FK" [disabled]="mode=='view'" (change)="ChangeOfEmployee(l.EMP_ID_FK)">
+							<option [value]="" selected>--Select--</option>
+							<option [value]="emp.EMP_EMPLOYEE_ID" *ngFor="let emp of AllEmployeeList;">
+								{{emp.EMP_EMPLOYEE_CODE}} &nbsp; {{emp.EMP_FIRST_NAME}}
+							</option>
+						</select>
+					</div>
+				</div> -->
+				<div class="col-md-6">
+					<label for=""> Employee Id :</label> &nbsp; <span class="name">{{detailsEmployee.EMP_EMPLOYEE_CODE}} </span>
+				</div>
+				<div class="col-md-6">
+						<label for=""> Name :</label> &nbsp; <span class="name"> {{detailsEmployee.EmpName}} </span>
+					</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 ">
+					<label for="">Division : </label> &nbsp; <span class="name">{{detailsEmployee.DI_District}} </span>
+				</div>
+				<div class="col-md-4">
+					<label for="">Department : </label> &nbsp; <span class="name">{{detailsEmployee.Department_Name}}
+					</span>
+				</div>
+				<div class="col-md-4">
+					<label for="">Designation : </label> &nbsp; <span class="name">{{detailsEmployee.desg_name}}</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<label for="">Employee Category : </label> &nbsp; <span
+						class="name">{{detailsEmployee.Category}}</span>
+				</div>
+				<div class="col-md-4">
+					<label for="">Employee Group : </label> &nbsp; <span
+						class="name">{{detailsEmployee.EmpGroup}}</span>
+				</div>
+				<div class="col-md-4">
+					<label for="">Employee Type : </label> &nbsp; <span class="name">{{detailsEmployee.EmpType}}</span>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="title themeheading">
+			{{title2}}
+			<!-- <button class="btn btn-primary pull-right" *ngIf="mode=='view' || mode=='edit'" style="margin-top: -3px;" (click)="gotoAdd(EmployeeId)" type="button" >Add</button> -->
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="input-group">
+						<label for="">Leave Type
+							<span class="mandatory">*</span>
+						</label>
+						<select class="custom-field" [(ngModel)]="l.EMP_LEAVE_DESC" #EMP_LEAVE_DESC="ngModel"
+							name="EMP_LEAVE_DESC" [disabled]="mode=='view'" required>
+							<option [value]="undefined" selected>---Select---</option>
+							<option [value]="lt.Leave_id" *ngFor="let lt of leavetypelist;">
+								{{lt.Leave_name}}
+							</option>
+						</select>
+					</div>
+					<div class="error-msg pull-right"  *ngIf="EMP_LEAVE_DESC.invalid && (EMP_LEAVE_DESC.dirty || EMP_LEAVE_DESC.touched || formInvalid)">
+                        <span  *ngIf="EMP_LEAVE_DESC.errors.required">Laeve Type is required</span>                      
+                    </div>
+				</div>
+				<div class="col-md-6">
+					<div class="input-group">
+						<label for="">Opening Balance
+							<span class="mandatory">*</span>
+						</label>
+						<input type="text" class="form-control" [(ngModel)]="l.EMP_LEAVE_OB" #EMP_LEAVE_OB="ngModel"
+							name="EMP_LEAVE_OB" [disabled]="mode=='view'" maxlength="3" pattern="^[0-9]*$" required>
+					</div>
+					<div class="error-msg pull-right"  *ngIf="EMP_LEAVE_OB.invalid && (EMP_LEAVE_OB.dirty || EMP_LEAVE_OB.touched || formInvalid)">
+						<span  *ngIf="EMP_LEAVE_OB.errors.required">Opening Balance is required</span> 
+						<span  *ngIf="EMP_LEAVE_OB.errors.pattern">Enter valid opening balance</span>                      
+                    </div>
+				</div>
+			</div>
+			<div class="row">
+				<!-- <div class="col-md-6">
+					<div class="input-group">
+						<label for="">Leaves Credit
+							<span class="mandatory">*</span>
+						</label>
+						<input type="text" class="form-control" [(ngModel)]="l.EMP_LEAVE_CREDIT"
+							#EMP_LEAVE_CREDIT="ngModel" name="EMP_LEAVE_CREDIT" [disabled]="mode=='view'" required>
+					</div>
+					<div class="error-msg pull-right"  *ngIf="EMP_LEAVE_CREDIT.invalid && (EMP_LEAVE_CREDIT.dirty || EMP_LEAVE_CREDIT.touched || formInvalid)">
+                        <span  *ngIf="EMP_LEAVE_CREDIT.errors.required">Leave credit is required</span>                      
+                    </div>
+				</div> -->
+				<div class="col-md-6">
+					<div class="input-group" *ngIf="(mode=='view') || (mode=='edit')">
+						<label for="">Leaves Availed</label>
+						<span>{{l.Leave_Debit}}</span>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6" *ngIf="(mode=='view') || (mode=='edit')">
+					<label for="">Leaves Balance :</label>
+					<span>&nbsp;{{l.LeaveBal}}</span>
+				</div>
+			</div>
+
+			<br>
+			<div class="text-center">
+					<button [disabled]="mode=='view'" class="btn btn-primary">{{mode=='Edit'?'Edit':'Save'}}</button> &nbsp;
+                    <button [disabled]="mode=='view'" (click)="Cancel()" class="btn btn-primary">Cancel</button>
+			</div>
+
+
+			<!--  -->
+
+			<br>
+			<div class="table-responsive">
+					<table class="table table-striped grid">
+							<thead>
+								<tr>
+									<td>Sl No.</td>									
+									<td>Leave Type</td>                                       
+									<td>Leaves Balance</td>                       
+									<td class="text-center">View</td>
+									<!-- <td class="text-center">Edit</td> -->
+									<td class="text-center">Delete</td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr *ngFor="let l of EmployeeLeaveDetails | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index">
+									<td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>									                       
+									<td>{{l.leave_name}}</td>
+									<td>{{l.LeaveBal}}</td>
+									<td class="text-center">
+										<a href="#" [routerLink]="['/home/serviceregister/leavedetails-form',l.EMP_LEAVE_ID,'view',l.EMP_ID_FK]">
+											<i class="fa fa-lg fa-eye themecolor"></i>
+										</a>
+									</td>
+									<!-- removing it bcz of the issue occured during leave balance update -->
+									<!-- <td class="text-center">
+										<a href="#" [routerLink]="['/home/serviceregister/leavedetails-form',l.EMP_LEAVE_ID,'edit',l.EMP_ID_FK]">
+											<i class="fa fa-lg fa-edit themecolor"></i>
+										</a>
+									</td> -->
+									<td class="text-center">
+										<a (click)="delete(l.EMP_LEAVE_ID)">
+											<i class="fa fa-lg fa-trash themecolor"></i>
+										</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+			</div>
+
+
+		</div>
+		<br>
+		<!-- <div class="text-center">
+		<button class="btn btn-primary" type="submit">Save</button> &nbsp;
+		<button class="btn btn-primary" (click)="Cancel()">Cancel</button>
+	</div> -->
+		<br>
+	</form>
+</div>

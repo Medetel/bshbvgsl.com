@@ -1,0 +1,138 @@
+<div class="wrapper">
+  <div class="title themeheading">
+   {{title}}
+    <button class="btn btn-primary float-right" [routerLink]="['/home/structuresplanning']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <form (ngSubmit)="mode=='edit'? UpdateStructurePlanning(StructurePlanningForm):SaveStructurePlanning(StructurePlanningForm)" #StructurePlanningForm="ngForm"
+  autocomplete="off">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <!-- <select class="custom-field" > -->
+          <select class="custom-field" #Project_Code="ngModel" name="Project_Code"
+            [(ngModel)]="i.Project_Code" list="dynmicUserIds" [disabled]="mode=='view'" required >
+          <!-- <datalist id="dynmicUserIds"> -->
+            <option [value]="undefined" selected>---Select Project Name---</option>        
+            <option [value]="c.PD_Id" *ngFor="let c of projectcode;">
+              {{c.PD_Project_Code}} - {{c.PD_Project_Name}}
+            </option>
+          <!-- </datalist> -->
+          </select>
+          <label for="">Project Name
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Project_Code.invalid && (Project_Code.dirty || Project_Code.touched || formInvalid)">
+      <span *ngIf="Project_Code.errors.required">Project Name is required</span>
+    </div> 
+        </div>
+
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="custom-field" #Project_Phase="ngModel" name="Project_Phase" pattern="^[a-zA-Z0-9 ]*$" [disabled]="mode=='view'" required
+          [(ngModel)]="i.Project_Phase">
+          <label for="">Project phase
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Project_Phase.invalid && (Project_Phase.dirty || Project_Phase.touched || formInvalid)">
+            <span *ngIf="Project_Phase.errors.required">Project Phase is required</span>
+            <span *ngIf="Project_Phase.errors?.pattern">Only AlphaNumeric should enter</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="custom-field" #Project_Job="ngModel" name="Project_Job" pattern="^[a-zA-Z0-9 ]*$" [disabled]="mode=='view'" required
+          [(ngModel)]="i.Project_Job">
+          <label for="">Project Job
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Project_Job.invalid && (Project_Job.dirty || Project_Job.touched || formInvalid)">
+            <span *ngIf="Project_Job.errors.required">Project Job is required</span>
+            <span *ngIf="Project_Job.errors?.pattern">Only AlphaNumeric should enter</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="custom-field" #Structure="ngModel" name="Structure" pattern="^[a-zA-Z0-9 ]*$" [disabled]="mode=='view'" required
+          [(ngModel)]="i.Structure">
+          <label for="">Structure
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Structure.invalid && (Structure.dirty || Structure.touched || formInvalid)">
+            <span *ngIf="Structure.errors.required">Structure is required</span>
+            <span *ngIf="Structure.errors?.pattern">Only AlphaNumeric should enter</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <textarea class="custom-field" #Description="ngModel" name="Description" [disabled]="mode=='view'" required
+          [(ngModel)]="i.Description"></textarea>
+          <label for="">Description
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Description.invalid && (Description.dirty || Description.touched || formInvalid)">
+            <span *ngIf="Description.errors.required">Description is required</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="custom-field" #Structure_Baseline_Qty="ngModel" name="Structure_Baseline_Qty" pattern="^[a-zA-Z0-9 ]*$" [disabled]="mode=='view'" required
+          [(ngModel)]="i.Structure_Baseline_Qty">
+          <label for="">Structure Baseline Qty
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Structure_Baseline_Qty.invalid && (Structure_Baseline_Qty.dirty || Structure_Baseline_Qty.touched || formInvalid)">
+            <span *ngIf="Structure_Baseline_Qty.errors.required">Structure Baseline Quantity is required</span>
+            <span *ngIf="Structure_Baseline_Qty.errors?.pattern">Only AlphaNumeric should enter</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="custom-field" #Structure_Actual_Qty="ngModel" name="Structure_Actual_Qty" pattern="^[a-zA-Z0-9 ]*$" [disabled]="mode=='view'" required
+          [(ngModel)]="i.Structure_Actual_Qty">
+          <label for="">Structure Actual Qty
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Structure_Actual_Qty.invalid && (Structure_Actual_Qty.dirty || Structure_Actual_Qty.touched || formInvalid)">
+            <span *ngIf="Structure_Actual_Qty.errors.required">Structure Actual Quantity is required</span>
+            <span *ngIf="Structure_Actual_Qty.errors?.pattern">Only AlphaNumeric should enter</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <select class="custom-field" [(ngModel)]="i.Status" #Status="ngModel" name="Status"
+            [disabled]="mode=='view'" required>
+            <option [value]="undefined" selected>---Select---</option>
+            <option value=3>Active</option>
+            <option value=4>Inactive</option>
+          </select>
+          <label for="">Status
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Status.invalid && (Status.dirty || Status.touched || formInvalid)">
+            <span *ngIf="Status.errors.required">Status is required</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center">
+      <button class="btn btn-primary" type="submit" [disabled]="mode=='view'">Save</button>&nbsp;
+      <button class="btn btn-primary" type="reset" [disabled]="mode=='view'">Cancel</button>
+    </div>
+  </div>
+</form>
+</div>

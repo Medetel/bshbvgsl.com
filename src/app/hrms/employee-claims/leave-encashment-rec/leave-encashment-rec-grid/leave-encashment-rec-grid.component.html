@@ -1,0 +1,141 @@
+
+<div class="wrapper">
+  <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm,itemsPerPage,1)">
+      <div class="title themeheading">{{title}}
+          <div class="float-right">
+              Items per page:
+              <select name="SearchRows" #SearchRows="ngModel" [(ngModel)]="itemsPerPage" class="noofpage"
+                  (change)="itemsPerPageChanged(itemsPerPage, 1)">
+                  <option [ngValue]="5">5</option>
+                  <option [ngValue]="10">10</option>
+                  <option value="20">20</option>
+                  <option value="30">30</option>
+                  <option value="40">40</option>
+                  <option value="50">50</option>
+              </select>
+              <a class="btn btn-primary " [routerLink]="['/home/emp-claims/medical-reimburesment-form']">Add</a>
+          </div>
+          <span class="clearfix"></span>
+      </div>
+      <div class="searchbar">
+          <div class="container">
+              <div class="row">
+                  <div class="col-md-1">
+                      <label>Search</label>
+                  </div>
+                  <div class="col-md-4">
+                    <select name="SearchCriteria" #SearchCriteria="ngModel" [(ngModel)]="s.SearchCriteria"
+                    class="form-control" required>
+                    <option [ngValue]="undefined" selected>---Select---</option>
+                    <option value="DOC_CODE">Leave Concession No</option>
+                    <option value="EMP_FIRST_NAME">Employee Name</option>
+                    <option value="CONS_TYPE">Concession Type</option>
+                    <option value="DOC_DATE">Date</option>
+                    <option value="CONS_DESCRIPTION">Description</option>
+                </select>
+                      <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)"
+                          class="error-msg">
+                          <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+                      </div>
+                  </div>
+                  <div class="col-md-4">
+                      <input type="text" name="SearchText" #SearchText="ngModel" [(ngModel)]="s.SearchText"
+                          class="form-control" placeholder="Search.." required>
+                      <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+                          <div *ngIf="SearchText.errors.required">Search text is required</div>
+                      </div>
+                  </div>
+                  <div class="col-md-3">
+                      <button class="btn btn-default" type="submit">Search</button>
+                      <button class="btn btn-default" type="reset"
+                          (click)="GetAllLeaveRECDetials(h.DivisionId,itemsPerPage,1)">Clear</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <br>
+      <!-- <div class="container-fluid" [hidden]="!Edit"> -->
+            <div class="container-fluid">
+          <div class="row">
+              <div class="col-md-6">
+                  <div class="input-group">
+                      <label for=""> Division </label>
+                      <select class="custom-field" [(ngModel)]="h.DivisionId" #DivisionId="ngModel" name="DivisionId"
+                          (change)="GetAllLeaveRECDetials(h.DivisionId,itemsPerPage,1)" disabled>
+                          <option [value]="undefined" selected>---Select---</option>
+                          <option [value]="d.DI_Id" *ngFor="let d of Districtlist;">
+                              {{d.DI_District}}
+                          </option>
+                      </select>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+
+      <div class="table-responsive">
+          <table class="table table-striped grid">
+              <thead>
+                  <tr>
+                      <td>Sl No.</td>
+                      <td>Reimbursement No</td>
+                      <td>Employee Id</td>
+                      <td>Employee Name</td>  
+                      <td>District</td>                     
+                      <td>Status</td>                     
+                      <td class="text-center">View</td>
+                      <!-- <td class="text-center">Edit</td>
+                      <td class="text-center">Delete</td> -->
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let h of LeaveElist | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index"
+                      [ngClass]="{'inactive':h.INACTIVE=='Y'}">
+                      <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+                      <td>{{h.DOC_CODE}}</td>
+                      <td>{{h.EMP_EMPLOYEE_CODE}}</td>
+                      <td>{{h.EMP_FIRST_NAME}}</td>    
+                      <td>{{h.DI_District}}</td>                    
+                      <td *ngIf="h.DOC_STATUS =='G' || h.DOC_STATUS =='g' ">Generated</td>
+                      <td *ngIf="h.DOC_STATUS =='A' || h.DOC_STATUS =='a' ">Approved</td>
+                      <td *ngIf="h.DOC_STATUS =='S' || h.DOC_STATUS =='s' ">Sanctioned</td>
+                      <td *ngIf="h.DOC_STATUS =='R' || h.DOC_STATUS =='r' ">Rejected</td>
+                    
+                      <td class="text-center">
+                        <a href="#" [routerLink]="['/home/emp-claims/leave-encashment/leave-encashment-form',h.LVENCASH_ID,'View']">
+                            <i class="fa fa-lg fa-eye themecolor"></i>
+                        </a>
+                    </td>
+                      <!-- <td class="text-center">
+                          <a href="#"
+                              [routerLink]="['/home/emp-claims/medical-reimburesment-form',m.MEDI_CLAIM_ID,'Edit']">
+                              <i class="fa fa-lg fa-edit themecolor"></i>
+                          </a>
+                      </td>
+                      <td class="text-center">
+                          <a href="javascript:void(0);" (click)="delete(m.MEDI_CLAIM_ID)">
+                              <i class="fa fa-lg fa-trash themecolor"></i>
+                          </a>
+                      </td> -->
+                  </tr>
+              </tbody>
+          </table>
+          <div class="container-fluid">
+              <div class="row">
+                  <div class="col-md-11">
+                      <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)"
+                          maxSize="9" directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+                          screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                          screenReaderCurrentLabel="You're on page">
+                      </pagination-controls>
+                  </div>
+                  <div class="col-md-1">
+                      Total:
+                      <span>{{totalItems}}</span>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </form>
+</div>
+

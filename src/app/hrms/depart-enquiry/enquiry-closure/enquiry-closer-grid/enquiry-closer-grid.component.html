@@ -1,0 +1,225 @@
+<div class="wrapper">
+  <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm,itemsPerPage,1)">
+
+    
+    <div class="title themeheading">{{title}}
+      <div class="float-right">
+        Items per page:
+        <select name="SearchRows" #SearchRows="ngModel" [(ngModel)]="itemsPerPage" class="noofpage"
+          (change)="itemsPerPageChanged(itemsPerPage, 1)">
+          <option [ngValue]="5">5</option>
+          <option [ngValue]="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="40">40</option>
+          <option value="50">50</option>
+        </select>
+        <!-- <a class="btn btn-primary " [routerLink]="['/home/dept-enquiry/enquiry-proceeding-form']">Add</a> -->
+      </div>
+      <span class="clearfix"></span>
+    </div>
+    <div class="searchbar">
+      <div class="container">
+          <div class="row">
+              <div class="col-md-1">
+                  <label>Search</label>
+              </div>
+              <div class="col-md-4">
+                  <select name="SearchCriteria" #SearchCriteria="ngModel" [(ngModel)]="s.SearchCriteria"
+                      class="form-control" required>
+                      <option [ngValue]="undefined" selected>---Select---</option>
+                      <option value="DOC_CODE">Enquiry Number</option>
+                      <!-- <option value="DOC_CODE1"> Complaint Number</option> -->
+                      <option value="DGO_NAME">DGO's Name</option>
+                      <!-- <option value="DOC_CODE2">SCN Number</option>          -->
+                      <option value="ENQ_START_DATE">Enquiry date</option>                       
+                  </select>
+                  <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)"
+                      class="error-msg">
+                      <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+                  </div>
+              </div>
+              <div class="col-md-4">
+                  <input type="text" name="SearchText" #SearchText="ngModel" [(ngModel)]="s.SearchText"
+                      class="form-control" placeholder="Search.." required>
+                  <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+                      <div *ngIf="SearchText.errors.required">Search text is required</div>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <button class="btn btn-default" type="submit">Search</button>
+                  <button class="btn btn-default" type="reset"
+                      (click)="GetAllClosureDetails(itemsPerPage, 1)">Clear</button>
+              </div>
+          </div>
+      </div>
+  </div>
+    <div class="table-responsive">
+      <table class="table table-striped grid table-bordered">
+        <thead>
+          <tr>
+            <td colspan="7" class="text-center"> Enquiry Details</td> 
+
+          </tr>
+          <tr>
+            <td>Sl No.</td>
+            <td>Enquiry No.</td>
+            <td>Enquiry Date </td>
+            <td>DGO's Name</td>
+            <td class="text-center"> Status</td>
+            <td class="text-center">View</td>
+            <td>Closure </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let e of Closureist | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index"
+            [ngClass]="{'inactive':e.INACTIVE=='Y'}">
+            <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+            <td>{{e.DOC_CODE}}</td>
+            <td>{{e.ENQ_START_DATE  | date:'dd-MM-yyyy'}}</td>
+            <td>{{e.DGO_NAME}}</td>
+            <td *ngIf="e.DOC_STATUS=='p'">Proceeded</td>
+            <td *ngIf="e.DOC_STATUS=='C'">Close</td>
+            <td *ngIf="e.DOC_STATUS=='S'">Stop</td>
+
+            <td class="text-center">
+              <a [routerLink]="['/home/dept-enquiry/enquiry-closure-form',e.ENQUIRY_ID,'View']">
+                <i class="fa fa-lg fa-eye themecolor"></i>
+              </a>
+              
+            </td>
+
+            <td> <button class="btn-primary btn" data-toggle="modal" data-target=".bd-example-modal-lg" (click)="ClosureEnquiryid(e.ENQUIRY_ID)">Closure</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-11">
+            <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)" maxSize="9"
+              directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+              screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+              screenReaderCurrentLabel="You're on page">
+            </pagination-controls>
+          </div>
+          <div class="col-md-1">
+            Total:
+            <span>{{totalItems}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Model -->
+    <!-- <form (ngSubmit)="mode=='Edit'?UpdateProc(Closure):SaveProc(Closure)" #Closure="ngForm" name="Closure"> -->
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Closure</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="container-fluid">
+              <div class="title rowmarginfix themeheading">
+                Enquiry Closure
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="input-group">
+                    <label for=""> Comments of Presenting Officer </label>
+                    <input type="text" name="COMMENTS_PRES_OFF" maxlength="50" [(ngModel)]="e.COMMENTS_PRES_OFF"
+                    #COMMENTS_PRES_OFF="ngModel" class="form-control" [disabled]="mode=='View'" pattern="[A-Za-z]+">
+                  </div>
+                  <div class="error-msg pull-right"  *ngIf="COMMENTS_PRES_OFF.invalid && (COMMENTS_PRES_OFF.dirty || COMMENTS_PRES_OFF.touched || formInvalid)">
+                    <span  *ngIf="COMMENTS_PRES_OFF.errors.pattern">Comments of Presenting Officer it should accept only alphabets</span>             
+                </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="input-group">
+                    <label for=""> Comments of Enquiry Officer </label>
+                    <input type="text" name="COMMENTS_ENQ_OFF" maxlength="50" [(ngModel)]="e.COMMENTS_ENQ_OFF"
+                    #COMMENTS_ENQ_OFF="ngModel" class="form-control" [disabled]="mode=='View'" pattern="[A-Za-z]+">
+                  </div>
+                  <div class="error-msg pull-right"  *ngIf="COMMENTS_ENQ_OFF.invalid && (COMMENTS_ENQ_OFF.dirty || COMMENTS_ENQ_OFF.touched || formInvalid)">
+                    <span  *ngIf="COMMENTS_ENQ_OFF.errors.pattern">Comments of Enquiry Officer it should accept only alphabets</span>             
+                </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <label for="">Conclusion</label>
+                    <select class="custom-field" [(ngModel)]="e.ENQ_CONCLUSION" #ENQ_CONCLUSION="ngModel" name="ENQ_CONCLUSION" [disabled]="mode=='View'">
+                      <option value="undefined">--Select--</option>
+                      <option value="Stop"> Stop Enquiry </option>
+                      <option value="Close">Close Enquiry</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <!-- <label for="">Conclusion Date :</label>  &nbsp;<span> {{sk.SCNREPLY_REP_PRD}} </span> -->
+                </div>
+                <div class="col-md-3">
+                  <!-- <label for="">Total Proceeding : </label>  &nbsp;<span> {{sk.SCNREPLY_REP_PRD}} </span> -->
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <label for="">Invoke Termination </label>
+                    <select class="custom-field" [(ngModel)]="e.TERMINATION_IND" #TERMINATION_IND="ngModel" name="TERMINATION_IND" [disabled]="mode=='View'">
+                      <option value="undefined">--Select--</option>
+                      <option value="Y">Yes</option>
+                      <option value="N">No</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <label for="">Revoke Suspension</label>
+                    <select class="custom-field" [(ngModel)]="e.REVOKE_SUSPND_IND" #REVOKE_SUSPND_IND="ngModel" name="REVOKE_SUSPND_IND" [disabled]="mode=='View'">
+                      <option value="undefined">--Select--</option>
+                      <option value="Y">Yes</option>
+                      <option value="N">No</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <label for="">Termination W.E.F</label>
+                    <input type="Date" name="TERMINATION_WEF" maxlength="50" [(ngModel)]="e.TERMINATION_WEF"
+                    #TERMINATION_WEF="ngModel" class="form-control" [disabled]="mode=='View'">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <label for="">Revocation Date W.E.F</label>
+                    <input type="Date" name="REVOKE_TERMINATION_WEF" maxlength="50" [(ngModel)]="e.REVOKE_TERMINATION_WEF"
+                    #REVOKE_TERMINATION_WEF="ngModel" class="form-control" [disabled]="mode=='View'">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="d-flex justify-content-center">
+            <button [disabled]="mode=='View'" class="btn btn-primary"type="button" (click)="SaveClosure(e)">Save</button> &nbsp;
+            <button [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button>&nbsp;
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <!-- </form> -->
+
+
+</div>

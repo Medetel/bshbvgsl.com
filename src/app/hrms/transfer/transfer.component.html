@@ -1,0 +1,43 @@
+<!-- <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2">
+        <div class="sidemenu">
+          <ul class="billmenu">
+            <li><a [routerLink]="['/home/transfer/']"> Transfer Relieving</a></li>
+            <li><a [routerLink]="['transfer-authorization']">Transfer Approval</a></li>
+            <li><a [routerLink]="['transfer-sanction']">Transfer Sanction</a></li>
+            <li><a [routerLink]="['transferin']">Transfer Reporting </a></li>
+            <li><a [routerLink]="['transfer-rec']">Transfer Records </a></li>                -->
+          <!-- </ul>
+        </div>
+      </div>
+      <div class="col-md-10">
+          <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>  -->
+
+  <!-- <router-outlet></router-outlet> -->
+
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2">
+        <div class="sidemenu">
+          <!-- <ul class="billmenu" *ngFor="let p of subpageslist">
+            <li><a [ngClass]="{'alert-primary':p.KSP_Redirect_URL === localurl}" (click)="geturl(p.KSP_Redirect_URL)" routerLink="{{p.KSP_Redirect_URL}}">{{p.KSP_Name}}</a></li>         
+          </ul> -->
+          <ul class="billmenu">
+            <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="['/home/transfer/']"> Transfer Relieving</a></li>
+            <li routerLinkActive="active"><a [routerLink]="['transfer-authorization']">Transfer Approval</a></li>
+            <li routerLinkActive="active"><a [routerLink]="['transfer-sanction']">Transfer Sanction</a></li>
+            <li routerLinkActive="active"><a [routerLink]="['transferin']">Transfer Reporting </a></li>
+            <li routerLinkActive="active"><a [routerLink]="['transfer-rec']">Transfer Records </a></li>                
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-10">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>

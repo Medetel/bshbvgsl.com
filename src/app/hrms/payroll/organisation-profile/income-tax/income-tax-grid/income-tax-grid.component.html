@@ -1,0 +1,166 @@
+<form (ngSubmit)="mode=='edit'?UpdateIncomTax(Details):SaveIncomTax(Details)"
+    #Details="ngForm" name="form1">
+
+<div class="wrapper">
+  <div class="container" *ngIf="mode==null">
+    <div class="row">
+      <div class="col-md-2" *ngIf="mode==null">
+        <label for="">Enable / Disable</label>
+      </div>
+      <div class="col-md-2">
+        <label class="switch">
+          <input type="checkbox" (click)="toggle1()">
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+  <br>
+  <span *ngIf="show1">
+    <div class="title themeheading">
+      Income Tax
+    </div>
+    <div class="container-fluid row-background">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="input-group">
+            <input class="custom-field" type="text" name="IT_Description" maxlength="100" [(ngModel)]="a.IT_Description"
+            #IT_Description="ngModel" [disabled]="mode=='view'" required>
+            <label for="">IT Slab Description
+             <span class="mandatory">*</span></label>
+          </div>
+           <div class="error-msg pull-right"  *ngIf="IT_Description.invalid && (IT_Description.dirty || IT_Description.touched || formInvalid)">
+              <span  *ngIf="IT_Description.errors.required">Description is reqiured.</span>             
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="input-group">
+            <label for=""> IT Slab for  </label>
+            <select name="Gender_ind" maxlength="100" [(ngModel)]="a.Gender_ind"
+            #Gender_ind="ngModel" [disabled]="mode=='view'" id="" class="custom-field">
+              <option value="">--Select--</option>
+              <option value="M">Male</option>
+              <option value="F">Female</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="input-group ">
+            <label for="">Taxable Range</label>
+            <div class="form-inline">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">₹</span>
+                </div>
+                <input  class="form-control" type="number" name="From_amount"  maxlength="100" [(ngModel)]="a.From_amount"
+                #From_amount="ngModel" [disabled]="mode=='view'">
+              </div>             
+            </div>
+          </div>
+        </div>
+        <div class="col-md-1">
+          <span style="margin: -50px 0px 1px 15px; font-size: 26px;"> - </span>
+        </div>
+        <div class="col-md-2">
+          <div class="input-group">
+            <div class="form-inline">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">₹</span>
+                </div>
+                <input class="form-control" type="number" name="To_amount" maxlength="100" [(ngModel)]="a.To_amount"
+                #To_amount="ngModel" [disabled]="mode=='view'">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="input-group">
+            <label for="">Income Tax Rate</label>
+            <input class="form-control" type="number" name="IT_rate"  [(ngModel)]="a.IT_rate"
+            #IT_rate="ngModel" [disabled]="mode=='view'">
+            <div class="input-group-append">
+              <span class="input-group-text" id="basic-addon2">%</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group">
+            <label for="">Education Cess</label>
+            <input class="form-control" type="number" name="Educ_cess_rate"  [(ngModel)]="a.Educ_cess_rate"
+            #Educ_cess_rate="ngModel" [disabled]="mode=='view'">
+            <div class="input-group-append">
+              <span class="input-group-text" id="basic-addon2">%</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group">
+            <label for="">Secondary & Higher Education Cess</label>
+            <input class="form-control" type="number" name="SH_Educ_cess_rate"  [(ngModel)]="a.SH_Educ_cess_rate"
+            #SH_Educ_cess_rate="ngModel" [disabled]="mode=='view'">
+            <div class="input-group-append">
+              <span class="input-group-text" id="basic-addon2">%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="mode!=null">
+        <div class="col-md-3">
+          <div class="input-group">
+            <label for=""> Status  </label>
+            <select name="IT_status" maxlength="100" [(ngModel)]="a.IT_status"
+            #IT_status="ngModel" [disabled]="mode=='view'" id="" class="custom-field">
+              <option value="">--Select--</option>
+              <option value="A">Active</option>
+              <option value="I">Inactive</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+
+      <br>
+      <div class="text-center">
+        <button class="btn btn-primary" type="submit">Save</button> &nbsp;
+        <button class="btn btn-primary" type="reset" (click)="Cancel()">Cancel</button>
+      </div>
+      <br>
+      <div class="table-responsive">
+        <table class="table table-stripped grid">
+          <thead>
+            <tr>
+              <td>Sl.No</td>
+              <td>IT Slab Description</td>
+              <td>Taxable Range</td>
+              <td>Income Tax(%)</td>
+              <td>Education Cess</td>
+              <td>Secondary & Higher Education Cess</td>
+              <td class="text-center">Edit</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let in of incomtaxlist; let i=index">
+              <td>{{(i+1)}}</td>
+              <td>{{in.IT_Description}}</td>
+              <td>{{in.From_amount}}-{{in.To_amount}}</td>
+              <td>{{in.IT_rate}}</td>
+              <td>{{in.Educ_cess_rate}}</td>
+              <td>{{in.SH_Educ_cess_rate}}</td>
+              <td class="text-center">
+                <a href="#" [routerLink]="['/home/payroll/payroll-compliance',in.IT_SLAB_ID,'edit']" >
+                  <i class="fa fa-lg fa-edit themecolor"></i>
+              </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </span>
+</div>
+</form>
+<!-- <app-professional-tax-form></app-professional-tax-form> -->

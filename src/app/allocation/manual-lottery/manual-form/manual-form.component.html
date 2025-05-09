@@ -1,0 +1,363 @@
+<form #Lottery="ngForm" (ngSubmit)="Save(Lottery)" name="form1" novalidate>
+
+  <div class="lottery-form-view">
+    <div class="text-right">
+      <button class="btn btn-primary" type="button" style="margin-top: 10px;" [routerLink]="['/home/allot/manual-grid']">Back</button>
+    </div>
+    <br>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="input-group">
+                <select [disabled]="mode=='View'" [(ngModel)]="l.LO_NO_Id_FK" required #LO_NO_Id_FK="ngModel" name="LO_NO_Id_FK"
+                  class="custom-field" (change)="GetNotificationProjects(l.LO_NO_Id_FK,null)">
+                  <option [ngValue]="undefined" selected>---Select---</option>
+                  <option [ngValue]="n.DSWOId_NO_Id" *ngFor="let n of Notifications;">
+                    {{n.DSWOId_NO_Number}}-{{n.DSWOId_NO_Id}}-{{n.PD_Project_Name}}-{{n.PD_Project_Code}}</option>
+                </select>
+                <label>Notification No.
+                  <span class="mandatory">*</span>
+                </label>
+                <div class="error-msg" *ngIf="LO_NO_Id_FK.invalid && (LO_NO_Id_FK.dirty || LO_NO_Id_FK.touched || formInvalid)">
+                  <span *ngIf="LO_NO_Id_FK.errors.required">Notification No is required</span>
+              </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="input-group">
+                <select [disabled]="mode=='View'" [(ngModel)]="l.LO_PD_Id_FK" required #LO_PD_Id_FK="ngModel" name="LO_PD_Id_FK"
+                  class="custom-field" (change)="GetNotificationProjects(null,l.LO_PD_Id_FK)">
+                  <option [ngValue]="undefined" selected>---Select---</option>
+                  <option [ngValue]="p.PD_Id" *ngFor="let p of Projects;">
+                    {{p.PD_Project_Code}}-{{p.PD_Project_Name}}</option>
+                </select>
+                <label>Project
+                  <span class="mandatory">*</span>
+                </label>
+                <div class="error-msg" *ngIf="LO_PD_Id_FK.invalid && (LO_PD_Id_FK.dirty || LO_PD_Id_FK.touched || formInvalid)">
+                  <span *ngIf="LO_PD_Id_FK.errors.required">Project is required</span>
+              </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="input-group">
+                <input [disabled]="mode=='View'" type="date" [(ngModel)]="l.LO_Allotted_Date" required #LO_Allotted_Date="ngModel" name="LO_Allotted_Date"
+                  class="custom-field">
+                <label>Allotment Date.
+                  <span class="mandatory">*</span>
+                </label>
+                <div class="error-msg" *ngIf="LO_Allotted_Date.invalid && (LO_Allotted_Date.dirty || LO_Allotted_Date.touched || formInvalid)">
+                  <span *ngIf="LO_Allotted_Date.errors.required">Allotment Date is required</span>
+              </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="input-group">
+                <input type="text" [(ngModel)]="l.LO_Id" required #LO_Id="ngModel" name="LO_Id" class="custom-field"
+                  readonly style="background: rgb(231, 230, 230)">
+                <label>Lottery Id.
+                  <span class="mandatory">*</span>
+                </label>
+                <div class="error-msg" *ngIf="LO_Id.invalid && (LO_Id.dirty || LO_Id.touched || formInvalid)">
+                  <span *ngIf="LO_Id.errors.required">Lottery Id is required</span>
+              </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="input-group">
+                <select [disabled]="mode=='View'" [(ngModel)]="l.LO_CA_Id_FK" required #LO_CA_Id_FK="ngModel" name="LO_CA_Id_FK"
+                  class="custom-field" (change)="clear()">
+                  <option [ngValue]="undefined" selected>---Select---</option>
+                  <option [value]="ca.CA_Id" *ngFor="let ca of Categories;">
+                    {{ca.CA_CategoryName}}</option>
+                </select>
+                <label>Property Category
+                  <span class="mandatory">*</span>
+                </label>
+                <div class="error-msg" *ngIf="LO_CA_Id_FK.invalid && (LO_CA_Id_FK.dirty || LO_CA_Id_FK.touched || formInvalid)">
+                  <span *ngIf="LO_CA_Id_FK.errors.required">Property Category is required</span>
+              </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="input-group">
+                <select [disabled]="mode=='View'" [(ngModel)]="l.LO_PT_Id_FK" required #LO_PT_Id_FK="ngModel" name="LO_PT_Id_FK"
+                  class="custom-field" (change)="GetAllResPercentage(6, 0,l.LO_NO_Id_FK,l.LO_PD_Id_FK,l.LO_CA_Id_FK,l.LO_PT_Id_FK)">
+                  <option [ngValue]="undefined" selected>---Select---</option>
+                  <option [value]="p.PT_Id" *ngFor="let p of PropertyTypes;">
+                    {{p.PT_Property_Type}}</option>
+                </select>
+                <label>Property type
+                  <span class="mandatory">*</span>
+                </label>
+                <div class="error-msg" *ngIf="LO_PT_Id_FK.invalid && (LO_PT_Id_FK.dirty || LO_PT_Id_FK.touched || formInvalid)">
+                  <span *ngIf="LO_PT_Id_FK.errors.required">Property type is required</span>
+              </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="input-group">
+                <select (change)="onReservationChange()" [disabled]="mode=='View'" [(ngModel)]="l.LO_RES_Id_FK" required #LO_RES_Id_FK="ngModel" name="LO_RES_Id_FK"
+                  class="custom-field" (change)="GetTokenNoCount(l.LO_NO_Id_FK,l.LO_PD_Id_FK,l.LO_CA_Id_FK,l.LO_RES_Id_FK,l.LO_PT_Id_FK,l.PT_PropertyType)">
+                  <option [ngValue]="undefined" selected>---Select---</option>
+                  <option [value]="r.RES_Id" *ngFor="let r of Reservations;">
+                    {{r.RES_Name}}</option>
+                </select>
+                <label>Reservations
+                  <span class="mandatory">*</span>
+                </label>
+                <div class="error-msg" *ngIf="LO_RES_Id_FK.invalid && (LO_RES_Id_FK.dirty || LO_RES_Id_FK.touched || formInvalid)">
+                  <span *ngIf="LO_RES_Id_FK.errors.required">Reservations is required</span>
+              </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="input-group">
+                <input type="text" [(ngModel)]="l.LO_RES_Percentage" required #LO_RES_Percentage="ngModel" name="LO_RES_Percentage"
+                  class="custom-field" readonly style="background: rgb(231, 230, 230)">
+                <label>Percentage
+                  <span class="mandatory">*</span>
+                </label>
+                <div class="error-msg" *ngIf="LO_RES_Percentage.invalid && (LO_RES_Percentage.dirty || LO_RES_Percentage.touched || formInvalid)">
+                  <span *ngIf="LO_RES_Percentage.errors.required">Percentage is required</span>
+              </div>
+              </div>
+            </div>
+            <div class="col-md-12 text-center">
+              <button *ngIf="mode!='View'" [disabled]="disGenerate==true || l.LO_PD_Id_FK==undefined|| l.LO_RES_Id_FK==undefined || l.LO_CA_Id_FK==undefined || l.LO_PT_Id_FK==undefined"
+                style="width:200px;" class="btn btn-primary go" type="button" (click)="GetTokenNoForLottery(l.LO_NO_Id_FK,l.LO_PD_Id_FK,l.LO_CA_Id_FK,l.LO_RES_Id_FK,l.LO_PT_Id_FK,l.PT_PropertyType)">Generate
+                Tokens
+              </button>
+              <!-- <a *ngIf="mode!='View'" style="width:200px;" [hidden]="l.LO_PD_Id_FK==undefined|| l.LO_RES_Id_FK==undefined || l.LO_CA_Id_FK==undefined || l.LO_PT_Id_FK==undefined"
+               class="btn btn-primary go" [routerLink]="['/Token-view',l.LO_NO_Id_FK,l.LO_PD_Id_FK,l.LO_CA_Id_FK,l.LO_RES_Id_FK,l.LO_PT_Id_FK]"
+                type="button">Print Tokens
+              </a> -->
+              <a *ngIf="mode!='View'" style="width:200px;" [hidden]="l.LO_PD_Id_FK==undefined || l.LO_RES_Id_FK==undefined || l.LO_CA_Id_FK==undefined || l.LO_PT_Id_FK==undefined"
+   class="btn btn-primary go" [routerLink]="['/Token-view', l.LO_NO_Id_FK, l.LO_PD_Id_FK, l.LO_CA_Id_FK, l.LO_RES_Id_FK, l.LO_PT_Id_FK]"
+   target="_blank" type="button">
+  Print Tokens
+</a>
+
+              <button *ngIf="mode!='View'" style="width:200px;" class="btn btn-primary go" type="button" (click)="GettokenstoAllot(l.LO_NO_Id_FK,l.LO_PD_Id_FK,l.LO_CA_Id_FK,l.LO_RES_Id_FK,l.LO_PT_Id_FK,'tru')">Go
+                to Allot
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="table-responsive">
+            <table class="table table-striped allot-details-table">
+              <thead>
+                <tr>
+                  <td>Sl No.</td>
+                  <td>Project Name</td>
+                  <td>Property Category</td>
+                  <td>Property Type</td>
+                  <td>Reservation</td>
+                  <td>Percentage</td>
+                  <td>Total Properties</td>
+                  <td>ReservationWise Properties</td>
+                  <td>Total Allotted</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let per of ResPercentage | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index">
+                  <td>{{i+1}}.</td>
+                  <td>{{per.ProjectName}}</td>
+                  <td>{{per.CA_CategoryName}}</td>
+                  <td>{{per.PT_Property_Type}}</td>
+                  <td>{{per.RES_Name}}</td>
+                  <td>{{per.LO_RES_Percentage}}</td>
+                  <td>{{per.TotalProperties}}</td>
+                  <td>{{per.Total_Res_Properties}}</td>
+                  <td>{{per.TotalAllotted}}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-11">
+                  <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)" maxSize="9"
+                    directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+                    screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                  </pagination-controls>
+                </div>
+                <!-- <div class="col-md-1">
+                      Total:
+                      <span>{{totalItems}}</span>
+                  </div> -->
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="container-fluid">
+      <div class="container" *ngIf="containerview" [hidden]="Applications=='undefined'||Applications=='null'||Applications==''">
+        <div class="row">
+
+          <div class="col-md-6">
+            <div class="input-group">
+              <select [disabled]="mode=='View'" [(ngModel)]="x.LO_TO_Id_FK" required #LO_TO_Id_FK="ngModel" name="LO_TO_Id_FK"
+                class="custom-field" (change)=" GetAppData(x.LO_TO_Id_FK)">
+                <option [ngValue]="undefined" selected>---Select---</option>
+                <option [value]="t.TokenNo" *ngFor="let t of Applications;">
+                  {{t.TokenNo}}</option>
+              </select>
+              <label>Token No.</label>
+            </div>
+          </div>
+
+
+          <div class="col-md-6">
+            <div class="input-group">
+              <select [disabled]="mode=='View'" [(ngModel)]="x.LOD_Property_Id_Fk" required #LOD_Property_Id_Fk="ngModel"
+                name="LOD_Property_Id_Fk" class="custom-field">
+                <option [ngValue]="undefined" selected>---Select---</option>
+                <option [value]="p.PR_Id" *ngFor="let p of PropertyNumbers;">
+                  {{p.PR_Property_No}}</option>
+              </select>
+              <label>Property No.</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" hidden>
+          <div class="col-md-4">
+            <div class="input-group">
+              <input type="text" placeholder=" " [(ngModel)]="x.LOD_APP_Id_FK" #LOD_APP_Id_FK="ngModel" name="LOD_APP_Id_FK"
+                class="custom-field">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="input-group">
+              <input type="text" placeholder=" " [(ngModel)]="x.LO_APP_No" #LO_APP_No="ngModel" name="LO_APP_No" class="custom-field">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="input-group">
+              <input type="text" placeholder=" " [(ngModel)]="x.LO_APP_PA_Name" #LO_APP_PA_Name="ngModel" name="LO_APP_PA_Name"
+                class="custom-field">
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#alloted-modal" (click)="AddLotteryList(x,Lottery)">Allot
+            </button>&nbsp;
+          </div>
+        </div>
+      </div>
+
+      <div class="table-responsive" *ngIf="ManualLottery.length>=1">
+        <table class="table table-striped grid">
+          <thead>
+            <tr>
+              <td>Sl No.</td>
+              <td>Token No.</td>
+              <td>Application No</td>
+              <td>Applicant Name</td>
+              <td>Property No</td>
+              <!-- <td>View</td> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let lo of ManualLottery;let i=index;">
+              <td>{{i+1}}.</td>
+              <td>{{lo.LO_TO_Id_FK}}</td>
+              <td hidden>{{lo.LOD_APP_Id_FK}}</td>
+              <td>{{lo.LO_APP_No}}</td>
+              <td>{{lo.LO_APP_PA_Name}}</td>
+              <td>{{lo.LOD_Property_No}}</td>
+              <!-- <td>
+                <a href="#" [routerLink]="['/home/applicant/applicantviewLottery',lo.LOD_APP_Id_FK,l.LO_NO_Id_FK,'lottery']">
+                  <i class="fa fa-lg fa-eye themecolor"></i>
+                </a>
+              </td> -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <br>
+    </div>
+  </div>
+</form>
+
+
+<!--popup-->
+<div id="alloted-modal" class="modal fade" role="dialog" *ngIf="showIt">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span style="font-size:30px;text-align:center;padding:10px;color:#ff0000;display:block;width:100%;">
+          <span class="pull-left">Lottery for
+            <span *ngIf="l.LO_CA_Id_FK==1">EWS</span>
+            <span *ngIf="l.LO_CA_Id_FK==2">LIG</span>
+            <span *ngIf="l.LO_CA_Id_FK==3">MIG</span>
+            <span *ngIf="l.LO_CA_Id_FK==4">HIG1</span>
+            <span *ngIf="l.LO_CA_Id_FK==5">HIG2</span>
+          </span>
+          <span class="pull-right">Allotted : {{ManualLotteryCount}}/{{PropertyCount}}</span>
+          <span class="clearfix"></span>
+        </span>
+
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+          <img src="../../../assets/images/cracker.png" style="width:50%;" alt="">
+        </div>
+        <div style="font-size:40px;font-style:italic;text-align:center;color:#0000ff;">
+          <span>
+            <span>{{Applicant_Name}}</span>
+          </span>
+        </div>
+
+
+        <table class="applicant-details">
+          <tbody>
+            <tr>
+              <td style="    width: 25%;">Application No.</td>
+              <td>:</td>
+              <td>{{Application_No}}</td>
+              <td style="    width: 20%;">Token No.</td>
+              <td>:</td>
+              <td>{{Token_Id}}</td>
+            </tr>
+            <tr>
+              <td>Property No.</td>
+              <td>:</td>
+              <td>{{Property_No}}</td>
+              <td>Reservation</td>
+              <td>:</td>
+              <td>
+                <span *ngIf="l.LO_RES_Id_FK==1">SC</span>
+                <span *ngIf="l.LO_RES_Id_FK==2">ST</span>
+                <span *ngIf="l.LO_RES_Id_FK==3">BT</span>
+                <span *ngIf="l.LO_RES_Id_FK==4">Defence/Ex-Serviceman</span>
+                <span *ngIf="l.LO_RES_Id_FK==5">Central Govt</span>
+                <span *ngIf="l.LO_RES_Id_FK==6">State Govt</span>
+                <span *ngIf="l.LO_RES_Id_FK==7">Physically Handicapped</span>
+                <span *ngIf="l.LO_RES_Id_FK==8">Senior Citizens</span>
+                <span *ngIf="l.LO_RES_Id_FK==9">Others</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="text-center">
+        </div>
+      </div>
+      <div class="modal-footer" style="text-align:center !important;">
+        <button class="btn btn-primary" data-dismiss="modal" (click)="Allotted(l.LO_RES_Id_FK)">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--popup-->

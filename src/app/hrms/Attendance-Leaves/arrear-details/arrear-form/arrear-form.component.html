@@ -1,0 +1,133 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary float-right" [routerLink]="['/home/leaveapp/arrear-grid']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+
+  <form (ngSubmit)="SaveArrarDetails(ArrearDetails)" #ArrearDetails="ngForm" name="ArrearDetails">
+    <div class="container-fluid">
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Employee Id <span class="mandatory">*</span></label>
+            <input type="text" class="custom-field" name="EMP_CODE" value="" #EMP_CODE="ngModel"
+              [(ngModel)]="d.EMP_CODE" [disabled]="mode=='view'" required>
+              <div class="error-msg"
+              *ngIf="EMP_CODE.invalid && (EMP_CODE.dirty || EMP_CODE.touched || formInvalid)">
+              <span *ngIf="EMP_CODE.errors.required">Employee Id is required.</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-primary" (click)="GetArrearempCodelist(d.EMP_CODE)">Go</button>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <label><span class="field-title">Employee Name</span>: {{data[0].EMP_FIRST_NAME}} </label>
+        </div>
+        <div class="col-md-4">
+          <label> <span class="field-title">Current Post Field</span>: {{data[0].emppost}} </label>
+        </div>
+        <div class="col-md-4">
+          <label> <span class="field-title">Current Posting Place</span>: {{data[0].curdiv}}</label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="input-group">
+          <label for="">No. of days Arrear to calculated <span class="mandatory">*</span></label>
+          <input type="text" class="custom-field" name="days" value="" #days="ngModel" [(ngModel)]="d.days" [disabled]="mode=='view'" required>
+          <div class="error-msg"
+            *ngIf="days.invalid && (days.dirty || days.touched || formInvalid)">
+            <span *ngIf="days.errors.required">No. of days Arrear to calculated is required.</span>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="col-md-4">
+        <div class="input-group">
+          <label for="">For the month of </label>
+          <input type="text" class="custom-field" name="monthcode" value="" #monthcode="ngModel"
+            [(ngModel)]="d.monthcode">
+        </div>
+      </div> -->
+      <div class="col-md-4">
+        <div class="input-group">
+
+          <select class="custom-field" [(ngModel)]="d.monthcode" #monthcode="ngModel" name="monthcode"
+            [disabled]="mode=='view'" required>
+            <option [value]="undefined" selected>---Select---</option>
+            <option value="January">January</option>
+            <option value="February">February</option>
+            <option value="March">March</option>
+            <option value="April">April</option>
+            <option value="May">May</option>
+            <option value="June">June</option>
+            <option value="July">July</option>
+            <option value="August">August</option>
+            <option value="September">September</option>
+            <option value="October">October</option>
+            <option value="November">November</option>
+            <option value="December">December</option>
+          </select>
+          <label for="">For the month of 
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg"
+            *ngIf="monthcode.invalid && (monthcode.dirty || monthcode.touched || formInvalid)">
+            <span *ngIf="monthcode.errors.required">For the month of is required.</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <button type="button" class="btn btn-primary"
+          (click)="GetArrearmonthlist(data[0].EMP_EMPLOYEE_ID,d.days,d.monthcode, $event)">Go</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label>Nature Of Employement<span class="mandatory">*</span>
+          </label>
+          <select class="custom-field" [(ngModel)]="c.Emp_Cat" #Emp_Cat="ngModel" name="Emp_Cat"
+            [disabled]="mode=='view'" required>
+            <option [value]="undefined" selected>---Select---</option>
+            <option [value]="a.fix_code_id" *ngFor="let a of EmployeeList;">
+              {{a.code_value}}
+            </option>
+          </select>
+          <div class="error-msg"
+            *ngIf="Emp_Cat.invalid && (Emp_Cat.dirty || Emp_Cat.touched || formInvalid)">
+            <span *ngIf="Emp_Cat.errors.required">Nature Of Employement is required.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label><span class="field-title">Gross Pay </span>: {{data1[0].GrossPay}} </label>
+      </div>
+      <div class="col-md-4">
+        <label><span class="field-title">Total Deduction </span>: {{data1[0].TotalDeductions}}</label>
+      </div>
+      <div class="col-md-4">
+        <label><span class="field-title">Net Payable </span>: {{data1[0].TotalPayable}}</label>
+      </div>
+    </div>
+
+    <br>
+
+    <div class="container-fluid">
+      <div class="text-center">
+        <button class="btn btn-primary" type="submit" [disabled]="mode=='view'">Save</button>
+        <button class="btn btn-primary" type="reset" [disabled]="mode=='view'">Cancel</button>
+      </div>
+      <br>
+    </div>
+  </form>
+
+</div>

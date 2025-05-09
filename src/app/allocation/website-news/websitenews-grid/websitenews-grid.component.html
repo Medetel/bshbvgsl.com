@@ -1,0 +1,92 @@
+<div class="wrapper">
+
+    <form>
+
+  <div class="searchbar">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-1">
+                <label>Search</label>
+            </div>
+            <div class="col-md-4">
+                <select >
+                    <option [ngValue]="undefined" selected>---Select---</option>
+                    <option value="office-code">Notification No.</option>
+                    <option value="office-code">Scheme</option>
+                    <option value="office-name">District</option>
+                    <option value="address">Project</option>
+                    <option value="address">Phase</option>
+                    <option value="address">News feed content</option>
+                </select>
+                <!-- <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)" class="error-msg">
+                    <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+                </div> -->
+            </div>
+            <div class="col-md-4">
+                <input type="text" name="SearchText"  class="form-control" placeholder="Search.."
+                    required>
+                <!-- <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+                    <div *ngIf="SearchText.errors.required">Search text is required</div>
+                </div> -->
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-default" type="submit">Search</button>
+                <button class="btn btn-default" type="reset" >Clear</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="title themeheading">{{title}}
+  <div class="float-right">
+      Items per page:
+      <select >
+          <option [ngValue]="5">5</option>
+          <option [ngValue]="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="40">40</option>
+          <option value="50">50</option>
+      </select>
+      <a class="btn btn-primary " routerLink="/home/websitenews/websitenews-form">Add</a>
+  </div>
+  <span class="clearfix"></span>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped grid">
+        <thead>
+          <tr>
+            <td>Sl No.</td>
+            <td>Notification No.</td>            
+            <td>Scheme</td>
+            <td>District</td>
+            <td>Project</td>
+            <td>Phase</td>
+            <td>News feed content</td>
+            <td>Edit</td>
+            <td>Delete</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>1</td>
+            <td>MGRY</td>
+            <td>Ramnagara</td>
+            <td>BSHB</td>
+            <td>II</td>
+            <td></td>
+            <td class="text-center"><a href="#">
+                <i class="fa fa-lg fa-edit themecolor"></i>
+            </a>
+            </td>
+            <td class="text-center"><a href="javascript:void(0);" >
+                <i class="fa fa-lg fa-trash themecolor"></i></a>
+            </td>
+          </tr>
+        </tbody>
+    </table>
+</div>
+</form>
+</div>

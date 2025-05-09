@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        .letter-body {
+            padding: 20px;
+        }
+
+        .font-20 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .font-12 {
+            font-size: 12px;
+        }
+
+        .section1 {
+            border-bottom: 2px solid #000;
+            margin-bottom: 5px;
+            padding-bottom: 5px;
+        }
+
+        .title {
+            font-size: 25px;
+            text-decoration: underline;
+            margin-bottom: 10px;
+        }
+
+        .headers {
+            padding: 30px 16px;
+            background: #555;
+            color: #f1f1f1;
+            position: sticky;
+            top: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<!-- <body>
+    <div class="headers" id="myHeader sticky">
+        <button class="btn btn-primary float-right" (click)="myFunction()" style="
+                padding: 3px 15px;
+                margin-top: -17px;">Print Intimation letter</button>
+    </div>
+    <div class="letter-body" *ngFor="let intlet of Intimationletter;">
+        <div class="header">
+            <div class="section1">
+                <div class="font-20">ಕರ್ನಾಟಕ ಗೃಹ ಮಂಡಳಿ</div>
+                <div class="font-12">3 ಮತ್ತು 4ನೇ ಮಹಡಿ, ಕಾವೇರಿ ಭಾವನ, ಕೆ.ಜಿ. ರಸ್ತೆ, ಬೆಂಗಳೂರು: 560009
+                    <br> ದೂರವಾಣಿ: 91-80-22273511-16 ಫ್ಯಾಕ್ಸ್:91-80-22240976 </div>
+            </div>
+        </div>
+
+
+        <div>
+            <div class="float-left">
+                ನಂ. ಕಗೃಮ0/ಉಪ್ರವ್ಯ(ಗ್ರಾಸೇ)/ಹರಾಜು /{{intlet.DI_District}}/2018-19
+            </div>
+            <div class="float-right">ದಿನಾಂಕಃ {{today | date:'dd-MM-yyyy'}}</div>
+            <span class="clearfix"></span>
+        </div>
+        <br>
+        <div>
+            <div>ನೋಂದಣಿ ಸಂಖ್ಯೆಃ {{intlet.B_BidderId}}</div>
+            <div>{{intlet.B_BName}}</div>
+            <div>{{intlet.B_Address}}</div>
+        </div>
+        <br>
+        <div class="title text-center">ಹರಾಜು ಮಾರಾಟ ಧೃಢೀಕರಣ ಪತ್ರ</div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-2">
+                    <p>ವಿಷಯ :-</p>
+                </div>
+                <div class="col-md-7">
+                    <p>ಕರ್ನಾಟಕ ಗೃಹ ಮಂಡಳಿ, {{intlet.AN_AuctionPlace}} ಬಡಾವಣೆಯ ಮೂಲ ನಿವೇಶನ
+                        <br> ಸಂಖ್ಯೆಃ {{intlet.IC_Name}} -- {{intlet.B_Prop_No}}/{{intlet.CA_CategoryName}}. ಇದರ ಹರಾಜು ಬಿಡ್ಡನ್ನು ಅಂಗೀಕರಿಸಿ, ಸ್ಥಿರಕರಿಸಿರುವ
+                        ಬಗ್ಗೆ.</p>
+                </div>
+            </div>
+            <br>
+            <div class="row justify-content-center">
+                <div class="col-md-2">
+                    <p>ಉಲ್ಲೇಖ :-</p>
+                </div>
+                <div class="col-md-7">
+                    <p>ಹರಾಜು ಪ್ರಕಟಣೆ ಸಂಖ್ಯೆಃಕಗೃಮ0/ಉಪ್ರವ್ಯ(ಗ್ರಾಸೇ)/ಹರಾಜು ಪ್ರಕಟಣೆ/2018-19,
+                        <br> ದಿನಾಂಕಃ {{intlet.AN_Date | date:'dd-MM-yyyy'}}</p>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <p>ಉಲ್ಲೇಖದಲ್ಲಿನ ಪ್ರಕಟಣೆಯಂತೆ,ದಿನಾಂಕಃ {{intlet.AN_FromDate | date:'dd-MM-yyyy'}} ರಂದು ನಡೆದ ಬಹಿರಂಗ ಹರಾಜಿನಲ್ಲಿ
+                        ನೀವು ಕರ್ನಾಟಕ ಗೃಹ ಮಂಡಳಿ, {{intlet.AN_AuctionPlace}} {{intlet.DI_District}}-Dist ಬಡಾವಣೆಯ ಮೂಲೆ ನಿವೇಶನ
+                        ಸಂಖ್ಯೆಃ {{intlet.IC_Name}} -- {{intlet.B_Prop_No}}/{{intlet.CA_CategoryName}} ಕ್ಕೆ ಒಟ್ಟು ರೂ . {{intlet.B_Bid_Price}} ಗಳಿಗೆ ಬಿಡ್ಡು
+                        ಮಾಡಿದ್ದು ಸರದಿ ಬಿಡ್ಡನ್ನು ಸ್ಥಿರಕರಿಸಿ ಅಂಗೀಕರಿಸಲಾಗಿದೆ. </p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>ಸ್ವತ್ತಿನ ಮಾದರಿ</td>
+                                    <td>{{intlet.IC_Name}}</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>ಸ್ವತ್ತಿನ ಸಂಖ್ಯೆ ಮತ್ತು ವರ್ಗ</td>
+                                    <td>{{intlet.B_Prop_No}}/{{intlet.CA_CategoryName}}</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>ಅಳತೆ ಮತ್ತು ವಿಸ್ತೀರ್ಣ (ಚ. ಮೀಟರ್ಗಳಲ್ಲಿ)</td>
+                                    <td>{{intlet.PR_Plot_Area | number}}</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td> ಬಿಡ್ಡಿನ ಒಟ್ಟು ಬೆಲೆ(ರೂಗಳಲ್ಲಿ)</td>
+                                    <td>{{intlet.bidAmt | number}}</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>ಈಗಾಗಲೇ ಸಂದಾಯ ಮಾಡಿರುವ ಗರಿಸ್ಟ ಹರಾಜು ಬೆಲೆಯ ಶೇ25 ರಷ್ಟು ಮೊತ್ತ.</td>
+                                    <td>{{intlet.B_perc_payment | number}}</td>
+                                </tr>
+                                <tr>
+                                    <td>6</td>
+                                    <td> ಸಂದಾಯ ಮಾಡಬೇಕಾದ ಬಾಕಿ ಮೊತ್ತ.</td>
+                                    <td>{{intlet.Remaining_Amt | number}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <p>ಆದುದರಿಂದ ನೀವು ಮೇಲೆ 6ನೇ ಕಾಲಂನಲ್ಲಿ ನಮೂದಿಸಿದ ಬಾಕಿ ಮೊತ್ತದ ಹಣವನ್ನು ಈ ತಿಳುವಳಿಕೆ ಪತ್ರ ತಲುಪಿದ 60 ದಿನಗಳೂಳಗಾಗಿ
+                        ಗೃಹ ಆಯುಕ್ತರು, ಕರ್ನಾಟಕ ಗೃಹ ಮಂಡಳಿ,ಬೆಂಗಳೂರು, ಇವರ ಹೆಸರಿನಲ್ಲಿ ಡಿ. ಡಿ. ಮೂಲಕ ಕಾರ್ಪೊರೇಷನ್ ಬ್ಯಾಂಕ್, ಎಸ್. ಸಿ.
+                        ರೋಡ್ ಶಾಖೆ, ಬೆಂಗಳೂರು ಇಲ್ಲಿ ಮಂಡಳಿ ಖಾತೆ ಸಂಖ್ಯೆಃ 510101002828811 IFSC CODE: CORP0000144 ಗೆ ಅಥವಾ ಯಾವುದೇ
+                        ಸ್ಥಳದಲ್ಲಿನ ಕಾರ್ಪೊರೇಷನ್ ಬ್ಯಾಂಕ್ ಶಾಖೆಯಲ್ಲಿ ಚಲನ್ ಮೂಲಕ ಪಾವತಿ ಮಾಡಿ, ಪಾವತಿ ಮಾಡಿದ ಚಲನ್ ಪ್ರತಿಯನ್ನು ಅರ್ಜಿಯೊಂದಿಗೆ
+                        ಲಗತ್ತಿಸುವುದು. (ಡಿ. ಡಿ/ ಪೇ ಆರ್ಡರ್ ಹಿಂದೆ ಹಂಚಿಕೆದಾರರ ಹೆಸರು, ಹಂಚಿಕೆಯಾದ ಸ್ವತ್ತಿನ ಸಂಖ್ಯೆಃ , ಮೊಬೈಲ್ ನಂಬರ್
+                        ನಮೂದಿಸುವುದು).
+                    </p>
+                    <br>
+                    <p>ಹಂಚಿಕೆಯಾದ ಸ್ವತ್ತಿನ ಬೆಲೆ ರೂ. 50 ಲಕ್ಷಗಳಿಗಿಂತ ಮೇಲ್ಪಟ್ಟಿದ್ದಲ್ಲಿ, ಹಂಚಿಕೆದಾರರು ಆ ಮೊತ್ತದಲ್ಲಿ 1% TDS ಕಟಾವು ಮಾಡಿ,
+                        ಉಳಿದ ಮೊತ್ತವನ್ನು ಮಂಡಳಿಗೆ ಜಮಾ ಮಾಡಬೇಕು ಮತ್ತು 1% TDS ಮೊತ್ತವನ್ನು ಆದಾಯ ತೆರಿಗೆ ಇಲಾಖೆಯ 26QB ನಮೂನೆಯನ್ನು ಭರ್ತಿ
+                        ಮಾಡಿ ನಂತರ ಸಲ್ಲಿಸಿ, ಚಲನ್ ಪಡೆದುಕೊಂಡು ಬ್ಯಾಂಕಿನಲ್ಲಿ ಹಣ ಸಂದಾಯ ಮಾಡಬಹುದು.</p>
+                    <br>
+                    <p class="float-right">ಕಾರ್ಯಪಾಲಕ ಅಭಿಯಂತರರು
+                        <br> ಬೆಂಗಳೂರು.
+                    </p>
+                    <span class="clearfix"></span>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <p>
+                        ಬಾಕಿ ಮೊತ್ತವನ್ನು ನಿಗಢಿದ ಅವಧಿಯಲ್ಲಿ ಪಾವತಿ ಮಾಡಿ, ಸಹಾಯಕ ಕಾರ್ಯಪಾಲಕ ಅಭಿಯಂತರರು ಕಗೃಮಂ , ಜಿಲ್ಲಾ ಯೋಜನಾ ಕಛೇರಿ, {{intlet.DI_District}} ಇವರಿಗೆ ಪಾವತಿ ಮಾಡಿರುವ
+                        ಬಗ್ಗೆ ವಿವರಗಳನ್ನು ಒದಗಿಸಿ, ನಿಗಧಿತ ನಮೂನೆಯಲ್ಲಿ ಕ್ರಯಪತ್ರವನ್ನು ಪಡೆದು ಸ್ವಂತ ಖರ್ಚಿನಲ್ಲಿ ನೋಂದಾಯಿಸಿಕೊಳ್ಳತಕ್ಕದ್ದು.
+                        ನಂತರ ಸರದಿ ಸ್ವತ್ತಿನ ಸ್ವಾಧೀನ ಪಾತ್ರವನ್ನು ಪಡೆಯುವುದು.
+                    </p>
+                    <br>
+                    <p>ನಿಗಧಿತ ಅವಧಿಯೊಳಗೆ ಮೇಲಿನಂತೆ ಹಣ ಸಂದಾಯ ಮಾಡದೆ ಇದ್ದಲ್ಲಿ, ಸದರಿ ಮೂಲೆ ನಿವೇಶನ ಸಂಖ್ಯೆಃ {{intlet.IC_Name}} -- {{intlet.B_Prop_No}}/{{intlet.CA_CategoryName}}
+                        ಹರಾಜು ಮಾರಾಟ ದೃಢೀಕರಣವನ್ನು ರದ್ದುಪಡಿಸಲಾಗುವುದು. ಹಾಗೂ ನೀವು ಈಗಾಗಲೇ ಈ ಬಗ್ಗೆ ಪಾವತಿಸಿರುವ ಹರಾಜು ಮೊತ್ತದ ಶೇಕಡ
+                        25% ರಷ್ಟು ಹಣವನ್ನು ಮುಟ್ಟುಗೋಲು ಹಾಕಿಕೊಳ್ಳಲಾಗುವುದು. ನಿಮಗೆ ಹಣ ಪಾವತಿಸಲು ಮೇಲೆ ತಿಳಿಸಿದ ಸಮಯಕ್ಕಿಂತ ಹೆಚ್ಚಿನ
+                        ಸಮಯ ನೀಡುವುದಿಲ್ಲವೆಂದು ಹಾಗೂ ಈ ಬಗ್ಗೆ ಮತ್ತೊಮ್ಮೆ ನಿಮಗೆ ಪ್ರತ್ಯೇಕ ನೋಟೀಸ್ ನೀಡುವುದಿಲ್ಲವೆಂದು ಈ ಮೂಲಕ ತಿಳಿಸಿದೆ.</p>
+                    <br>
+                    <p>ಸರದಿ ಹರಾಜು ಮಾರಾಟವು ಕಗೃಮಂ ಕಾಯ್ದೆ 1962 ಹಾಗೂ ಈ ಕಾಯ್ದೆ ಅಡಿಯಲ್ಲಿ ಬರುವ ನಿಯಮ ನಿಬಂಧನೆಗಳ ವ್ಯಾಪ್ತಿಗೆ ಒಳಪಟ್ಟಿರುತ್ತದೆ.</p>
+                    <br>
+                    <p>ಕರ ನಿರ್ವಹಣಾ ವೆಚ್ಚವನ್ನು ಕಾಲಕಾಲಕ್ಕೆ ಪ್ರತ್ಯೇಕವಾಗಿ ಪಾವತಿ ಮಾಡಬೇಕಾಗಿರುತ್ತದೆ.</p>
+                    <p>ಕ್ರಾಯಪತ್ರ ಪಡೆಯುವ ಸಮಯದಲ್ಲಿ ಇತ್ತೀಚಿನ ಪಾಸ್ ಪೋರ್ಟ್ ಅಳತೆಯ ಭಾವಚಿತ್ರಗಳು, ವಿಳಾಸ ದೃಢೀಕರಣ ಪಾತ್ರದ ಪ್ರತಿ, ಬ್ಯಾಂಕ್
+                        ಖಾತೆ (IFSC Code ಸಹಿತ), ಗುರುತಿನ ಚೀಟಿ ಪ್ರತಿ ಸಲ್ಲಿಸತಕ್ಕದ್ದು. (ಈಗಾಗಲೇ ಅರ್ಜಿಯ ಜೊತೆಗೆ ಸಲ್ಲಿಸಿದಲ್ಲಿ ಮತ್ತೆ
+                        ಸಲ್ಲಿಸುವ ಅಗತ್ಯವಿರುವುದಿಲ್ಲ).</p>
+                    <p>ಅಗತ್ಯ ಮಾಹಿತಿಗಾಗಿ ಸಹಾಯಕ ಕಾರ್ಯಪಾಲಕ ಅಭಿಯಂತರರು ಕಗೃಮಂ , ಜಿಲ್ಲಾ ಯೋಜನಾ ಕಛೇರಿ, {{intlet.DI_District}} ದೂರವಾಣಿ ಸಂಖ್ಯೆಃ 08372-239483
+                        ಇವರನ್ನು ಸಂಪೆರ್ಕಿಸಿ . ರವರಿಗೆ,
+                    </p>
+                    <div>
+                        <p>Address</p>
+                        <p>Address1</p>
+                        <p>Address2</p>
+                        <p>Address3</p>
+                        <p>Address4</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="container">
+
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="title">
+                        ಪ್ರತಿಯನ್ನು
+                    </div>
+                    <ol>
+                        <li> ಹಣಕಾಸು ನಿಯಂತ್ರಕರು ,ಕಗೃಮಂ, ಕಾವೇರಿ ಭಾವನ, ಬೆಂಗಳೂರು ರವರಿಗೆ ಮಾಹಿತಿಗಾಗಿ ಸಲ್ಲಿಸಿದೆ.</li>
+                        <li>ಕಾರ್ಯಪಾಲಕ ಅಭಿಯಂತರರು, ಕಗೃಮಂ. ಸಮನ್ವಯ ಕಛೇರಿ, ಗದಗ ರವರ ಮಾಹಿತೆಗೆ ಕಳುಹಿಸಲಾಗಿದೆ.</li>
+                        <li>ಸಹಾಯಕ ಕಾರ್ಯಪಾಲಕ ಅಭಿಯಂತರರು, ಕಗೃಮಂ , ಜಿಲ್ಲಾ ಯೋಜನಾ ಕಛೇರಿ, ಗದಗ ರವರ ಮಾಹಿತೆಗೆ ಕಳುಹಿಸುತ್ತಾ, ಸರದಿ ಬಿಡ್ಡುದಾರರು
+                            ನಿಗಧಿತ ಅವಧಿಯೊಳಗೆ ಮಂಡಳಿಗೆ ಹಣ ಪಾವತಿಸಿರುವ ಬಗ್ಗೆ ದೃಢೀಕರಿಸಿಕೊಂಡು ಕ್ರಾಯಪತ್ರ ನೀಡುವುದು. ಒಂದು ವೇಳೆ ಹಣ
+                            ಪಾವತಿ ಮಾಡದಿದ್ದಲ್ಲಿ, ಹರಾಜು ಮಾರಾಟ ದೃಢೀಕರಣವನ್ನು ರದ್ದುಪಡಿಸುವ ಬಗ್ಗೆ ಕ್ರಮ ಕೈಗೊಳ್ಳುವುದು. ಹಾಗೂ ಪಾವತಿ
+                            ವಿವರಗಳನ್ನು ಕಾಲಕಾಲಕ್ಕೆ ಹಣಕಾಸು ನಿಯಂತ್ರಕರು, ಕಗೃಮಂ. ಇವರಿಗೆ ಸಲ್ಲಿಸಟಕ್ಕದ್ದು.</li>
+                    </ol>
+                </div>
+            </div>
+            <br>
+            <div class="row justify-content-end">
+                <div class="col-md-3">
+                    ಕಾರ್ಯಪಾಲಕ ಅಭಿಯಂತರರು,
+                    <br> ಬೆಂಗಳೂರು.
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body> -->
+
+
+<body>
+    <div class="headers sticky" id="myHeader">
+        <button class="btn btn-primary float-right" onclick="myFunction()" style="padding: 3px 15px; margin-top: -17px;">
+            प्रिंट सूचना पत्र
+        </button>
+    </div>
+
+    <div class="letter-body" *ngFor="let intlet of Intimationletter">
+        <div class="header">
+            <div class="section1">
+                <div class="font-20">बिहार हाउसिंग बोर्ड</div>
+                <div class="font-12">6, सरदार पटेल मार्ग, पटना, बिहार : 800015</div>
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <div>नं. कगृम0/उप्रव्य(ग्रासे)/नीलामी/{{intlet.DI_District}}/2018-19</div>
+                <div>तारीखः {{today | date:'dd-MM-yyyy'}}</div>
+            </div>
+            <br>
+            <div>
+                <div>पंजीकरण संख्या: {{intlet.B_BidderId}}</div>
+                <div>{{intlet.B_BName}}</div>
+                <div>{{intlet.B_Address}}</div>
+            </div>
+            <br>
+            <div class="title text-center">नीलामी बिक्री पुष्टि पत्र</div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2 font-weight-bold">विषय :-</div>
+                    <div class="col-md-10">
+                        बिहार हाउसिंग बोर्ड, {{intlet.AN_AuctionPlace}} योजना का मूल प्लॉट
+                        संख्या: {{intlet.IC_Name}} -- {{intlet.B_Prop_No}}/{{intlet.CA_CategoryName}}. की
+                        नीलामी को मंजूरी देकर पुष्टि की जाती है।
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-2 font-weight-bold">संदर्भ :-</div>
+                    <div class="col-md-10">
+                        नीलामी सूचना संख्या: कगृम0/उप्रव्य(ग्रासे)/नीलामी सूचना/2018-19,
+                        दिनांक: {{intlet.AN_Date | date:'dd-MM-yyyy'}}
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>संदर्भ में दी गई सूचना के अनुसार, दिनांक {{intlet.AN_FromDate | date:'dd-MM-yyyy'}} को आयोजित
+                            खुले नीलामी में,
+                            आपने बिहार हाउसिंग बोर्ड, {{intlet.AN_AuctionPlace}} {{intlet.DI_District}}-जिला योजना का
+                            मूल प्लॉट संख्या {{intlet.IC_Name}} -- {{intlet.B_Prop_No}}/{{intlet.CA_CategoryName}} पर
+                            कुल रु. {{intlet.B_Bid_Price}} की बोली लगाई और इसे स्थिर कर अनुमोदित किया गया है।</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>संपत्ति का प्रकार</td>
+                                        <td>{{intlet.IC_Name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>संपत्ति संख्या और श्रेणी</td>
+                                        <td>{{intlet.B_Prop_No}}/{{intlet.CA_CategoryName}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>आकार और क्षेत्रफल (वर्ग मीटर में)</td>
+                                        <td>{{intlet.PR_Plot_Area | number}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>बोली की कुल कीमत (रुपयों में)</td>
+                                        <td>{{intlet.bidAmt | number}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>अब तक भुगतान किया गया 25% नीलामी मूल्य</td>
+                                        <td>{{intlet.B_perc_payment | number}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td>बकाया राशि</td>
+                                        <td>{{intlet.Remaining_Amt | number}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>अतः आप उपरोक्त तालिका के 6वें कॉलम में दी गई बकाया राशि को इस पत्र के प्राप्त होने के 60
+                            दिनों के भीतर "गृह आयुक्त, बिहार हाउसिंग बोर्ड, पटना" के नाम से डिमांड ड्राफ्ट द्वारा या
+                            कॉरपोरेशन बैंक, एस.सी. रोड शाखा, पटना में चालान द्वारा भुगतान करें।
+                        </p>
+                        <br>
+                        <p>यदि संपत्ति की कीमत 50 लाख रुपये से अधिक है, तो बोलीदाता को 1% TDS काटकर शेष राशि का भुगतान
+                            करना होगा।</p>
+                        <br>
+                        <p class="float-right">कार्यपालक अभियंता<br>पटना</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>निर्धारित समय में भुगतान न करने पर, यह पुष्टि पत्र रद्द कर दिया जाएगा।</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="title font-weight-bold">प्रतिलिपि:</div>
+                        <ol>
+                            <li>वित्त नियंत्रक, बिहार हाउसिंग बोर्ड, 6, सरदार पटेल मार्ग, पटना को जानकारी के लिए।</li>
+                            <li>कार्यपालक अभियंता, बिहार हाउसिंग बोर्ड, गडग को जानकारी के लिए।</li>
+                            <li>सहायक कार्यपालक अभियंता, जिला योजना कार्यालय, गडग को निर्देशानुसार।</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="row justify-content-end">
+                    <div class="col-md-3 text-right">
+                        कार्यपालक अभियंता,<br>पटना
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

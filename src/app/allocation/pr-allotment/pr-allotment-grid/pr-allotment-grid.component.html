@@ -1,0 +1,111 @@
+<div class="wrapper">
+    <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm,itemsPerPage,1)">
+        <div class="title themeheading">{{title}}
+            <div class="float-right">
+                Items per page:
+                <select name="SearchRows" #SearchRows="ngModel" [(ngModel)]="itemsPerPage" class="noofpage" (change)="itemsPerPageChanged(itemsPerPage, 1)">
+                    <option [ngValue]="5">5</option>
+                    <option [ngValue]="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                    <option value="500">500</option>
+                    <option value="1000">1000</option>
+                </select>
+                <!-- <a class="btn btn-primary " routerLink="/home/pre-allotmentform">Add</a> -->
+            </div>
+            <span class="clearfix"></span>
+        </div>
+        <!--Applicant Search section start-->
+        <div class="wrapper">
+            <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm,itemsPerPage,1)">
+                <div class="searchbar">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-1">
+                                <label for="">Search</label>
+                            </div>
+                            <div class="col-md-3">
+                                <select name="SearchCriteria" #SearchCriteria="ngModel" [(ngModel)]="s.SearchCriteria" class="form-control" required>
+                                    <option [ngValue]="undefined" selected>---Select---</option>
+                                    <option value="District">District</option>
+                                    <option value="Project">Project</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" name="SearchText" #SearchText="ngModel" [(ngModel)]="s.SearchText" class="form-control" placeholder="Search.."
+                                    required>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="btn btn-default" type="submit">Search</button>
+                                <button class="btn btn-default" type="reset" (click)="GetAllPropertiesPlaningList(itemsPerPage, 1)">Clear</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--Applicant Search section end-->
+        <div class="table-responsive">
+            <table class="table table-striped grid">
+                <thead>
+                    <tr>
+                        <td rowspan="2">Sl No.</td>
+                        <td rowspan="2">Scheme Name</td>
+                        <td rowspan="2">District</td>
+                        <td rowspan="2">Project Name</td>
+                        <td rowspan="2">Phase Name</td>
+                        <td rowspan="2">Total Properties</td>
+                        <td rowspan="2">Available for allotment</td>
+                        <td rowspan="2">Not available for allotment(Blocked)</td>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    <tr *ngFor="let p of PropertiesPlaningList | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index">
+                        <!-- [ngClass]="{'inactive':r.Inactive=='Y'}" -->
+                        <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+                        <td>{{p.Sch_Name}}</td>
+                        <td>{{p.DI_District}}</td>
+                        <td>{{p.PD_Project_Name}}</td>
+                        <td>{{p.Phase_Name}}</td>
+
+                        <td>
+                            <a href="#" *ngIf="mode==Planning" style="text-decoration:underline;" [routerLink]="['/home/pre-allotment/pre-allotmentall',p.PD_Id]">{{p.TotalProperties}}</a>
+                            <a href="#" *ngIf="mode!=Planning" style="text-decoration:underline;" [routerLink]="['/home/revised-property/pre-allotmentall-prop',p.PD_Id,'Planning']">{{p.TotalProperties}}</a>
+
+                        </td>
+
+                        <td>
+                            <a href="#" *ngIf="mode==Planning" style="text-decoration:underline;" [routerLink]="['/home/pre-allotment/pre-allotmentform',p.PD_Id]">{{p.Available}}</a>
+                            <a href="#" *ngIf="mode!=Planning" style="text-decoration:underline;" [routerLink]="['/home/revised-property/pre-allotmentform-prop',p.PD_Id,'Planning']">{{p.Available}}</a>
+
+                        </td>
+
+                        <td>
+                            <a href="#" *ngIf="mode==Planning" [routerLink]="['/home/pre-allotment/pre-allotmentformnotsent',p.PD_Id]" style="text-decoration:underline;">{{p.Blocked}}</a>
+                            <a href="#" *ngIf="mode!=Planning" [routerLink]="['/home/revised-property/pre-allotmentformnotsent-prop',p.PD_Id,'Planning']"
+                                style="text-decoration:underline;">{{p.Blocked}}</a>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="container-fluid">
+                <!-- <div class="row">
+                    <div class="col-md-11">
+                        <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChange($event)" directionLinks="true" autoHide="false"
+                            previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                            screenReaderCurrentLabel="You're on page">
+                        </pagination-controls>
+                    </div>
+                    <div class="col-md-1">
+                        Total:
+                        <span>{{totalItems}}</span>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </form>
+</div>

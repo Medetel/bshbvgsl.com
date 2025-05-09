@@ -1,0 +1,110 @@
+/* @font-face{
+    src:url(assets/Fonts/Cinzel-Regular.otf);
+    font-family: 'Cinzel';
+} */
+
+body { 
+    /* padding: 0 !important; */
+    /* padding-right: 5%;  */
+    min-height: 100vh;
+    background: url('/assets/images/loginbg.jpg') no-repeat center center; /* Centering the background */
+    background-size: cover; /* Ensures the image scales to cover the viewport */
+    display: flex;
+    justify-content: flex-end; /* Aligns the content to the right */
+    align-items: center;       /* Centers content vertically */
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 768px) {
+    body {
+        padding-right: 2%; /* Reduce padding on smaller screens */
+        justify-content: center; /* Center the content */
+        background-size: cover; /* Adjust the background image scaling */
+    }
+}
+
+/* High-resolution displays */
+@media (min-width: 1920px) {
+    body {
+        background-size: cover; /* Ensure the image still covers large screens */
+    }
+}
+
+.login-wrapper {
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    width: 350px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    position: relative;        /* Allows adjusting position */
+    right: 30%;                 /* Fine-tunes distance from the right */
+    border:1px solid rgb(132, 216, 53);
+}
+
+.login-wrapper h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.field-wrapper {
+    margin-top: 15px;
+    text-align: left;
+}
+
+.field-wrapper label {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.field-wrapper input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 5px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+.field-wrapper input:focus {
+    outline: none;
+    border-color: #1e88e5;
+}
+
+.error-msg {
+    color: #d9534f;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.btn-primary {
+    background-color: #1e88e5;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.btn-primary:hover {
+    background-color: #166bb5;
+}
+
+.btn-primary:active {
+    transform: scale(0.98);
+}
+
+.text-center{
+    text-transform:none;
+    font-weight: bold;
+}

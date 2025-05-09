@@ -1,0 +1,239 @@
+<div class="wrapper">
+    <form #LoInfo="ngForm" (ngSubmit)="onSubmitLogDetails(LoInfo)" name="form1" novalidate>
+        <div class="title themeheading">
+            {{title}}
+            <span class="clearfix"></span>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>From Date</label>
+                        <input type="date" name="fromDate" #fromDate="ngModel" [(ngModel)]="l.fromDate"
+                            class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>To Date</label>
+                        <input type="date" name="Todate" #fromDate="ngModel" [(ngModel)]="l.Todate"
+                            class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label>Page</label>
+                        <select class="form-control" [(ngModel)]="l.tableName" #tableName="ngModel" name="tableName">
+                            <option [value]="undefined" selected>---Select---</option>
+                            <option [value]="p.PKS_TableName" *ngFor="let p of PageList;">
+                                {{p.PKS_TableName}} </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary" style="margin-top: 27px;">GO</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="container">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="insert-tab" data-toggle="tab" href="#insert" role="tab"
+                    aria-controls="insert" aria-selected="true">Insert</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="delete-tab" data-toggle="tab" href="#delete" role="tab" aria-controls="delete"
+                    aria-selected="false">Delete</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="edit-tab" data-toggle="tab" href="#edit" role="tab" aria-controls="edit"
+                    aria-selected="false">Edit</a>
+            </li>
+
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="insert" role="tabpanel" aria-labelledby="insert-tab">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <td>Sl No.</td>
+                                <td>User Name</td>
+                                <td>Date</td>
+                                <td>Role</td>
+                                <td>Name</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr *ngFor="let in of InsertLogList;let i=index">
+                                <td>{{i+1}}</td>
+                                <td>{{in.UserName}}</td>
+                                <td>{{in.InsertDate | date:'dd/MM/yyyy'}}</td>
+                                <td>{{in.RoleName}}</td>
+                                <td *ngIf="in.UniqueName != null">{{in.UniqueName}} - {{in.PKS_DisplayName}}</td>
+                                <td *ngIf="in.UniqueName == null">{{in.PrimaryKeyId}}- {{in.PKS_DisplayName}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="delete" role="tabpanel" aria-labelledby="delete-tab">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <td>Sl No.</td>
+                                <td>UserName</td>
+                                <td>Date</td>
+                                <td>Role</td>
+                                <td>Unique Id</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let d of DeleteLogList;let i=index">
+                                <td>{{i+1}}</td>
+                                <td>{{d.UserName}}</td>
+                                <td>{{d.DeletedTS | date:'dd/MM/yyyy'}}</td>
+                                <td>{{d.RoleName}}</td>
+                                <td *ngIf="d.UniqueName != null">{{d.UniqueName}} - {{d.PKS_DisplayName}}</td>
+                                <td *ngIf="d.UniqueName == null">{{d.PrimaryKeyId}} - {{d.PKS_DisplayName}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="edit" role="tabpanel" aria-labelledby="edit-tab">
+
+
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <td>Sl No.</td>
+                                <td>UserName</td>
+                                <td>Edited Date</td>
+                                <td>Role</td>
+                                <td>Unique Name</td>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let e of EditLogList;let i=index">
+                            <tr data-toggle="collapse" data-target="#i+1" class="clickable"
+                                (click)="EditDetailsLogList(e.PrimaryKeyId,i)">
+                                <td>{{i+1}}</td>
+                                <td>{{e.UserName}}
+                                <td>{{e.editDate | date:'dd/MM/yyyy'}}</td>
+                                <td>{{e.RoleName}}</td>
+                                <td *ngIf="e.UniqueName != null">{{e.UniqueName}} - {{e.PKS_DisplayName}}</td>
+                                <td *ngIf="e.UniqueName == null">{{e.PrimaryKeyId}} - {{e.PKS_DisplayName}}</td>
+                            </tr>
+                            <tr *ngIf="acc == i">
+                                <td colspan="6" class="hiddentablerow">
+                                    <div id="i+1" class="collapse">
+                                        <table style="width: 90%;margin: 20px auto;">
+                                            <thead>
+                                                <tr class="table-primary">
+                                                    <td>sl</td>
+                                                    <td>Modified By</td>
+                                                    <td>Modified Date</td>
+                                                    <td>Role</td>
+                                                    <td>View</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let ed of EditDetailsList;let i=index"
+                                                    data-toggle="collapse" class="clickable">
+                                                    <td>{{i+1}}</td>
+                                                    <td>{{ed.UserName}}</td>
+                                                    <td>{{ed.editDate | date:'M/d/yy, h:mm a'}}</td>
+                                                    <td>{{ed.RoleName}}</td>
+                                                    <td class="text-center">
+                                                        <a class="goview" href="javascript:void(0);"
+                                                            (click)="gotoView(ed.row_no,ed.TableName)">
+                                                            <i class="fa fa-lg fa-eye themecolor"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<!-- comment -->
+
+<!-- <div class="container-fluid">
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td>Sl No.</td>
+                    <td>UserName</td>
+                    <td>Edited Date</td>
+                    <td>Role</td>
+                    <td>Unique Name</td>
+                </tr>
+            </thead>
+            <tbody *ngFor="let e of EditLogList;let i=index">
+                <tr data-toggle="collapse" data-target="#i+1" class="clickable"
+                    (click)="EditDetailsLogList(e.PrimaryKeyId,i)">
+                    <td>{{i+1}}</td>
+                    <td>{{e.UserName}}
+                    <td>{{e.editDate | date:'dd/MM/yyyy'}}</td>
+                    <td>{{e.RoleName}}</td>
+                    <td *ngIf="e.UniqueName != null">{{e.UniqueName}} - {{e.PKS_DisplayName}}</td>
+                    <td *ngIf="e.UniqueName == null">{{e.PrimaryKeyId}} - {{e.PKS_DisplayName}}</td>
+                </tr>
+                <tr *ngIf="acc == i">
+                    <td colspan="6" class="hiddentablerow">
+                        <div id="i+1" class="collapse">
+                            <table style="width: 90%;margin: 20px auto;">
+                                <thead>
+                                    <tr class="table-primary">
+                                        <td>sl</td>
+                                        <td>Modified By</td>
+                                        <td>Modified Date</td>
+                                        <td>Role</td>
+                                        <td>View</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let ed of EditDetailsList;let i=index" data-toggle="collapse"
+                                        class="clickable">
+                                        <td>{{i+1}}</td>
+                                        <td>{{ed.UserName}}</td>
+                                        <td>{{ed.editDate | date:'M/d/yy, h:mm a'}}</td>
+                                        <td>{{ed.RoleName}}</td>
+                                        <td class="text-center">
+                                            <a class="goview" href="javascript:void(0);"
+                                                (click)="gotoView(ed.row_no,ed.TableName)">
+                                                <i class="fa fa-lg fa-eye themecolor"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div> -->

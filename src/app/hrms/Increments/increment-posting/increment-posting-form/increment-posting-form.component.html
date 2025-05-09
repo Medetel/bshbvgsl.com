@@ -1,0 +1,128 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    Add Post Increment
+    <button class="btn btn-primary float-right" [routerLink]="['/home/increment/increment-post']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4">
+        <label for="">Increment List No :</label>
+      </div>
+      <div class="col-md-4">
+        <label for="">Date : </label>
+      </div>
+      <div class="col-md-4">
+        <label for="">Status :</label>
+      </div>
+    </div>
+
+    <div class="title themeheading rowmarginfix">
+      Generate Increment List
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped grid">
+        <thead>
+          <tr>
+            <td>Sl No.</td>
+            <td>Employee Id</td>
+            <td>Employee Name</td>
+            <td>Present Designation</td>
+            <td>Present Basic Pay</td>
+            <td>Increment Due Date</td>
+            <td> Pay Scale After Increment</td>
+            <td>Increment W.E.F</td>
+            <td>Hold_Ind</td>
+            <td class="text-center">View</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td> 1 </td>
+            <td> 1 </td>
+            <td> Akash</td>
+            <td>FDA</td>
+            <td>10000-500-12500</td>
+            <td>05-01-2019</td>
+            <td>
+              <select name="" id="" class="form-control">
+                <option value="">--Select--</option>
+                <option value="">10500-500-12500</option>
+                <option value="">16000-1000-20000</option>
+              </select>
+            </td>
+            <td>
+              <select name="" id="" class="form-control">
+                <option value="">--Select--</option>
+                <option value="">Yes</option>
+                <option value="">No</option>
+              </select>
+            </td>
+            <td>
+              <input type="date" class="form-control">
+            </td>
+            <td class="text-center">
+              <a href="javascript:void(0);">
+                <i class="fa fa-lg fa-eye themecolor"></i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="title themeheading rowmarginfix">
+      Authorization Screen
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Authorised</label>
+          <select name="" id="" class="custom-field">
+            <option value="">--Select--</option>
+            <option value="">Yes</option>
+            <option value="">No</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Cancel</label>
+          <select name="" id="" class="custom-field">
+            <option value="">--Select--</option>
+            <option value="">Yes</option>
+            <option value="">No</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label for="">Authorzed By :</label>
+      </div>
+      <div class="col-md-4">
+        <label for="">Authorzed Date :</label>
+      </div>
+      <div class="col-md-4">
+        <label for="">Canceled Date :</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Remarks</label>
+          <textarea name="" id="" cols="30" rows="10" class="custom-field"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <br>
+    <div class="text-center">
+      <button class="btn btn-primary">Post Increment</button>
+      <button class="btn btn-primary">Cancel</button>
+    </div>
+    <br>
+  </div>
+</div>

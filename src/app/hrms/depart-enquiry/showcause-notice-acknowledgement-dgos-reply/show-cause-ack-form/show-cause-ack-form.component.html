@@ -1,0 +1,312 @@
+<div class="wrapper">
+    <!-- <form (ngSubmit)="mode=='Edit'?UpdateSCK(SCK):SaveExam(SCK)" #SCK="ngForm" name="SCK"> -->
+  <div class="container-fluid">
+    <div class="title rowmarginfix themeheading">
+      Complaint Details
+      <!-- <button *ngIf="Back= != '3rd'" class="btn btn-primary float-right" [routerLink]="['/home/dept-enquiry/show-cause-ack']">Back</button>
+      <button *ngIf="Back2 == '3rd'" class="btn btn-primary float-right" [routerLink]="['/home/dept-enquiry/initiative-depart-form',COMPLAINT_ID,'Edit']">Back</button>       -->
+      <button *ngIf="back == 'sck'" class="btn btn-primary float-right" [routerLink]="['/home/dept-enquiry/show-cause-ack']">Back</button>
+      <button *ngIf="back == 'idesck'" class="btn btn-primary float-right" [routerLink]="['/home/dept-enquiry/initiative-depart-form',sckid,'ENQ','mode']">Back</button>
+      <button *ngIf="back == 'idesck1'" class="btn btn-primary float-right" [routerLink]="['/home/dept-enquiry/enquiry-proceeding-form']">Back</button>
+      
+      <span class="clearfix"></span>
+    </div>
+    <!--  -->
+    <div class="row">
+      <div class="col-md-4">
+        <label for=""> Complaint No : </label> &nbsp;<span> {{ComplaintDetails.DOC_CODE1}} </span>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group ">
+          <span for="">Date : </span> &nbsp;<span> {{ComplaintDetails.DOC_DATE | date:'dd/MM/yyyy'}} </span>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group ">
+          <span for="">Status : Generated</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label for="">Complaint Type : </label>  &nbsp;<span> {{ComplaintDetails.COMPLAINT_TYPE}} </span>
+      </div>
+      <div class="col-md-6">
+        <label for="">Initiated By :</label>  &nbsp;<span> {{ComplaintDetails.COMPLAINT_INITIATED_BY}} </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label for=""> Complaint Date :</label>  &nbsp;<span> {{ComplaintDetails.COMPLAINT_INITIATED_DATE | date:'dd/MM/yyyy'}} </span>
+      </div>
+      <div class="col-md-6">
+        <label for=""> Nature of Complaint :</label>  &nbsp;<span> {{ComplaintDetails.COMPLNT_NATURE}} </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label for=""> Complainee's Name :</label>  &nbsp;<span> {{ComplaintDetails.COMPLNT_COMP_NAME}} </span>
+      </div>
+      <div class="col-md-6">
+        <label for=""> Complainee's Address :</label>  &nbsp;<span> {{ComplaintDetails.COMPLNT_COMP_ADD}} </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label for=""> Complainee's Contact No. :</label>  &nbsp;<span> {{ComplaintDetails.COMPLNT_COMP_CONTACT}} </span>
+      </div>
+      <div class="col-md-6">
+        <label for=""> Complaint Addressed to :</label>  &nbsp;<span> {{ComplaintDetails.COMPLNT_ADDR_TO}} </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <a href=""> View Complaint Document </a>   <a class="" target="_blank" href="{{ComplaintDetails.COMPLNT_UPLOAD_PATH}}">View</a>
+      </div>
+      <div class="col-md-6">
+        <label for="">Description / Details :</label>  &nbsp;<span> {{ComplaintDetails.COMPLNT_DESC}} </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label for="">Remarks :</label>  &nbsp;<span> {{ComplaintDetails.COMPLNT_REMARKS}} </span>
+      </div>
+    </div>
+    <div class="title themeheading rowmarginfix">
+      DGO's Details
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+          <label for=""> Division Code : </label> <span> {{EmployeeDetails.DI_Code}} </span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Emp Code :</label> <span> {{EmployeeDetails.EMP_EMPLOYEE_CODE}} </span>
+        </div>
+        <div class="col-md-4">
+          <label for=""> Name :</label> &nbsp; <span> {{EmployeeDetails.EMP_FIRST_NAME}} </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <label for="">Division : </label> &nbsp; <span> {{EmployeeDetails.DI_District}} </span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Department : </label> &nbsp; <span> {{EmployeeDetails.Department_Name}} </span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Designation : </label> &nbsp;<span> {{EmployeeDetails.desg_name}} </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <label for="">Employee Category : </label> &nbsp;<span> {{EmployeeDetails.EMP_CATEGORY}} </span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Employee Group : </label> &nbsp; <span> {{EmployeeDetails.EMP_GROUP}} </span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Employee Type : </label> &nbsp;<span> {{EmployeeDetails.EMP_TYPE}} </span>
+        </div>
+      </div>
+      <br>
+    <!--  -->
+    <div class="title rowmarginfix themeheading">
+      SCN Details
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+          <label for=""> SCN No : </label> &nbsp;<span> {{SCNDetails.DOC_CODE1}} </span>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group ">
+            <span for="">Date : </span>  &nbsp;<span> {{SCNDetails.DOC_DATE | date:'dd/MM/yyyy'}} </span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group ">
+            <span for="">Status : Generated</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label for="">Due Date to Reply :</label>  &nbsp;<span> {{SCNDetails.SCN_REPLY_DUE_DATE  | date:'dd/MM/yyyy'}} </span>
+        </div>
+        <div class="col-md-6">
+          <label for="">Mode of Reply :</label>  &nbsp;<span> {{SCNDetails.SCN_MODE_REPLY}} </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label for=""> Additional Details : </label>  &nbsp;<span> {{SCNDetails.SCN_ADDL_DTL}} </span>
+        </div>
+        <div class="col-md-6">
+          <label for=""> Remarks :</label>  &nbsp;<span> {{SCNDetails.SCN_REMARKS}} </span>
+        </div>
+      </div>
+      <!-- <div class="row">
+        <div class="col-md-6">
+          <a href=""> View OM Document </a>  &nbsp;<span> {{ComplaintDetails.COMPLAINT_TYPE}} </span>
+        </div>
+      </div> -->
+      <br>
+    <div class="title rowmarginfix themeheading">
+      DGO'S Reply & Further Actions
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Reply Recerived Date </label>
+          <input type="Date" name="SCNREPLY_RECVD_DATE" maxlength="50" [(ngModel)]="sk.SCNREPLY_RECVD_DATE"
+                    #SCNREPLY_RECVD_DATE="ngModel" class="form-control" [disabled]="mode=='View'">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Mode of Reply </label>
+          <!-- <input type="text" name="SCNREPLY_MODE" maxlength="50" [(ngModel)]="sk.SCNREPLY_MODE"
+          #SCNREPLY_MODE="ngModel" class="form-control" [disabled]="mode=='View'"> -->
+          <select [(ngModel)]="sk.SCNREPLY_MODE" #SCNREPLY_MODE="ngModel"
+          name="SCNREPLY_MODE" [disabled]="mode=='View'" required class="custom-field">
+          <option value="undefined">--Select--</option>
+          <option value="By Hand"> By Hand </option>
+          <option value="Post">By Post</option>
+          <option value="Courrier">By Courrier</option>
+          <option value="Email">By Email</option>
+        </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label for=""> Reply Period : </label>  &nbsp;<span> {{sk.SCNREPLY_REP_PRD}} </span>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for=""> DGOs Reply Details </label>
+          <!-- <input type="text" name="SCNREPLY_DGO_REP_DTL" maxlength="50" [(ngModel)]="sk.SCNREPLY_DGO_REP_DTL"
+          #SCNREPLY_DGO_REP_DTL="ngModel" class="form-control" [disabled]="mode=='View'"> -->
+          <textarea name="SCNREPLY_DGO_REP_DTL" maxlength="50" [(ngModel)]="sk.SCNREPLY_DGO_REP_DTL"
+          #SCNREPLY_DGO_REP_DTL="ngModel" [disabled]="mode=='View'" class="custom-field"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for=""> Reply Satisfactory </label>
+          <select class="custom-field" [(ngModel)]="sk.SCNREPLY_REP_STFTRY" #SCNREPLY_REP_STFTRY="ngModel" name="AUTH_BY" [disabled]="mode=='View'">
+              <option value="undefined">--Select--</option>
+              <option value="1">Yes</option>
+              <option value="2">No</option>
+            </select>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Reply Accepted </label>
+          <select class="custom-field" [(ngModel)]="sk.SCNREPLY_REP_ACCPT" #SCNREPLY_REP_ACCPT="ngModel" name="SCNREPLY_REP_ACCPT" [disabled]="mode=='View'">
+              <option value="undefined">--Select--</option>
+              <option value="1">Yes</option>
+              <option value="2">No</option>
+            </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for=""> Action Initiated </label>
+          <select class="custom-field" [(ngModel)]="sk.SCNREPLY_ACTION" #SCNREPLY_ACTION="ngModel" name="SCNREPLY_ACTION" [disabled]="mode=='View'">
+              <option value="undefined">--Select--</option>
+              <option value="1">Close Complaint</option>
+              <option value="2">Initiated Enq</option>
+            </select>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for=""> Supention Invoked </label>
+          <select class="custom-field" [(ngModel)]="sk.SUSPND_IND" #SUSPND_IND="ngModel" name="SUSPND_IND" [disabled]="mode=='View'">
+              <option value="undefined">--Select--</option>
+              <option value="1">Yes</option>
+              <option value="2">No</option>
+            </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Comment by Competent Authority </label>
+          <input type="text" name="REMARKS" maxlength="50" [(ngModel)]="sk.REMARKS"
+          #REMARKS="ngModel" class="form-control" [disabled]="mode=='View'">
+        </div>
+      </div>
+      <div class="col-md-6"> 
+        <div class="form-inline">
+          <div class="form-group mb-2">
+            <label for="">DGO's Reply Document </label>            
+          </div>
+          <div class="form-group mb-2 mx-xs-3">
+            <input *ngIf="!hide" type="file" #Image accept="application/pdf" [disabled]="mode == 'View'"
+            (change)="imageUploaddgo($event.target.files)" id="DGO_Upload" name="DGO_Upload">
+            
+            <!-- Disable the "View" link if DGO_Upload is null or undefined -->
+            <a *ngIf="sk.DGO_Upload" [href]="sk.DGO_Upload" target="_blank" 
+               [class.disabled]="!sk.DGO_Upload" tabindex="-1" aria-disabled="true">
+              View
+            </a>
+            
+            <!-- Optionally, you can also disable the link when DGO_Upload is null -->
+            <a *ngIf="!sk.DGO_Upload" class="disabled" tabindex="-1" aria-disabled="true">
+              View
+            </a>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Addition Comments </label>
+          <input type="text" name="SCN_ADD_DTL" maxlength="50" [(ngModel)]="sk.SCN_ADD_DTL"
+          #SCN_ADD_DTL="ngModel" class="form-control" [disabled]="mode=='View'">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-inline">
+          <div class="form-group mb-2">
+            <label for="">OM Document Upload </label>
+          </div>
+          <div class="form-group  mb-2 mx-xs-3">
+              <input *ngIf="!hide" type="file" #Image accept="application/pdf" [disabled]="mode=='View'"
+              (change)="imageUpload0m($event.target.files)" id="OM_Upload" name="OM_Upload">
+              <a *ngIf="sk.OM_Upload" [href]="sk.OM_Upload" target="_blank" 
+              [class.disabled]="!sk.OM_Upload" tabindex="-1" aria-disabled="true">
+             View
+              </a>
+           
+           <!-- Optionally, you can also disable the link when DGO_Upload is null -->
+           <a *ngIf="!sk.OM_Upload" class="disabled" tabindex="-1" aria-disabled="true">
+             View
+           </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--  -->
+    <br>
+    <div class="d-flex justify-content-center">
+        <!-- <button [disabled]="mode=='View'" class="btn btn-primary" type="submit">{{mode=='Edit'?'Update':'Save'}}</button> &nbsp; -->
+        <button [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="SaveUpdateSCnAck(sk)">Save</button>&nbsp;
+        <button [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button>&nbsp;
+      
+  
+      </div>
+    <br>
+  </div>
+  <!-- </form> -->
+</div>

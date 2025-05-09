@@ -1,0 +1,38 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    Payroll Process
+  </div>
+  <div class="container-fluid">
+    <div class="row" style="margin-top: 25px;">
+      <div class="col-md-6">
+        <label for=""> Month Year Code : </label>
+        <span> {{monthcode}} </span>
+      </div>
+      <div class="col-md-6">
+        <label for="">Month :</label>
+        <span>{{month}} </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label for=""> Initialized Date : </label>
+        <span> {{send_date}} </span>
+      </div>
+      <div class="col-md-6">
+        <label for="">Process Date :  </label>
+        <span> {{send_date}} </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label for=""> Finalized  : </label>
+        <span> No </span>
+      </div>     
+    </div>
+  </div>
+  <br>
+  <div class="text-center">
+    <button class="btn btn-primary" [disabled]="disablebutton"  (click)="ProcessPayroll()">Finalized </button>
+  </div>  
+ <br>
+</div>

@@ -1,0 +1,135 @@
+<div class="wrapper">
+    <div class="title themeheading">
+        Add Payment Receipt
+        <button class="btn btn-primary float-right" [routerLink]="['/home/paymentreceipt']" *ngIf="BackId!='1'">Back</button>
+        <button class="btn btn-primary float-right" [routerLink]="['/home/paymentreceipt/payment-receipt-approval']" *ngIf="BackId=='1'">Back</button>
+        <span class="" clearfix></span>
+    </div>
+    <form (ngSubmit)="mode=='Edit'?UpdateReceipt(PaymentReceipt):CreateReceipt(PaymentReceipt)" #PaymentReceipt="ngForm">
+    <div class="add-click container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <label>Select Challan No. </label>
+                    <select class="custom-field" [(ngModel)]="PR.Payment_Id" #Payment_Id="ngModel" name="Payment_Id" [disabled]="mode=='View'"
+                     required (change)="GetChallanDetailsById(PR.Payment_Id)">
+                    <option [value]="undefined" selected>---Select---</option>
+                    <option [value]="RL.Payment_Id" *ngFor="let RL of Receiptlist;">
+                      {{RL.Challan_Code}}
+                    </option>
+                  </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label> Agreement No :</label> &nbsp; <span> <b>{{PR.Agrmnt_Code}}</b> </span> 
+            </div>
+            <div class="col-md-6">
+                <label> Lessee Details :</label> &nbsp; <span> <b>{{PR.CUST_F_NAME}}</b> </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label> Property Details :</label> &nbsp; <span> <b>{{PR.PR_Property_No}}</b> </span>
+            </div>
+            <div class="col-md-6">
+                <label> Rent :</label> &nbsp; <span> <b>{{PR.TOTAL_RATE}}</b> </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label> Maintenenace Cost :</label> &nbsp; <span> <b>{{PR.Total_Maintenan_Cost}}</b> </span>
+            </div>
+            <div class="col-md-6">
+                <label> Total :</label> &nbsp; <span> <b>{{PR.RENT_MNTN}}</b> </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label> GST% :</label> &nbsp; <span> <b>{{PR.GST_Rate}}</b> </span>
+            </div>
+            <div class="col-md-6">
+                <label> TDS% :</label> &nbsp; <span> <b>{{PR.TDS_Rate}}</b> </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label> Amount in words :</label> &nbsp; <span> <b>{{PR.Gross_Amount_Words}}</b> </span>
+            </div>
+            <div class="col-md-6">
+                <label> Gross Amount : </label> &nbsp; <span> <b>{{PR.Gross_Amount}}</b> </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label style="color:blue;"> Payment Mode </label>
+                <div class="form-check-inline">
+                    <label class="form-check-label" for="dd">
+                        <input type="radio" class="form-check-input" id="dd" [(ngModel)]="PR.Payment_Mode" #Payment_Mode="ngModel" name="Payment_Mode" value="D">D.D
+                    </label>
+                </div>
+                <div class="form-check-inline">
+                    <label class="form-check-label" for="neft">
+                        <input type="radio" class="form-check-input" id="neft" [(ngModel)]="PR.Payment_Mode" #Payment_Mode="ngModel" name="Payment_Mode" value="N">NEFT
+                    </label>
+                </div>
+                <div class="form-check-inline">
+                    <label class="form-check-label" for="grtgs">
+                        <input type="radio" class="form-check-input" id="gtgs" [(ngModel)]="PR.Payment_Mode" #Payment_Mode="ngModel" name="Payment_Mode" value="R">RTGS
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <label>Amount Received </label>
+                    <input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="PR.AMOUNT_RECEIVED"
+                    #AMOUNT_RECEIVED="ngModel" name="AMOUNT_RECEIVED" [disabled]="mode=='View'" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <label for="" style="color:blue;">Reference Number </label>
+                    <input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="PR.Reference_Number"
+                    #Reference_Number="ngModel" name="Reference_Number" [disabled]="mode=='View'" required>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <label for="" style="color:blue;">Reference Date </label>
+                    <input class="custom-field" type="date" [(ngModel)]="PR.Reference_Date" #Reference_Date="ngModel"
+                        name="Reference_Date" [disabled]="mode=='View'" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <label> Naration </label>
+                    <input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="PR.Naration"
+                    #Naration="ngModel" name="Naration" [disabled]="mode=='View'" required>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-inline">
+                    <div class="form-group mb-2">
+                        <label for="" style="color:blue;"> Upload Receipt Copy </label>
+                    </div> &nbsp;
+                    <div class="form-group mb-2">
+                        <input *ngIf="!hide" type="file" #Image accept="application/pdf" (change)="imageUpload($event.target.files)" id="DOC_UPLOAD_PATH" name="DOC_UPLOAD_PATH">
+                            <a class="" *ngIf="PR.DOC_UPLOAD_PATH!=null && (mode=='view' || mode=='edit')" target="_blank" href="{{PR.DOC_UPLOAD_PATH}}">View</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 d-flex justify-content-center">
+                <button class="btn btn-primary" [disabled]="mode=='View'" type="submit"> {{mode=='Edit'?'Update':'Save'}} </button> &nbsp;
+                <button class="btn btn-primary" [disabled]="mode=='View'" type="button" (click)="Cancel()"> Cancel </button>
+            </div>
+        </div>
+    </div>
+</form>
+</div>

@@ -1,0 +1,97 @@
+
+<div class="wrapper">
+  <div class="title themeheading">Allotted Properties List </div>
+  
+ <form #searchForm="ngForm">
+    <div class="searchbar">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-1">
+            <label for="">Search</label>
+          </div>
+          <div class="col-md-3">
+            <select name="SearchCriteria" class="form-control" name="Biddercriteria" value="" #Biddercriteria="ngModel"
+            [(ngModel)]="Bidder.Biddercriteria" required>
+              <option [ngValue]="undefined" selected>---Select---</option>
+              <option value="BidderId">Bidder Id</option>
+              <option value="BidderName">Bidder Name</option>
+              <option value="ProjectName">Project Name</option>              
+            </select>
+          </div>
+          <div class="col-md-4">
+            <input type="text" name="Biddersearch" class="form-control" placeholder="Search.." name="Biddersearch"
+              #BidderId="ngModel" [(ngModel)]="Bidder.Biddersearch" required>
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-default" type="button" (click)="SearchAllocatedProperties(Bidder, itemsPerPage, 1)">Search</button>
+            <button class="btn btn-default" type="reset" (click)="clear()">Clear</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+<div class="table-responsive">
+  <table class="table table-striped grid">
+      <thead>
+          <tr>
+              <td>Sl No.</td>
+              <td>Bidder Id</td>
+              <td>Bidder Name</td>             
+              <td>Project Name</td>
+              <td>Property Type</td>
+              <td>Property No</td>     
+              <td>Category Name</td>    
+              <td>Intermediate / Corner</td> 
+              <td>EMD Amt(Rs)</td> 
+              <td>Property Status</td>         
+              <td>Action</td>
+          </tr>         
+      </thead>
+       <tbody *ngIf="Bidderdetails == '' || Bidderdetails == 'undefined' || Bidderdetails == 'null'">
+        <td colspan="11" class="text-center">No data found.</td>
+        </tbody>
+      <tbody>
+          <tr *ngFor="let Not of Bidderdetails | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems };let i=index">
+            <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>       
+              <td>{{Not.B_BidderId}}</td>   
+              <td>{{Not.B_BName}}</td>          
+              <td>{{Not.Project_Name}}</td>
+              <td>{{Not.PT_Property_Type}}</td>
+              <td>{{Not.PR_Property_No}}</td>   
+              <td>{{Not.CA_CategoryName}}</td>  
+              <td>{{Not.IC_Name}}</td>    
+              <td>{{Not.B_EMD_Amt | currency:'INR':true: '1.2-2'}}</td>           
+              <td>{{Not.PR_Status}}</td> 
+              <td> 
+                <a href="#" [routerLink]="['/home/viewauctionedproperties',Not.PR_Id]">
+                    <!-- <i class="fa fa-lg fa-eye themecolor"></i> -->
+                    Cancel
+                </a>              
+               
+            </td>
+             
+          </tr>
+      </tbody>
+  </table>
+   <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-11">
+              <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)"
+                  maxSize="9" directionLinks="true" autoHide="false" previousLabel="Previous"
+                  nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                  screenReaderCurrentLabel="You're on page">
+              </pagination-controls>
+          </div>
+          <div class="col-md-1">
+              Total:
+              <span>{{totalItems}}</span>
+          </div>
+      </div>
+  </div> 
+</div>
+
+
+
+
+</div>

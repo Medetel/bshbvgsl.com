@@ -1,0 +1,407 @@
+<div class="wrapper propertyregister">
+  <div class="title themeheading">
+    Land to Town Planning (LTP)
+    <div class="float-right">
+      <a class="btn btn-primary" [routerLink]="['/home/land-town-planning']">Back</a>
+    </div>
+    <span class="clearfix"></span>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      
+      <div class="col-md-5">
+        <div class="input-group">
+          <select #LTP_Pd_Id_Fk="ngModel" name="LTP_Pd_Id_Fk" [(ngModel)]="proj.LTP_Pd_Id_Fk" class="custom-field"
+            [disabled]="mode=='view'">
+            <option value="undefined">---Select---</option>
+            <option *ngFor="let project of projectlist" [value]="project.PD_Id">
+              {{project.PD_Project_Code}} - {{project.PD_Project_Name}} - {{project.Phase_Name}}
+            </option>
+          </select>
+          <label>Project</label>
+        </div>
+      </div>
+      <div class="col-md-1">
+        <button class="btn btn-primary" type="button" (click)="GetProjectDetailsforLandtoTown(proj.LTP_Pd_Id_Fk,0)"
+          [disabled]="mode=='view'">Go</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label>
+          <span class="field-title">LTP Id</span>: {{projectDetails.LTP_Id}}</label>
+      </div>
+      <div class="col-md-6">
+        <label>
+          <span class="field-title">Project</span>: {{projectDetails.PD_Project_Name}}</label>
+      </div>
+     
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label>
+          <span class="field-title">Scheme</span>: {{projectDetails.Sch_Name}}</label>
+      </div>
+      <div class="col-md-6">
+        <label>
+          <span class="field-title">District</span>: {{projectDetails.DI_District}}</label>
+      </div>
+     
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label>
+          <span class="field-title">Block</span>: {{projectDetails.TA_Taluk}}</label>
+      </div>
+      <!-- <div class="col-md-6">
+        <label>
+          <span class="field-title">Hobli</span>: {{projectDetails.HO_Name}}</label>
+      </div> -->
+      <div class="col-md-6">
+        <label>
+          <span class="field-title">Village/City/Colony</span>: {{projectDetails.PD_Village}}</label>
+      </div>
+    </div>
+    <div class="row">
+    
+      <div class="col-md-6">
+        <label>
+          <span class="field-title">Phase</span>: {{projectDetails.Phase_Name}}</label>
+      </div>
+      
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="input-group">
+          <label for="">File Upload</label>
+          <input type="file" #LTP_File="ngModel" name="LTP_File" [(ngModel)]="LTP.LTP_File" #Image accept="application/pdf"
+            [disabled]="mode=='view'" (change)="LTPFileInput($event.target.files)" id="LTP_File">
+        </div>
+      </div>
+      <div class="col-md-2">
+        <a class="float-right" [hidden]="LTP_File_Show=='hide'" target="_blank" href="{{LTP.LTP_File}}">view</a>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Date</label>
+          <input type="date" [disabled]="mode=='view'" class="custom-field" #LTP_Date="ngModel" name="LTP_Date"
+            [(ngModel)]="LTP.LTP_Date">
+        </div>
+      </div>      
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Note</label>         
+          <textarea name="" id="" cols="30" rows="10" class="custom-field" #LTP_Note="ngModel" name="LTP_Note"
+            [(ngModel)]="LTP.LTP_Note" [disabled]="mode=='view'"></textarea>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+  <div class="title themeheading">
+    Survey Numbers Pending in Land Procurement
+    <span class="clearfix"></span>
+  </div>
+
+  <div class="table-responsive" style="margin-top:15px">
+    <table class="table table-bordered" style="width: 1800px;">
+      <thead>
+        <tr>
+          <td rowspan="2">Sl No.</td>
+          <td rowspan="2">Survey No.</td>
+          <td rowspan="2">Land Owner</td>
+          <td rowspan="2"> Extends </td>
+          <td  rowspan="2">Procurement Type</td>
+
+          <td rowspan="2"> Latitude </td>
+          <td rowspan="2"> Longitude </td>
+          <td rowspan="2">Akar </td>
+          <td rowspan="2">Land Type</td>
+
+          <td rowspan="2"> North </td>
+          <td rowspan="2"> East </td>
+          <td rowspan="2">West </td>
+          <td rowspan="2">South</td>
+
+          <td rowspan="2">Sharing Pattern </td>
+          <td rowspan="2"> CAD </td>
+          <td rowspan="2">Sketch </td>
+
+
+          <td colspan="2" class="text-center">Extent</td>
+          <td colspan="2" class="text-center">Tippani</td>
+          <td rowspan="2">Atlas</td>
+          <td rowspan="2">Khatha</td>
+          <td rowspan="2">EC</td>
+          <td rowspan="2">RTC</td>
+          <td rowspan="2">Revenue Sketch</td>
+          <td rowspan="2">PT sheet</td>
+          <td rowspan="2">Akar Bandh</td>
+          <td rowspan="2">JMC</td>
+          <td rowspan="2">Select</td>
+          <!-- <td rowspan="2">Note</td> -->
+        </tr>
+        <tr>
+          <td class="text-center">Acres</td>
+          <td class="text-center">Guntas</td>
+          <td>No</td>
+          <td>Date</td>
+        </tr>
+      </thead>
+
+      <tbody class="data-grid">
+        <tr *ngFor="let info of LandRecordDetailswithoutLTP;let i=index" [ngClass]="{'planning':info.LR_From =='Planning'}">
+          <td>{{i+1}} </td>
+          <td>{{info.LR_SurveyNo}}</td>
+          <td>{{info.LR_Owner}}</td>
+          <td>{{info.LD_Extents}}</td>
+          <td>{{info.MOP_Name}}</td>
+          <td>{{info.LD_Latitude}}</td>
+          <td>{{info.LD_Longitude}}</td>
+          <td>{{info.LD_Akar}}</td>
+          <td>{{info.LandType_Name}}</td>
+          <td>{{info.LD_North}}</td>
+          <td>{{info.LD_East}}</td>
+          <td>{{info.LD_West}}</td>
+          <td>{{info.LD_South}}</td>
+          <td>{{info.SharingPattern_Name}}</td>
+          <td>
+            <span *ngIf="info.LD_Cad != null">
+              <a href="javascript:void(0);">Yes</a>
+            </span>
+            <span *ngIf="info.LD_Cad == null">No</span>
+          </td>
+          <td>
+            <span *ngIf="info.LD_Sketch != null">
+              <a href="javascript:void(0);">Yes</a>
+            </span>
+            <span *ngIf="info.LD_Sketch == null">No</span>
+          </td>
+          <td>{{info.LR_ExtentinAcres}}</td>
+          <td>{{info.LR_ExtentinGuntas}}</td>
+          <td>{{info.LR_Tippani_No}}</td>
+          <td>{{info.LR_Tippani_Date | date:'dd-MM-yyyy'}}</td>
+
+          <td>
+            <span *ngIf="info.LR_Atlas != null">
+              <a href="javascript:void(0);">Yes</a>
+            </span>
+            <span *ngIf="info.LR_Atlas == null">No</span>
+          </td>
+          <td>
+            <span *ngIf="info.LR_Khatha != null">
+              <a href="javascript:void(0);">Yes</a>
+            </span>
+            <span *ngIf="info.LR_Khatha == null">No</span>
+          </td>
+          <td>
+            <span *ngIf="info.LR_EC != null">
+              <a href="javascript:void(0);">Yes</a>
+            </span>
+            <span *ngIf="info.LR_EC == null">No</span>
+          </td>
+          <td>
+            <span *ngIf="info.LR_RTC != null">
+              <a href="javascript:void(0);">Yes</a>
+            </span>
+            <span *ngIf="info.LR_RTC == null">No</span>
+          </td>
+          <td>
+            <span *ngIf="info.LR_Revenue_Sketch != null">
+              <a href="javascript:void(0);">Yes</a>
+            </span>
+            <span *ngIf="info.LR_Revenue_Sketch == null">No</span>
+          </td>
+          <td>
+            <span *ngIf="info.LR_PTSheet != null">
+              <a href="javascript:void(0);">Yes</a>
+            </span>
+            <span *ngIf="info.LR_PTSheet == null">No</span>
+          </td>
+          <td>
+            <span *ngIf="info.LR_Akar_Bandh != null">
+              <a href="javascript:void(0);">Yes</a>
+            </span>
+            <span *ngIf="info.LR_Akar_Bandh == null">No</span>
+          </td>
+          <td>
+            <span *ngIf="info.LR_JMC != null">
+              <a href="javascript:void(0);">Yes</a>
+            </span>
+            <span *ngIf="info.LR_JMC == null">No</span>
+          </td>         
+          <td>
+            <input type="checkbox" [value]="info.LR_LTP_Id_Fk" name="LR_LTP_Id_Fk" [checked]="info.LR_LTP_Id_Fk===true"
+              (change)="changeCheckbox(info.LR_Id,info.LR_LTP_Id_Fk)">
+          </td>         
+        </tr>       
+      </tbody>
+    </table>
+  </div>
+
+  <div class="title themeheading">
+    Survey Numbers Sent to Town Planning
+    <span class="clearfix"></span>
+  </div>
+
+
+  <div class="table-responsive" style="margin-top:15px">
+    <table class="table table-bordered" style="width: 1800px;">
+      <thead>
+        <tr>
+          <td rowspan="2">Sl No.</td>
+          <td rowspan="2">LTP Id</td>
+          <td rowspan="2">Survey No.</td>
+          <td rowspan="2">Land Owner</td>
+          <td rowspan="2"> Extends </td>
+          <td rowspan="2">Procurement Type</td>
+          <td rowspan="2"> Latitude </td>
+          <td rowspan="2"> Longitude </td>
+          <td rowspan="2">Akar </td>
+          <td rowspan="2">Land Type</td>
+
+          <td rowspan="2"> North </td>
+          <td rowspan="2"> East </td>
+          <td rowspan="2">West </td>
+          <td rowspan="2">South</td>
+
+          <td rowspan="2">Sharing Pattern </td>
+          <td rowspan="2"> CAD </td>
+          <td rowspan="2">Sketch </td>
+
+
+          <td colspan="2" class="text-center">Extent</td>
+          <td colspan="2" class="text-center">Tippani</td>
+          <td rowspan="2">Atlas</td>
+          <td rowspan="2">Khatha</td>
+          <td rowspan="2">EC</td>
+          <td rowspan="2">RTC</td>
+          <td rowspan="2">Revenue Sketch</td>
+          <td rowspan="2">PT sheet</td>
+          <td rowspan="2">Akar Bandh</td>
+          <td rowspan="2">JMC</td>
+          <!-- <td rowspan="2">Select</td> -->
+          <!-- <td rowspan="2">Note</td> -->
+        </tr>
+        <tr>
+          <td class="text-center">Acres</td>
+          <td class="text-center">Guntas</td>
+          <td>No</td>
+          <td>Date</td>
+        </tr>
+      </thead>
+
+      <tbody class="data-grid">
+        <tr *ngFor="let info of LandRecordDetailswithLTP;let i=index" [ngClass]="{'planning':info.LR_From =='Planning'}">
+          <td>{{i+1}} </td>
+          <td>{{info.LR_LTP_Id_Fk}}</td>
+          <td>{{info.LR_SurveyNo}}</td>
+          <td>{{info.LR_Owner}}</td>
+          <td>{{info.LD_Extents}}</td>
+          <td>{{info.MOP_Name}}</td>
+          <td>{{info.LD_Latitude}}</td>
+          <td>{{info.LD_Longitude}}</td>
+          <td>{{info.LD_Akar}}</td>
+          <td>{{info.LandType_Name}}</td>
+          <td>{{info.LD_North}}</td>
+          <td>{{info.LD_East}}</td>
+          <td>{{info.LD_West}}</td>
+          <td>{{info.LD_South}}</td>
+          <td>{{info.SharingPattern_Name}}</td>
+          <td>
+            <span *ngIf="info.LD_Cad != null">
+              <a href="javascript:void(0);">Yes</a>
+            </span>
+            <span *ngIf="info.LD_Cad == null">No</span>
+          </td>
+          <td>
+            <span *ngIf="info.LD_Sketch != null">
+              <a href="javascript:void(0);">Yes</a>
+            </span>
+            <span *ngIf="info.LD_Sketch == null">No</span>
+          </td>
+          <td>{{info.LR_ExtentinAcres}}</td>
+          <td>{{info.LR_ExtentinGuntas}}</td>
+          <td>{{info.LR_Tippani_No}}</td>
+          <td>{{info.LR_Tippani_Date | date:'dd-MM-yyyy'}}</td>
+
+          <td>
+            <span *ngIf="info.LR_Atlas != null">
+              <a href="javascript:void(0);">Yes</a>
+            </span>
+            <span *ngIf="info.LR_Atlas == null">No</span>
+          </td>
+          <td>
+            <span *ngIf="info.LR_Khatha != null">
+              <a href="javascript:void(0);">Yes</a>
+            </span>
+            <span *ngIf="info.LR_Khatha == null">No</span>
+          </td>
+          <td>
+            <span *ngIf="info.LR_EC != null">
+              <a href="javascript:void(0);">Yes</a>
+            </span>
+            <span *ngIf="info.LR_EC == null">No</span>
+          </td>
+          <td>
+            <span *ngIf="info.LR_RTC != null">
+              <a href="javascript:void(0);">Yes</a>
+            </span>
+            <span *ngIf="info.LR_RTC == null">No</span>
+          </td>
+          <td>
+            <span *ngIf="info.LR_Revenue_Sketch != null">
+              <a href="javascript:void(0);">Yes</a>
+            </span>
+            <span *ngIf="info.LR_Revenue_Sketch == null">No</span>
+          </td>
+          <td>
+            <span *ngIf="info.LR_PTSheet != null">
+              <a href="javascript:void(0);">Yes</a>
+            </span>
+            <span *ngIf="info.LR_PTSheet == null">No</span>
+          </td>
+          <td>
+            <span *ngIf="info.LR_Akar_Bandh != null">
+              <a href="javascript:void(0);">Yes</a>
+            </span>
+            <span *ngIf="info.LR_Akar_Bandh == null">No</span>
+          </td>
+          <td>
+            <span *ngIf="info.LR_JMC != null">
+              <a href="javascript:void(0);">Yes</a>
+            </span>
+            <span *ngIf="info.LR_JMC == null">No</span>
+          </td>
+          <!-- <td>{{info.LR_Landuse_per_MaterPlan}}</td> -->
+          <!-- <td>-</td> -->
+          <!-- <td>
+                  <button class="btn btn-primary">Download</button>
+                </td> -->
+          <!-- <td>
+            
+            <a href="#" data-target="#landrecord" data-toggle="modal" (click)="GetLandRecordbyId(info.LR_Id,LR.PD_Id)">
+              <i class="fa fa-lg fa-edit themecolor"></i>
+            </a>
+          </td> -->
+          <!-- <td>
+            <button *ngIf="info.LR_From =='Procurement'" class="btn btn-primary" (click)="SendLrId(info.LR_Id,info.LR_Owner,info.LR_SurveyNo)"
+              data-target="#note" data-toggle="modal">Note</button>
+          </td> -->
+        </tr>
+        <!-- <tr>
+            <td colspan="3" style="text-align: right;font-size: 20px;">Total</td>
+            <td colspan="2" style="text-align: right;font-size: 20px;">{{total | number}}</td>
+          </tr> -->
+      </tbody>
+    </table>
+  </div>
+  <br>
+  <div class="text-center">
+    <button class="btn btn-primary" [disabled]="mode=='view'" type="button" (click)="SaveSurveyNoforTownPlanning(LTP,proj.LTP_Pd_Id_Fk)">Send
+      to Town Planning</button>
+  </div>
+
+</div>

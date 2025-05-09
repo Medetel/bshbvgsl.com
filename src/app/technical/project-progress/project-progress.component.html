@@ -1,0 +1,16 @@
+<div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2">
+        <div class="sidemenu">
+          <ul class="billmenu">
+            <li><a [routerLink]="['/home/workprogress']">Project Schedule</a></li>
+            <li><a [routerLink]="['workprogress']">Work Progress</a></li>
+            <li><a [routerLink]="['photo']">Project Photos</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-10">
+          <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,187 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    Add Leave Authorization
+    <button class="btn btn-primary float-right" [routerLink]="['/home/leaveapp/leave-authorization']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="row" style="margin-top: -10px;">
+          <div class="col-md-7">
+            <label for="">Leave Application No. : </label>
+          </div>
+          <div class="col-md-5">
+            <span> {{c.AppNo}} </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row" style="margin-top: -10px;">
+          <div class="col-md-5">
+            <label for="">Date : </label>
+          </div>
+          <div class="col-md-7">
+            <span>{{c.DOC_DATE |date:'dd/MM/yyyy'}} </span>
+          </div>
+        </div>
+      </div>
+      <div class=" col-md-4">
+        <div class="row" style="margin-top: -10px;">
+          <div class="col-md-5">
+            <label for="">Status :  </label>
+          </div>
+          <div class="col-md-7">
+            <span> <span>{{c.LeaveStatus}}</span> </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="title themeheading rowmarginfix">
+      Employee Details
+      <span class="clearfix"></span>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">       
+          <label for=""> Division Code :{{detailsEmployee.EMP_EMPLOYEE_CODE}}</label>
+      </div>
+      <!-- <div class="col-md-4">        
+          <label for="">Emp Code :</label>
+      </div> -->
+      <div class="col-md-4">
+        <label for="">Name : {{detailsEmployee.EmpName}}</label> &nbsp;
+        <span> </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 ">
+        <label for="">Division :{{detailsEmployee.DI_District}} </label> &nbsp;
+        <span> </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Department : {{detailsEmployee.Department_Name}}</label> &nbsp;
+        <span> </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Designation : {{detailsEmployee.desg_name}}</label> &nbsp;
+        <span> </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label for="">Employee Category : {{detailsEmployee.Category}}</label> &nbsp;
+        <span> </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Employee Group : {{detailsEmployee.EmpGroup}}</label> &nbsp;
+        <span> </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Employee Type : {{detailsEmployee.EmpType}}</label> &nbsp;
+        <span> </span>
+      </div>
+    </div>
+
+    <div class="title themeheading rowmarginfix">
+      Leave Details
+    </div>
+    <div class="border-view">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <td class="text-center">Sl No.</td>
+              <td class="text-center">Leave Type</td>
+              <td class="text-center">No.of Days</td>
+              <!-- <td class="text-center">Balance</td> -->
+              <td class="text-center">Note </td>
+              <td class="text-center">Note View </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-center">1.</td>
+              <td class="text-center">{{c.leave_name}}</td>
+              <td class="text-center">{{DateDifference}}</td>
+              <!-- <td class="text-center">2</td> -->
+              <td> {{c.Remarks}}
+              </td>
+              <td class="text-center">
+                <a  [routerLink]="['/home/leaveapp/leaveapp-form',c.LEAVE_APPL_ID,'auth']">
+                    <i class="fa fa-lg fa-eye themecolor"></i>
+                </a>
+            </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="title themeheading rowmarginfix">
+      Authorization Details
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="form-inline">
+          <div class="form-group mb-2">
+            <label for="" style="color: blue;">Authorzed : </label>
+          </div>
+          <div class="form-group mx-sm-3 mb-2">
+            <input type="radio" class="form-control" id="radio1" name="cancel"    (change)="handleChange2()">
+            <label for="radio1">Yes</label>
+          </div>
+          <!-- <div class="form-group mx-sm-3 mb-2">
+            <input type="radio" class="form-control" id="radio2" name="auth">
+            <label for="radio2">No</label>
+          </div> -->
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="form-inline">
+          <div class="form-group mb-2">
+            <label for="" style="color: blue;">Cancel : </label>
+          </div>
+          <div class="form-group mx-sm-3 mb-2">
+            <input type="radio" class="form-control" id="radio1" name="cancel"   (change)="handleChange1()">
+            <label for="radio1">Yes</label>
+          </div>
+          <!-- <div class="form-group mx-sm-3 mb-2">
+            <input type="radio" class="form-control" id="radio4" name="cancel">
+            <label for="radio4">No</label>
+          </div> -->
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label for="">Authorzed By : {{AuthdBy}}</label>
+      </div>
+      <div class="col-md-6">
+        <label for="">Authorzed Date : {{AuthDate}}</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label for="">Canceled By : {{CancelledBy}}</label>
+      </div>
+      <div class="col-md-6">
+        <label for="">Canceled Date : {{CancelledDate}}</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Remarks</label>
+          <textarea  cols="30" rows="10" class="custom-field" [(ngModel)]="a.remarks" #remarks="ngModel" name="remarks"
+          [disabled]="mode=='view'"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="text-center">
+    <button class="btn btn-primary" (click)="save(a.remarks)">Save</button> &nbsp;
+    <button class="btn btn-primary">Cancel</button>
+  </div>
+</div>

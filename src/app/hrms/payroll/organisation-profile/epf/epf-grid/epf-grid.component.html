@@ -1,0 +1,64 @@
+<div class="wrapper">
+
+  <br>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2">
+        <label for="">Enable / Disable</label>
+      </div>
+      <div class="col-md-2">
+        <label class="switch">
+          <input type="checkbox" (click)="toggle1()">
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <br>
+
+  <span *ngIf="show1">
+    <div class="title themeheading">
+      Employees' Provident Fund
+      <a class="btn btn-change float-right" routerLink="/home/payroll/epf-form">Edit</a>
+      <span class="clearfix"></span>
+    </div>
+    <br>
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-md-3">
+          <label for="">EPF Number</label>
+        </div>
+        <div class="col-md-6">
+          <span>-</span>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-md-3">
+          <label for="">Deduction Cycle</label>
+        </div>
+        <div class="col-md-6">
+          <span>Monthly</span>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-md-3"><label for="">Other Details</label></div>
+        <div class="col-md-6"><span>Employer's contribution is included in the CTC.</span></div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-md-3"><label for="">Pro-rate Restricted PF Wages</label></div>
+        <div class="col-md-6"><span>Yes</span></div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-md-3"><label for="">Allow Override</label></div>
+        <div class="col-md-6"><span>Yes</span></div>
+      </div>
+    </div>
+
+    <br>
+  </span>
+
+
+
+
+</div>

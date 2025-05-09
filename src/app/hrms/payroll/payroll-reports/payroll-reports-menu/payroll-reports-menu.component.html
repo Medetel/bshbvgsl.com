@@ -1,0 +1,15 @@
+
+<ul class="billmenu-new header">
+  <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+    <a [routerLink]="['/home/payroll/payroll-reports']"> Master Reports  </a>
+  </li>
+  <li routerLinkActive="active">
+    <a [routerLink]="['summary-payroll-report']"> Summary Reports </a>
+  </li> 
+  <li routerLinkActive="active">
+    <a [routerLink]="['miscellaneous-payroll-reports']"> Miscellaneous Reports    </a>
+  </li>  
+</ul>
+<div class="overflow">
+  <router-outlet></router-outlet>
+</div>

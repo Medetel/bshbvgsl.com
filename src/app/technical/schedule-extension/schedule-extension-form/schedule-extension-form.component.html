@@ -1,0 +1,188 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary float-right" [routerLink]="['/home/scheduleextension']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <form (ngSubmit)="mode=='edit'? UpdateScheduleExtension(ScheduleExtensionForm):SaveScheduleExtension(ScheduleExtensionForm)" #ScheduleExtensionForm="ngForm"
+   autocomplete="off">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <!-- <select class="custom-field" > -->
+          <select class="custom-field" #Project_Code="ngModel" name="Project_Code"
+            [(ngModel)]="i.Project_Code" list="dynmicUserIds" [disabled]="mode=='view'" required >
+          <!-- <datalist id="dynmicUserIds"> -->
+            <option [value]="undefined" selected>---Select Project Name---</option>        
+            <option [value]="c.PD_Id" *ngFor="let c of projectcode;">
+              {{c.PD_Project_Code}} - {{c.PD_Project_Name}}
+            </option>
+          <!-- </datalist> -->
+          </select>
+          <label for="">Project Name
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Project_Code.invalid && (Project_Code.dirty || Project_Code.touched || formInvalid)">
+           <span *ngIf="Project_Code.errors.required">Project Name is required</span>
+          </div> 
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="custom-field" #Phase="ngModel" name="Phase" [(ngModel)]="i.Phase" [disabled]="mode=='view'" required>
+          <label for="">Phase
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Phase.invalid && (Phase.dirty || Phase.touched || formInvalid)">
+            <span *ngIf="Phase.errors.required">Phase is required</span>
+           </div> 
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <!-- <select class="custom-field" > -->
+          <select class="custom-field" #Contractor="ngModel" name="Contractor"
+            [(ngModel)]="i.Contractor" list="dynmicUserIds" [disabled]="mode=='view'" required >
+          <!-- <datalist id="dynmicUserIds"> -->
+            <option [value]="undefined" selected>---Select Contractor---</option>        
+            <option [value]="c.Contractor_id" *ngFor="let c of contractorcode;">
+              {{c.Contractor_Code}} - {{c.Contractor_name}}
+            </option>
+          <!-- </datalist> -->
+          </select>
+          <label for="">Contractor
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Contractor.invalid && (Contractor.dirty || Contractor.touched || formInvalid)">
+           <span *ngIf="Contractor.errors.required">Contractor is required</span>
+          </div> 
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="custom-field" #Activity_Job="ngModel" name="Activity_Job" [(ngModel)]="i.Activity_Job" [disabled]="mode=='view'" required>
+          <label for="">Activity / Job
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Activity_Job.invalid && (Activity_Job.dirty || Activity_Job.touched || formInvalid)">
+            <span *ngIf="Activity_Job.errors.required">Activity Job is required</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <textarea class="custom-field" #Description="ngModel" name="Description" [(ngModel)]="i.Description" [disabled]="mode=='view'" required></textarea>
+          <label for="">Description
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Description.invalid && (Description.dirty || Description.touched || formInvalid)">
+            <span *ngIf="Description.errors.required">Description is required</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="custom-field" #Extension_Duration="ngModel" name="Extension_Duration" [(ngModel)]="i.Extension_Duration" [disabled]="mode=='view'" required maxlength="3" pattern="^[0-9]{1,3}$">
+          <label for="">Extension Duration (in Days)
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Extension_Duration.invalid && (Extension_Duration.dirty || Extension_Duration.touched || formInvalid)">
+            <span *ngIf="Extension_Duration.errors.required">Extension Duration is required</span>
+            <span *ngIf="Extension_Duration.errors?.pattern">Extension Duration should contain only numbers</span>
+            <span *ngIf="Extension_Duration.errors?.maxlength">Extension Duration should contain maximum 3 numbers</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="date" class="custom-field" #Extension_Start_Date="ngModel" name="Extension_Start_Date" [(ngModel)]="i.Extension_Start_Date" [disabled]="mode=='view'" required>
+          <label for="">Extension Start Date
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Extension_Start_Date.invalid && (Extension_Start_Date.dirty || Extension_Start_Date.touched || formInvalid)">
+            <span *ngIf="Extension_Start_Date.errors.required">Extension Start Date is required</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="date" class="custom-field" #Extension_End_Date="ngModel" name="Extension_End_Date" [(ngModel)]="i.Extension_End_Date" [disabled]="mode=='view'" required>
+          <label for="">Extension End Date
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Extension_End_Date.invalid && (Extension_End_Date.dirty || Extension_End_Date.touched || formInvalid)">
+            <span *ngIf="Extension_End_Date.errors.required">Extension End Date is required</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="custom-field" #Extension_Cost="ngModel" name="Extension_Cost" [(ngModel)]="i.Extension_Cost" [disabled]="mode=='view'" required pattern="^[0-9]{1,12}$" maxlength = "10">
+          <label for="">Extension Cost
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Extension_Cost.invalid && (Extension_Cost.dirty || Extension_Cost.touched || formInvalid)">
+            <span *ngIf="Extension_Cost.errors.required">Extension Cost is required</span>
+            <span *ngIf="Extension_Cost.errors?.pattern">Extension Cost should contain only numbers</span>
+            <span *ngIf="Extension_Cost.errors?.maxlength">Extension Cost should contain 12 digits </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="custom-field" #Previous_Activity="ngModel" name="Previous_Activity" [(ngModel)]="i.Previous_Activity" [disabled]="mode=='view'" required>
+          <label for="">Previous Activity
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Previous_Activity.invalid && (Previous_Activity.dirty || Previous_Activity.touched || formInvalid)">
+            <span *ngIf="Previous_Activity.errors.required">Previous Activity is required</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="custom-field" #Next_Activity="ngModel" name="Next_Activity" [(ngModel)]="i.Next_Activity" [disabled]="mode=='view'" required>
+          <label for="">Next Activity
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Next_Activity.invalid && (Next_Activity.dirty || Next_Activity.touched || formInvalid)">
+            <span *ngIf="Next_Activity.errors.required">Next Activity is required</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <select class="custom-field" [(ngModel)]="i.Status" #Status="ngModel" name="Status"
+            [disabled]="mode=='view'" required>
+            <option [value]="undefined" selected>---Select---</option>
+            <option value=3>Active</option>
+            <option value=4>Inactive</option>
+          </select>
+          <label for="">Status
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Status.invalid && (Status.dirty || Status.touched || formInvalid)">
+            <span *ngIf="Status.errors.required">Status is required</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="text-center">
+      <button class="btn btn-primary" [disabled]="mode=='view'" type="submit">Save</button>&nbsp;
+      <button class="btn btn-primary" [disabled]="mode=='view'" type="reset">Cancel</button>
+    </div>
+  </div>
+</form>
+</div>

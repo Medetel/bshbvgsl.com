@@ -1,0 +1,91 @@
+<div class="wrapper">
+    <div class="title themeheading">
+        {{title}}
+        <button class="btn btn-primary float-right" [routerLink]="['/home/payroll/allowances']">Back</button>
+        <span class="clearfix"></span>
+    </div>
+
+    <form (ngSubmit)="mode=='edit'?UpdateAllowanceDedu(Details):SaveAllowanceDedu(Details)"
+    #Details="ngForm" name="form1">
+    <div class="container-fluid">
+       
+        <div class="title themeheading rowmarginfix">
+            Allowance Details
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <div class="input-group">
+                    <label>Earn Code</label><br>
+                    <select class="custom-field">
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div class="input-group">
+                    <label>Description
+                     <span class="mandatory">*</span>
+                     </label><br>
+                    <input class="custom-field" type="text" maxlength="30" name="ED_DESC" maxlength="50" [(ngModel)]="a.ED_DESC"
+                    #ED_DESC="ngModel" [disabled]="mode=='view'" reqiured>
+                </div>
+                <div class="error-msg pull-right"  *ngIf="ED_DESC.invalid && (ED_DESC.dirty || ED_DESC.touched || formInvalid)">
+              <span  *ngIf="ED_DESC.errors.required">Description is required</span>             
+          </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <label style="color:blue;">Fixed Variable </label>
+                <input type="radio" name="optradio">Fixed
+                <input type="radio" name="optradio"> variable
+
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div class="input-group">
+                    <label>Fixed Amount</label><br>
+                    <input class="custom-field" type="text">
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <div class="input-group">
+                    <label>Variable Amount </label>
+                    <input class="custom-field" type="text">
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div class="input-group">
+                    <label>Depend Variable</label><br>
+                    <input class="custom-field" type="text">
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+                <div class="input-group">
+                    <label>Earn Code</label><br>
+                    <select class="custom-field">
+
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div class="input-group">
+                    <label>Effective date</label><br>
+                    <input class="custom-field" type="date">
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <br>
+    <div class="text-center">
+        <button class="btn btn-primary" type="submit">Save</button> &nbsp;
+        <button class="btn btn-primary">Cancel</button>
+    </div>
+    </form>
+</div>

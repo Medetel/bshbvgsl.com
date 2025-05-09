@@ -1,0 +1,30 @@
+.menus{
+   
+    color: rgb(0, 0, 0);
+   
+}
+
+ul#user-dopdown{
+    overflow: initial;
+    position: absolute;
+    right: 10px;
+}
+
+ul#user-dopdown .dropdown-menu{
+    left: -135px !important;
+    top: 45px;
+}
+
+ul#user-dopdown a{
+    line-height: 20px;
+    padding:10px;
+}
+
+@media (max-width: 768px) {
+   
+    .navbar {
+      position: relative;
+      top: 0;
+    }
+
+}

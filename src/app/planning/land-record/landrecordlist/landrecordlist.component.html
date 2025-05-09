@@ -1,0 +1,544 @@
+<div class="wrapper propertyregister">
+  <div class="title themeheading">{{title}}
+    <span class="clearfix"></span>
+  </div>
+  <div class="container-fluid">
+
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <!-- <select #PD_Id="ngModel" name="PD_Id" [(ngModel)]="LR.PD_Id" class="custom-field" (change)="AddProject(LR.PD_Id)">
+            <option value="undefined">---Select---</option>
+            <option *ngFor="let project of projectlist" [value]="project.PD_Id">
+              {{project.PD_Project_Code}} - {{project.PD_Project_Name}} - {{project.Phase_Name}}
+            </option>
+          </select> -->
+          <input type="text" class="custom-field" #PD_Id="ngModel" name="PD_Id" [(ngModel)]="LR.PD_Id"
+            list="dynmicUserIds" (change)="AddProject(LR.PD_Id)" />
+          <datalist id="dynmicUserIds">
+            <option *ngFor="let item of projectlist" [value]="item.PD_Id"
+              style="height:150px; width:150px;margin-bottom:50px;">
+              {{item.PD_Project_Code}} - {{item.PD_Project_Name}} - {{item.Phase_Name}}
+            </option>
+          </datalist>
+          <label>Project</label>
+        </div>
+      </div>
+      <div class="col-md-1">
+        <button class="btn btn-primary" type="button" (click)="GetProjectDetailsforLR(LR.PD_Id)">Go</button>
+      </div>
+    </div>
+
+
+
+
+    <div class="row">
+      <div class="col-md-6">
+        <label>
+          <span class="field-title">Project</span>: {{projectDetails.PD_Project_Name}}</label>
+      </div>
+
+      <div class="col-md-6">
+        <label>
+          <span class="field-title">Scheme</span>: {{projectDetails.Sch_Name}}</label>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label>
+          <span class="field-title">District</span>: {{projectDetails.DI_District}}</label>
+      </div>
+      <div class="col-md-6">
+        <label>
+          <span class="field-title">Taluk</span>: {{projectDetails.TA_Taluk}}</label>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label>
+          <span class="field-title">Hobli</span>: {{projectDetails.HO_Name}}</label>
+      </div>
+      <div class="col-md-6">
+        <label>
+          <span class="field-title">Village</span>: {{projectDetails.PD_Village}}</label>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <label>
+          <span class="field-title">Phase</span>: {{projectDetails.Phase_Name}}</label>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="table-responsive" style="margin-top:15px">
+    <table class="table table-bordered" style="width: 1800px;">
+      <thead>
+        <tr>
+          <td rowspan="2">Sl No.</td>
+          <td rowspan="2">Survey No.</td>
+          <td rowspan="2">Land Owner.</td>
+
+          <td colspan="3" class="text-center">Extent</td>
+
+          <td colspan="2" class="text-center">Tippani</td>
+
+
+          <td rowspan="2">Atlas</td>
+
+          <td rowspan="2">Khatha</td>
+          <td rowspan="2">EC</td>
+          <td rowspan="2">RTC</td>
+          <td rowspan="2">Revenue Sketch</td>
+          <td rowspan="2">PT sheet</td>
+          <td rowspan="2">Akar Bandh</td>
+          <td rowspan="2">JMC</td>
+          <td rowspan="2" class="text-center">Land Use as per Master Plan</td>
+          <!-- <td rowspan="2">Remarks</td> -->
+          <td rowspan="2">Edit</td>
+          <td rowspan="2">Note</td>
+        </tr>
+        <tr>
+          <td class="text-center">Acres</td>
+          <td class="text-center">Guntas</td>
+          <td class="text-center">Total Extents</td>
+          <td>No</td>
+          <td>Date</td>
+        </tr>
+      </thead>
+      <tbody class="data-grid">
+        <tr *ngFor="let info of LandRecord;let i=index" [ngClass]="{'planning':info.LR_From =='Planning'}">
+          <td>{{i+1}} </td>
+          <td>{{info.LR_SurveyNo}}</td>
+          <td>{{info.LR_Owner}}</td>
+          <td>{{info.LR_ExtentinAcres}}</td>
+          <td>{{info.LR_ExtentinGuntas}}</td>
+          <td>{{info.LR_ExtentinAcres}}<span *ngIf="info.LR_ExtentinGuntas != null">.</span>{{info.LR_ExtentinGuntas}}
+          </td>
+          <td>{{info.LR_Tippani_No}}</td>
+          <td>{{info.LR_Tippani_Date | date:'dd-MM-yyyy'}}</td>
+
+          <td>
+            <span *ngIf="info.LR_Atlas != null">
+              <a href="javascript:void(0);">Yes</a>
+            </span>
+            <span *ngIf="info.LR_Atlas == null">No</span>
+          </td>
+          <td>
+            <span *ngIf="info.LR_Khatha != null">
+              <a href="javascript:void(0);">Yes</a>
+            </span>
+            <span *ngIf="info.LR_Khatha == null">No</span>
+          </td>
+          <td>
+            <span *ngIf="info.LR_EC != null">
+              <a href="javascript:void(0);">Yes</a>
+            </span>
+            <span *ngIf="info.LR_EC == null">No</span>
+          </td>
+          <td>
+            <span *ngIf="info.LR_RTC != null">
+              <a href="javascript:void(0);">Yes</a>
+            </span>
+            <span *ngIf="info.LR_RTC == null">No</span>
+          </td>
+          <td>
+            <span *ngIf="info.LR_Revenue_Sketch != null">
+              <a href="javascript:void(0);">Yes</a>
+            </span>
+            <span *ngIf="info.LR_Revenue_Sketch == null">No</span>
+          </td>
+          <td>
+            <span *ngIf="info.LR_PTSheet != null">
+              <a href="javascript:void(0);">Yes</a>
+            </span>
+            <span *ngIf="info.LR_PTSheet == null">No</span>
+          </td>
+          <td>
+            <span *ngIf="info.LR_Akar_Bandh != null">
+              <a href="javascript:void(0);">Yes</a>
+            </span>
+            <span *ngIf="info.LR_Akar_Bandh == null">No</span>
+          </td>
+          <td>
+            <span *ngIf="info.LR_JMC != null">
+              <a href="javascript:void(0);">Yes</a>
+            </span>
+            <span *ngIf="info.LR_JMC == null">No</span>
+          </td>
+          <td>{{info.LR_Landuse_per_MaterPlan}}</td>
+          <!-- <td>-</td> -->
+          <!-- <td>
+                <button class="btn btn-primary">Download</button>
+              </td> -->
+          <td>
+            <!-- <a *ngIf="info.LR_From =='Procurement'">
+              <i class="fa fa-lg fa-edit themecolor"></i>
+            </a> -->
+            <!-- *ngIf="info.LR_From =='Planning'" -->
+            <a href="#" data-target="#landrecord" data-toggle="modal" (click)="GetLandRecordbyId(info.LR_Id,LR.PD_Id)">
+              <i class="fa fa-lg fa-edit themecolor"></i>
+            </a>
+          </td>
+          <td>
+            <button *ngIf="info.LR_From =='Procurement'" class="btn btn-primary"
+              (click)="SendLrId(info.LR_Id,info.LR_Owner,info.LR_SurveyNo)" data-target="#note"
+              data-toggle="modal">Note</button>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="5" style="text-align: right;font-size: 20px;">Total</td>
+          <td colspan="1" style="text-align: right;font-size: 20px;">{{total | number}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!--<form action="" #ln="ngForm" (ngSubmit)="onSubmit(ln)">-->
+<div class="modal fade" id="note" *ngIf="showIt">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Note</h4>
+        <span style="color: rgb(87, 35, 228);margin-top: 9px;margin-left: 161px;"> Land Owner Name : {{LR_Name}} ||
+          Survey No : {{Survey_No}} </span>
+        <button type="button" (click)="closeModal()" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+
+
+
+        <br>
+
+        <div class="container-fluid">
+          <div class="row" style="background:#fff;">
+            <div class="col-md-12">
+              <div class="table-responsive fixedheight">
+                <div class="planning-remarks" *ngFor="let lrpnote of LRProcremarks; let i=index"
+                  [ngClass]="{'proc':i =='0'}">
+                  <div>
+                    <div class="name float-left">{{lrpnote.UserName}}, {{lrpnote.LRN_From}} Team </div>
+                    <div class="date float-right">{{lrpnote.LRN_TS_LastEdited | date:'medium'}} </div>
+                    <div class="clearfix"> </div>
+                  </div>
+                  <div class="remark">
+                    {{lrpnote.LRN_Note}}
+                  </div>
+                </div>
+                <div class="procurement-remarks" *ngFor="let lrnote of LRremarks; let i=index"
+                  [ngClass]="{'plan':i =='0'}">
+                  <div>
+                    <div class="name float-left">{{lrnote.UserName}}, {{lrnote.LRN_From}} Team </div>
+                    <div class="date float-right">{{lrnote.LRN_TS_LastEdited | date:'medium'}} </div>
+                    <div class="clearfix"> </div>
+                  </div>
+                  <div class="remark">
+                    {{lrnote.LRN_Note}}
+                  </div>
+                </div>
+
+
+
+
+              </div>
+            </div>
+          </div>
+          <div class="row" style="background:#fff !important;" style="margin-top:10px">
+            <div class="col-md-12">
+              <div class="input-group">
+                <textarea [(ngModel)]="LRN.LRN_Note" #LRN_Note name="LRN_Note" id="" cols="30" rows="10"
+                  style="height:150px;" class="custom-field"></textarea>
+                <label for="">Remarks</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="modal-footer">
+        <button class="btn btn-danger" type="button" (click)="onSubmit(LRN,LR_ID)">Send for Clarification</button>
+        <button class="btn btn-danger" data-dismiss="modal" type="button" (click)="closeModal()">Cancel</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- </form> -->
+
+
+<div class="modal fade" role="dialog" id="landrecord" *ngIf="showMod">
+  <div class="modal-dialog modal-lg">
+    <form (ngSubmit)="mode=='edit'?update(landdetails):SaveLandDetails(landdetails)" #landdetails="ngForm"
+      autocomplete="off">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Add Private/Goverment Land included in the project area</h4>
+          <button type="button" (click)="closeModal()" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="row">
+
+              <div class="col-md-6">
+                <div class="input-group">
+                  <select class="custom-field" [(ngModel)]="Land.LR_LD_Id_Fk" #LR_LD_Id_Fk="ngModel" name="LR_LD_Id_Fk"
+                    [disabled]="mode =='view'" required (change)="GetLandOwnerName(Land.LR_LD_Id_Fk)" disabled>
+                    <option [value]="undefined" selected>---Select---</option>
+                    <option [value]="sl.LD_Id" *ngFor="let sl of Surveylist;">
+                      {{sl.LD_SurveyNo}} </option>
+                  </select>
+                  <label for="">Survey No
+                    <span class="mandatory">*</span>
+                  </label>
+                  <div class="error-msg"
+                    *ngIf="LR_LD_Id_Fk.invalid && (LR_LD_Id_Fk.dirty || LR_LD_Id_Fk.touched || formInvalid)">
+                    <span *ngIf="LR_LD_Id_Fk.errors.required">Survey No is required.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="input-group">
+                  <select class="custom-field" [(ngModel)]="Land.LR_LOD_Id_Fk" #LR_LOD_Id_Fk="ngModel"
+                    name="LR_LOD_Id_Fk" [disabled]="mode =='view'" required disabled>
+                    <option [value]="undefined" selected>---Select---</option>
+                    <option [value]="ll.LOD_Id_PK" *ngFor="let ll of Landlist;">
+                      {{ll.LOD_LO_Name}} </option>
+                  </select>
+                  <label for="">Land Owner
+                    <span class="mandatory">*</span>
+                  </label>
+                  <div class="error-msg"
+                    *ngIf="LR_LOD_Id_Fk.invalid && (LR_LOD_Id_Fk.dirty || LR_LOD_Id_Fk.touched || formInvalid)">
+                    <span *ngIf="LR_LOD_Id_Fk.errors.required">Land Owner is required.</span>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="input-group">
+                  <input type="text" class="custom-field" maxlength="20" name="LR_ExtentinAcres"
+                    [(ngModel)]="Land.LR_ExtentinAcres" #LR_ExtentinAcres="ngModel">
+                  <label for="">Extent in Acres</label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="input-group">
+                  <input type="text" class="custom-field" maxlength="20" name="LR_ExtentinGuntas"
+                    [(ngModel)]="Land.LR_ExtentinGuntas" #LR_ExtentinGuntas="ngModel">
+                  <label for="">Extent in Guntas</label>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="input-group">
+                  <input type="text" class="custom-field" maxlength="20" name="LR_Tippani_No"
+                    [(ngModel)]="Land.LR_Tippani_No" #LR_Tippani_No="ngModel">
+                  <label for="">Tippani No.</label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="input-group">
+                  <input type="date" class="custom-field" name="LR_Tippani_Date" [(ngModel)]="Land.LR_Tippani_Date"
+                    #LR_Tippani_Date="ngModel">
+                  <label for="">Tippani Date</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="input-group">
+                  <input type="text" class="custom-field" maxlength="20" name="LR_Landuse_per_MaterPlan"
+                    [(ngModel)]="Land.LR_Landuse_per_MaterPlan" #LR_Landuse_per_MaterPlan="ngModel">
+                  <label for="">Land Use as Per Master Plan.</label>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="input-group">
+                  <input type="text" class="custom-field" maxlength="20" name="LR_Extents_asper_COL"
+                    [(ngModel)]="Land.LR_Extents_asper_COL" #LR_Extents_asper_COL="ngModel">
+                  <label for="">Extent for change of land Use(A-G)</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="input-group">
+                  <input type="text" class="custom-field" maxlength="20" name="LR_GO_Number"
+                    [(ngModel)]="Land.LR_GO_Number" #LR_GO_Number="ngModel">
+                  <label for="">G.O Number</label>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="input-group">
+                  <input type="date" class="custom-field" maxlength="20" name="LR_GO_Date" [(ngModel)]="Land.LR_GO_Date"
+                    #LR_GO_Date="ngModel">
+                  <label for="">G.O Date</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="input-group">
+                  <input type="text" class="custom-field" maxlength="20" name="LR_LandConversion_Number"
+                    [(ngModel)]="Land.LR_LandConversion_Number" #LR_LandConversion_Number="ngModel">
+                  <label for="">Land Conversion Order number</label>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="input-group">
+                  <input type="date" class="custom-field" maxlength="20" name="LR_LandConversion_Date"
+                    [(ngModel)]="Land.LR_LandConversion_Date" #LR_LandConversion_Date="ngModel">
+                  <label for="">Land Conversion Order Date</label>
+                </div>
+              </div>
+            </div>
+
+
+
+
+            <div class="row">
+              <div class="col-md-2">
+                <label for="">Altas</label>
+              </div>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <!-- <input type="file" class="custom-field" #Image accept="application/pdf" (change)="UploadAtlas($event.target.files)"
+                    id="LR_Atlas" name="LR_Atlas" [(ngModel)]="Land.LR_Atlas" #LR_Atlas="ngModel"> -->
+                  <a target="_blank" *ngIf="Land.LR_Atlas!=null" href="{{Land.LR_Atlas}}">view</a>
+
+                </div>
+              </div>
+              <div class="col-md-2">
+                <label for="">Khatha</label>
+              </div>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <!-- <input type="file" class="custom-field" #Image accept="application/pdf" (change)="UploadKhatha($event.target.files)"
+                    id="LR_Khatha" name="LR_Khatha" [(ngModel)]="Land.LR_Khatha" #LR_Khatha="ngModel"> -->
+                  <a target="_blank" *ngIf="Land.LR_Khatha!=null" href="{{Land.LR_Khatha}}">view</a>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-2">
+                <label for="">EC</label>
+              </div>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <!-- <input type="file" class="custom-field" #Image accept="application/pdf" (change)="UploadEC($event.target.files)"
+                    id="LR_EC" name="LR_EC" [(ngModel)]="Land.LR_EC" #LR_EC="ngModel"> -->
+                  <a target="_blank" *ngIf="Land.LR_EC!=null" href="{{Land.LR_EC}}">view</a>
+
+                </div>
+              </div>
+              <div class="col-md-2">
+                <label for="">RTC</label>
+              </div>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <!-- <input type="file" class="custom-field" #Image accept="application/pdf" (change)="UploadRTC($event.target.files)"
+                    id="LR_RTC" name="LR_RTC" [(ngModel)]="Land.LR_RTC" #LR_RTC="ngModel"> -->
+                  <a target="_blank" *ngIf="Land.LR_RTC!=null" href="{{Land.LR_RTC}}">view</a>
+
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2">
+                <label for="">Revenue Sketch</label>
+              </div>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <!-- <input type="file" class="custom-field" #Image accept="application/pdf" (change)="UploadSketch($event.target.files)"
+                    id="LR_Revenue_Sketch" name="LR_Revenue_Sketch" [(ngModel)]="Land.LR_Revenue_Sketch"
+                    #LR_Revenue_Sketch="ngModel"> -->
+                  <a target="_blank" *ngIf="Land.LR_Revenue_Sketch!=null" href="{{Land.LR_Revenue_Sketch}}">view</a>
+
+                </div>
+              </div>
+              <div class="col-md-2">
+                <label for="">PT Sheet</label>
+              </div>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <!-- <input type="file" class="custom-field" #Image accept="application/pdf" (change)="UploadPTSheet($event.target.files)"
+                    id="LR_PTSheet" name="LR_PTSheet" [(ngModel)]="Land.LR_PTSheet" #LR_PTSheet="ngModel"> -->
+                  <a target="_blank" *ngIf="Land.LR_PTSheet!=null" href="{{Land.LR_PTSheet}}">view</a>
+
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2">
+                <label for="">Akar Bandh</label>
+              </div>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <!-- <input type="file" class="custom-field" #Image accept="application/pdf" (change)="UploadBandh($event.target.files)"
+                    id="LR_Akar_Bandh" name="LR_Akar_Bandh" [(ngModel)]="Land.LR_Akar_Bandh" #LR_Akar_Bandh="ngModel"> -->
+                  <a target="_blank" *ngIf="Land.LR_Akar_Bandh!=null" href="{{Land.LR_Akar_Bandh}}">view</a>
+
+                </div>
+              </div>
+              <div class="col-md-2">
+                <label for="">JMC</label>
+              </div>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <!-- <input type="file" class="custom-field" #Image accept="application/pdf" (change)="UploadJMC($event.target.files)"
+                    id="LR_JMC" name="LR_JMC" [(ngModel)]="Land.LR_JMC" #LR_JMC="ngModel"> -->
+                  <a target="_blank" *ngIf="Land.LR_JMC!=null" href="{{Land.LR_JMC}}">view</a>
+
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2">
+                <label for="">Tippani File</label>
+              </div>
+              <div class="col-md-4">
+                <div class="input-group">
+                  <a target="_blank" *ngIf="Land.LR_Tippani_File!=null" href="{{Land.LR_Tippani_File}}">view</a>
+                </div>
+              </div>
+            </div>
+            <!-- <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <textarea class="custom-field" name="LR_Tippani_Date" [(ngModel)]="Land.LR_Tippani_Date" #LR_Tippani_Date="ngModel"></textarea>
+                    <label for="">Remarks</label>
+                  </div>
+            </div>
+          </div> -->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" *ngIf="show=='Y'" type="submit">{{mode=='edit'?'Update':'Save'}}</button>
+          <!-- <button class="btn btn-danger" type="button" (click)="updated(Land)">{{mode=='edit'?'Update':'Save'}}</button> -->
+          <button class="btn btn-danger" data-dismiss="modal" type="button">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

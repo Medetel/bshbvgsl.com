@@ -1,0 +1,74 @@
+<div class="wrapper">
+    <div class="title themeheading">
+        {{title}}
+        <button class="btn btn-primary pull-right" [routerLink]="['/home/masters/designation']">Back</button>
+        <span class="clearfix"></span>
+    </div>
+
+
+    <form #Religion="ngForm" name="Religion">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6 col-sm-6" *ngIf="mode=='View'">
+                    <div class="input-group">
+                        <label>Designation Code</label><br>
+                        <input class="custom-field" type="text" oninput="this.value = this.value.toUpperCase()"
+                            maxlength="100" name="Dsc_Code" [(ngModel)]="r.Dsc_Code" #Dsc_Code="ngModel"
+                            disabled required>
+                    </div>
+                </div>
+               
+                <div class="col-md-6  col-sm-6">
+                    <div class="input-group">
+                        <label>Designation
+                            <span class="mandatory">*</span>
+                        </label><br>
+                        <input class="custom-field" type="text" style="text-transform: capitalize;" maxlength="100"
+                            name="Dsc_Name" [(ngModel)]="r.Dsc_Name" #Dsc_Name="ngModel" [disabled]="mode=='View'" required pattern="[A-Za-z]+">
+                    </div>
+                    <div class="error-msg pull-right"  *ngIf="Dsc_Name.invalid && (Dsc_Name.dirty || Dsc_Name.touched || formInvalid)">
+                        <span  *ngIf="Dsc_Name.errors.required">Description No is required</span>        
+                        <span  *ngIf="Dsc_Name.errors.pattern">Description No it should accept only alphabets</span>               
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-sm-6">
+                    <div class="input-group">
+                        <label>General
+                            <span class="mandatory">*</span>
+                        </label><br>
+                        <input class="custom-field" type="text" name="Desg_gen" [(ngModel)]="r.Desg_gen"
+                            #Desg_gen="ngModel" [disabled]="mode=='View'" required maxlength="10" pattern="[A-Za-z]+">
+                    </div>
+                    <div class="error-msg pull-right"  *ngIf="Desg_gen.invalid && (Desg_gen.dirty || Desg_gen.touched || formInvalid)">
+                        <span  *ngIf="Desg_gen.errors.required">General No is required</span>
+                        <span  *ngIf="Desg_gen.errors.pattern">Enter valid data</span>                      
+                    </div>
+                </div>
+                <div class="col-md-4  col-sm-6">
+                    <div class="input-group">
+                        <label>371J
+                            <span class="mandatory">*</span>
+                        </label><br>
+                        <input class="custom-field" type="text" name="Desg_371j" [(ngModel)]="r.Desg_371j"
+                            #Desg_371j="ngModel" [disabled]="mode=='View'" (keydown.enter)="mydata(r.Desg_371j,r.Desg_gen)" required
+                            maxlength="10" pattern="[A-Za-z]+">
+                    </div>
+                    <div class="error-msg pull-right"  *ngIf="Desg_371j.invalid && (Desg_371j.dirty || Desg_371j.touched || formInvalid)">
+                        <span  *ngIf="Desg_371j.errors.required">Desg371j is required</span>  
+                        <span  *ngIf="Desg_371j.errors.pattern">Enter valid data</span>                      
+                    </div>
+                </div>
+                <label>Total Post(As per C&R) :{{sum}}</label>
+            </div>
+        </div>
+
+        <!-- </div> -->
+        <br>
+        <div class="text-center">
+            <button class="btn btn-primary" [disabled]="mode=='View'" type="submit" (click)="mode=='Edit'?UpdateReligionDetails(Religion):SaveReligion(Religion)">{{mode=='Edit'?'Edit':'Save'}}</button> &nbsp;
+            <button class="btn btn-primary" (click)="Cancel()" [disabled]="mode=='View'">Cancel</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,67 @@
+<div class="wrapper application">
+  <div class="title themeheading">
+    {{title}}
+    <!-- <button class="btn btn-primary pull-right" [hidden]="appmode!='applicant'" [routerLink]="['/home/appstatus']">Back</button> -->
+  </div>
+
+ 
+
+  <!--  -->
+  <br>
+  <div class="container-fluid martop20">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="recieved-tab" data-toggle="tab" href="#recieved" role="tab" aria-controls="recieved" aria-selected="true">Recieved</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="sent-tab" data-toggle="tab" href="#sent" role="tab" aria-controls="sent" aria-selected="false">Sent</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="escalated-tab" data-toggle="tab" href="#escalated" role="tab" aria-controls="escalated" aria-selected="false">Escalated</a>
+      </li>
+    </ul>
+    <br>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="recieved" role="tabpanel" aria-labelledby="recieved-tab">
+        <br>
+        <div class="table-responsive">
+          <table class="grid table table-striped">
+            <thead>
+              <tr>
+                <td>Sl No.</td>
+                <td>Task</td>
+                <td>Alert Message</td>
+                <td>From</td>             
+                <td>View</td>
+              </tr>
+            </thead>        
+            <tbody>
+              <tr *ngFor="let Alt of Alert;let i=index">              
+                <td>{{i+1}}</td>
+                <td>{{Alt.PageName}}</td>
+                <td>{{Alt.TR_Trans_Message}}</td>
+                <td>{{Alt.UserName}}</td>
+                <td>               
+                  <a href="#" [routerLink]="Alt.RedirectUrl">
+                    <i class="fa fa-lg fa-eye themecolor"></i>
+                </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>    
+        </div>
+      </div>
+      <div class="tab-pane fade" id="sent" role="tabpanel" aria-labelledby="sent">
+        
+      </div>
+      <div class="tab-pane fade" id="escalated" role="tabpanel" aria-labelledby="escalated-tab">
+        
+      </div>
+    </div>
+  </div>
+
+  
+
+
+
+</div>

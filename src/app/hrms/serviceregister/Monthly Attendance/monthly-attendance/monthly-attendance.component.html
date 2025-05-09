@@ -1,0 +1,256 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    Monthly Attendance
+    <button class="btn btn-primary float-right" [routerLink]="['/home/monthlyattendance']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <div class="container-fluid">
+    <!-- <div class="row">
+      <div class="col-md-4">
+        <label for="">Document No :</label>
+      </div>
+      <div class="col-md-4">
+        <label for="">Date : <span>11/11/2019</span></label>
+      </div>
+      <div class="col-md-4">
+        <label for="">Status : <span>Pending</span></label>
+      </div>
+    </div> -->
+    
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for=""> Division code <span class="mandatory">*</span> </label>
+          <select class="custom-field" [(ngModel)]="b.EMP_DIVISION_ID" #EMP_DIVISION_ID="ngModel"
+            name="EMP_DIVISION_ID" [disabled]="mode=='view' || hide== true" required>
+            <option [value]="undefined" selected>---Select---</option>
+            <option [value]="d.DI_Id" *ngFor="let d of DistrictsList;">
+              {{d.DI_District}}
+            </option>
+          </select>
+          
+          <div class="error-msg"
+            *ngIf="EMP_DIVISION_ID.invalid && (EMP_DIVISION_ID.dirty || EMP_DIVISION_ID.touched || formInvalid)">
+            <span *ngIf="EMP_DIVISION_ID.errors.required">Division code is required</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for=""> Month/Year <span class="mandatory">*</span></label>
+          <select class="custom-field" [(ngModel)]="b.code_value1" (change)="ChangeOfmonthyear(b.code_value1)"
+          #code_value1="ngModel" name="code_value1" [disabled]="mode=='view' || hide== true" required>
+          <option [value]="undefined" selected>---Select---</option>
+          <option [value]="r.monthCode" *ngFor="let r of CalendaryearmonthList;">
+            {{r.monthCode}}
+          </option>
+        </select>
+          
+        <div class="error-msg"
+        *ngIf="code_value1.invalid && (code_value1.dirty || code_value1.touched || formInvalid)">
+        <span *ngIf="code_value1.errors.required">Month/Year is required</span>
+      </div>
+        </div>
+          
+  
+  
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+      <div class="input-group">
+        <label for=""> Designation <span class="mandatory">*</span></label>
+      <select class="custom-field" [(ngModel)]="b.desg_id" (change)="Changeofdesignation(b.EMP_DIVISION_ID,b.desg_id)"
+      #desg_id="ngModel" name="desg_id" [disabled]="mode=='view' || hide== true" required>
+      <option [ngValue]="undefined" selected>---Select---</option>
+      <option [ngValue]="d.desg_id" *ngFor="let d of DesignationList;">
+        {{d.desg_name}}
+      </option>
+    </select>
+      
+    <div class="error-msg"
+    *ngIf="desg_id.invalid && (desg_id.dirty || desg_id.touched || formInvalid)">
+    <span *ngIf="desg_id.errors.required">Designation is required</span>
+  </div>
+    </div>
+  </div>
+    </div>
+  </div>
+  <br>
+
+  <div class="title themeheading">
+    Attendance Details
+    <span class="clearfix"></span>
+  </div>
+  <div class="container-fluid">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td>Sl No.</td>
+            <td>Emp. Code</td>
+            <td>Name</td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+            <td>10</td>
+            <td>11</td>
+            <td>12</td>
+            <td>13</td>
+            <td>14</td>
+            <td>15</td>
+            <td>16</td>
+            <td>17</td>
+            <td>18</td>
+            <td>19</td>
+            <td>20</td>
+            <td>21</td>
+            <td>22</td>
+            <td>23</td>
+            <td>24</td>
+            <td>25</td>
+            <td>26</td>
+            <td>27</td>
+            <td>28</td>
+            <td>29</td>
+            <td>30</td>
+            <td>31</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let t of TimeRollDetails; let i=index" >
+            <td>{{i+1}}</td>
+            <td>{{t.Emp_Employee_Code}}</td>
+            <td>{{t.EMP_FIRST_NAME}}</td>
+            <td>
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_1" style="text-transform: uppercase;" #DAY_1="ngModel" [disabled]="mode=='view'"  name="DAY_1" class="form-control">
+            </td>
+            <td>
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_2" style="text-transform: uppercase;" #DAY_2="ngModel" [disabled]="mode=='view'" name="DAY_2" class="form-control">
+            </td>
+            <td>
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_3" style="text-transform: uppercase;" #DAY_3="ngModel" [disabled]="mode=='view'" name="DAY_3"  class="form-control">
+            </td>
+            <td>
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_4" style="text-transform: uppercase;" #DAY_4="ngModel" [disabled]="mode=='view'"  name="DAY_4" class="form-control">
+            </td>
+            <td>
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_5" style="text-transform: uppercase;" #DAY_5="ngModel" [disabled]="mode=='view'" name="DAY_5" class="form-control">
+            </td>
+            <td>
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_6" style="text-transform: uppercase;" #DAY_6="ngModel" [disabled]="mode=='view'" name="DAY_6" class="form-control">
+            </td>
+            <td>
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_7" style="text-transform: uppercase;" #DAY_7="ngModel" [disabled]="mode=='view'" name="DAY_7" class="form-control">
+            </td>
+            <td>
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_8" style="text-transform: uppercase;" #DAY_8="ngModel" [disabled]="mode=='view'" name="DAY_8" class="form-control">
+            </td>
+            <td>
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_9" style="text-transform: uppercase;" #DAY_9="ngModel" [disabled]="mode=='view'" name="DAY_9" class="form-control">
+            </td>
+            <td>
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_10" style="text-transform: uppercase;" #DAY_10="ngModel" [disabled]="mode=='view'" name="DAY_10" class="form-control">
+            </td>
+            <td>
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_11" style="text-transform: uppercase;" #DAY_11="ngModel" [disabled]="mode=='view'" name="DAY_11" class="form-control">
+            </td>
+            <td>
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_12" style="text-transform: uppercase;" #DAY_12="ngModel" [disabled]="mode=='view'" name="DAY_12" class="form-control">
+            </td>
+            <td>
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_13" style="text-transform: uppercase;" #DAY_13="ngModel" [disabled]="mode=='view'"name="DAY_13" class="form-control">
+            </td>
+            <td>
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_14" style="text-transform: uppercase;" #DAY_14="ngModel" [disabled]="mode=='view'"name="DAY_14" class="form-control">
+            </td>
+            <td>
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_15" style="text-transform: uppercase;" #DAY_15="ngModel" [disabled]="mode=='view'"name="DAY_15" class="form-control">
+            </td>
+            <td>
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_16" style="text-transform: uppercase;" #DAY_16="ngModel" [disabled]="mode=='view'"name="DAY_16" class="form-control">
+            </td>
+            <td>
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_17" style="text-transform: uppercase;" #DAY_17="ngModel" [disabled]="mode=='view'"name="DAY_17" class="form-control">
+            </td>
+            <td>
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_18" style="text-transform: uppercase;" #DAY_18="ngModel" [disabled]="mode=='view'"name="DAY_18" class="form-control">
+            </td>
+            <td>
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_19" style="text-transform: uppercase;" #DAY_19="ngModel" [disabled]="mode=='view'"name="DAY_2" class="form-control">
+            </td>
+            <td>
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_20" style="text-transform: uppercase;" #DAY_20="ngModel" [disabled]="mode=='view'"name="DAY_20" class="form-control">
+            </td>
+            <td>
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_21" style="text-transform: uppercase;" #DAY_21="ngModel" [disabled]="mode=='view'"name="DAY_21" class="form-control">
+            </td>
+            <td>
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_22" style="text-transform: uppercase;" #DAY_22="ngModel" [disabled]="mode=='view'"name="DAY_22" class="form-control">
+            </td>
+            <td>
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_23" style="text-transform: uppercase;" #DAY_23="ngModel" [disabled]="mode=='view'"name="DAY_23" class="form-control">
+            </td>
+            <td>
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_24" style="text-transform: uppercase;" #DAY_24="ngModel" [disabled]="mode=='view'" name="DAY_24" class="form-control">
+            </td>
+            <td>
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_25" style="text-transform: uppercase;" #DAY_25="ngModel" [disabled]="mode=='view'"name="DAY_25" class="form-control">
+            </td>
+            <td>
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_26" style="text-transform: uppercase;" #DAY_26="ngModel" [disabled]="mode=='view'" name="DAY_26" class="form-control">
+            </td>
+            <td>
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_27" style="text-transform: uppercase;" #DAY_27="ngModel" [disabled]="mode=='view'" name="DAY_27" class="form-control">
+            </td>
+            <td *ngIf="days==28 || days==29 || days == 30 || days == 31">
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_28" style="text-transform: uppercase;" #DAY_28="ngModel" [disabled]="mode=='view'" name="DAY_28" class="form-control">
+            </td> 
+
+                   
+            <td *ngIf="days==29 || days == 30 || days == 31">
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_29" style="text-transform: uppercase;" #DAY_29="ngModel" [disabled]="mode=='view'" name="DAY_29" class="form-control">
+            </td>
+            <td *ngIf="days == 30 || days == 31">
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_30" style="text-transform: uppercase;" #DAY_30="ngModel" [disabled]="mode=='view'" name="DAY_30" class="form-control">
+            </td>
+            <td *ngIf="days == 31">
+              <input type="text" maxlength="3" [(ngModel)]="t.DAY_31" style="text-transform: uppercase;" #DAY_31="ngModel" [disabled]="mode=='view'" name="DAY_31" class="form-control">
+            </td>
+          </tr>
+         
+        </tbody>
+      </table>
+    </div>
+    <br>
+    <div class="row" >
+      <div class="col-md-12">
+        <ul class="list">
+          <li class="list-item"> SL - Sick Leave</li>
+          <li class="list-item"> SL9 - Maternity Leave</li>
+          <li class="list-item"> TL3 - Paid Leave</li>
+          <li class="list-item"> AL - Casual Leave</li>
+          <li class="list-item"> BL - Business Leave</li>
+          <li class="list-item"> IL - Initial Leave</li>
+          <li class="list-item"> CL - Company Leave</li>
+          <li class="list-item"> VL - Vacation Leave</li>
+          <li class="list-item"> DL - Deduction Leave</li>
+          <!-- <li class="list-item"> WO - Week Off </li> -->
+          
+        </ul>
+      </div>
+    </div>
+    <br>
+    <div class="text-center">
+      <button class="btn btn-primary" (click)="AddTimeroll(TimeRollDetails)" [disabled]="mode=='view' || hide== true">Save</button>
+      <button class="btn btn-primary" [disabled]="mode=='view' || hide== true" type="button" (click)="resetForm() ">Cancel</button>
+    </div>
+    <br>
+  </div>
+</div>

@@ -1,0 +1,240 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <div class="float-right">
+      <button class="btn btn-primary" [routerLink]="['/home/ratefixation']">Back</button>
+    </div>
+    <span class="clearfix"></span>
+  </div>
+
+  <form (ngSubmit)="mode=='edit'?UpdateRateFixation(rateFixation):SaveRateFixation(rateFixation)" #rateFixation="ngForm"
+    name="form1">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <select #RF_PD_Id_FK="ngModel" name="RF_PD_Id_FK" [(ngModel)]="r.RF_PD_Id_FK" class="custom-field" required
+              (change)="GetProposalId(r.RF_PD_Id_FK)" [disabled]="mode =='view'">
+              <option value="undefined">---Select---</option>
+              <option *ngFor="let project of projectlist" [value]="project.PD_Id">
+                {{project.PD_Project_Code}} - {{project.PD_Project_Name}}
+              </option>
+            </select>
+            <label>Project<span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="RF_PD_Id_FK.invalid && (RF_PD_Id_FK.dirty || RF_PD_Id_FK.touched || formInvalid)">
+              <span *ngIf="RF_PD_Id_FK.errors.required">Project is required.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="r.RF_PR_Id_FK" #RF_PR_Id_FK="ngModel" name="RF_PR_Id_FK" (change)="GetOtherrelatedinfo(r.RF_PR_Id_FK)"
+              [disabled]="mode =='view'" required disabled>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="p.PR_Id_PK" *ngFor="let p of proposallist;">
+                {{p.PR_Id}} </option>
+            </select>
+            <label for="">Proposal Id
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="RF_PR_Id_FK.invalid && (RF_PR_Id_FK.dirty || RF_PR_Id_FK.touched || formInvalid)">
+              <span *ngIf="RF_PR_Id_FK.errors.required">Proposal Id is required.</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="">Proposal for :{{ProposalFor}}</label>
+        </div>
+      </div>
+
+      <div class="row row-custom">
+        <div class="col-md-3">
+          <label for="">District : <span> {{district}}</span></label>
+        </div>
+        <div class="col-md-3">
+          <label for="">Block : <span> {{Taluk}}</span></label>
+        </div>
+        <div class="col-md-3">
+          <label for="">Village/City/Colony : <span>{{Village}}</span></label>
+        </div>
+        <div class="col-md-3">
+          <a *ngIf="r.VR_Id_PK > 0" href="#" [routerLink]="['/home/viabilityreport/viabilityform',r.VR_Id_PK,'view']">View
+            Viability</a>
+          <a *ngIf="r.IR_Id_PK > 0" href="#" [routerLink]="['/home/inspectionreport/inspection-form',r.IR_Id_PK,'view']">View
+            Inspection</a>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <select #RF_PV_Id_FK="ngModel" name="RF_PV_Id_FK" [(ngModel)]="r.RF_PV_Id_FK" [disabled]="mode =='view'" class="custom-field" >
+              <option value="undefined" selected>---Select---</option>
+              <option *ngFor="let vill of projvillagelist" [value]="vill.PV_Id">
+                {{vill.PV_VillageName}}
+              </option>
+            </select>
+            <label>Village<span class="mandatory">*</span>
+            </label>
+            <!-- <div class="error-msg" *ngIf="RF_PD_Id_FK.invalid && (RF_PD_Id_FK.dirty || RF_PD_Id_FK.touched || formInvalid)">
+              <span *ngIf="RF_PD_Id_FK.errors.required">Project is required.</span>
+            </div> -->
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" [disabled]="mode=='view'" [(ngModel)]="r.RF_Rate_Acre" pattern="^[0-9.]*$" maxlength="15"
+              #RF_Rate_Acre="ngModel" name="RF_Rate_Acre" class="custom-field" required>
+            <label for="">Rate Per Acre
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="RF_Rate_Acre.invalid && (RF_Rate_Acre.dirty || RF_Rate_Acre.touched || formInvalid)">
+              <span *ngIf="RF_Rate_Acre.errors.required">Rate/Acre is required.</span>
+              <span *ngIf="RF_Rate_Acre.errors?.pattern">Enter Valid Data.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" [disabled]="mode=='view'" [(ngModel)]="r.RF_Val_asper_SRRate" pattern="^[0-9.]*$"
+              maxlength="15" #RF_Val_asper_SRRate="ngModel" name="RF_Val_asper_SRRate" class="custom-field" (keyup)="GetTotal()"
+              required>
+            <label for="">Valuation AsPer S R Rate
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="RF_Val_asper_SRRate.invalid && (RF_Val_asper_SRRate.dirty || RF_Val_asper_SRRate.touched || formInvalid)">
+              <span *ngIf="RF_Val_asper_SRRate.errors.required">Valuation AsPer S R Rate is required.</span>
+              <span *ngIf="RF_Val_asper_SRRate.errors?.pattern">Enter Valid Data.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" [disabled]="mode=='view'" [(ngModel)]="r.RF_Val_asper_MarketRate" pattern="^[0-9.]*$"
+              maxlength="15" #RF_Val_asper_MarketRate="ngModel" name="RF_Val_asper_MarketRate" class="custom-field"
+              (keyup)="GetTotal()" required>
+            <label for="">Valuation AsPer Market Rate
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="RF_Val_asper_MarketRate.invalid && (RF_Val_asper_MarketRate.dirty || RF_Val_asper_MarketRate.touched || formInvalid)">
+              <span *ngIf="RF_Val_asper_MarketRate.errors.required">Valuation AsPer Market Rate is required.</span>
+              <span *ngIf="RF_Val_asper_MarketRate.errors?.pattern">Enter Valid Data.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" [disabled]="mode=='view'" [(ngModel)]="r.RF_asper_AwardRate" pattern="^[0-9.]*$"
+              maxlength="15" #RF_asper_AwardRate="ngModel" name="RF_asper_AwardRate" class="custom-field" (keyup)="GetTotal()"
+              required>
+            <label for="">AsPer Award Rate
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="RF_asper_AwardRate.invalid && (RF_asper_AwardRate.dirty || RF_asper_AwardRate.touched || formInvalid)">
+              <span *ngIf="RF_asper_AwardRate.errors.required">AsPer Award Rate is required.</span>
+              <span *ngIf="RF_asper_AwardRate.errors?.pattern">Enter Valid Data.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" [disabled]="mode=='view'" [(ngModel)]="r.RF_Marlaki" pattern="^[0-9.]*$" maxlength="15"
+              #RF_Marlaki="ngModel" name="RF_Marlaki" class="custom-field" (keyup)="GetTotal()" required>
+            <label for="">Marlaki
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="RF_Marlaki.invalid && (RF_Marlaki.dirty || RF_Marlaki.touched || formInvalid)">
+              <span *ngIf="RF_Marlaki.errors.required">Marlaki is required.</span>
+              <span *ngIf="RF_Marlaki.errors?.pattern">Enter Valid Data.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" [disabled]="mode=='view'" [(ngModel)]="r.RF_Structures" pattern="^[0-9.]*$" maxlength="15"
+              #RF_Structures="ngModel" name="RF_Structures" class="custom-field" (keyup)="GetTotal()" required>
+            <label for="">Structures
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="RF_Structures.invalid && (RF_Structures.dirty || RF_Structures.touched || formInvalid)">
+              <span *ngIf="RF_Structures.errors.required">Structures is required.</span>
+              <span *ngIf="RF_Structures.errors?.pattern">Enter Valid Data.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" [disabled]="mode=='view'" [(ngModel)]="r.RF_Total" #RF_Total="ngModel" name="RF_Total"
+              class="custom-field" required readonly>
+            <label for="">Total Cost
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="RF_Total.invalid && (RF_Total.dirty || RF_Total.touched || formInvalid)">
+              <span *ngIf="RF_Total.errors.required">Total Cost is required.</span>
+              <span *ngIf="RF_Total.errors?.pattern">Enter Valid Data.</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <textarea [disabled]="mode=='view'" [(ngModel)]="r.RF_Comments" maxlength="200" #RF_Comments="ngModel" name="RF_Comments"
+              cols="30" rows="10" class="custom-field"></textarea>
+            <label for=""> Comments
+            </label>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="file" [disabled]="mode=='view'" #Image accept="application/pdf" (change)="imageAwardUpload($event.target.files)"
+              id="RF_Award_Upload" name="RF_Award_Upload" [(ngModel)]="r.RF_Award_Upload" #RF_Award_Upload="ngModel">
+            <a class="" *ngIf="r.RF_Award_Upload!=null && hide" target="_blank" href="{{r.RF_Award_Upload}}">view</a>
+            <label for="">Award Upload<span class="mandatory">*</span></label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="file" [disabled]="mode=='view'" #Image accept="application/pdf" (change)="imageUpload($event.target.files)"
+              id="RF_Report_Path" name="RF_Report_Path" [(ngModel)]="r.RF_Report_Path" #RF_Report_Path="ngModel">
+            <a class="" *ngIf="r.RF_Report_Path!=null && hide" target="_blank" href="{{r.RF_Report_Path}}">view</a>
+            <label for="">DC Proceeding<span class="mandatory">*</span></label>
+          </div>
+        </div>
+      </div>
+
+      <br>
+      <div class="text-center">
+        <button class="btn btn-primary" [disabled]="mode=='view'" type="submit">Save</button> &nbsp; 
+        <!-- <button class="btn btn-primary" (click)="Cancel()" type="button">Cancel</button> -->
+        <button class="btn btn-primary" [disabled]="mode=='view'" type="reset">Cancel</button>
+      </div>
+    </div>
+  </form>
+</div>

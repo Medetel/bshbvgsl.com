@@ -1,0 +1,108 @@
+<div class="wrapper">
+    <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm,itemsPerPage,1)">
+      <div class="title themeheading">{{title}}
+          <div class="float-right">
+              Items per page:
+              <select name="SearchRows" #SearchRows="ngModel" [(ngModel)]="itemsPerPage" class="noofpage"
+              (change)="itemsPerPageChanged(itemsPerPage, 1)">
+                  <option [ngValue]="5">5</option>
+                  <option [ngValue]="10">10</option>
+                  <option value="20">20</option>
+                  <option value="30">30</option>
+                  <option value="40">40</option>
+                  <option value="50">50</option>
+              </select>
+              <a class="btn btn-primary " [routerLink]="['/home/contractordoc/contractordoc-form']">Add</a>
+          </div>
+          <span class="clearfix"></span>
+      </div>
+      <div class="searchbar">
+          <div class="container">
+              <div class="row">
+                  <div class="col-md-1">
+                      <label>Search</label>
+                  </div>
+                  <div class="col-md-4">
+                      <select class="form-control" #SearchCriteria="ngModel" [(ngModel)]="s.SearchCriteria" name="SearchCriteria" required>
+                          <option [ngValue]="undefined" selected>---Select---</option>
+                          <option value="PD_Project_Name">Project</option>
+                          <option value="Phase">Phase</option>
+                          <option value="Contractor_name">Contractor</option>
+                          <option value="ContractorDoc_Type">Contractor Document Type</option>
+                      </select>
+                      <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)" class="error-msg">
+                  <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+              </div>
+                  </div>
+                  <div class="col-md-4">
+                    <input type="text" name="SearchText"  class="form-control" placeholder="Search.." #SearchText="ngModel" [(ngModel)]="s.SearchText"
+                    required>
+                      <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+                  <div *ngIf="SearchText.errors.required">Search text is required</div>
+              </div>
+                  </div>
+                  <div class="col-md-3">
+                      <button class="btn btn-default" type="submit">Search</button>
+                      <button class="btn btn-default" type="reset" (click)=" GetAllContractdocument(itemsPerPage, 1)" >Clear</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="table-responsive">
+          <table class="table table-striped grid">
+              <thead>
+                  <tr>
+                      <td>Sl No.</td>
+                      <td>Project</td>
+                      <td>Phase</td>
+                      <td>Contractor</td>
+                      <td>Contractor Document Type</td>
+                      <td>View</td>
+                      <td>Edit</td>
+                      <td>Delete</td>
+                  </tr>
+              </thead>
+              <tbody>
+                <tr
+                *ngFor="let tl of Contractdocumentlist | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems}; let i=index">
+                      <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+                        <td>{{tl.PD_Project_Name}}</td>
+                            <td>{{tl.Phase}}</td>
+                            <td>{{tl.Contractor_name}}</td>
+                            <td>{{tl.ContractorDoc_Type}}</td>
+                            <td>
+                                <a href="#" [routerLink]="['/home/contractordoc/contractordoc-form',tl.ContractorDoc_id,'view']">
+                                    <i class="fa fa-lg fa-eye themecolor"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="#" [routerLink]="['/home/contractordoc/contractordoc-form',tl.ContractorDoc_id,'edit']">
+                                    <i class="fa fa-lg fa-edit themecolor"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="javascript:void(0);" (click)="delete(tl.ContractorDoc_id)">
+                                    <i class="fa fa-lg fa-trash themecolor"></i>
+                                </a>
+                            </td>
+        
+                        </tr>  
+              </tbody>
+          </table>
+          <div class="container-fluid">
+              <div class="row">
+                  <div class="col-md-11">
+                      <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)" maxSize="9" directionLinks="true"
+                          autoHide="false" previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination"
+                          screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                      </pagination-controls>
+                  </div>
+                  <div class="col-md-1">
+                      Total:
+                      <span>{{totalItems}}</span>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </form>
+</div>

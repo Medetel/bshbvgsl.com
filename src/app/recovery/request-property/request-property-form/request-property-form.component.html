@@ -1,0 +1,194 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    Customer/Applicant Details
+    <button class="btn btn-primary float-right" [routerLink]="['/home/request-property']" *ngIf="BId!='1'">Back</button>
+    <button class="btn btn-primary float-right" [routerLink]="['/home/request-property/request-property-approval']" *ngIf="BId=='1'">Back</button>
+    <span class="" clearfix></span>
+  </div>
+  <form (ngSubmit)="mode=='Edit'?UpdateRequestProperty(RequestProperties):CreateRequestProperty(RequestProperties)"
+    #RequestProperties="ngForm">
+    <div class="add-click container-fluid">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="input-group">
+            <label for="">Applicant Type <span style="color:red;"> *</span> </label>
+            <select class="custom-field" [(ngModel)]="P.REQP_APP_TYPE" #REQP_APP_TYPE="ngModel" name="REQP_APP_TYPE"
+              [disabled]="mode=='View'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="A.fix_code_id" *ngFor="let A of ApplicantTypelist;">
+                {{A.code_value}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3">  
+          <div class="input-group">
+            <label> Request For<span style="color:red;"> *</span> </label>
+            <select class="custom-field" [(ngModel)]="P.REQP_FOR" #REQP_FOR="ngModel" name="REQP_FOR"
+              [disabled]="mode=='View'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="F.fix_code_id" *ngFor="let F of RequestForlist;">
+                {{F.code_value}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="input-group">
+            <label for="">Customer Code <span style="color:red;"> *</span> </label>
+            <select class="custom-field" [(ngModel)]="P.REQP_CUST_ID" #REQP_CUST_ID="ngModel" name="REQP_CUST_ID"
+              [disabled]="mode=='View'" required (change)="GetByIdCustomerDetails(P.REQP_CUST_ID)">
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="CU.CUST_ID" *ngFor="let CU of Customerlist;">
+                {{CU.CUST_CODE}}
+              </option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="col-md-3" [hidden]="mode!='View' && mode!='Edit'">
+          <label for="">Prop Request No. : </label> &nbsp; <span> <b>{{P.Req_Prperty_Code}}</b> </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label for="">First Name :</label> &nbsp; <b>{{R.CUST_F_NAME}}</b>
+        </div>
+        <div class="col-md-6">
+          <label for="">Last Name :</label> &nbsp; <b>{{R.CUST_L_NAME}}</b>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label>Address -1 :</label> &nbsp; <b>{{R.CUST_ADRSS1}}</b>
+        </div>
+        <div class="col-md-6">
+          <label> Address -2 :</label> &nbsp; <b>{{R.CUST_ADRSS2}}</b>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label> State :</label> &nbsp; <b>{{R.ST_StateName}}</b>
+        </div>
+        <div class="col-md-6">
+          <label> District :</label> &nbsp; <b>{{R.DI_District}}</b>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label> Taluk :</label> &nbsp; <b>{{R.CUST_TLK}}</b>
+        </div>
+        <div class="col-md-6">
+          <label> Pincode :</label> &nbsp; <b>{{R.CUST_PINCODE}}</b>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label> Contact No. :</label> &nbsp; <b>{{R.CUST_CNT_NO}}</b>
+        </div>
+        <div class="col-md-6">
+          <label> Mobile No. :</label> &nbsp; <b>{{R.CUST_PHN_NO}}</b>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label> Aadhar Card No. :</label> &nbsp; <b>{{R.CUST_ADHR_NO}}</b>
+        </div>
+        <div class="col-md-6">
+          <label> PAN Card No. :</label> &nbsp; <b>{{R.CUST_PAN_NO}}</b>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label> Bank Account No. :</label> &nbsp; <b>{{R.CUST_BANK_NO}}</b>
+        </div>
+        <div class="col-md-6">
+          <label>Bank Name :</label> &nbsp; <b>{{R.CUST_BNK_NAME}}</b>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label> Bank Code :</label> &nbsp; <b>{{R.CUST_BNK_CODE}}</b>
+        </div>
+        <div class="col-md-6">
+          <label>IFSC Code :</label> &nbsp; <b>{{R.CUST_IFSC}}</b>
+        </div>
+      </div>
+      <div class="title themeheading rowmarginfix">
+        Request Property
+      </div>
+      <div class="row">
+        
+        <div class="col-md-4">
+          <div class="input-group">
+            <label> Project <span style="color:red;"> *</span> </label>
+            <select class="custom-field" [(ngModel)]="P.REQP_PD_ID" #REQP_PD_ID="ngModel" name="REQP_PD_ID"
+              [disabled]="(mode=='View' || mode=='Edit')" required (change)="GetId(P.REQP_PD_ID)">
+              <option [value]="undefined" selected>---Select---</option>  
+              <option [value]="PL.PD_Id" *ngFor="let PL of ProjectList;">
+                {{PL.PD_Project_Name}}
+              </option> 
+            </select>
+          </div>
+        </div> 
+        <div class="col-md-4">
+          <div class="input-group">
+            <label> Property Category <span style="color:red;"> *</span> </label>
+            <select class="custom-field" [(ngModel)]="P.REQP_CA_ID" #REQP_CA_ID="ngModel" name="REQP_CA_ID"
+              [disabled]="(mode=='View' || mode=='Edit')" required (change)="GetIdCat(P.REQP_CA_ID,'Save')">
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="C.CA_Id" *ngFor="let C of Categorylist;">
+                {{C.CA_CategoryName}}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table-stripped table-bordered table">
+          <thead>
+            <tr>
+              <th rowspan="2">Sl.No</th>
+              <th rowspan="2">Property No.</th>
+              <th rowspan="2">Category</th>
+              <th rowspan="2">Intermediate/Corner</th>
+              <th rowspan="2">Odd/Regular</th>
+              <th colspan="2">Measurement</th>
+              <th rowspan="2">Plot area in sqm </th>
+              <th rowspan="2">Status</th>
+              <th rowspan="2">Select</th>
+            </tr>
+            <tr>
+              <td>East to West </td>
+              <td>North to South</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let P of PropertyList ; let i=index">
+              <td>{{i+1}}</td>
+              <td>{{P.PR_Property_No}}</td>
+              <td>{{P.CA_CategoryName}}</td>
+              <td>{{P.IC_Name}}</td>
+              <td>{{P.OR_Name}}</td>
+              <td>{{P.PR_M_East_west}}</td>
+              <td>{{P.PR_M_North_South}}</td>
+              <td>{{P.PR_Plinth_Area}}</td>
+              <td>{{P.PR_Status}}</td>
+              <td class="text-center">
+                <div class="form-group form-check">
+                  <input type="checkbox" [checked]="P.Selected==1" class="form-check-input" id="exampleCheck2" (change)="selectProp(P.PR_Id)">
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <br>
+      <div class="d-flex justify-content-center">
+        <button [disabled]="mode=='View'" class="btn btn-primary" type="submit"> {{mode=='Edit'?'Update':'Save'}} </button> &nbsp;
+        <button [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="Cancel()"> Cancel </button>
+      </div>
+    </div>
+  </form>
+</div>

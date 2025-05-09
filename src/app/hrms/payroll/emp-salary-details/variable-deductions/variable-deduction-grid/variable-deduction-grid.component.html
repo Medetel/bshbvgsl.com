@@ -1,0 +1,178 @@
+<!-- <div class="tab-inside-content container-fluid">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="input-group">
+        <select name="" id="" class="custom-field">
+          <option value="">--Select--</option>
+        </select>
+        <label>Deduction Code</label>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="input-group margin-top">
+        <label>Deduction Description :</label>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="input-group">
+        <input type="text" class="custom-field">
+        <label>Amount</label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="input-group">
+        <select name="" id="" class="custom-field">
+          <option value="">--Select--</option>
+        </select>
+        <label>Month</label>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="input-group">
+        <select name="" id="" class="custom-field">
+          <option value="">--Select--</option>
+        </select>
+        <label>Year</label>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="input-group">
+        <input type="date" class="custom-field">
+        <label>Effective Date</label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="input-group">
+        <input type="text" class="custom-field">
+        <label>Ref.Doc.No.</label>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="input-group">
+        <input type="date" class="custom-field">
+        <label>Ref.Doc Date</label>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="input-group">
+        <input type="text" class="custom-field">
+        <label>Ref.Doc. Amount</label>
+      </div>
+    </div>  
+    <div class="col-md-3">
+      <div class="input-group">
+        <input type="month" class="custom-field">
+        <label>Ref.Doc Month Year</label>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="text-center"><button class="btn btn-primary">Add</button></div>
+  <br>
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Sl.No.</th>
+          <th>Deduction Code</th>
+          <th>Deduction Description</th>
+          <th>Amount</th>
+          <th>Month</th>
+          <th>Year</th>
+          <th>Effective Date</th>
+          <th>Ref.Doc.No.</th>
+          <th>Ref.Doc Date</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div> -->
+
+<div class="wrapper">
+  <div class="title themeheading">
+    Variable Deductions
+    <div class="float-right">
+      <button class="btn btn-primary" type="button" (click)="Update()">Update Salary</button>
+      <span class="clearfix"></span>
+    </div>
+  </div>
+  <div class="searchbar">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-1">
+          <label>Search</label>
+        </div>
+        <div class="col-md-4">
+          <select class="form-control" required>
+            <option>---Select---</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <input type="text" class="form-control"  placeholder="Search.." required>
+        </div>
+        <div class="col-md-3">
+          <button class="btn btn-default" type="submit">Search</button>
+          <button class="btn btn-default" type="reset">Clear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-striped grid table-sm">
+      <thead>
+        <tr>
+          <td>Sl No.</td>
+          <td>Variable Deductions Code</td>
+          <td>Desciption</td>
+          <td>Flat Amout / <br> Formula</td>          
+          <td class="text-center">View Formula</td>
+          <td>Amount</td>     
+          <td class="text-center">Applicable</td>     
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let f of DeductionList ; let i=index">
+          <td>{{(i+1)}}</td>
+          <td>{{f.ED_Short_name}}</td> 
+          <td>{{f.ED_DESC}}</td>              
+          <td *ngIf="f.ED_Category == 'A'">Flat</td>
+          <td *ngIf="f.ED_Category == 'F'">Formula</td>             
+          <td class="text-center" *ngIf="f.Formula_id">
+            <a href="javascript:void(0);" (click)="GotoFormula(f.Formula_id)">
+              <i class="fa fa-lg fa-eye themecolor"></i>
+            </a>
+          </td>
+          <td class="text-center" *ngIf="f.Formula_id==null">
+            --
+          </td>      
+          <td>{{f.Flat_amt}}</td>
+          <td class="text-center">
+            <input type="checkbox" [(ngModel)]="f.isChecked" (change)="checkValue(f.isChecked?'C':'U',f.ED_CODE)" checked/>
+          </td>
+        </tr> 
+      </tbody>
+    </table>
+  </div>
+</div>

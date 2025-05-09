@@ -1,0 +1,71 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    Add Structure
+    <button class="btn btn-primary float-right" [routerLink]="['/home/structures']" >Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <form (ngSubmit)="mode=='edit'? UpdateStructures(StructuresForm):SaveStructures(StructuresForm)" #StructuresForm="ngForm"
+  autocomplete="off">
+  <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field"  #BOQ_Item="ngModel" name="BOQ_Item" [(ngModel)]="i.BOQ_Item" [disabled]="mode=='view'" pattern="^[a-zA-Z0-9 ]*$" required>
+            <label for="">BOQ Item Code
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="BOQ_Item.invalid && (BOQ_Item.dirty || BOQ_Item.touched || formInvalid)">
+              <span *ngIf="BOQ_Item.errors.required">BOQ Item is required</span>
+              <span *ngIf="BOQ_Item.errors?.pattern">Only AlphaNumeric should enter</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <textarea class="custom-field"  #Description="ngModel" name="Description" [(ngModel)]="i.Description" [disabled]="mode=='view'" required></textarea>
+            <label for="">Description
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Description.invalid && (Description.dirty || Description.touched || formInvalid)">
+              <span *ngIf="Description.errors.required">Description is required</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field"  #Class="ngModel" name="Class" [(ngModel)]="i.Class" [disabled]="mode=='view'" pattern="^[a-zA-Z0-9 ]*$" required>
+            <label for="">Class/Type
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Class.invalid && (Class.dirty || Class.touched || formInvalid)">
+              <span *ngIf="Class.errors.required">Class is required</span>
+              <span *ngIf="Class.errors?.pattern">Only AlphaNumeric should enter</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="i.Status" #Status="ngModel" name="Status"
+              [disabled]="mode=='view'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option value=3>Active</option>
+              <option value=4>Inactive</option>
+            </select>
+            <label for="">Status
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Status.invalid && (Status.dirty || Status.touched || formInvalid)">
+              <span *ngIf="Status.errors.required">Status is required</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center">
+          <button class="btn btn-primary" type="submit" [disabled]="mode=='view'">Save</button>
+          <button class="btn btn-primary" type="reset" [disabled]="mode=='view'">Cancel</button>
+        </div>
+  </div>
+</form>
+</div>

@@ -1,0 +1,227 @@
+<div class="wrapper">
+    <form (ngSubmit)="mode=='Edit'?UpdateDPT(DPT):SaveDPT(DPT)" #DPT="ngForm" name="DPT">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary float-right" [routerLink]="['/home/deputation']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+
+  <!--  -->
+  <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="row">
+            <div class="col-md-5">
+              <label for="">Deputation No. : </label>
+            </div>
+            <div class="col-md-7">
+              <span> {{E.DOC_CODE}} </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row">
+            <div class="col-md-5">
+              <label for="">Date. : </label>
+            </div>
+            <div class="col-md-7">
+              <span> {{E.Doc_Year | date:'dd/MM/yyyy'}} </span>
+            </div>
+          </div>
+        </div>
+        <div class=" col-md-4">
+          <label for="">Status : 
+            <span *ngIf="E.DOC_STATUS=='G'">Generated</span>
+            <span *ngIf="E.DOC_STATUS=='A'">Approved</span>
+            <span *ngIf="E.DOC_STATUS=='R'">Rejected</span>
+            <span *ngIf="E.DOC_STATUS=='S'">Sanctioned</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="title rowmarginfix themeheading">
+      Employee Details
+      <span class="clearfix"></span>
+    </div>
+    <div class="row">
+      <!-- <div class="col-md-4">
+        <div class="input-group">
+          <label for=""> Division code <span style="color:red;">*</span></label>
+          <select class="custom-field" [(ngModel)]="E.DivisionId" #DivisionId="ngModel" name="DivisionId"
+            disabled (change)="GetEmployee(E.DivisionId)" required>
+            <option [value]="undefined" selected>---Select---</option>
+            <option [value]="d.DI_Id" *ngFor="let d of Districtlist;">
+              {{d.DI_District}}
+            </option>
+          </select>
+        </div>
+        <div class="error-msg" *ngIf="DivisionId.invalid && (DivisionId.dirty || DivisionId.touched || formInvalid)">
+          <span *ngIf="DivisionId.errors.required">Division is required</span>
+        </div>
+      </div> -->
+      <div class="col-md-4">
+        <div class="input-group">
+          <label for="">Emp Code <span style="color:red;">*</span></label>
+          <select class="custom-field" [(ngModel)]="E.EmpID" #EmpID="ngModel" name="EmpID" [disabled]="mode=='View'"
+            (change)="GetEmployeeForTheId(E.EmpID)" required>
+            <option [value]="undefined" selected>---Select---</option>
+            <option [value]="ee.EMP_EMPLOYEE_ID" *ngFor="let ee of Emplist;">
+              {{ee.EMP_EMPLOYEE_CODE}} &nbsp; {{ee.EMP_FIRST_NAME}}
+            </option>
+          </select>
+        </div>
+        <div class="error-msg" *ngIf="EmpID.invalid && (EmpID.dirty || EmpID.touched || formInvalid)">
+          <span *ngIf="EmpID.errors.required">Employee Id is required</span>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <label for="">Name : </label> &nbsp; <span> {{EmployeeDetails.EMP_FIRST_NAME}} </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 ">
+        <label for="">Division : </label> &nbsp; <span> {{EmployeeDetails.DI_District}} </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Department : </label> &nbsp; <span> {{EmployeeDetails.Department_Name}} </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Designation : </label> &nbsp; <span> {{EmployeeDetails.desg_name}} </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label for="">Employee Category : </label> &nbsp;<span> {{EmployeeDetails.EMP_CATEGORY}} </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Employee Group : </label> &nbsp; <span> {{EmployeeDetails.EMP_GROUP}} </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Employee Type : </label> &nbsp;<span> {{EmployeeDetails.EMP_TYPE}} </span>
+      </div>
+    </div>
+    <div class="title rowmarginfix themeheading">
+      Deputation Details
+      <span class="clearfix"></span>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-sm-6">
+        <div class="input-group">
+          <label>Deputation Type <span style="color:red;">*</span></label>
+          <select class="custom-field" [(ngModel)]="E.TrainingId" #TrainingId="ngModel" (change)="ChangeTraining(E.TrainingId)" name="TrainingId"
+          [disabled]="mode=='View'" required >
+          <option [value]="undefined" selected>---Select---</option>
+          <option [value]="tt.fix_code_id" *ngFor="let tt of Trainingtypelist;">
+            {{tt.code_value}}
+          </option>
+        </select>
+        </div>
+        <div class="error-msg" *ngIf="TrainingId.invalid && (TrainingId.dirty || TrainingId.touched || formInvalid)">
+          <span *ngIf="TrainingId.errors.required">Deputation Type is required</span>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6">
+        <div class="input-group">
+          <label>Organization Name </label>
+          <input class="custom-field" name="Organization" maxlength="50" [(ngModel)]="E.Organization"
+          #Organization="ngModel" [disabled]="mode=='View' || E.TrainingId==3051" type="text" pattern="[A-Za-z]+">
+        </div>
+        <div class="error-msg" *ngIf="Organization.invalid && (Organization.dirty || Organization.touched || formInvalid)">
+          <span *ngIf="Organization.errors.pattern">Organization Name should accept only alphabets</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-sm-6">
+        <div class="input-group">
+          <label>Deputation Division  </label>
+          <select class="custom-field" [(ngModel)]="E.DivisionId1" #DivisionId1="ngModel" name="DivisionId1"
+          [disabled]="mode=='View' || E.TrainingId==3052" (change)="GetDepartment(E.DivisionId1)"  >
+          <option [value]="undefined" selected>---Select---</option>
+          <option [value]="dd.DI_Id" *ngFor="let dd of DistrictlistDep;">
+            {{dd.DI_District}}
+          </option>
+        </select>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6">
+        <div class="input-group">
+          <label>Deputation Department </label>
+          <select class="custom-field" [(ngModel)]="E.DepId" #DepId="ngModel" name="DepId"
+          [disabled]="mode=='View' || E.TrainingId==3052" >
+          <option [value]="undefined" selected>---Select---</option>
+          <option [value]="DP.Department_Id" *ngFor="let DP of Departmentlist;">
+            {{DP.Department_Name}}
+          </option>
+        </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-sm-6">
+        <div class="input-group">
+          <label>Reporting Authority </label>
+          <select class="custom-field" [(ngModel)]="E.ReportId" #ReportId="ngModel" name="ReportId" [disabled]="mode=='View' || E.TrainingId==3052" >
+            <option [value]="undefined" selected>---Select---</option>
+            <option [value]="r.desg_id" *ngFor="let r of ReportList;">
+              {{r.desg_name}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <label> Relieving Date <span style="color:red;">*</span> </label>
+          <br>
+          <input type="Date" name="Rel_Date" maxlength="50" [(ngModel)]="E.Rel_Date"
+                #Rel_Date="ngModel" class="form-control" [disabled]="mode=='View'" required>
+        </div>
+        <div class="error-msg" *ngIf="Rel_Date.invalid && (Rel_Date.dirty || Rel_Date.touched || formInvalid)">
+          <span *ngIf="Rel_Date.errors.required">Relieving Date is required</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label> Reporting Date <span style="color:red;">*</span></label>
+          <input type="Date" name="Rep_Date" maxlength="50" [(ngModel)]="E.Rep_Date"
+                #Rep_Date="ngModel" class="form-control" [disabled]="mode=='View'" required>
+        </div>
+        <div class="error-msg" *ngIf="Rep_Date.invalid && (Rep_Date.dirty || Rep_Date.touched || formInvalid)">
+          <span *ngIf="Rep_Date.errors.required">Reporting Date is required</span>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6">
+        <div class="input-group">
+          <label>Remarks </label>
+          <textarea name="Remarks" maxlength="50" [(ngModel)]="E.Remarks"
+          #Remarks="ngModel" [disabled]="mode=='View'" class="custom-field"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2 col-sm-2">
+        <label style="color:blue;">Upload (OM)</label>
+      </div>
+      <div class="col-md-4">
+        <input *ngIf="!hide" type="file" #Image accept="application/pdf"
+        (change)="imageUpload1($event.target.files)" id="Upload1" name="Upload1">
+      <!-- <a class=""  target="_blank"  href="{{E.Upload1}}">View</a> -->
+      <a *ngIf="E.Upload1" [href]="E.Upload1" target="_blank" 
+      [class.disabled]="!E.Upload1" tabindex="-1" aria-disabled="true">
+     View
+   </a>
+      <a *ngIf="!E.Upload1" class="disabled" tabindex="-1" aria-disabled="true">
+        View
+      </a>
+      </div>
+    </div>
+ 
+  <br>
+  <div class="d-flex justify-content-center">
+    <button [disabled]="mode=='View'" class="btn btn-primary" type="submit">{{mode=='edit'?'Update':'Save'}}</button> &nbsp;
+    <button [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button>&nbsp;
+  </div>
+</form>
+</div>

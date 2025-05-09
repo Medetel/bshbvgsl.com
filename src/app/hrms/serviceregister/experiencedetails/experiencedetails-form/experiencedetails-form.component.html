@@ -1,0 +1,205 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary float-right" [routerLink]="['/home/serviceregister/experiencedetails']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+
+
+  <form (ngSubmit)="mode=='edit'?UpdateEmplExperience(EmplDetails):SaveEmplExperience(EmplDetails)" #EmplDetails="ngForm"
+    name="form1">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- <div class="col-md-4">
+        <div class="input-group">
+          <label for=""> Division code </label>
+          <select class="custom-field" [(ngModel)]="e.EMP_DIVISION_ID" #EMP_DIVISION_ID="ngModel" name="EMP_DIVISION_ID"
+                [disabled]="mode=='view'" (change)="ChangeOfDivision(a.EMP_DIVISION_ID)">
+                <option [value]="undefined" selected>---Select---</option>
+                <option [value]="d.DI_Id" *ngFor="let d of DistrictsList;">
+                  {{d.DI_District}}
+                </option>
+              </select>   
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group">
+          <label for="">Emp Code </label>
+          <select select class="custom-field" [(ngModel)]="e.EXPR_EMP_ID_FK" #EXPR_EMP_ID_FK="ngModel" name="EXPR_EMP_ID_FK"
+          [disabled]="mode=='view'" (change)="ChangeOfEmployee(e.EXPR_EMP_ID_FK)">
+          <option [value]="" selected>--Select--</option>
+          <option [value]="emp.EMP_EMPLOYEE_ID" *ngFor="let emp of AllEmployeeList;">
+            {{emp.EMP_EMPLOYEE_CODE}} &nbsp; {{emp.EMP_FIRST_NAME}}
+          </option>
+        </select>
+        </div>
+      </div> -->
+      <div class="col-md-6">
+        <label for=""> Employee Id :</label> &nbsp; <span class="name"> {{detailsEmployee.EMP_EMPLOYEE_CODE}}  </span>
+      </div>
+      <div class="col-md-6">
+          <label for=""> Name :</label> &nbsp; <span class="name"> {{detailsEmployee.EmpName}}  </span>
+        </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 ">
+        <label for="">Division : </label> &nbsp; <span class="name">{{detailsEmployee.DI_District}} </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Department : </label> &nbsp; <span class="name">{{detailsEmployee.Department_Name}} </span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Designation : </label> &nbsp; <span class="name">{{detailsEmployee.desg_name}}</span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label for="">Employee Category : </label> &nbsp; <span class="name">{{detailsEmployee.Category}}</span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Employee Group : </label> &nbsp; <span class="name">{{detailsEmployee.EmpGroup}}</span>
+      </div>
+      <div class="col-md-4">
+        <label for="">Employee Type : </label> &nbsp; <span class="name">{{detailsEmployee.EmpType}}</span>
+      </div>
+    </div>
+
+    <div class="title themeheading rowmarginfix">
+      {{title2}}
+      <!-- <button class="btn btn-primary pull-right" *ngIf="mode=='view' || mode=='edit'" style="margin-top: -3px;" (click)="gotoAdd(EmployeeId)" >Add</button> -->
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 col-sm-6">
+        <div class="input-group">
+          <label>Role / Designation
+            <span class="mandatory">*</span>
+          </label>
+          <br>
+          <input class="custom-field" type="text" [(ngModel)]="e.EXPR_ROLE" #EXPR_ROLE="ngModel" name="EXPR_ROLE"
+          [disabled]="mode=='view'" maxlength="50" required pattern="[A-Za-z]+">
+        </div>
+        <div class="error-msg pull-right"  *ngIf="EXPR_ROLE.invalid && (EXPR_ROLE.dirty || EXPR_ROLE.touched || formInvalid)">
+          <span  *ngIf="EXPR_ROLE.errors.required">Role is required</span>       
+          <span *ngIf="EXPR_ROLE.errors?.pattern">Enter only alphabets for Role/designation</span>               
+      </div>
+      </div>
+      <div class="col-md-6 col-sm-6">
+        <div class="input-group">
+          <label>Organization   
+            <span class="mandatory">*</span>         
+          </label>
+          <br>
+          <input class="custom-field" type="text" [(ngModel)]="e.EXPR_ORGANIZATION" #EXPR_ORGANIZATION="ngModel" name="EXPR_ORGANIZATION"
+          [disabled]="mode=='view'" maxlength="50" required pattern="[A-Za-z]+">
+        </div>
+        <div class="error-msg pull-right"  *ngIf="EXPR_ORGANIZATION.invalid && (EXPR_ORGANIZATION.dirty || EXPR_ORGANIZATION.touched || formInvalid)">
+          <span  *ngIf="EXPR_ORGANIZATION.errors.required">Organization is required</span>                   
+          <span *ngIf="EXPR_ROLE.errors?.pattern">Enter only alphabets organization</span>    
+      </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-sm-6">
+        <div class="input-group">
+          <label>From Date
+            <span class="mandatory">*</span>   
+          </label>
+          <input class="custom-field" type="date" [(ngModel)]="e.EXPR_FROM" #EXPR_FROM="ngModel" name="EXPR_FROM"
+          [disabled]="mode=='view'" required>
+        </div>
+        <div class="error-msg pull-right"  *ngIf="EXPR_FROM.invalid && (EXPR_FROM.dirty || EXPR_FROM.touched || formInvalid)">
+          <span  *ngIf="EXPR_FROM.errors.required">Experience FromDate is required</span>                      
+      </div>
+      </div>
+      <div class="col-md-6 col-sm-6">
+        <div class="input-group">
+          <label>To Date
+            <span class="mandatory">*</span>   
+          </label>
+          <input class="custom-field" type="date" [(ngModel)]="e.EXPR_TO" #EXPR_TO="ngModel" name="EXPR_TO"
+          [disabled]="mode=='view'" (change)="changeofdate()" required>
+        </div>
+        <div class="error-msg pull-right"  *ngIf="EXPR_TO.invalid && (EXPR_TO.dirty || EXPR_TO.touched || formInvalid)">
+          <span  *ngIf="EXPR_TO.errors.required">Experience ToDate is required</span>                      
+      </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class=" col-md-2">
+        <label>Document Upload</label>
+      </div>
+      <div class=" col-md-4">
+        <input input *ngIf="!hide" type="file" #Image accept="application/pdf" (change)="imageUpload1($event.target.files)" id="EXPR_DOC_UPLOAD_PATH">
+        <a class="" *ngIf="(e.EXPR_DOC_UPLOAD_PATH!=null && hide)" target="_blank" href="{{e.EXPR_DOC_UPLOAD_PATH}}">view</a>
+        <a class="" *ngIf="mode=='edit'" target="_blank" href="{{e.EXPR_DOC_UPLOAD_PATH}}">view</a>
+      </div>
+      <div class=" col-md-6 col-sm-6">
+        <label>Experience Period : {{DateDiff}}</label>
+      </div>
+    </div>
+
+
+    
+    <br>
+    <div class="text-center">
+      <button [disabled]="mode=='view'" class="btn btn-primary">{{mode=='Edit'?'Edit':'Save'}}</button> &nbsp;
+      <button [disabled]="mode=='view'" (click)="Cancel()" class="btn btn-primary">Cancel</button>
+    </div>
+
+
+    <!--  -->
+
+    <br>
+    <div class="table-responsive">
+      <table class="table table-stripped table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th>Sl.No</th>  
+            <th>Experience Id</th>         
+            <th>Organization</th>
+            <th>Experience Period</th>
+            <th class="text-center">View</th>
+            <th class="text-center">Edit</th>
+            <th class="text-center">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+          *ngFor="let e of EmployeeExperienceDetails | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index">
+          <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+          <td>{{e.EXPR_ID}}</td>
+          <td>{{e.EXPR_ORGANIZATION}}</td>         
+          <td>{{e.EXPR_TOTAL_YEARS}} &nbsp; years</td>                        
+          <td class="text-center">
+              <a href="#"
+                  [routerLink]="['/home/serviceregister/experiencedetails-form',e.EXPR_ID,'view',e.EXPR_EMP_ID_FK]">
+                  <i class="fa fa-lg fa-eye themecolor"></i>
+              </a>
+          </td>
+          <td class="text-center">
+              <a href="#"
+                  [routerLink]="['/home/serviceregister/experiencedetails-form',e.EXPR_ID,'edit',e.EXPR_EMP_ID_FK]">
+                  <i class="fa fa-lg fa-edit themecolor"></i>
+              </a>
+          </td>
+          <td class="text-center">
+              <a (click)="delete(e.EXPR_ID)">
+                  <i class="fa fa-lg fa-trash themecolor"></i>
+              </a>
+          </td>
+      </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+    <br>
+    <br>    
+    <!-- <div class="text-center">
+      <button class="btn btn-primary" type="submit">Save</button>
+      <button class="btn btn-primary" (click)="Cancel()">Cancel</button>
+    </div>    -->
+    </div>  
+  </form>
+</div>

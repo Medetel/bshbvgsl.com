@@ -1,0 +1,449 @@
+<div class="wrapper">
+  <form (ngSubmit)="mode=='Edit'?SaveIDE(IDE,e.SCN):SaveIDE(IDE,e.SCN)" #IDE="ngForm" name="IDE">
+
+    <div class="container-fluid">
+      <div class="title rowmarginfix themeheading">
+        Complaint Details
+        <!-- <button class="btn btn-primary float-right"
+          [routerLink]="['/home/dept-enquiry/initiative-depart']">Back</button> -->
+          <button *ngIf="back == 'ENQ'" class="btn btn-primary float-right" [routerLink]="['/home/dept-enquiry/initiative-depart']">Back</button>
+          <button *ngIf="back == 'enq'" class="btn btn-primary float-right" [routerLink]="['/home/dept-enquiry/enquiry-proceeding-form']">Back</button>  
+        <span class="clearfix"></span>
+      </div>
+      <!--  -->
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for=""> SCN No. </label>
+            <select class="custom-field" [(ngModel)]="e.SCN" #SCN="ngModel" name="SCN"
+              [disabled]="mode=='View'" (change)="GetComplaints(e.SCN)" (change)="GetSCND(e.SCN)"
+              (change)="GetSCk(e.SCN)">
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="s.SCN_REPLY_ID" *ngFor="let s of SCNlist;">
+                {{s.DOC_CODE2}}
+              </option>
+            </select>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div class="border-view">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <td class="text-center">Sl No.</td>
+                <td class="text-center">Complaint No</td>
+                <td class="text-center">Date</td>
+                <td class="text-center">Complaint Type</td>
+                <td class="text-center"> DGO's Name </td>
+                <td class="text-center"> View </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let c of Complist;let i=index;">
+                <td>{{i+1}}</td>
+                <td>{{c.DOC_CODE1}}</td>
+                <td>{{c.COMPLAINT_INITIATED_DATE | date:"dd/MM/yyyy"}}</td>
+                <td>{{c.COMPLAINT_TYPE}}</td>
+                <td>{{c.DGO_NAME}}</td>
+                <!-- <td class="text-center">
+                  <a href="javascript:void(0);" (click)="Back(c.COMPLAINT_ID)">
+                    <i class="fa fa-lg fa-eye themecolor"></i>
+                  </a>
+                </td> -->
+                <td class="text-center">
+                  <a href="javascript:void(0)" (click)="addcomp()" [routerLink]="['/home/dept-enquiry/complaints-reg-form/',c.COMPLAINT_ID,'Idecomp','View']"  >
+                      
+                    <i class=" fa fa-lg fa-eye themecolor"></i>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="title rowmarginfix themeheading">
+        SCN Details
+        <span class="clearfix"></span>
+      </div>
+
+      <div class="border-view">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <td class="text-center">Sl No.</td>
+                <td class="text-center">SCN No</td>
+                <td class="text-center">Date</td>
+                <td class="text-center">Due Date to Reply</td>
+                <td class="text-center"> Mode of Reply </td>
+                <td class="text-center"> View </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let sc of SClist;let i=index;">
+                <td>{{i+1}}</td>
+                <td>{{sc.DOC_CODE2}}</td>
+                <td>{{sc.DOC_DATE | date:"dd/MM/yyyy"}}</td>
+                <td>{{sc.SCN_REPLY_DUE_DATE | date:"dd/MM/yyyy"}}</td>
+                <td>{{sc.SCN_MODE_REPLY}}</td>
+                <!-- <td>
+                 
+                  <a href="javascript:void(0);" (click)="Back1(sc.COMPLAINT_ID,sc.SCN_ID)">
+                    <i class="fa fa-lg fa-eye themecolor"></i>
+                  </a>
+                </td> -->
+                <td class="text-center">
+                  <a href="#" (click)="addcomp()" [routerLink]="['/home/dept-enquiry/show-cause-form',sc.COMPLAINT_ID,sc.SCN_ID,'IDESCN','View']">
+                      <i class="fa fa-lg fa-eye themecolor"></i>
+                  </a>
+              </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="title rowmarginfix themeheading">
+        SCN Acknowledgement & DGO's Reply
+        <span class="clearfix"></span>
+      </div>
+
+      <div class="border-view">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <td class="text-center">Sl No.</td>
+                <td class="text-center"> DGO's Name </td>
+                <td class="text-center">Date</td>
+                <td class="text-center">Reply Recieved Date </td>
+                <td class="text-center"> Mode of Reply </td>
+                <td class="text-center"> Reply Period </td>
+                <td class="text-center"> View </td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let sck of SCklist;let i=index;">
+                <td>{{i+1}}</td>
+                <td>{{sck.DGO_NAME}}</td>
+                <td>{{sck.DOC_DATE | date:"dd/MM/yyyy"}}</td>
+                <td>{{sck.SCNREPLY_RECVD_DATE | date:"dd/MM/yyyy"}}</td>
+                <td>{{sck.SCNREPLY_MODE}}</td>
+                <td>{{sck.SCNREPLY_MODE}}</td>
+                <!-- <td class="text-center">
+                 
+                  <a href="javascript:void(0);" (click)="Back2(sck.COMPLAINT_ID,sck.SCN_ID)">
+                    <i class="fa fa-lg fa-eye themecolor"></i>
+                  </a>
+                </td> -->
+                <!-- <td class="text-center">
+                  <a href="javascript:void(0)" [routerLink]="['/home/dept-enquiry/complaints-reg-form/',sck.COMPLAINT_ID,'Idesck','View']"  >
+                      
+                    <i class=" fa fa-lg fa-eye themecolor"></i>
+                  </a>
+                </td> -->
+                <td class="text-center">
+                  <a href="#" (click)="addcomp()" [routerLink]="['/home/dept-enquiry/show-cause-ack-form',sck.COMPLAINT_ID,sck.SCN_ID,'idesck','View']">
+                      <i class="fa fa-lg fa-eye themecolor"></i>
+                  </a>
+              </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!--  -->
+      <div class="title rowmarginfix themeheading">
+        Initiate Departmental Enquiry
+        <span class="clearfix"></span>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <label for=""> Enquiry No : </label> &nbsp;<span> {{e.DOC_CODE}} </span>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group ">
+            <span for="">Date : </span> &nbsp;<span> {{e.DOC_DATE  | date:"dd/MM/yyyy"}} </span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group ">
+            <span for="">Status :</span> &nbsp;<span> {{e.DOC_STATUS}} </span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for=""> Enquiry Officer <span style="color:red;">*</span></label>
+            <input type="text" name="ENQ_OFFICER1" maxlength="50" [(ngModel)]="e.ENQ_OFFICER1" required
+              #ENQ_OFFICER1="ngModel" class="form-control" [disabled]="mode=='View'">
+          </div>
+          <div class="error-msg"
+            *ngIf="ENQ_OFFICER1.invalid && (ENQ_OFFICER1.dirty || ENQ_OFFICER1.touched || formInvalid)">
+            <span *ngIf="ENQ_OFFICER1.errors.required">Enquiry Officer is required</span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <div class="input-group">
+              <label for="">Presenting Officer <span style="color:red;">*</span></label>
+              <input type="text" name="ENQ_PRESENTING_OFF1" maxlength="50" [(ngModel)]="e.ENQ_PRESENTING_OFF1" required
+                #ENQ_PRESENTING_OFF1="ngModel" class="form-control" [disabled]="mode=='View'">
+            </div>
+          </div>
+          <div class="error-msg"
+            *ngIf="ENQ_PRESENTING_OFF1.invalid && (ENQ_PRESENTING_OFF1.dirty || ENQ_PRESENTING_OFF1.touched || formInvalid)">
+            <span *ngIf="ENQ_PRESENTING_OFF1.errors.required">Presenting Officer is required</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="input-group">
+            <label for="">Enquiry Start Date <span style="color:red;">*</span></label>
+            <input type="Date" name="ENQ_START_DATE" maxlength="50" [(ngModel)]="e.ENQ_START_DATE" required
+              #ENQ_START_DATE="ngModel" class="form-control" [disabled]="mode=='View'">
+          </div>
+          <div class="error-msg"
+            *ngIf="ENQ_START_DATE.invalid && (ENQ_START_DATE.dirty || ENQ_START_DATE.touched || formInvalid)">
+            <span *ngIf="ENQ_START_DATE.errors.required">Enquiry Start Date is required</span>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="input-group">
+            <label for="">provision to revoke suspension <span style="color:red;">*</span></label>
+            <input type="text" name="ENQ_PRVS_SUS" maxlength="50" [(ngModel)]="e.ENQ_PRVS_SUS" required
+              #ENQ_PRVS_SUS="ngModel" class="form-control" [disabled]="mode=='View'">
+          </div>
+          <div class="error-msg"
+            *ngIf="ENQ_PRVS_SUS.invalid && (ENQ_PRVS_SUS.dirty || ENQ_PRVS_SUS.touched || formInvalid)">
+            <span *ngIf="ENQ_PRVS_SUS.errors.required">revoke suspension is required</span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label for="">Enquiry End Date :</label>
+        </div>
+        <div class="col-md-4">
+          <label for="">Enquiry Period :</label>
+        </div>
+      </div>
+      <!-- <div class="row">
+        <div class="col-md-4">
+          <div class="input-group">
+            <label> Complaint Document:</label>
+            <input *ngIf="!hide" type="file" #Image accept="application/pdf" (change)="imageUpload1($event.target.files)"
+              id="DGO_Upload" name="DGO_Upload">
+            <a *ngIf="e.DGO_Upload" [href]="e.DGO_Upload" target="_blank" [class.disabled]="!e.DGO_Upload" tabindex="-1"
+              aria-disabled="true">
+              View
+            </a>
+      
+           
+            <a *ngIf="!e.DGO_Upload" class="disabled" tabindex="-1" aria-disabled="true">
+              View
+            </a>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label> Showcause Notice Document:</label>
+          <input *ngIf="!hide" type="file" #Image accept="application/pdf" (change)="imageUpload2($event.target.files)"
+            id="REPLY_UPLOAD_PATH" name="REPLY_UPLOAD_PATH">
+          <a *ngIf="e.REPLY_UPLOAD_PATH" [href]="e.REPLY_UPLOAD_PATH" target="_blank" [class.disabled]="!e.REPLY_UPLOAD_PATH"
+            tabindex="-1" aria-disabled="true">
+            View
+          </a>
+      
+         
+          <a *ngIf="!e.REPLY_UPLOAD_PATH" class="disabled" tabindex="-1" aria-disabled="true">
+            View
+          </a>
+        </div>
+      
+      </div> -->
+      <!--  -->
+      <br>
+      <div class="title rowmarginfix themeheading">
+        Charges Framed
+      </div>
+      <br>
+      <!--  -->
+      <br>
+
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="charges-farmed-tab" data-toggle="tab" href="#charges-farmed" role="tab"
+            aria-controls="charges-farmed" aria-selected="true"> Charges Framed </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="witness-details-tab" data-toggle="tab" href="#witness-details" role="tab"
+            aria-controls="witness-details" aria-selected="false"> Witness Details </a>
+        </li>
+
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="charges-farmed" role="tabpanel" aria-labelledby="charges-farmed-tab">
+          <div class="title rowmarginfix themeheading">
+            Charges Framed
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="input-group">
+                <label for="">Allegations Raised <span style="color:red;">*</span> </label>
+                <input type="text" name="ALLEGATIONS_RAISED" maxlength="50" [(ngModel)]="c.ALLEGATIONS_RAISED"
+                  #ALLEGATIONS_RAISED="ngModel" class="form-control" [disabled]="mode=='View'">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="input-group">
+                <label for=""> Charges Framed <span style="color:red;">*</span> </label>
+                <input type="text" name="CHARGES_FRAMED" maxlength="50" [(ngModel)]="c.CHARGES_FRAMED"
+                  #CHARGES_FRAMED="ngModel" class="form-control" [disabled]="mode=='View'">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="input-group">
+                <label for=""> Remarks</label>
+                <input type="text" name="REMARKS" maxlength="50" [(ngModel)]="c.REMARKS" #v="ngModel"
+                  class="form-control" [disabled]="mode=='View'">
+              </div>
+
+            </div>
+          </div>
+          <br>
+          <div class=" d-flex justify-content-center" style="margin-top:10px;">
+
+            <button [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="AddChargeDetails(c)"
+              type="button">Add</button> &nbsp;
+
+            <button [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="CleaChrge()">Cancel
+            </button>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table-striped table-bordered grid">
+              <thead>
+                <tr>
+                  <td>Sl No.</td>
+                  <td>Allegations Raised</td>
+                  <td> Charges Framed</td>
+                  <td>Remarks</td>
+                  <td>Remove</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let c of ChargeDetails;let i=index;">
+                  <td>{{i+1}}</td>
+                  <td>{{c.ALLEGATIONS_RAISED}}</td>
+                  <td>{{c.CHARGES_FRAMED}}</td>
+                  <td>{{c.REMARKS}}</td>
+                  <td *ngIf="!hide" (click)="ChargeDetailsremove(i)"><i class="fa fa-lg fa-trash themecolor"></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="tab-pane fade" id="witness-details" role="tabpanel" aria-labelledby="witness-details-tab">
+          <div class="title rowmarginfix themeheading">
+            Witness Details
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="input-group">
+                <label for=""> Witness Name <span style="color:red;">*</span> </label>
+                <input type="text" name="Witnessname" maxlength="50" [(ngModel)]="W.Witnessname" #Witnessname="ngModel"
+                  class="form-control" [disabled]="mode=='View'">
+              </div>
+              <div class="error-msg"
+                *ngIf="Witnessname.invalid && (Witnessname.dirty || Witnessname.touched || formInvalid)">
+                <span *ngIf="Witnessname.errors.required"> Witness name is required</span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="input-group">
+                <label for=""> Witness Address <span style="color:red;">*</span> </label>
+                <input type="text" name="witnessadr" maxlength="50" [(ngModel)]="W.witnessadr" #witnessadr="ngModel"
+                  class="form-control" [disabled]="mode=='View'">
+              </div>
+              <div class="error-msg"
+                *ngIf="witnessadr.invalid && (witnessadr.dirty || witnessadr.touched || formInvalid)">
+                <span *ngIf="witnessadr.errors.required"> Witness Addressed is required</span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="input-group">
+                <label for=""> Witness Contact No <span style="color:red;">*</span></label>
+                <input type="text" name="witnesscontsct" maxlength="50" [(ngModel)]="W.witnesscontsct"
+                  #witnesscontsct="ngModel" class="form-control" [disabled]="mode=='View'">
+              </div>
+              <div class="error-msg"
+                *ngIf="witnesscontsct.invalid && (witnesscontsct.dirty || witnesscontsct.touched || formInvalid)">
+                <span *ngIf="witnesscontsct.errors.required"> Witness Contact No is required</span>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class=" d-flex justify-content-center" style="margin-top:10px;">
+
+            <button [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="AddWitnessDetails(W)"
+              type="button">Add</button> &nbsp;
+
+            <button [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="ClearWitness()">Cancel
+            </button>
+          </div>
+
+
+
+          <div class="table-responsive">
+            <table class="table table-striped grid">
+              <thead>
+                <tr>
+                  <td>Sl No.</td>
+                  <td>Witness Name</td>
+                  <td>Witness Address</td>
+                  <td> Witness Contact No </td>
+                  <td> Delete </td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let W of WitenssDetails;let i=index;">
+                  <td>{{i+1}}</td>
+                  <td>{{W.WITNESS_NAME}}</td>
+                  <td>{{W.WITNESS_ADD}}</td>
+                  <td>{{W.WITNESS_CONTACT_NO}}</td>
+
+                  <td *ngIf="!hide" (click)="WitnessDetailsremove(i)"><i class="fa fa-lg fa-trash themecolor"></i>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+
+        </div>
+      </div>
+
+
+
+
+      <br>
+      <div class="d-flex justify-content-center">
+        <button [disabled]="mode=='View'" class="btn btn-primary"
+          type="submit">Save</button>
+        &nbsp;
+        <button [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button>&nbsp;
+      </div>
+      <br>
+    </div>
+  </form>
+</div>

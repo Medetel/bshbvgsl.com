@@ -1,0 +1,11 @@
+.radio-button-list{
+    margin-left: 150px;
+}
+
+.radio-button-list .form-check-label {
+    font-size: 15px;
+}
+
+.form-check-input{
+    cursor: pointer;
+}

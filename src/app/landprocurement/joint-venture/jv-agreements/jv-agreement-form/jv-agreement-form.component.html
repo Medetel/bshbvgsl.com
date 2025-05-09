@@ -1,0 +1,385 @@
+<!-- <div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary float-right" [routerLink]="['/home/joint-venture']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+
+
+  <form (ngSubmit)="mode=='edit'?UpdateLandAquisition(la,1,null):SaveLandAquisition(la)" #fouroneform="ngForm" name="form1">
+    <div class="container-fluid">
+
+      <div class="row" hidden>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" placeholder=" " name="LA_PD_Id_FK" [(ngModel)]="la.LA_PD_Id_FK" #LA_PD_Id_FK="ngModel"
+              class="custom-field" hidden>
+          </div>
+        </div>
+      </div>
+      <div class="row" hidden>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" placeholder=" " name="LA_PR_Id_FK" [(ngModel)]="la.LA_PR_Id_FK" #LA_PR_Id_FK="ngModel"
+              class="custom-field" hidden>
+
+          </div>
+
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <select #PD_Id_FK="ngModel" name="PD_Id_FK" [(ngModel)]="pro.PD_Id_FK" class="custom-field" (change)="GetProjectId(pro.PD_Id_FK)">
+              <option value="undefined">---Select---</option>
+              <option *ngFor="let project of projectlist" [value]="project.PD_Id">
+                {{project.PD_Project_Code}} - {{project.PD_Project_Name}} - {{project.Phase_Name}}
+              </option>
+            </select>
+            <label>Project
+              <span class="mandatory">*</span>
+            </label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="pro.pro_PR_Id_FK" #pro_PR_Id_FK="ngModel" name="pro_PR_Id_FK"
+              (change)="GetOtherrelatedinfo(pro.pro_PR_Id_FK)" [disabled]>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="p.PR_Id_PK" *ngFor="let p of proposallist;">
+                {{p.PR_Id}} </option>
+            </select>
+            <label for="">Proposal Id
+              <span class="mandatory">*</span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <label for="">Procurement Type : </label>
+          <span>{{ProposalFor=='Mix'?'Acquisition/Purchase/Joint Ventures':ProposalFor}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Scheme : </label>
+          <span>{{Sch_Name}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">District : </label>
+          <span>{{district}}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <label for="">Village : </label>
+          <span> {{Village}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Proposal receipt date : </label>
+          <span>{{Submitted_Date | date:'dd-MM-yyyy'}}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" placeholder=" " name="LA_Noti4_Number" [(ngModel)]="la.LA_Noti4_Number" #LA_Noti4_Number="ngModel"
+              class="custom-field" [disabled]="mode=='view'" required>
+            <label for="">Agreement Number
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="LA_Noti4_Number.invalid && (LA_Noti4_Number.dirty || LA_Noti4_Number.touched || formInvalid)">
+              <span *ngIf="LA_Noti4_Number.errors.required">Agreement Number.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="date" placeholder=" " name="LA_Noti_Date" [(ngModel)]="la.LA_Noti_Date" #LA_Noti_Date="ngModel"
+              class="custom-field" [disabled]="mode=='view'" required>
+            <label for="">Agreement Date
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="LA_Noti_Date.invalid && (LA_Noti_Date.dirty || LA_Noti_Date.touched || formInvalid)">
+              <span *ngIf="LA_Noti_Date.errors.required">Agreement Date is required.</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <textarea type="text" placeholder=" " name="LA_TOC_Note" [(ngModel)]="lat.LA_TOC_Note" #LA_TOC_Note="ngModel"
+              class="custom-field" [disabled]="mode=='view'"></textarea>
+            <label for="">Note</label>
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <label for="">Document</label>
+        </div>
+        <div class="col-md-4">
+          <input type="file" #Image accept="application/pdf" (change)="imageUpload($event.target.files)" id="LA_Not_FilePath"
+            name="LA_Not_FilePath" [(ngModel)]="la.LA_Not_FilePath" #LA_Not_FilePath="ngModel">
+          <a class="" *ngIf="la.LA_Not_FilePath!=null && hide" target="_blank" href="{{la.LA_Not_FilePath}}">view</a>
+        </div>
+      </div>
+
+      <div class="row">
+          <div class="col-md-6">
+            <div class="input-group">
+              <select #PD_Id_FK="ngModel" name="PD_Id_FK" [(ngModel)]="pro.PD_Id_FK" class="custom-field" (change)="GetProjectId(pro.PD_Id_FK)">
+                <option value="undefined">---Select---</option>
+                <option *ngFor="let project of projectlist" [value]="project.PD_Id">
+                  {{project.PD_Project_Code}} - {{project.PD_Project_Name}} - {{project.Phase_Name}}
+                </option>
+              </select>
+              <label>Land Owner Name
+                <span class="mandatory">*</span>
+              </label>
+            </div>
+          </div>
+          </div>
+      <br>
+
+      <div class="table-responsive">
+        <table class="table table-striped grid table-bordered">
+          <thead>
+            <tr>
+              <th rowspan="2">Sl.No</th>
+              <th rowspan="2"> Land Owner Name </th>
+              <th rowspan="2">Survey No</th>
+              <th rowspan="2">Procurement Type</th>
+              <th rowspan="2">Extent</th>
+              <th rowspan="2">Akar</th>
+              <th colspan="4" class="text-center">Schedule</th>
+              <th rowspan="2">Status</th>
+              <th rowspan="2" class="text-center"> Select </th>
+            </tr>
+            <tr>
+              <th>North</th>
+              <th>South</th>
+              <th>East</th>
+              <th>West</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let sur of LandDetailslist;let i=index">
+              <td>{{i+1}}</td>
+              <td>{{sur.LOD_LO_Name}}</td>
+              <td>{{sur.LD_SurveyNo}}</td>
+              <td>{{sur.MOP_Name}}</td>
+              <td>{{sur.LD_Extents}}</td>
+              <td>{{sur.LD_Akar}}</td>
+              <td>{{sur.LD_North}}</td>
+              <td>{{sur.LD_South}}</td>
+              <td>{{sur.LD_East}}</td>
+              <td>{{sur.LD_West}}</td>
+              <td>{{sur.LD_Not4_Selected=='1'?'Accepted':''}}</td>
+              <td class="text-center">
+                <button type="button" [hidden]="sur.LD_Not4_Selected==1" (click)="selectexculdesurveyno(sur.LD_Id,'in',4,pro.PD_Id_FK)">Select
+                </button>
+                <button type="button" [hidden]="sur.LD_Not4_Selected!=1" (click)="selectexculdesurveyno(sur.LD_Id,'ex',4,pro.PD_Id_FK)">Exclude
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="text-center">
+        <button class="btn btn-primary" [disabled]="mode=='view'" type="submit">Save</button>
+        <button class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button>
+      </div>
+    </div>
+  </form>
+</div> -->
+
+<div class="wrapper">
+    <div class="title themeheading">
+      {{title}}
+      <button class="btn btn-primary float-right" [routerLink]="['/home/joint-venture']">Back</button>
+      <span class="clearfix"></span>
+    </div>
+  
+  
+    <form (ngSubmit)="mode=='edit'?UpdateLandPurchase(LandPurchaseForm):SaveLandPurchase(LandPurchaseForm)"
+      #LandPurchaseForm="ngForm" name="form1">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-group">
+              <select #JV_PD_Id_FK="ngModel" name="JV_PD_Id_FK" [(ngModel)]="l.JV_PD_Id_FK" class="custom-field" required
+                (change)="GetProjectId(l.JV_PD_Id_FK)">
+                <option value="undefined">---Select---</option>
+                <option *ngFor="let project of projectlist" [value]="project.PD_Id">
+                  {{project.PD_Project_Code}} - {{project.PD_Project_Name}} - {{project.Phase_Name}}
+                </option>
+              </select>
+              <label>Project<span class="mandatory">*</span>
+              </label>
+              <div class="error-msg" *ngIf="JV_PD_Id_FK.invalid && (JV_PD_Id_FK.dirty || JV_PD_Id_FK.touched || formInvalid)">
+                <span *ngIf="JV_PD_Id_FK.errors.required">Project is required.</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="input-group">
+              <select class="custom-field" [(ngModel)]="l.JV_PR_Id_FK" #JV_PR_Id_FK="ngModel" name="JV_PR_Id_FK" (change)="GetOtherrelatedinfo(l.LP_PR_Id_FK)"
+                [disabled]="mode =='view'" required>
+                <option [value]="undefined" selected>---Select---</option>
+                <option [value]="p.PR_Id_PK" *ngFor="let p of proposallist;">
+                  {{p.PR_Id}} </option>
+              </select>
+              <label for="">Proposal Id
+                <span class="mandatory">*</span>
+              </label>
+              <div class="error-msg" *ngIf="JV_PR_Id_FK.invalid && (JV_PR_Id_FK.dirty || JV_PR_Id_FK.touched || formInvalid)">
+                <span *ngIf="JV_PR_Id_FK.errors.required">Proposal Id is required.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <label for="">Procurement Type : </label><span>{{ProposalFor}}</span>
+          </div>
+          <div class="col-md-4">
+            <label for="">Scheme : </label><span>{{Sch_Name}}</span>
+          </div>
+          <div class="col-md-4">
+            <label for="">District : </label><span>{{district}}</span>
+          </div>
+  
+  
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <label for="">Village : </label><span> {{Village}}</span>
+          </div>
+          <div class="col-md-4">
+            <label for="">Proposal receipt date : </label><span>{{Submitted_Date | date:'dd-MM-yyyy'}}</span>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-group">
+              <label for="">Agreement No. <span class="mandatory">*</span></label>
+              <input type="text" class="custom-field" [(ngModel)]="l.JV_Note_No" #JV_Note_No="ngModel" name="JV_Note_No" required>
+            </div>
+            <div class="error-msg" *ngIf="JV_Note_No.invalid && (JV_Note_No.dirty || JV_Note_No.touched || formInvalid)">
+              <span *ngIf="JV_Note_No.errors.required">Agreement No. is required.</span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="input-group">
+              <label for="">Agreement Date<span class="mandatory">*</span></label>
+              <input type="date" class="custom-field" [(ngModel)]="l.JV_Note_Date" #JV_Note_Date="ngModel" name="JV_Note_Date" required>
+            </div>
+            <div class="error-msg" *ngIf="JV_Note_Date.invalid && (JV_Note_Date.dirty || JV_Note_Date.touched || formInvalid)">
+              <span *ngIf="JV_Note_Date.errors.required">Agreement Date is required.</span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-1">
+            <div class="input-group" style="margin-top: 26px;text-align: end;">
+              <label for="">Document </label>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="input-group">
+              <input type="file" #Image accept="application/pdf" (change)="imageUpload($event.target.files)" id="JV_file"
+               [(ngModel)]="l.JV_file" #JV_file="ngModel" name="JV_file">
+             <a class="" [hidden]="l.JV_file==null" *ngIf="mode=='view' || mode=='edit'" target="_blank" href="{{l.JV_file}}">view</a>
+               
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="input-group">
+              <label for="">Note </label>
+              <textarea name="" id="" cols="30" rows="3" class="custom-field" maxlength="300" [(ngModel)]="l.JV_Note" #JV_Note="ngModel" name="JV_Note"></textarea>
+            </div>
+          </div>
+        </div>
+  
+        <div class="row">
+          <div class="col-md-6">
+              <div class="input-group">
+                  <!-- (change)="GetLandOwnerName(o.ON_LO_Id_Fk)" -->
+                  <select class="custom-field" [(ngModel)]="l.JV_LOD_Id_Fk" #JV_LOD_Id_Fk="ngModel" name="JV_LOD_Id_Fk"
+                      [disabled]="mode =='view'" (change)="GetlanddetailsforLA(l.JV_PD_Id_FK,l.JV_Id_PK,l.JV_LOD_Id_Fk,'save')" required>
+                      <option [value]="undefined" selected>---Select---</option>
+                      <option [value]="ll.LOD_Id_PK" *ngFor="let ll of Landownerlist;">
+                          {{ll.LOD_LO_Name}} </option>
+                  </select>
+                  <label for="">Land Owner
+                      <span class="mandatory">*</span>
+                  </label>
+                  <div class="error-msg" *ngIf="JV_LOD_Id_Fk.invalid && (JV_LOD_Id_Fk.dirty || JV_LOD_Id_Fk.touched || formInvalid)">
+                      <span *ngIf="JV_LOD_Id_Fk.errors.required">Land Owner is required.</span>
+                  </div>
+              </div>
+          </div>
+          </div>
+  
+          <div class="table-responsive">
+            <table class="table table-striped grid table-bordered">
+              <thead>
+                <tr>
+                  <th rowspan="2">Sl.No</th>
+                  <th rowspan="2"> Land Owner Name </th>
+                  <th rowspan="2">Survey No</th>
+                  <th rowspan="2">Procurement Type</th>
+                  <th rowspan="2">Extent</th>
+                  <th rowspan="2">Akar</th>
+                  <th colspan="4" class="text-center">Schedule</th>
+                  <th rowspan="2">Status</th>
+                  <th rowspan="2" class="text-center"> Select </th>
+                </tr>
+                <tr>
+                  <th>North</th>
+                  <th>South</th>
+                  <th>East</th>
+                  <th>West</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let sur of LandDetailslist;let i=index" [hidden]="sur.LD_JVPId_Selected==1">
+                    <!-- [hidden]="sur.LD_Not6_Selected==1" -->
+                  <td>{{i+1}}</td>
+                  <td>{{sur.LOD_LO_Name}}</td>
+                  <td>{{sur.LD_SurveyNo}}</td>
+                  <td>{{sur.MOP_Name}}</td>
+                  <td>{{sur.LD_Extents}}</td>
+                  <td>{{sur.LD_Akar}}</td>
+                  <td>{{sur.LD_North}}</td>
+                  <td>{{sur.LD_South}}</td>
+                  <td>{{sur.LD_East}}</td>
+                  <td>{{sur.LD_West}}</td>
+                  <td>{{sur.LD_LPAId_Selected=='1'?'Accepted':''}}</td>
+                  <td class="text-center" *ngIf="mode=='save'">
+                    <button type="button" [hidden]="sur.LD_JVAId_Selected==1" (click)="selectexculdesurveynoforLa(sur.LD_Id,'in',i,l.JV_PD_Id_FK)">Select </button>
+                    <button type="button" [hidden]="sur.LD_JVAId_Selected!=1" (click)="selectexculdesurveynoforLa(sur.LD_Id,'ex',i,l.JV_PD_Id_FK)">Exclude </button>
+                  </td>
+                  <td class="text-center" *ngIf="mode!='save'">
+                    <button type="button" [hidden]="sur.LD_JVAId_Selected==1" (click)="selectexculdesurveyno(sur.LD_Id,'in',1,l.JV_PD_Id_FK,sur.LOD_Id_PK)">Select </button>
+                    <button type="button" [hidden]="sur.LD_JVAId_Selected!=1" (click)="selectexculdesurveyno(sur.LD_Id,'ex',1,l.JV_PD_Id_FK,sur.LOD_Id_PK)">Exclude </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div> 
+  
+        <div class="text-center">
+          <button class="btn btn-primary" [disabled]="mode=='view'" type="submit">Save</button>
+          <!-- <button class="btn btn-primary" type="button">Cancel</button> -->
+          <button class="btn btn-primary" type="reset" [disabled]="mode=='view'">Cancel</button>
+        </div>
+  
+      </div>
+    </form>
+  </div>

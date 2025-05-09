@@ -1,0 +1,31 @@
+<body>
+  <form #rf="ngForm" (ngSubmit)="Login(rf)">
+    <div class="login-wrapper">
+      <span class="head">Employee Login</span>
+      <div class="field-wrapper">
+        <label>Username</label>
+        <input type="text" class="form-control md-custom" name="username" ngModel #username="ngModel" matInput
+          placeholder="UserName" required />
+        <div class="error-msg" *ngIf="username.invalid && (username.dirty || username.touched || formSubmitted)">
+          <div *ngIf="username.errors.required">Username is required</div>
+        </div>
+      </div>
+
+      <div class="field-wrapper">
+        <label>Password</label>
+        <input type="password" class="form-control md-custom" name="Password" ngModel #Password="ngModel" matInput
+          placeholder="Password" required />
+        <div *ngIf="Password.invalid && (Password.dirty || Password.touched || formSubmitted)" class="error-msg">
+          <div *ngIf="Password.errors.required">Password is required</div>
+        </div>
+        <span class="clearfix"></span>
+      </div>
+      <br>
+      <div class="justify-content-end d-flex">
+        <button class="btn btn-primary" type="submit" [disabled]="showLodingSpinner">Login
+          <i *ngIf="showLodingSpinner"          style="margin-left:10px;" class="fa fa-circle-o-notch fa-spin"></i>
+        </button>
+      </div>
+    </div>
+  </form>
+</body>

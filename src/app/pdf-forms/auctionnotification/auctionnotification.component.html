@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>EAuction Notification</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <style>
+        body {
+            padding-bottom: 50px;
+        }
+
+        p {
+            margin-bottom: 0px !important;
+        }
+
+        .letter-body {
+            /*            padding:20px;*/
+        }
+
+        .font-20 {
+            font-size: 20px;
+        }
+
+        .section1 {
+            background: #444;
+            color: #fff;
+            margin-bottom: 5px;
+            padding-bottom: 5px;
+        }
+
+        .title {
+            font-size: 25px;
+            text-decoration: underline;
+            margin-bottom: 10px;
+        }
+
+        .logo {
+            width: 100px;
+            margin: 10px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        .font-40 {
+            font-size: 40px;
+        }
+
+        .font-16 {
+            font-size: 16px;
+        }
+
+        .font-12 {
+            font-size: 12px;
+        }
+
+        .padding {
+            padding: 20px 0px;
+        }
+
+        .info {
+            padding: 10px;
+        }
+
+        .text-italic {
+            font-style: italic;
+        }
+
+        .design {
+            display: inline-block;
+            background: #444;
+            color: #fff;
+            padding: 5px;
+            border-radius: 10px;
+        }
+
+        .auction-info {
+            border-radius: 10px;
+            border: 1px solid #444;
+            text-align: left;
+            width: 80%;
+            margin: 10px auto;
+        }
+
+        .auction-info span {
+            display: block;
+            padding: 5px 15px;
+            background: #f3f3f3;
+            font-size: 14px;
+        }
+
+        .auction-info span:first-child {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .auction-info span:last-child {
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+
+        .auction-info span:nth-child(2) {
+            border-top: 1px solid #444;
+            border-bottom: 1px solid #444;
+        }
+
+        .width-100 {
+            width: 100%;
+        }
+
+        .general-info {
+            width: 80%;
+            margin: 10px auto;
+        }
+
+        .info-box {
+            border: 1px solid #444;
+            margin: 0px auto;
+            width: 90%;
+            /*            padding:20px;*/
+        }
+
+        .info-box .col-md-6 {
+            padding: 20px;
+            display: grid;
+            align-items: center;
+            align-content: center;
+        }
+
+        .info-box .col-md-6:first-child {
+            border-right: 1px solid #444;
+        }
+
+        .info-table {
+            margin: 20px auto 10px;
+            width: 95%;
+            font-size: 14px;
+        }
+
+        .info-table td {
+            vertical-align: middle;
+            padding: 3px;
+            border: 1px solid #444;
+        }
+
+        .info-table thead {
+            background: #444;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="letter-body">
+        <div class="header">
+            <div class="section1">
+                <!-- <div class="float-left">
+                    <img src="11.jpeg" class="logo" alt="">
+                </div> -->
+                <div class="padding font-20 text-center">BIHAR STATE HOUSING BOARD
+                    <br>
+                    <span class="font-16 text-center">6, Sardar Patel Marg,Patna, Bihar - 800015.</span>
+                </div>
+                <span class="clearfix"></span>
+            </div>
+        </div>
+        <div class="info text-center">
+            <span class="font-20 text-italic">
+                Bid Online!!!
+            </span>
+            <br>
+            <span class="design">
+                e-Auction Notification
+            </span>
+            <br>
+            <span class="font-12">Minimum Change in Bid Price is Rs.25 perSq.ft</span>
+
+            <div class="auction-info">
+                <span>Date of Opening of E-auction & Commencement of Live Bidding. {{notificationletter.AN_FromDate | date:'medium'}}</span>
+                <span>Last date to Express interest of Participation: {{notificationletter.AN_POI_Date | date:'medium'}}</span>
+                <span>Last Date & Time for closing of E-auction : {{notificationletter.AN_ToDate | date:'medium'}}</span>
+            </div>
+
+            <p class="font-20">Bihar State Housing Board announces the e-auction of Corner Sites, Sop Sites, and Intermediate Sites. The auction-cum-sale
+                of these sites are according to the rules and regulations of BSHB's Act. The sites are auctioned on "AS IS
+                WHERE IS BASIS". Property details & layout names are mentioned below.</p>
+        </div>
+
+
+        <div class="table-reponsive text-center">
+            <table class="table table-bordered info-table">
+                <thead>
+                    <tr>
+                        <td rowspan="2">SL NO.</td>
+                        <td rowspan="2">Category</td>
+                        <td rowspan="2">Site NO</td>
+                        <td rowspan="2">Property Details</td>
+                        <td colspan="2">Dimensions in Mtrs</td>
+                        <td rowspan="2">Area in Sq. Mtrs</td>
+                        <td rowspan="2">Area in Sq. Ft.</td>
+                        <td rowspan="2">Board Rate PER Sq.Ft</td>
+                    </tr>
+                    <tr>
+                        <td>East to West</td>
+                        <td>North to South</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="9" class="text-left">Project Name: <span style="font-size: 17px;font-family: initial;">{{notificationletter.PD_Project_Name}}</span></td>
+                    </tr>
+                    <tr *ngFor="let Notletr of notificationletter.PropertiesforAuctionModel;let i=index">
+                        <td>{{i+1}}</td>
+                        <td>{{Notletr.CA_CategoryName}}</td>
+                        <td>{{Notletr.PR_Property_No}}</td>
+                        <td>{{Notletr.IC_Name}}</td>
+                        <td>{{Notletr.PR_M_East_west}}</td>
+                        <td>{{Notletr.PR_M_North_South}}</td>
+                        <td>{{Notletr.PR_Plot_Area}}</td>
+                        <td>{{Notletr.Sqft}}</td>
+                        <td>{{Notletr.Price | number}}/-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <br>
+        <br>
+        <div class="general-info">
+            <div class="design font-20 width-100 text-center">
+                GENERAL TERMS AND CONDITIONS FOR E-AUCTION ARE AS FOLLOWS
+            </div>
+
+            <ol>
+                <li>Auction Purchaser should be a citizen of India.</li>
+                <li>Address Proof: Any one of the following documents attested by the Gazetted officer/Notary/Embassy Office
+                    shall be furnished.
+                    <ul>
+                        <li>Voter ID </li>
+                        <li>Driving License</li>
+                        <li>Passport</li>
+                        <li>UID(ADHAAR)</li>
+                    </ul>
+                </li>
+                <li>PAN No. (Attested by the Gazetted officer/Notary/Embassy Office-In case of NRI )</li>
+                <li>Photo Identity & Specimen Signature(Attested by the Gazetted officer/Notary/Embassy Office-In case of NRI)-
+                    To be furnished in the BSHB's prescribed format.</li>
+                <li>E-Mail address.</li>
+                <li>Mobile No</li>
+                <li>Landline Phone No(if available)</li>
+                <li>Partnership firm may participate in the auction.However the partnership firm should be registered in India
+                    before participation in the auction.</li>
+                <li>Minor is eligible to participate in the Auction through his/her guardian/next friend.</li>
+                <li>All legal proceedings in respect of the auction properties are subject to the jurisdiction of Courts in Patna
+                    Only.</li>
+                <li>EMD amount is fixed at Rs.50,000/-(Rupees Fifty thousand only)</li>
+                <li>EMD amount and e-auction fees to be paid as per the e-procurement portal.</li>
+                <li>The successful bidders(highest bidders) shall remit 25% of the total cost of the plot(including EMD amount)
+                    within 72 working hours from the closing time of e-auction to the below mentioned Bank account from his
+                    personal bank account only. The copy of the payment challan should be submitted to the Finance Section,
+                    BSHB.In case 25% of the bid amount is not remitted within 72 working hours, the EMD amount of Rs. 50,000/-
+                    will be forfeilted by the Board without any notice.</li>
+                <li>BANK & ACCOUNT DETAILS is as follows: Bank Name & Branch : CORPORATION BANK SC ROAD BRANCH ; Account Holder
+                    Name : Housing Commissioner, Bihar State Housing Board. ; Account No: 014400201003000 ; IFSC Code : CORP0000144
+                    ;</li>
+                <li>The successful bidder shall remit the remaining 75% of bid amount within 60 days ofissuance of the bid confirmation
+                    letter, failing which the entire amount paid by the bidder shall be forfeited by the board.</li>
+                <li>Bidder shall ahide by the auction rules and regulations of BSHB Act.</li>
+                <li>The properties notified are auctioned on "AS IS WHERE IS BASIS".</li>
+                <li>The Auction Purchaser, as specified in the format.</li>
+                <li>A per the IT Act 1961 Sec194 1A where the sale consideration exceeds Rs.50 Lakhs, then the successful bidder
+                    should deduct 1% of the amount and remit the same to the IT Department.</li>
+                <li>BSHB reserves the right to auction/withdraw the sites notified at any time during auction period without assigning
+                    any reasons.</li>
+                <li>The bid will be in accordance with the actual dimension of notified sites, in case of any discrepancy in
+                    notified dimensions.</li>
+                <li>BSHB reserves the right to accept or reject the bid made by successful bidder.</li>
+                <li>Single bid will not be accepted.</li>
+                <li>5 minutes of delta time shall be extended to the last moment bids of e-auction.</li>
+                <li>For demonstration of live bidding & learning the process of bidding, Visit BSHB-IT Section, III Floor, Central
+                    Office, Cauvery Bhavan, during office hours. Bidding by BSHB on behalf of abidder will not be undertaken
+                    during demo.</li>
+            </ol>
+
+        </div>
+
+        <div class="info-box">
+            <div class="container-fluid">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div>For e-bidding clarification,queries or any other related information. Please contact e-procurerment
+                            Help Desk Nos. 080-25501216/25501227
+                        </div>
+                        <div>For Other Enquires Contact</div>
+                        <ul>
+                            <li>Deputy General Manager(Customer Service), BSHB, Landline- 080-22273511 Extn 363</li>
+                            <li>System Analyst, IT Section, Landline-080-222735111-323
+                            </li>
+                            <li>Revenue Officer, BSHB, Landline-080-22273511 Extn 307/309</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <div>
+                            For location of sites and other details log on
+                            <br>
+                            <b>
+                                <u>www.eproc.bihar.gov.in</u>
+                            </b>
+                            <br> and also visit our website
+                            <br>
+                            <b>
+                                <u>www.biharhousing.com</u>
+                            </b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="font-20">Necessary training for uploading of bids and hands on experience in handling e-procurerment system could
+                        be obtained from the center for e-governance, 6,Sardar Patel Marg, Patna-800015.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="font-20">
+                        <b>Training Details:</b> A free training schedule is organized by center for e-Governance.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table info-table">
+                <thead>
+                    <tr>
+                        <td>Training Date</td>
+                        <td>Training Venue</td>
+                        <td>Training Batches</td>
+                        <td>Training Duration</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="2">On all Govt Bihar working Wednesday's & Saturday's</td>
+                        <td rowspan="2">6,Sardar Patel Marg, Patna-800015.</td>
+                        <td>1</td>
+                        <td>10.30 am to 1.30 pm</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>2.30 pm to 5.30 pm</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <span style="display:block;" class="text-center font-20">
+            (OR)
+        </span>
+
+        <div class="table-responsive">
+            <table class="table info-table">
+                <thead>
+                    <tr>
+                        <td>Training Date</td>
+                        <td>Training Venue</td>
+                        <td>Training Batches</td>
+                        <td>Training Duration</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="2">On all Govt of Bihar working Monday's</td>
+                        <td rowspan="2">6,Sardar Patel Marg, Patna-800015.</td>
+                        <td>1</td>
+                        <td>10.30 am to 1.30 pm</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>2.30 pm to 5.30 pm</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <br>
+        <div>
+            <div class="float-right">
+                Sd/-
+                <br> Housing Commissioner,
+                <br> Bihar State Housing Board,Patna
+            </div>
+            <span class="clearfix"></span>
+        </div>
+
+    </div>
+</body>
+
+</html>

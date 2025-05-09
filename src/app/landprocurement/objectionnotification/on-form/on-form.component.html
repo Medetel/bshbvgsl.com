@@ -1,0 +1,243 @@
+<div class="wrapper">
+    <div class="title themeheading">
+        {{title}}
+        <div class="float-right">
+            <button class="btn btn-primary" [routerLink]="['/home/objectionnotification']">Back</button>
+        </div>
+        <span class="clearfix"></span>
+    </div>
+
+    <form (ngSubmit)="mode=='edit'?UpdateObjectionNotification(objectionForm):SaveObjectionNotification(objectionForm)"
+        #objectionForm="ngForm" name="form1">
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <select #ON_PD_Id_FK="ngModel" name="ON_PD_Id_FK" [(ngModel)]="o.ON_PD_Id_FK" class="custom-field"
+                            required (change)="AddProject(o.ON_PD_Id_FK)">
+                            <option value="undefined">---Select---</option>
+                            <option *ngFor="let project of projectlist" [value]="project.PD_Id">
+                                {{project.PD_Project_Code}} - {{project.PD_Project_Name}}
+                            </option>
+                        </select>
+                        <label>Project<span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="ON_PD_Id_FK.invalid && (ON_PD_Id_FK.dirty || ON_PD_Id_FK.touched || formInvalid)">
+                            <span *ngIf="ON_PD_Id_FK.errors.required">Project is required.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="" *ngIf="o.ON_Not_No!=null">Objection Number: {{o.ON_Not_No}}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <select class="custom-field" [(ngModel)]="o.ON_PR_Id_FK" #ON_PR_Id_FK="ngModel" name="ON_PR_Id_FK"
+                            (change)="GetOtherrelatedinfo(o.ON_PR_Id_FK)" disabled required>
+                            <option [value]="undefined" selected>---Select---</option>
+                            <option [value]="p.PR_Id_PK" *ngFor="let p of proposallist;">
+                                {{p.PR_Id}} </option>
+                        </select>
+                        <label for="">Proposal Id
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="ON_PR_Id_FK.invalid && (ON_PR_Id_FK.dirty || ON_PR_Id_FK.touched || formInvalid)">
+                            <span *ngIf="ON_PR_Id_FK.errors.required">Proposal Id is required.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="">Procurement Type : {{ProposalFor=='Mix'?'Acquisition/Purchase/Joint Ventures':ProposalFor}}</label>
+                </div>
+            </div>
+
+            <div class="row row-custom">
+                <div class="col-md-3">
+                    <label for="">District : <span>{{district}}</span></label>
+                </div>
+                <div class="col-md-3">
+                    <label for="">Block : <span>{{Taluk}}</span></label>
+                </div>
+                <div class="col-md-3">
+                    <label for="">Village/City/Colony : <span>{{Village}}</span></label>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <!-- (change)="GetLandOwnerName(o.ON_LO_Id_Fk)" -->
+                        <select class="custom-field" [(ngModel)]="o.ON_LOD_Id_Fk" #ON_LOD_Id_Fk="ngModel" name="ON_LOD_Id_Fk"
+                            [disabled]="mode =='view'" required (change)="GetONSurveyNo(o.ON_LOD_Id_Fk,0)">
+                            <option [value]="undefined" selected>---Select---</option>
+                            <option [value]="ll.LOD_Id_PK" *ngFor="let ll of Landlist;">
+                                {{ll.LOD_LO_Name}} </option>
+                        </select>
+                        <label for="">Land Owner
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="ON_LOD_Id_Fk.invalid && (ON_LOD_Id_Fk.dirty || ON_LOD_Id_Fk.touched || formInvalid)">
+                            <span *ngIf="ON_LOD_Id_Fk.errors.required">Land Owner is required.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 "  style="margin-top:-24px">
+                    <label for="">Survey No
+                        <span class="mandatory">*</span>
+                    </label>
+                    <div class="selectBox" (click)="showCheckboxes()" style="margin-top:-24px">
+                        <select class="custom-field" [disabled]="mode=='view'">
+                            <option>Select Survey No</option>
+                        </select>
+                        <div class="overSelect"></div>
+                    </div>
+                    <div id="checkboxes">
+                        <label for="one" *ngFor="let sl of Surveylist">
+                            <input type="checkbox" id="sl.LD_Id" [checked]="sl.IsSelected==1" (change)="AddSurveyList(sl.LD_Id)"
+                                required /> &nbsp; {{sl.LD_SurveyNo}}</label>
+                    </div>
+
+                </div>
+
+
+                <!-- <div class="col-md-6">
+                    <div class="input-group">
+                        <select class="custom-field" [(ngModel)]="o.ON_LO_Id_Fk" #ON_LO_Id_Fk="ngModel" name="ON_LO_Id_Fk"
+                            [disabled]="mode =='view'" required>
+                            <option [value]="undefined" selected>---Select---</option>
+                            <option [value]="sl.LD_Id" *ngFor="let sl of Surveylist;">
+                                <input type="checkbox"> {{sl.LD_SurveyNo}} </option>
+                        </select>
+                        <label for="">Survey No
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="ON_LO_Id_Fk.invalid && (ON_LO_Id_Fk.dirty || ON_LO_Id_Fk.touched || formInvalid)">
+                            <span *ngIf="ON_LO_Id_Fk.errors.required">Survey No is required.</span>
+                        </div>
+                    </div>
+                </div> -->
+
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" name="ON_MobileNumber" pattern="^[0-9]{10,15}$" maxlength="10" minlength="10"
+                            #ON_MobileNumber="ngModel" [(ngModel)]="o.ON_MobileNumber" class="custom-field" [disabled]="mode=='view'"
+                            required>
+                        <label for="">Mobile Number
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg pull-right" *ngIf="ON_MobileNumber.invalid && (ON_MobileNumber.dirty || ON_MobileNumber.touched || formInvalid)">
+                            <span *ngIf="ON_MobileNumber.errors.required">Land Owner Mobile Number is required.</span>
+                            <span *ngIf="ON_MobileNumber.errors?.pattern">Mobile No is not valid </span>
+                            <span *ngIf="ON_MobileNumber.errors?.minlength">Mobile No is not valid </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <textarea type="text" name="ON_Address" maxlength="200" #ON_Address="ngModel" [(ngModel)]="o.ON_Address"
+                            class="custom-field" [disabled]="mode=='view'" required></textarea>
+                        <label for="">Address
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg pull-right" *ngIf="ON_Address.invalid && (ON_Address.dirty || ON_Address.touched || formInvalid)">
+                            <span *ngIf="ON_Address.errors.required">Address is required.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <select class="custom-field" [(ngModel)]="o.ON_CaseType_Id" #ON_CaseType_Id="ngModel" name="ON_CaseType_Id"
+                            [disabled]="mode=='view'" required>
+                            <option [value]="undefined" selected>---Select---</option>
+                            <option [value]="ct.CaseType_Id" *ngFor="let ct of caseTypelist;">
+                                {{ct.CaseType_Name}}
+                            </option>
+                        </select>
+                        <label for="">Objection Type
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="ON_CaseType_Id.invalid && (ON_CaseType_Id.dirty || ON_CaseType_Id.touched || formInvalid)">
+                            <span *ngIf="ON_CaseType_Id.errors.required">Case Type selection is required</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" name="ON_Objection" maxlength="100" #ON_Objection="ngModel" [(ngModel)]="o.ON_Objection"
+                            class="custom-field" [disabled]="mode=='view'" required>
+                        <label for="">Objection
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg pull-right" *ngIf="ON_Objection.invalid && (ON_Objection.dirty || ON_Objection.touched || formInvalid)">
+                            <span *ngIf="ON_Objection.errors.required">Objection is required.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input [disabled]="mode=='view'" [(ngModel)]="o.ON_Rate_Acre" pattern="^[0-9.]*$" maxlength="15"
+                            #ON_Rate_Acre="ngModel" name="ON_Rate_Acre" class="custom-field" required>
+                        <label for="">Rate / acre
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="ON_Rate_Acre.invalid && (ON_Rate_Acre.dirty || ON_Rate_Acre.touched || formInvalid)">
+                            <span *ngIf="ON_Rate_Acre.errors.required">Rate/Acre is required.</span>
+                            <span *ngIf="ON_Rate_Acre.errors?.pattern">Enter Valid Data.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <textarea [disabled]="mode=='view'" [(ngModel)]="o.ON_Comments" maxlength="200" #ON_Comments="ngModel"
+                            name="ON_Comments" cols="30" rows="10" class="custom-field" required></textarea>
+                        <label for=""> Comments
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="ON_Comments.invalid && (ON_Comments.dirty || ON_Comments.touched || formInvalid)">
+                            <span *ngIf="ON_Comments.errors.required">Comments is required.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <select class="custom-field" [(ngModel)]="o.ON_Status" #ON_Status="ngModel" name="ON_Status"
+                            [disabled]="mode=='view'">
+                            <option [ngValue]="undefined" selected>---Select---</option>
+                            <!-- <option [value]="ct.CaseType_Id" *ngFor="let ct of caseTypelist;"> -->
+                            <option value="Progress">Progress</option>
+                            <option value="Closed">Closed
+                            </option>
+                        </select>
+                        <label for="">Status
+                            <!-- <span class="mandatory">*</span> -->
+                        </label>
+                        <div class="error-msg" *ngIf="ON_Status.invalid && (ON_Status.dirty || ON_Status.touched || formInvalid)">
+                            <span *ngIf="ON_Status.errors.required">Status is required</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="text-center">
+                <button class="btn btn-primary" [disabled]="mode=='view'" type="submit">Save</button> &nbsp;
+                <!-- <button class="btn btn-primary" type="submit" (click)="Cancel()">Cancel</button> -->
+                <button class="btn btn-primary" type="reset" [disabled]="mode=='view'">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>

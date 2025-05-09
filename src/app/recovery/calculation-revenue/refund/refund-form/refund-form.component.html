@@ -1,0 +1,67 @@
+<div class="wrapper">
+    <div class="title themeheading">
+        {{title}}
+        <!-- <button class="btn btn-primary float-right" type="button" (click)="Back()">Back</button> -->
+        <span class="clearfix"></span>
+    </div>
+
+    <form #Application="ngForm" (ngSubmit)="GetAllRefunddetailsBySearch(searchText)">
+        <div class="add-click class=container-fluid">
+            <div class="selector" id="app-filter">
+                <div class="row justify-content-center">
+                    <div class="col-md-4">
+                        <div class="form-group input-group">
+                            <input type="text" class="form-control custom-field" id="txtAppNo" name="APP_No"
+                                #APP_No="ngModel" [(ngModel)]="searchText">
+                            <label for="txtAppNo">Applicant No.</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <!-- <div class="input-group">
+                            <input type="text" class="custom-field" #APP_PA_Name="ngModel" name="APP_PA_Name"
+                [(ngModel)]="APP_PA_Name"  required>
+                            <label for="">Name of Applicant
+                                <span class="mandatory">*</span>
+                            </label>
+                        </div> -->
+                    </div>
+                    <div class="col-md-4">
+                        <button class="btn btn-primary" type="submit">Go</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped grid table-bordered">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2"> Applicant Name</th>
+                                    <th rowspan="2"> Amount deposit by the Applicant </th>
+                                    <th rowspan="2"> Date of Deposit </th>
+                                    <th rowspan="2"> Rate of Interest </th>
+                                    <th rowspan="2"> Duration of Interest </th>
+                                    <th rowspan="2"> Amount of Interest </th>
+                                    <th rowspan="2"> Payable Amount </th>
+                
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr  *ngFor="let item of RefundList">
+                                    <td>{{item.APP_PA_Name}}</td>
+                                    <td>{{item.P_Amount}} ⟨₹⟩</td>
+                                    <td>{{item.P_Applicant_pay_Date}}</td>
+                                    <td>5%</td>
+                                    <td>{{item.Durationofinterest}} (Months)</td>
+                                    <td>{{item.amountofinterest}} ⟨₹⟩</td>
+                                    <td>{{item.amountpayable}} ⟨₹⟩</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>

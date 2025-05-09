@@ -1,0 +1,26 @@
+.searchbar{
+    padding:10px;
+    background: #212121;
+}
+
+label{
+    color:#fff;
+    margin-top:8px;
+}
+
+.form-control{
+    padding:4px;
+}
+
+select.form-control:not([size]):not([multiple]) {
+    height: calc(2rem + 2px);
+}
+
+button{
+    width:100px;
+    margin-right: 5px;
+}
+
+.swal2-popup .swal2-styled.swal2-confirm { 
+    width: 100%;
+}

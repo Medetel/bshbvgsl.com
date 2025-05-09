@@ -1,0 +1,167 @@
+<div class="wrapper">
+    <form (ngSubmit)="mode=='Edit'?UpdateTRFIn(DPT):SaveDPT(DPT)" #DPT="ngForm" name="DPT">
+    <div class="title themeheading">
+        {{title}}
+        <button class="btn btn-primary float-right" [routerLink]="['/home/transfer/transferin']">Back</button>
+        <span class="clearfix"></span>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class=" col-md-4 ">
+                <label>Transfer Order Number :</label>
+            </div>
+            <div class="col-md-4">
+                <label for="">Date :
+                    <span>11/12/2018</span>
+                </label>
+            </div>
+            <div class="col-md-4">
+                <label for="">Status :
+                    <span>Pending</span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="title themeheading">
+        Employee Details
+        <span class="clearfix"></span>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+              <label for=""> Division Code : </label> <span> {{EmployeeDetails.DI_Code}} </span>
+            </div>
+            <div class="col-md-4">
+              <label for="">Emp Code :</label> <span> {{EmployeeDetails.EMP_EMPLOYEE_CODE}} </span>
+            </div>
+            <div class="col-md-4">
+              <label for=""> Name :</label> &nbsp; <span> {{EmployeeDetails.EMP_FIRST_NAME}} </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <label for="">Division : </label> &nbsp; <span> {{EmployeeDetails.DI_District}} </span>
+            </div>
+            <div class="col-md-4">
+              <label for="">Department : </label> &nbsp; <span> {{EmployeeDetails.Department_Name}} </span>
+            </div>
+            <div class="col-md-4">
+              <label for="">Designation : </label> &nbsp;<span> {{EmployeeDetails.desg_name}} </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <label for="">Employee Category : </label> &nbsp;<span> {{EmployeeDetails.EMP_CATEGORY}} </span>
+            </div>
+            <div class="col-md-4">
+              <label for="">Employee Group : </label> &nbsp; <span> {{EmployeeDetails.EMP_GROUP}} </span>
+            </div>
+            <div class="col-md-4">
+              <label for="">Employee Type : </label> &nbsp;<span> {{EmployeeDetails.EMP_TYPE}} </span>
+            </div>
+          </div>
+          <br>
+        <!--  -->
+        <div class="title rowmarginfix themeheading">
+            Transfer Details
+            <span class="clearfix"></span>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6">
+              <label>To Division :</label>
+              <span> {{EmployeeDetailsTO.DI_District}} </span>
+            </div>
+            <div class="col-md-6 col-sm-6">
+              <label>To Department :</label>
+              <span> {{EmployeeDetailsTO.Department_Name}} </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class=" col-md-6  col-sm-6">
+              <label>Transfer Date :</label>
+              <span> {{EmployeeDetailsTO.RELI_TIME | date:'dd/MM/yyyy'}} </span>
+            </div>
+            <div class="col-md-6 col-sm-6">
+              <label>Reporting Authority :</label>
+              <span> {{EmployeeDetailsTO.DEPUT_REPT_AUTH}} </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-6">
+              <label>Reporting Time :</label>
+              <span> {{EmployeeDetailsTO.REPORT_TIME }} </span>
+            </div>
+            <div class="col-md-6 col-sm-6">
+              <label>Reporting Date :</label>
+              <span> {{E.DEPUT_ACT_REP_DATE}} </span>
+            </div>
+          
+          </div>
+
+        <!--  -->
+        <div class="title rowmarginfix themeheading">
+            Transfer Reporting Details
+          </div>
+          <div class="row">
+            <div class="col-md-6 col-sm-6">
+              <div class="input-group">
+                <label> Date (Actual Reporting) <span style="color:red;">*</span></label>
+                <input type="Date" name="DEPUT_ACT_REP_DATE" maxlength="50" [(ngModel)]="E.DEPUT_ACT_REP_DATE"
+                #DEPUT_ACT_REP_DATE="ngModel" class="form-control" [disabled]="mode=='View'" required>
+              </div>
+              <div class="error-msg"
+              *ngIf="DEPUT_ACT_REP_DATE.invalid && (DEPUT_ACT_REP_DATE.dirty || DEPUT_ACT_REP_DATE.touched || formInvalid)">
+              <span *ngIf="DEPUT_ACT_REP_DATE.errors.required">Actual Reporting is required</span>
+            </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+              <div class="input-group">
+                <label>Reporting Time <span style="color:red;">*</span></label>
+                <select class="custom-field" [(ngModel)]="E.REPORT_TIME" #REPORT_TIME="ngModel"  name="REPORT_TIME"[disabled]="mode=='View'" required>
+                    <option [value]="undefined" selected>---Select---</option>
+                    <option [value]="tt.code_value" *ngFor="let tt of Trainingtypelist;">
+                      {{tt.code_value}}
+                    </option>
+                  </select>
+              </div>
+              <div class="error-msg"
+              *ngIf="REPORT_TIME.invalid && (REPORT_TIME.dirty || REPORT_TIME.touched || formInvalid)">
+              <span *ngIf="REPORT_TIME.errors.required">Reporting Time is required</span>
+            </div>
+            </div>
+      
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="input-group">
+                <label for="">Remarks</label>
+                <textarea name="REMARKS" maxlength="50" [(ngModel)]="E.REMARKS"
+                #REMARKS="ngModel" [disabled]="mode=='View'" class="custom-field"></textarea>
+              </div>
+            </div>
+            <div class="col-md-2 col-sm-2">
+              <label style="color:blue;">Upload (OM) </label>
+            </div>
+            <div class="col-md-4">
+                <input *ngIf="!hide" type="file" #Image accept="application/pdf" [disabled]="mode=='View'"
+                (change)="imageUpload1($event.target.files)" id="repdoc" name="repdoc">
+                <a *ngIf="E.repdoc" [href]="E.repdoc" target="_blank" 
+                [class.disabled]="!E.repdoc" tabindex="-1" aria-disabled="true">
+               View
+             </a>
+             
+             <!-- Optionally, you can also disable the link when DGO_Upload is null -->
+             <a *ngIf="!E.repdoc" class="disabled" tabindex="-1" aria-disabled="true">
+               View
+             </a>
+            </div>
+          </div>
+    <br>
+    <div class="d-flex justify-content-center">
+        <button [disabled]="mode=='View'" class="btn btn-primary" type="submit">Update</button> &nbsp;
+        <button [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button>&nbsp;
+      </div>
+    <br>
+</div>
+</form>
+</div>

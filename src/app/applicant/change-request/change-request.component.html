@@ -1,0 +1,157 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+  </div>
+
+
+  <div class="container-fluid">
+    <!-- <div class="row">
+        <div class="search-hero">
+          <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  Start searching for a hero by id or name or country">
+        </div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Hero Name</th>
+              <th>Country</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let hero of heroes | filter:searchText">
+              <td>{{hero.id}}</td>
+              <td>{{hero.name}}</td>
+              <td>{{hero.country}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div> -->
+
+
+
+
+    <div class="row" style="margin-top: 1%;">
+      <div class="col-md-3">
+        <div class="form-group input-group">
+          <input type="text" placeholder=" " class="form-control" name="searchText" [(ngModel)]="app.searchText"
+            #searchText="ngModel" (keyup)="GetApplicantDetails(app.searchText,app.searchName)">
+          <label>Application No.</label>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group input-group">
+          <input type="text" placeholder=" " class="form-control" name="searchName" [(ngModel)]="app.searchName"
+            #searchName="ngModel" (keyup)="GetApplicantDetails(app.searchText,app.searchName)">
+          <label>Applicant Name.</label>
+        </div>
+      </div>
+      <!-- <div class="col-md-1">
+        <button class="btn btn-primary">
+          Go
+        </button>
+      </div> -->
+    </div>
+    <table class="table table-striped absolute">
+      <tbody>
+        <tr *ngFor="let app of ApplicantDetails">
+          <td>{{app.APP_No}}</td>
+          <td>{{app.APP_PA_Name}}</td>
+          <td><button type="button" class="btn btn-primary" (click)="GetApplicantDetailsById(app.APP_Id)">Select</button></td>
+        </tr>
+      </tbody>
+    </table>
+    <!--  -->
+    <div>
+      <div class="row image-row" style="padding:20px;">
+        <div class="col-md-6">
+          <img src="../assets/images/icons/Profile.png" style="width:100px;height:100px;max-width:100%;" alt="">
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-md-3">
+          <label>
+            <span class="field-title">Application number</span>:
+          </label>
+        </div>
+        <div class="col-md-6">
+          <input type="text" placeholder=" " class="custom-field blur" name="APP_No" maxlength="50" [(ngModel)]="Applicant.APP_No"
+            #APP_No="ngModel" readonly>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <label>
+            <span class="field-title">Name</span>:
+          </label>
+        </div>
+        <div class="col-md-6">
+          <input type="text" placeholder=" " class="custom-field" name="APP_PA_Name" maxlength="50" [(ngModel)]="Applicant.APP_PA_Name"
+            #APP_PA_Name="ngModel">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <label>
+            <span class="field-title">Address1</span>:
+          </label>
+        </div>
+        <div class="col-md-6">
+          <textarea placeholder=" " class="custom-field" name="APP_Address1" maxlength="50" [(ngModel)]="Applicant.APP_Address1"
+            #APP_Address1="ngModel">
+
+      </textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <label>
+            <span class="field-title">Address2</span>:
+          </label>
+        </div>
+        <div class="col-md-6">
+          <textarea placeholder=" " class="custom-field" name="APP_Address2" maxlength="50" [(ngModel)]="Applicant.APP_Address2"
+            #APP_Address2="ngModel">
+
+
+
+
+
+
+
+      </textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <label>
+            <span class="field-title">Mobile Number</span>:
+          </label>
+        </div>
+        <div class="col-md-6">
+          <input type="text" placeholder=" " class="custom-field" name="APP_PA_MobileNo" maxlength="10" [(ngModel)]="Applicant.APP_PA_MobileNo"
+            #APP_PA_MobileNo="ngModel">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <label>
+            <span class="field-title">Email</span>:
+          </label>
+        </div>
+        <div class="col-md-6">
+          <input type="text" placeholder=" " class="custom-field" name="APP_PA_Email" maxlength="50" [(ngModel)]="Applicant.APP_PA_Email"
+            #APP_PA_Email="ngModel">
+        </div>
+      </div>
+
+    </div>
+    <!--  -->
+  </div>
+
+  <div class="btn-wrapper">
+    <button class="btn btn-primary" (click)="EditApplicantDetails(Applicant)" type="button">Save</button>
+    <button class="btn btn-primary">Cancel</button>
+  </div>
+</div>

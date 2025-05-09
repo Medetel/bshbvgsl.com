@@ -1,0 +1,204 @@
+<div class="wrapper">
+    <div class="title themeheading">
+        {{title}}
+        <button class="btn btn-primary pull-right" [routerLink]="['/home/masters/leaves']">Back</button>
+        <span class="clearfix"></span>
+    </div>
+    <form (ngSubmit)="mode=='Edit'?UpdateLeaveDetails(Leave):SaveLeave(Leave)" #Leave="ngForm" name="Leave">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-6" *ngIf="mode=='View'">
+                    <div class="input-group">
+                        <label>Leave Code</label><br>
+                        <input class="custom-field" type="text" oninput="this.value = this.value.toUpperCase()"
+                            maxlength="100" name="Leave_code" [(ngModel)]="l.Leave_code" #Leave_code="ngModel" disabled>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="input-group">
+                        <label>Leave Description
+                            <span class="mandatory">*</span>
+                        </label><br>
+                        <input class="custom-field" type="text" style="text-transform: capitalize;"
+                            style="text-transform: capitalize;" maxlength="100" name="Leave_name"
+                            [(ngModel)]="l.Leave_name" #Leave_name="ngModel" [disabled]="mode=='View'" required>
+                    </div>
+                    <div class="error-msg pull-right"
+                        *ngIf="Leave_name.invalid && (Leave_name.dirty || Leave_name.touched || formInvalid)">
+                        <span *ngIf="Leave_name.errors.required">Description is required</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Paid Leave?
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="PaidStatus" #PaidStatus="ngModel"
+                                [(ngModel)]="l.PaidStatus" [disabled]="mode=='View'" id="inlineRadio1" value="Yes">
+                            <label class="form-check-label" for="inlineRadio1">Yes</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="PaidStatus" #PaidStatus="ngModel"
+                                [(ngModel)]="l.PaidStatus" [disabled]="mode=='View'" id="inlineRadio1" value="No" checked>
+                            <label class="form-check-label" for="inlineRadio2">No</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="input-group">
+                        <label>Leave Days
+                            <span class="mandatory">*</span>
+                        </label><br>
+                        <input class="custom-field" type="text" style="text-transform: capitalize;"
+                            style="text-transform: capitalize;" maxlength="100" name="LeaveDays"
+                            [(ngModel)]="l.LeaveDays" #LeaveDays="ngModel" [disabled]="mode=='View'"  pattern="^[0-9]*$"  required>
+                    </div>
+                    <div class="error-msg pull-right"
+                        *ngIf="LeaveDays.invalid && (LeaveDays.dirty || LeaveDays.touched || formInvalid)">
+                        <span *ngIf="LeaveDays.errors.required">Leave Days is required</span>
+                        <span *ngIf="LeaveDays.errors.pattern">Leave Days should accept only numericals</span>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="input-group">
+                        <label>Availed Ceiling
+                        </label>
+                        <input class="custom-field" type="text" maxlength="100" name="CeilingForAvail" max=3
+                            [(ngModel)]="l.CeilingForAvail" #CeilingForAvail="ngModel" [disabled]="mode=='View'">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Installememnt allowed
+                        </label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="AllowedInsta" #AllowedInsta="ngModel"
+                                [(ngModel)]="l.AllowedInsta" [disabled]="mode=='View'" id="inlineRadio1" value="Yes">
+                            <label class="form-check-label" for="inlineRadio1">Yes</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="AllowedInsta" #AllowedInsta="ngModel"
+                                [(ngModel)]="l.AllowedInsta" [disabled]="mode=='View'" id="inlineRadio1" value="NO">
+                            <label class="form-check-label" for="inlineRadio2">No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="input-group">
+                        <label>Maximum Installements
+                            <span class="mandatory">*</span>
+                        </label><br>
+                        <input class="custom-field" type="text" style="text-transform: capitalize;"
+                            style="text-transform: capitalize;" maxlength="100" name="No_insta" [(ngModel)]="l.No_insta"
+                            #No_insta="ngModel" [disabled]="mode=='View' || l.AllowedInsta=='NO'" required>
+                    </div>
+                    <div class="error-msg pull-right"
+                        *ngIf="No_insta.invalid && (No_insta.dirty || No_insta.touched || formInvalid)">
+                        <span *ngIf="No_insta.errors.required">Maximum installement is required</span>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Accumulation Allowed?
+                        </label>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="Accumalation" #Accumalation="ngModel"
+                                [(ngModel)]="l.Accumalation" [disabled]="mode=='View'" id="inlineRadio1" value="Y">
+                            <label class="form-check-label" for="inlineRadio1">Yes</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="Accumalation" #Accumalation="ngModel"
+                                [(ngModel)]="l.Accumalation" [disabled]="mode=='View'" id="inlineRadio2" value="No">
+                            <label class="form-check-label" for="inlineRadio2">No</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-4">
+                    <div class="input-group">
+                        <label> Accumulation Ceiling
+                        </label><br>
+                        <input class="custom-field" type="text" oninput="this.value = this.value.toUpperCase()"
+                            maxlength="3" name="Ceiling" [(ngModel)]="l.Ceiling" #Ceiling="ngModel"
+                            [disabled]="mode=='View' || l.Accumalation=='No'">
+                    </div>
+                    <div class="error-msg pull-right"
+                        *ngIf="Ceiling.invalid && (Ceiling.dirty || Ceiling.touched || formInvalid)">
+                        <span *ngIf="Ceiling.errors.required">Accumalation is required.</span>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Emcashment Allowed
+                        </label>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="EnbcashmentAllowed"
+                                #EnbcashmentAllowed="ngModel" [(ngModel)]="l.EnbcashmentAllowed"
+                                [disabled]="mode=='View'" id="inlineRadio1" value="Y">
+                            <label class="form-check-label" for="inlineRadio1">Yes</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="EnbcashmentAllowed"
+                                #EnbcashmentAllowed="ngModel" [(ngModel)]="l.EnbcashmentAllowed"
+                                [disabled]="mode=='View'" id="inlineRadio2" value="N">
+                            <label class="form-check-label" for="inlineRadio2">No</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="input-group">
+                        <label> Emcashment Ceiling
+                        </label><br>
+                        <input class="custom-field" type="text" maxlength="3" name="EnbcashmentCeiling"
+                            [(ngModel)]="l.EnbcashmentCeiling" #EnbcashmentCeiling="ngModel" [disabled]="mode=='View' || l.EnbcashmentAllowed=='N'">
+                    </div>
+                    <div class="error-msg pull-right"
+                        *ngIf="EnbcashmentCeiling.invalid && (EnbcashmentCeiling.dirty || EnbcashmentCeiling.touched || formInvalid)">
+                        <span *ngIf="EnbcashmentCeiling.errors.required">Accumalation is required.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        <label>Leave to be credited?
+                        </label>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="LeaveCredit" #LeaveCredit="ngModel"
+                                [(ngModel)]="l.LeaveCredit" [disabled]="mode=='View'" id="inlineRadio1" value="Yes">
+                            <label class="form-check-label" for="inlineRadio1">Yes</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="LeaveCredit" #LeaveCredit="ngModel"
+                                [(ngModel)]="l.LeaveCredit" [disabled]="mode=='View'" id="inlineRadio1" value="No">
+                            <label class="form-check-label" for="inlineRadio2">No</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="text-center">
+            <button class="btn btn-primary" [disabled]="mode=='View'">{{mode=='Edit'?'Edit':'Save'}}</button> &nbsp;
+            <button class="btn btn-primary" [disabled]="mode=='View'" class="btn btn-primary" type="button"
+                (click)="Cancel()">Cancel</button>
+        </div>
+    </form>
+</div>

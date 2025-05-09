@@ -1,0 +1,156 @@
+<div class="wrapper">
+    <div class="title themeheading">Pay Scale Master
+        <!-- Add Scales/Grades -->
+        <button class="btn btn-primary pull-right" [routerLink]="['/home/masters/scales']">Back</button>
+        <span class="clearfix"></span>
+    </div>
+    <form (ngSubmit)="mode=='Edit'?UpdatescaleDetails(scale):Savescale(scale)" #scale="ngForm" name="scale">
+        <div class="container-fluid">
+            <div class="row ">
+                <div class="col-md-6" *ngIf="mode=='View'">
+                    <div class="input-group">
+                        <label>Pay Scale Code</label><br>
+                        <input class="custom-field" type="text" oninput="this.value = this.value.toUpperCase()"
+                            maxlength="100" name="scale_code" [(ngModel)]="r.scale_code" #scale_code="ngModel" disabled
+                            required>
+                    </div>
+                </div>
+              
+                <div class="col-md-6 ">
+                    <div class="input-group">
+                        <label>Pay Scale Description
+                            <span class="mandatory">*</span>
+                        </label><br>
+                        <input class="custom-field" type="text" style="text-transform: capitalize;" maxlength="100" pattern="^[a-zA-Z0-9]*$" 
+                            name="scale_name" [(ngModel)]="r.scale_name" #scale_name="ngModel" [disabled]="mode=='View'"
+                            required>
+                            <div class="error-msg pull-right"  *ngIf="scale_name.invalid && (scale_name.dirty || scale_name.touched || formInvalid)">
+                                <span  *ngIf="scale_name.errors.required">Description is required</span>   
+                                <span  *ngIf="scale_name.errors.pattern">Description should accept only alphanumeric</span>                                  
+                            </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 ">
+                    <div class="input-group">
+                        <label [hidden]="mode=='View'">W.E.F</label><br>
+                        <input class="custom-field" type="date" name="w_e_f" [(ngModel)]="r.w_e_f" #w_e_f="ngModel"
+                            [hidden]="mode=='View'">
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="row "> -->             
+
+                <!-- <div class=" col-md-4 col-sm-6">
+                    <div class="input-group">
+                        <label>Designation</label>
+                        <select class="custom-field" [(ngModel)]="r.desg_id" #desg_id ="ngModel"
+                        name="desg_id" [disabled]="mode=='View'">
+                        <option [value]="undefined" selected>---Select---</option>
+                        <option [value]="d.desg_id" *ngFor="let d of DesignationList;">
+                            {{d.desg_name}} 
+                          </option>s
+                    </select>
+                    </div>
+                </div> -->
+            <!-- </div>      -->
+
+            <div class="scale-border">
+                <div class="title themeheading rowmargin">
+                    Play Scale Slab
+                    <span class="clearfix"></span>
+                </div>
+
+                <div *ngIf="mode !='View'">
+                <div class="row ">
+                    <div class="col-md-6 ">
+                        <div class="input-group">
+                            <label [hidden]="mode=='View'">Minimum
+                                <span class="mandatory">*</span>
+                            </label><br>
+                            <input class="custom-field" type="text" name="min_value" [(ngModel)]="s.min_value"
+                                #min_value="ngModel" [hidden]="mode=='View'"  pattern="^[0-9]*$" >
+                        </div>
+                        <div class="error-msg pull-right"  *ngIf="min_value.invalid && (min_value.dirty || min_value.touched || formInvalid)">
+                            <span  *ngIf="min_value.errors.pattern">Minimum should accept only numericals</span>                                  
+                        </div>
+                    </div>
+                    <div class="col-md-6 ">
+                        <div class="input-group">
+                            <label [hidden]="mode=='View'">Increment
+                                <span class="mandatory">*</span>
+                            </label><br>
+                            <input class="custom-field" type="text"  name="incr_value" [(ngModel)]="s.incr_value" (keyup)="ChangeValue(r.min_value,r.incr_value)" [hidden]="mode=='View'" pattern="^[0-9]*$">
+                            <!-- <input class="custom-field" type="text" name="incr_value" [(ngModel)]="r.incr_value"
+                            (keyup.enter)="ChangeValue(r.min_value,r.incr_value)" #incr_value="ngModel" [hidden]="mode=='View'"> -->
+                        </div>
+                        <div class="error-msg pull-right"
+                            *ngIf="incr_value.invalid && (incr_value.dirty || incr_value.touched || formInvalid)">
+                            <span *ngIf="incr_value.errors?.pattern">Increment should only be numericals</span>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 ">
+                        <div class="input-group">
+                            <label [hidden]="mode=='View'">Maximum
+                                <span class="mandatory">*</span>
+                            </label><br>
+                            <input class="custom-field" type="text" name="max_value" [(ngModel)]="s.max_value"
+                                #max_value="ngModel" [hidden]="mode=='View'"  pattern="^[0-9]*$" >
+                        </div>
+                        <div class="error-msg pull-right"  *ngIf="max_value.invalid && (max_value.dirty || max_value.touched || formInvalid)">
+                            <span  *ngIf="max_value.errors.pattern">Maximum should accept only numericals</span>                                  
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary" name="Add" (click)="foo(s.min_value,s.incr_value,s.max_value,s.w_e_f)"
+                        [disabled]="mode=='View'" >Add</button>                   
+                </div>
+            </div>
+
+                <div class="table-responsive">
+                    <table class="table table-stripped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Sl.No</th>
+                                <th>Minimum Value</th>
+                                <th>Increment Value</th>
+                                <th>Maximum Value</th>
+                                <!-- <th>W.E.F</th> -->
+                                <th [hidden]="mode=='Add'">Edit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let r of TempTableList  let i=index">
+                                <td> {{(i+1)}}.</td>
+                                <td>{{r.min_value}}</td>
+                                <td>{{r.incr_value}}</td>
+                                <td>{{r.max_value}}</td>
+                                <!-- <td>{{r.w_e_f | date:'dd-MM-yyyy'}}</td> -->
+                                <td>
+                                    <button type="button" class="btn btn-primary" name="Add" (click)="GetInfo(r)"
+                                        (click)="RemovePDDetails(i)" [disabled]="mode=='View'" [hidden]="mode=='Add'">
+                                        Edit
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <br>
+        <div class="text-center">
+            <button class="btn btn-primary" type="submit" [disabled]="mode=='View'">Save</button> &nbsp;
+           
+            <button class="btn btn-primary" [disabled]="mode=='View'" class="btn btn-primary" type="button"
+                (click)="Cancel()">Cancel</button>
+        </div>
+    </form>
+</div>

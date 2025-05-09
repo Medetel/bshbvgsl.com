@@ -1,0 +1,125 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary float-right" (click)="back()" >Back</button>
+    <span class="clearfix"></span>
+  </div>
+
+  <form (ngSubmit)="mode=='edit'?UpdateFormula(Details):SaveFORMULA(Details)"
+    #Details="ngForm" name="form1">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-10">
+        <div class="input-group">
+          <label>Name
+             <span class="mandatory">*</span></label>
+          <input type="text" class="custom-field" maxlength="50" name="Formula_Name" #Formula_Name="ngModel"
+          [(ngModel)]="f.Formula_Name" required>
+        </div>
+          <div class="error-msg pull-right"  *ngIf="Formula_Name.invalid && (Formula_Name.dirty || Formula_Name.touched || formInvalid)">
+              <span  *ngIf="Formula_Name.errors.required">Formula Name is required</span>             
+          </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+        <label>Allowance/Dedudtion
+         <span class="mandatory">*</span></label>
+        <select  class="custom-field" name="Code_ID" #Code_ID="ngModel"
+        [(ngModel)]="f.Code_ID" required>
+        <option [value]="d.ED_CODE" *ngFor="let d of variablelist;">
+          {{d.ED_DESC}} &#123; {{d.ED_Short_name}} &#125;
+        </option>
+        </select>
+      </div>
+       <div class="error-msg pull-right"  *ngIf="Code_ID.invalid && (Code_ID.dirty || Code_ID.touched || formInvalid)">
+              <span  *ngIf="Code_ID.errors.required">Feild is required</span>             
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label>Expression
+           <span class="mandatory">*</span></label>
+          <textarea name="" id="" cols="30" maxlength="100" rows="5" name="Formula" #Formula="ngModel"
+          [(ngModel)]="f.Formula" class="custom-field" required></textarea>
+        </div>
+        <div class="error-msg pull-right"  *ngIf="Formula.invalid && (Formula.dirty || Formula.touched || formInvalid)">
+              <span  *ngIf="Formula.errors.required">Formula is required</span>             
+          </div>
+      </div>
+       <div class="col-md-3">
+        <div class="text-center">          
+          <button class="btn btn-change" type="button" (click)=clear()>Clear</button>
+        </div>
+      </div>
+
+       <div class="col-md-3">
+        <div class="text-center">          
+          <button class="btn btn-change" type="button" (click)=varifyFormula(f.Formula)>Verify</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3">
+        <div class="input-group">
+          <label>Variables</label>
+          <select multiple name="" id="" class="custom-field multi-select" name="feild1" #feild1="ngModel"
+          [(ngModel)]="f.feild1"  (change)="feild1Change(f.feild1)">
+          <option [value]="d.ED_DESC" *ngFor="let d of filterdList;">
+            {{d.ED_DESC}} &#123; {{d.ED_Short_name}} &#125;
+          </option>
+          <option value="WRK_DAYS">Working Days</option>
+          <option value="ATND_DAYS">Attendant Days</option>
+          <option value="LOP">LOP</option>
+           <option value="Basic_Salary">Basic</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="input-group">
+          <label>Operators</label>
+          <select multiple name="" id="" class="custom-field multi-select" name="feild1" #feild1="ngModel"
+          [(ngModel)]="f.feild4" (change)="feild1Change2(f.feild4)">
+            <option [value]="d.code_value" *ngFor="let d of operatorlist;">
+              {{d.code_value}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="input-group">
+          <label>Comparision</label>
+          <select multiple name="" id="" class="custom-field multi-select"
+          name="feild2" #feild2="ngModel"
+          [(ngModel)]="f.feild2"  (change)="feild1Change2(f.feild2)">
+          <option [value]="d.code_value" *ngFor="let d of ComparisionList;">
+            {{d.code_value}}
+          </option>
+        </select>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="input-group">
+          <label>Function</label>
+          <select multiple name="" id="" class="custom-field multi-select" name="feild3" #feild3="ngModel"
+          [(ngModel)]="f.feild3" (change)="feild1Change2(f.feild3)">
+            <option [value]="d.code_value" *ngFor="let d of FunctinList;">
+              {{d.code_value}}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="text-center" *ngIf='disable == false'>
+      <button class="btn btn-primary" type="submit">Save</button> &nbsp;
+      <button class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button>
+    </div>
+  </div>
+  </form>
+</div>

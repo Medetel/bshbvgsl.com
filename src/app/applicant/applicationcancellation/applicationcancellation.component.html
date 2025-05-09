@@ -1,0 +1,437 @@
+<div class="wrapper">
+    <div class="title themeheading">
+        {{title}}
+        <button class="btn btn-primary float-right" [routerLink]="['/home/appstatus']">Back</button>
+        <span class="clearfix"></span>
+    </div>
+    <form (ngSubmit)="APP_Status!='Allotted'?onSubmit(can,AppData.APP_No,AppData.Amount,APP_Status):PostCancellation(can,AppData.APP_No,AppData.Amount)"
+        #can="ngForm" autocomplete="off">
+
+        <div class="applicationview">
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-md-6" style="margin-top: 4%;">
+                        <label>
+                            <span class="field-title">Application No.</span> {{AppData.APP_No}}</label>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6" *ngIf="AppData.APP_PA_Photo!=null">
+                                <span>Primary Applicant Photo</span>
+                                <img src="{{AppData.APP_PA_Photo}}" class="img-responsive" style="width:200px;height:130px;">
+                            </div>
+                            <div class="col-md-6" *ngIf="AppData.APP_PA_Signature!=null">
+                                <span> Primary Applicant Signature</span>
+                                <img src="{{AppData.APP_PA_Signature}}" class="img-responsive" style="width:200px;height:130px;">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-3">
+                        <div class="row" *ngIf="AppData.APP_IsJoint=='Y'">
+                            <div class="col-md-4" *ngIf="AppData.APP_SA_Photo!=null">
+                                <label>
+                                    <span class="field-title">Secondary Applicant Photo</span>
+                                    <img src="{{AppData.APP_SA_Photo}}" style="width:200px;height:130px;"> </label>
+                            </div>
+                            <div class="col-md-4" *ngIf="AppData.APP_SA_Signature!=null">
+                                <label>
+                                    <span class="field-title"> Secondary Applicant Signature</span>
+                                    <img src="{{AppData.APP_SA_Signature}}" style="width:200px;height:130px;"> </label>
+                            </div>
+                            <div class="col-md-4" *ngIf="AppData.APP_SA_AdharCard!=null">
+                                <label>
+                                    <span class="field-title"> Secondary Aadhaar Card copy upload</span>
+                                    <img src="{{AppData.APP_SA_AdharCard}}" style="width:200px;height:130px;"> </label>
+                            </div>
+                        </div>
+                    </div> -->
+
+
+
+
+
+
+
+
+                    <!-- <div class="col-md-4" *ngIf="AFD.APP_PA_AdharCard!=null">
+                          <label>
+                              <span class="field-title">Aadhaar Card copy upload</span>
+                              <img src="{{AFD.APP_PA_AdharCard}}" style="width:200px;height:130px;"> </label>
+                      </div> -->
+                    <!-- <div class="col-md-6">
+            <label><span class="field-title">Joint Application ? </span> {{AFD.APP_IsJoint}} </label>
+        </div> -->
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Joint Application </span> {{AppData.APP_IsJoint}} </label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Project Name</span> {{AppData.PD_Project_Name}}</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Project place</span> {{AppData.PD_Village}}</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Property Type</span> {{AppData.APP_PropertyType}}</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title"> Category</span> {{AppData.CA_CategoryName}}</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">District</span> {{AppData.DI_District}}</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">District Code</span> {{AppData.DI_Code}}</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Notification No.</span> {{AppData.DSWOId_NO_Number}}</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Notification Date</span> {{AppData.DSWOId_NO_Date|
+                            date:'dd-MM-yyyy'}}</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Applicant Name</span> {{AppData.APP_PA_Name}}</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Father/Mother/Husband/Wife</span>
+                            {{AppData.APP_PA_Relation_Name}}</label>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Date of Birth</span> {{AppData.APP_PA_DOB| date:'dd-MM-yyyy'}}</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Age</span> {{AppData.APP_PA_Age}}</label>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Gender</span> {{AppData.APP_PA_Gender}}</label>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Primary Mobile Number</span>{{AppData.APP_PA_MobileNo}}</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Primary Mobile Number</span> {{AppData.APP_PA_AlternateNo}}</label>
+                    </div> -->
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Email</span>{{AppData.APP_PA_Email}}</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">PAN No.</span> {{AppData.APP_PA_PanNo}}</label>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="AppData.APP_IsJoint=='Y'">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Secondary Applicant Name</span> {{AppData.APP_SA_Name}}</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Secondary Applicant Relationship </span>
+                            {{AppData.APP_SA_Relation_Name}}</label>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="AppData.APP_IsJoint=='Y'">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Secondary Applicant Date of Birth</span>{{AppData.APP_SA_DOB |
+                            date:'dd-MM-yyyy'}}</label>
+                    </div>
+                    <div class="col-md-3">
+                        <label>
+                            <span class="field-title">Secondary Applicant Age</span> {{AppData.APP_SA_Age}}</label>
+                    </div>
+                    <!-- <div class="col-md-3">
+                        <label>
+                            <span class="field-title">Secondary Applicant Gender</span> {{AppData.APP_SA_Gender}}</label>
+                    </div> -->
+                </div>
+
+                <!-- <div class="row" *ngIf="AppData.APP_IsJoint=='Y'">
+
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Secondary Applicant Mobile Number</span>{{AppData.APP_SA_MobileNo}}</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Secondary Applicant Email</span>{{AppData.APP_SA_Email}}</label>
+                    </div>
+                </div> -->
+
+                <div class="row">
+                   
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Adhar Card No</span> {{AppData.APP_PA_AdharNo}}</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Reservation</span> {{AppData.RES_Name}}</label>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="AppData.APP_IsJoint=='Y'">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Secondary Applicant PAN No.</span>{{AppData.APP_SA_PanNo}}</label>
+                    </div>
+                    <!-- <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Secondary Applicant Adhar No</span>{{AppData.APP_SA_AdharNo}}
+                        </label>
+                    </div> -->
+                </div>
+
+                <!-- <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Religion</span>{{AppData.Relegion_Name}}</label>
+                    </div>
+                   
+                </div> -->
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Annual Income</span> {{AppData.APP_AnnualIncome}}</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Name of the Nominee</span> {{AppData.APP_NomineeName}}</label>
+                    </div>
+                    <!-- <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Address</span> {{AppData.APP_Address1}}
+                            <br>{{AppData.APP_Address2}}
+                            <br> {{AppData.VI_Village}}
+                            <br>{{AppData.HO_Name}}
+                            <br> {{AppData.TA_Taluk}} {{AppData.DI_District}}
+                        </label>
+                    </div> -->
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Bank</span> {{AppData.APP_BankName}}</label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Branch</span> {{AppData.APP_BankBranch}}</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Account Number</span>{{AppData.APP_AccountNo}} </label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">IFSC Code</span> {{AppData.APP_IFSC}}</label>
+                    </div>
+                </div>
+
+                <!-- <div class="row">
+                    
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Relationship of the nominee</span> {{AppData.Relation_Name}}</label>
+                    </div>
+                </div> -->
+
+                <!-- <div class="row">
+              <div class="col-md-4" *ngIf="AFD.APP_PA_Photo!=null">
+                  <label><span class="field-title">Applicant Photo</span> <img src="{{AFD.APP_PA_Photo}}" style="width:200px;height:130px;"> </label>
+              </div>
+              <div class="col-md-4" *ngIf="AFD.APP_PA_Signature!=null">
+                      <label><span class="field-title">Applicant Signature</span><img src="{{AFD.APP_PA_Signature}}" style="width:200px;height:130px;"> </label>
+                  </div>
+                  <div class="col-md-4" *ngIf="AFD.APP_PA_AdharCard!=null">
+                          <label><span class="field-title">Aadhaar Card copy upload</span> <img src="{{AFD.APP_PA_AdharCard}}" style="width:200px;height:130px;"> </label>
+                      </div>
+              </div> -->
+
+                <!-- <div class="row" *ngIf="AFD.APP_IsJoint=='Y'">
+                  <div class="col-md-4" *ngIf="AFD.APP_SA_Photo!=null">
+                      <label>
+                          <span class="field-title">Secondary Applicant Photo</span>
+                          <img src="{{AFD.APP_SA_Photo}}" style="width:200px;height:130px;"> </label>
+                  </div>
+                  <div class="col-md-4" *ngIf="AFD.APP_SA_Signature!=null">
+                      <label>
+                          <span class="field-title"> Secondary Applicant Signature</span>
+                          <img src="{{AFD.APP_SA_Signature}}" style="width:200px;height:130px;"> </label>
+                  </div>
+                  <div class="col-md-4" *ngIf="AFD.APP_SA_AdharCard!=null">
+                      <label>
+                          <span class="field-title"> Secondary Aadhaar Card copy upload</span>
+                          <img src="{{AFD.APP_SA_AdharCard}}" style="width:200px;height:130px;"> </label>
+                  </div>
+              </div> -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Application Status</span>
+                            <b>{{APP_Status}}</b>
+                        </label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Amount</span>
+                            <b>{{AppData.Amount}}</b>
+                        </label>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Allotted Date</span>
+                            <b>{{AppData.Allotted_Date | date:'dd-MM-yyyy'}}</b>
+                        </label>
+                    </div>
+                    <div class="col-md-6">
+                        <label>
+                            <span class="field-title">Property Number</span>
+                            <b>{{AppData.Prop_No}}</b>
+                        </label>
+                    </div>
+
+                </div>
+
+                <!-- <div class="row">
+                    <div class="col-md-6" *ngIf="AppData.APP_ESW_Certificate!=null">
+                        <label>
+                            <span class="field-title">ESW Cerficate</span>
+                            <a href="{{AppData.APP_ESW_Certificate}}">View</a>
+                        </label>
+                    </div>
+                    <div class="col-md-6" *ngIf="AppData.APP_Caste_Certificate!=null">
+                        <label>
+                            <span class="field-title">Caste Cerficate</span>
+                            <a href="{{AppData.APP_Caste_Certificate}}">View</a>
+                        </label>
+                    </div>
+                </div> -->
+                <br>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-check-inline" *ngIf="APP_Status=='Not Allotted' || APP_Status=='Moved to Scrutiny'">
+                            <label class="form-check-label">
+                                <input class="form-check-input" required type="radio" id="inlineRadio1" value="Ref"
+                                    name="CR_Refund" [(ngModel)]="Cancel.CR_Refund" #CR_Refund="ngModel" required>
+                                Refund Request
+
+                            </label>
+                            <div class="error-msg" *ngIf="CR_Refund.invalid && (CR_Refund.dirty || CR_Refund.touched || formSubmitted)">
+                                <span *ngIf="CR_Refund.errors.required">Request Refund is required</span>
+                            </div>
+                        </div>
+                        <div class="form-check-inline" *ngIf="APP_Status=='Allotted' || APP_Status=='EXCNG'">
+                            <label class="form-check-label">
+                                <input class="form-check-input" required type="radio" id="inlineRadio1" value="OWN"
+                                    name="CR_Refund" [(ngModel)]="Cancel.CR_Refund" #CR_Refund="ngModel" required> Own
+                                Request Cancellation
+                            </label>
+                            <div class="error-msg" *ngIf="CR_Refund.invalid && (CR_Refund.dirty || CR_Refund.touched || formSubmitted)">
+                                <span *ngIf="CR_Refund.errors.required">Request Type is required</span>
+                            </div>
+                        </div>
+                        <div class="form-check-inline" *ngIf="APP_Status=='Allotted' || APP_Status=='EXCNG'">
+                            <label class="form-check-label">
+                                <input class="form-check-input" required type="radio" id="inlineRadio1" value="NPM"
+                                    name="CR_Refund" [(ngModel)]="Cancel.CR_Refund" #CR_Refund="ngModel" required> Non
+                                Payment Cancellation
+                            </label>
+                            <!-- <div class="error-msg" *ngIf="CR_Refund.invalid && (CR_Refund.dirty || CR_Refund.touched || formSubmitted)">
+                                <span *ngIf="CR_Refund.errors.required">Request Type is required</span>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <textarea name="" id="" cols="30" rows="10" class="custom-field" name="CR_Reason"
+                                [(ngModel)]="Cancel.CR_Reason" #CR_Reason="ngModel" required></textarea>
+                            <label for="">Reason for Cancellation</label>
+                            <div class="error-msg" *ngIf="CR_Reason.invalid && (CR_Reason.dirty || CR_Reason.touched || formSubmitted)">
+                                <span *ngIf="CR_Reason.errors.required">Reason for Cancellation is required</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="APP_Status=='Allotted'">
+                        <div class="col-md-6">
+                            <input type="file" #Image accept="application/pdf" (change)="PAC_Docment($event.target.files)"
+                                id="PAC_Doc" name="PAC_Doc" [(ngModel)]="Cancel.PAC_Doc" #PAC_Doc="ngModel">
+                        </div>
+                    </div>
+                    <div class="row" *ngIf="APP_Status=='EXCNG'">
+                        <div class="col-md-6">
+                            <input type="file" #Image accept="application/pdf" (change)="PAC_Docment($event.target.files)"
+                                id="PAC_Doc" name="PAC_Doc" [(ngModel)]="Cancel.PAC_Doc" #PAC_Doc="ngModel">
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="btn-wrapper text-wrapper">
+            <button class="btn btn-primary" type="submit" *ngIf="APP_Status!='Allotted'"> Submit to BSHB </button>
+            <button class="btn btn-primary" type="submit" *ngIf="APP_Status=='Allotted'"> Submit to BSHB </button>
+        </div>
+    </form>
+</div>

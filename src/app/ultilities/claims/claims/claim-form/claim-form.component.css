@@ -1,0 +1,22 @@
+table{
+    border:1px solid #ccc;
+}
+
+table thead{
+    background: #808080;
+    color:#fff;    
+
+}
+
+table td{
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #ccc; 
+}
+
+.btn{
+    width:100px;
+}
+.table.table tbody tr:hover {
+    background-color: inherit; 
+  }

@@ -1,0 +1,801 @@
+<div class="wrapper propertyregister">
+    <div class="title themeheading">{{title}}
+        <button class="btn btn-primary float-right" routerLink="/home/consultant">Back</button>
+        <span class="clearfix"></span>
+    </div>
+
+    <form (ngSubmit)="mode=='edit'?update(CD):onSubmit(CD)" #CD="ngForm" autocomplete="off">
+
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" class="custom-field" #CD_PD_ID_FK="ngModel" name="CD_PD_ID_FK" [(ngModel)]="consultant.CD_PD_ID_FK"
+                            list="dynmicUserIds" (change)=getProjectbyCode(consultant.CD_PD_ID_FK) required />
+                        <datalist id="dynmicUserIds">
+                            <option *ngFor="let item of projectlist" [value]="item.PD_Id" style="height:150px; width:150px;margin-bottom:50px;">
+                                {{item.PD_Project_Code}} - {{item.PD_Project_Name}} - {{item.Phase_Name}}
+                            </option>
+                        </datalist>
+                        <label>Project</label>
+                        <div class="error-msg" *ngIf="CD_PD_ID_FK.invalid && (CD_PD_ID_FK.dirty || CD_PD_ID_FK.touched || formSubmitted)">
+                            <span *ngIf="CD_PD_ID_FK.errors.required">Project is required</span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- <div class="col-md-6">
+                    <div class="input-group">
+                        <select name="CD_PD_ID_FK" [disabled]="mode=='view'" [(ngModel)]="consultant.CD_PD_ID_FK"
+                            #CD_PD_ID_FK="ngModel" (change)=getProjectbyCode(consultant.CD_PD_ID_FK) style="width:100%;height: 35px;border-radius: 4px;"
+                            class="custom-field" required>
+                            <option [ngValue]="undefined" selected>--Select--</option>
+                            <option [value]="po.PD_Id" *ngFor="let po of projectlist">{{po.PD_Project_Code}}-{{po.PD_Project_Name}}-{{po.Phase_Name}}</option>
+                        </select>
+                        <label>Project
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="CD_PD_ID_FK.invalid && (CD_PD_ID_FK.dirty || CD_PD_ID_FK.touched || formSubmitted)">
+                            <span *ngIf="CD_PD_ID_FK.errors.required">Project is required</span>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- <div class="col-md-1" style="margin-top:10px">
+                        <button class="btn btn-primary" (click)=getProjectbyCode(consultant.PD_Project_Code)>retreive</button>
+                        </div> -->
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <select name="CD_CT_ID_FK" [disabled]="mode=='view'" [(ngModel)]="consultant.CD_CT_ID_FK"
+                            #CD_CT_ID_FK="ngModel" style="width:100%;height: 35px;border-radius: 4px;" class="custom-field"
+                            required>
+                            <option [ngValue]="undefined" selected>--Select--</option>
+                            <option [value]="con.CD_CT_ID_FK" *ngFor="let con of consultantlist">{{con.CT_Name}}</option>
+                        </select>
+                        <label>Consultant type
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="CD_CT_ID_FK.invalid && (CD_CT_ID_FK.dirty || CD_CT_ID_FK.touched || formSubmitted)">
+                            <span *ngIf="CD_CT_ID_FK.errors.required">Consultant type is required</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" *ngIf="consultant.CD_CT_ID_FK=='2'">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" name="CD_Specify_Consultant_Type" [disabled]="mode=='view'" maxlength="50"
+                            [(ngModel)]="consultant.CD_Specify_Consultant_Type" #CD_Specify_Consultant_Type="ngModel"
+                            class="custom-field" required maxlength="10">
+                        <label>Specify
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg"
+                            *ngIf="CD_Specify_Consultant_Type.invalid && (CD_Specify_Consultant_Type.dirty || CD_Specify_Consultant_Type.touched || formSubmitted)">
+                            <span *ngIf="CD_Specify_Consultant_Type.errors.required">Specify Consultant Type is
+                                required </span>
+                    
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="title themeheading">
+                Project Details
+                <span class="clearfix"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>
+                        <span class="field-title">Scheme</span>: {{projectDetails.Sch_Name}} </label>
+                </div>
+                <div class="col-md-6">
+                    <label>
+                        <span class="field-title">District</span>: {{projectDetails.DI_District}}</label>
+                </div>
+            </div>
+            <!-- <div class="row">
+                <div class="col-md-6">
+                    <label>
+                        <span class="field-title">Taluk</span>: {{projectDetails.TA_Taluk}} </label>
+                </div>
+                <div class="col-md-6">
+                    <label>
+                        <span class="field-title">Hobli</span>: {{projectDetails.HO_Name}} </label>
+                </div>
+            </div> -->
+            <div class="row">
+                <div class="col-md-6">
+                    <label>
+                        <span class="field-title">Village</span>: {{projectDetails.PD_Village}}</label>
+                </div>
+                <div class="col-md-6">
+                    <label>
+                        <span class="field-title">Phase</span>: {{projectDetails.Phase_Name}}</label>
+                </div>
+            </div>
+
+            <div class="row">
+
+
+                <div class="col-md-6">
+                    <label>
+                        <span class="field-title">Total Project Extent in Acres</span>:
+                        {{total}} </label>
+                </div>
+
+
+            </div>
+
+
+
+            <div class="title themeheading">
+                Consultant Details
+                <span class="clearfix"></span>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <select name="CD_TOE_ID_FK" [disabled]="mode=='view'" [(ngModel)]="consultant.CD_TOE_ID_FK"
+                            #CD_TOE_ID_FK="ngModel" style="width:100%;height: 35px;border-radius: 4px;" class="custom-field"
+                            required>
+                            <option [ngValue]="undefined" selected>--Select--</option>
+                            <option [value]="to.CD_TOE_ID_FK" *ngFor="let to of toelist">{{to.TOE_Name}}</option>
+                        </select>
+                        <label>Type of Entrustment
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="CD_TOE_ID_FK.invalid && (CD_TOE_ID_FK.dirty || CD_TOE_ID_FK.touched || formSubmitted)">
+                            <span *ngIf="CD_TOE_ID_FK.errors.required">Type of Entrustment is required</span>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" *ngIf="consultant.CD_TOE_ID_FK=='2'">
+                    <div class="input-group">
+                        <input type="text" name="CD_TenderNotification_No" [disabled]="mode=='view'" 
+                            [(ngModel)]="consultant.CD_TenderNotification_No" #CD_TenderNotification_No="ngModel" class="custom-field"
+                            required maxlength="10">
+                        <label>Tender Notification No.
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="CD_TenderNotification_No.invalid && (CD_TenderNotification_No.dirty || CD_TenderNotification_No.touched || formSubmitted)">
+                            <span *ngIf="CD_TenderNotification_No.errors.required">Tender Notification No. is required</span>
+                            <span *ngIf="CD_TenderNotification_No.errors.required">Tender Notification No. Should be 10 Digits </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row" *ngIf="consultant.CD_TOE_ID_FK=='2'">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="date" name="CD_TenderNotification_Date" [disabled]="mode=='view'" [(ngModel)]="consultant.CD_TenderNotification_Date"
+                            #CD_TenderNotification_Date="ngModel" class="custom-field" required >
+                        <label>Tender Notification Date.
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="CD_TenderNotification_Date.invalid && (CD_TenderNotification_Date.dirty || CD_TenderNotification_Date.touched || formSubmitted)">
+                            <span *ngIf="CD_TenderNotification_Date.errors.required">Tender Notification Date is
+                                required</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" name="CD_ExtentasPerTenderNot" [disabled]="mode=='view'" maxlength="10"
+                            [(ngModel)]="consultant.CD_ExtentasPerTenderNot" #CD_ExtentasPerTenderNot="ngModel" class="custom-field"
+                            required>
+                        <label>Extent as per tender notification.
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="CD_ExtentasPerTenderNot.invalid && (CD_ExtentasPerTenderNot.dirty || CD_ExtentasPerTenderNot.touched || formSubmitted)">
+                            <span *ngIf="CD_ExtentasPerTenderNot.errors.required">Extent is required</span>
+                            <span *ngIf="CD_ExtentasPerTenderNot.errors.required">Extent No. Should be 10 Characters </span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" name="CD_NameofConsultant" [disabled]="mode=='view'" maxlength="20"
+                            [(ngModel)]="consultant.CD_NameofConsultant" #CD_NameofConsultant="ngModel" class="custom-field"
+                            required pattern="[A-Za-z]+">
+                        <label>Name of consultant.
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="CD_NameofConsultant.invalid && (CD_NameofConsultant.dirty || CD_NameofConsultant.touched || formSubmitted)">
+                            <span *ngIf="CD_NameofConsultant.errors.required">Consultant Name is required</span>
+                            <span *ngIf="CD_NameofConsultant.errors?.pattern">Consultant name should be alphabets.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <textarea class="custom-field" name="CD_Address" [disabled]="mode=='view'" maxlength="200"
+                            [(ngModel)]="consultant.CD_Address" #CD_Address="ngModel" required></textarea>
+                        <label>Address
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="CD_Address.invalid && (CD_Address.dirty || CD_Address.touched || formSubmitted)">
+                            <span *ngIf="CD_Address.errors.required">Address is required</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" name="CD_BankName" [disabled]="mode=='view'" maxlength="100" [(ngModel)]="consultant.CD_BankName"
+                            #CD_BankName="ngModel" class="custom-field" required pattern="[A-Za-z]+">
+                        <label>Bank Name.
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="CD_BankName.invalid && (CD_BankName.dirty || CD_BankName.touched || formSubmitted)">
+                            <span *ngIf="CD_BankName.errors.required">Bank Name is required</span>
+                            <span *ngIf="CD_BankName.errors?.pattern">Bank name should be alphabets.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" name="CD_BranchName" [disabled]="mode=='view'" maxlength="100" [(ngModel)]="consultant.CD_BranchName"
+                            #CD_BranchName="ngModel" class="custom-field" required pattern="[A-Za-z]+">
+                        <label>Branch Name.
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="CD_BranchName.invalid && (CD_BranchName.dirty || CD_BranchName.touched || formSubmitted)">
+                            <span *ngIf="CD_BranchName.errors.required">Bank Branch is required</span>
+                            <span *ngIf="CD_BranchName.errors?.pattern">Bank name should be alphabets.</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" name="CD_IFSCCode" [disabled]="mode=='view'"placeholder="AAAA0111111" minlength="11" maxlength="11" [(ngModel)]="consultant.CD_IFSCCode"
+                            #CD_IFSCCode="ngModel" class="custom-field" pattern="^[A-Z]{4}0\d{6}$" required>
+                        <label>IFSC Code.
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="CD_IFSCCode.invalid && (CD_IFSCCode.dirty || CD_IFSCCode.touched || formSubmitted)">
+                            <span *ngIf="CD_IFSCCode.errors.required">IFSC Code is required</span>
+                            <span *ngIf="CD_IFSCCode.errors.pattern"> Ifsc code is Invalid</span>
+                            <span *ngIf="CD_IFSCCode.errors.minlength"> Ifsc code must be 11 characters </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" name="CD_Account_No" [disabled]="mode=='view'"  [(ngModel)]="consultant.CD_Account_No"
+                            #CD_Account_No="ngModel" class="custom-field" maxlength="15" minlength="15"
+                            pattern="^[0-9]*$" required>
+                        <label>Account No.
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="CD_Account_No.invalid && (CD_Account_No.dirty || CD_Account_No.touched || formSubmitted)">
+                            <span *ngIf="CD_Account_No.errors.required">Account No. is required</span>
+                            <span *ngIf="CD_Account_No.errors.pattern"> Account Number must be characters</span>
+                            <span *ngIf="CD_Account_No.errors.minlength"> Account Number maximum 15 characters</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <select name="CD_F_ID_FK" [disabled]="mode=='view'" [(ngModel)]="consultant.CD_F_ID_FK"
+                            #CD_F_ID_FK="ngModel" style="width:100%;height: 35px;border-radius: 4px;" class="custom-field"
+                            required>
+                            <option [ngValue]="undefined" selected>--Select--</option>
+                            <option [value]="fee.F_ID" *ngFor="let fee of feelist">{{fee.F_Name}}</option>
+                        </select>
+                        <label>Type of Fee
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="CD_F_ID_FK.invalid && (CD_F_ID_FK.dirty || CD_F_ID_FK.touched || formSubmitted)">
+                            <span *ngIf="CD_F_ID_FK.errors.required">Fee is required</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group" *ngIf="consultant.CD_F_ID_FK==1">
+                        <input type="text" name="CD_Amount" maxlength="3" pattern="^([0-9]\.[0-9]{1}|[0-9]\.[0-9]{2}|\.[0-9]{2}|[1-9][0-9]\.[0-9]{1}|[1-9][0-9]\.[0-9]{2}|[0-9][0-9]|[1-9][0-9]\.[0-9]{2})$|^([0-9]|[0-9][0-9]|[0-99])$|^100$" [disabled]="mode=='view'" [(ngModel)]="consultant.CD_Amount"
+                            #CD_Amount="ngModel"  class="custom-field" required>
+                            <!-- pattern="^[0-9]*$" For Simple -->
+                            <!-- pattern="(?:\b|-)([1-9]{1,2}[0]?|100)\b" With in 100 -->
+                        <label>Amount/Percentage.
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="CD_Amount.invalid && (CD_Amount.dirty || CD_Amount.touched || formSubmitted)">
+                            <span *ngIf="CD_Amount.errors.required">Amount/Percentage is required</span>
+                            <span *ngIf="CD_Amount.errors.pattern">Enter valid data</span>
+                        </div>
+                    </div>
+                    <div class="input-group" *ngIf="consultant.CD_F_ID_FK==2">
+                        <input type="text" name="CD_Amount" [disabled]="mode=='view'" [(ngModel)]="consultant.CD_Amount"
+                            #CD_Amount="ngModel" pattern="([0-9]*[.])?[0-9]+" class="custom-field" required>
+                        <label>Amount/Percentage.
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="CD_Amount.invalid && (CD_Amount.dirty || CD_Amount.touched || formSubmitted)">
+                            <span *ngIf="CD_Amount.errors.required">Amount/Percentage is required</span>
+                            <span *ngIf="CD_Amount.errors.pattern">Enter valid data</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" name="CD_Bank_Guarantee_No" [disabled]="mode=='view'" maxlength="10"
+                            [(ngModel)]="consultant.CD_Bank_Guarantee_No" #CD_Bank_Guarantee_No="ngModel" class="custom-field"
+                            required pattern="^[0-9]*$">
+                        <label>Bank Guarantee Number
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="CD_Bank_Guarantee_No.invalid && (CD_Bank_Guarantee_No.dirty || CD_Bank_Guarantee_No.touched || formSubmitted)">
+                            <span *ngIf="CD_Bank_Guarantee_No.errors.required">Bank Guarantee Number is required</span>
+                            <span *ngIf="CD_Bank_Guarantee_No.errors.pattern">Bank Guarantee Number should numbers</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="date" name="CD_Bank_Guarantee_Date" [disabled]="mode=='view'" maxlength="10"
+                            [(ngModel)]="consultant.CD_Bank_Guarantee_Date" #CD_Bank_Guarantee_Date="ngModel" class="custom-field"
+                            required>
+                        <label>Bank Guarantee Date
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="CD_Bank_Guarantee_Date.invalid && (CD_Bank_Guarantee_Date.dirty || CD_Bank_Guarantee_Date.touched || formSubmitted)">
+                            <span *ngIf="CD_Bank_Guarantee_Date.errors.required">Bank Guarantee Date is required</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" name="CD_Bank_Guarantee_Name" [disabled]="mode=='view'" maxlength="15"
+                            [(ngModel)]="consultant.CD_Bank_Guarantee_Name" #CD_Bank_Guarantee_Name="ngModel" class="custom-field"
+                            required pattern="^[A-Za-z]+$">
+                        <label>Bank Guarantee Name
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="CD_Bank_Guarantee_Name.invalid && (CD_Bank_Guarantee_Name.dirty || CD_Bank_Guarantee_Name.touched || formSubmitted)">
+                            <span *ngIf="CD_Bank_Guarantee_Name.errors.required">Bank Guarantee Name is required</span>
+                            <span *ngIf="CD_Bank_Guarantee_Name.errors?.pattern">Bank Guarantee Name should contain only alphabets</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" name="CD_Bank_Guarantee_Amt" [disabled]="mode=='view'"
+                            [(ngModel)]="consultant.CD_Bank_Guarantee_Amt" #CD_Bank_Guarantee_Amt="ngModel" class="custom-field"
+                            required maxlength="10" pattern="^[0-9]*$">
+                        <label>Bank Guarantee Amount
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="CD_Bank_Guarantee_Amt.invalid && (CD_Bank_Guarantee_Amt.dirty || CD_Bank_Guarantee_Amt.touched || formSubmitted)">
+                            <span *ngIf="CD_Bank_Guarantee_Amt.errors.required">Bank Guarantee Amount is required</span>
+                            <span *ngIf="CD_Bank_Guarantee_Amt.errors.pattern">Bank Guarantee Amount should numbers</span>
+                            <span *ngIf="CD_Bank_Guarantee_Amt.errors.maxlength">Bank Guarantee Amount is Should be 10 Digits</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" name="CD_Bank_Guarantee_Validity" [disabled]="mode=='view'" maxlength="10"
+                            [(ngModel)]="consultant.CD_Bank_Guarantee_Validity" #CD_Bank_Guarantee_Validity="ngModel"
+                            class="custom-field" required>
+                        <label>Bank Guarantee Validity
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="CD_Bank_Guarantee_Validity.invalid && (CD_Bank_Guarantee_Validity.dirty || CD_Bank_Guarantee_Validity.touched || formSubmitted)">
+                            <span *ngIf="CD_Bank_Guarantee_Validity.errors.required">Bank Guarantee Validity is
+                                required</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-2">
+                    Letter of Acceptance
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <input type="date" name="CD_LetterofAcceptance_Date" [disabled]="mode=='view'" [(ngModel)]="consultant.CD_LetterofAcceptance_Date"
+                            #CD_LetterofAcceptance_Date="ngModel" class="custom-field" required>
+                        <label>Date.
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="CD_LetterofAcceptance_Date.invalid && (CD_LetterofAcceptance_Date.dirty || CD_LetterofAcceptance_Date.touched || formSubmitted)">
+                            <span *ngIf="CD_LetterofAcceptance_Date.errors.required">Field is required</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    Upload Letter
+                </div>
+                <div class="col-md-2">
+                    <input type="file" [disabled]="mode=='view'" #Image accept="application/pdf" (change)="CONLetterFileInput($event.target.files)"
+                        id="CD_Letter_Doc">
+                </div>
+                <!-- <div class="col-md-2">name="CD_Letter_Doc" [(ngModel)]="consultant.CD_Letter_Doc" #CD_Letter_Doc="ngModel"
+                        <img [src]="CONLetterPDFUrl" style="width:200px;height:130px;"> 
+                     </div> -->
+                <div class="col-md-2">
+                    <a *ngIf="consultant.CD_Letter_Doc" [href]="consultant.CD_Letter_Doc" target="_blank" 
+         [class.disabled]="!consultant.CD_Letter_Doc" tabindex="-1" aria-disabled="true">
+        View
+      </a>
+      
+      <!-- Optionally, you can also disable the link when DGO_Upload is null -->
+      <a *ngIf="!consultant.CD_Letter_Doc" class="disabled" tabindex="-1" aria-disabled="true">
+        View
+      </a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" name="CD_Aggrement_No" [disabled]="mode=='view'" maxlength="10" [(ngModel)]="consultant.CD_Aggrement_No"
+                            #CD_Aggrement_No="ngModel" class="custom-field" required>
+                        <label>Agreement No.
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="CD_Aggrement_No.invalid && (CD_Aggrement_No.dirty || CD_Aggrement_No.touched || formSubmitted)">
+                            <span *ngIf="CD_Aggrement_No.errors.required">Agreement No.is required</span>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="date" name="CD_Aggrement_Date" [disabled]="mode=='view'" [(ngModel)]="consultant.CD_Aggrement_Date"
+                            #CD_Aggrement_Date="ngModel" class="custom-field" required>
+                        <label>Agreement Date.
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="CD_Aggrement_Date.invalid && (CD_Aggrement_Date.dirty || CD_Aggrement_Date.touched || formSubmitted)">
+                            <span *ngIf="CD_Aggrement_Date.errors.required">Agreement Date is required</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-2">
+                    Upload Agreement
+                </div>
+                <div class="col-md-4">
+                    <input type="file" [disabled]="mode=='view'" #Image accept="application/pdf" (change)="ConAgreementPDFUrlFileInput($event.target.files)"
+                        id="CD_Aggrement_Doc">
+                </div>
+                <!-- <div class="col-md-2">name="CD_Aggrement_Doc" [(ngModel)]="consultant.CD_Aggrement_Doc" #CD_Aggrement_Doc="ngModel"
+                    <img [src]="ConAgreementPDFUrl" style="width:200px;height:130px;">
+                </div> -->
+                <div class="col-md-2">
+                    <a *ngIf="consultant.CD_Aggrement_Doc" [href]="consultant.CD_Aggrement_Doc" target="_blank" 
+                    [class.disabled]="!consultant.CD_Aggrement_Doc" tabindex="-1" aria-disabled="true">
+                   View
+                 </a>
+                 
+                 <!-- Optionally, you can also disable the link when DGO_Upload is null -->
+                 <a *ngIf="!consultant.CD_Aggrement_Doc" class="disabled" tabindex="-1" aria-disabled="true">
+                   View
+                 </a>
+                 
+                </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="date" name="CD_WorkOrderDate" [disabled]="mode=='view'" [(ngModel)]="consultant.CD_WorkOrderDate"
+                            #CD_WorkOrderDate="ngModel" class="custom-field" required>
+                        <label>Work Order Date.
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="CD_WorkOrderDate.invalid && (CD_WorkOrderDate.dirty || CD_WorkOrderDate.touched || formSubmitted)">
+                            <span *ngIf="CD_WorkOrderDate.errors.required">Work Order Date is required</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    Upload Work Order
+                </div>
+                <div class="col-md-2">
+                    <input type="file" [disabled]="mode=='view'" #Image accept="application/pdf" (change)="ConWOPDFUrlFileInput($event.target.files)"
+                        id="CD_WorkOrder_Doc" name="CD_WorkOrder_Doc" [(ngModel)]="consultant.CD_WorkOrder_Doc"
+                        #CD_WorkOrder_Doc="ngModel">
+                </div>
+                <!-- <div class="col-md-2">
+                    <img [src]="ConWOPDFUrl" style="width:200px;height:130px;">
+                </div> -->
+                <div class="col-md-2">
+                    <a *ngIf="consultant.CD_WorkOrder_Doc" [href]="consultant.CD_WorkOrder_Doc" target="_blank" 
+                    [class.disabled]="!consultant.CD_WorkOrder_Doc" tabindex="-1" aria-disabled="true">
+                   View
+                 </a>
+                 
+                 <!-- Optionally, you can also disable the link when DGO_Upload is null -->
+                 <a *ngIf="!consultant.CD_WorkOrder_Doc" class="disabled" tabindex="-1" aria-disabled="true">
+                   View
+                 </a>
+                </div>
+            </div>
+            <div class="title themeheading">
+                Supplementary Agreement
+                <span class="clearfix"></span>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <select class="custom-field" name="CD_SupplementaryAgreement" [disabled]="mode=='view'"
+                            [(ngModel)]="consultant.CD_SupplementaryAgreement" #CD_SupplementaryAgreement="ngModel"
+                            required>
+                            <option [ngValue]="undefined" selected>--Select--</option>
+                            <option value="Y">Yes</option>
+                            <option value="N">No</option>
+                        </select>
+                        <label>Supplementary Agreement
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="CD_SupplementaryAgreement.invalid && (CD_SupplementaryAgreement.dirty || CD_SupplementaryAgreement.touched || formSubmitted)">
+                            <span *ngIf="CD_SupplementaryAgreement.errors.required">Supplementary Agreement is required</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- [hidden]="consultant.CD_SupplementaryAgreement=='N'" -->
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <select class="custom-field" name="CD_Govt_Approval" [disabled]="mode=='view'" [(ngModel)]="consultant.CD_Govt_Approval"
+                            #CD_Govt_Approval="ngModel">
+                            <option [ngValue]="undefined" selected>--Select--</option>
+                            <option value="Y">Yes</option>
+                            <option value="N">No</option>
+                        </select>
+                        <label>Government Approval
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="CD_Govt_Approval.invalid && (CD_Govt_Approval.dirty || CD_Govt_Approval.touched || formSubmitted)">
+                            <span *ngIf="CD_Govt_Approval.errors.required">Government Approval is required</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- [hidden]="consultant.CD_SupplementaryAgreement=='N'" -->
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <select class="custom-field" name="CD_Board_Approval" [disabled]="mode=='view'" [(ngModel)]="consultant.CD_Board_Approval"
+                            #CD_Board_Approval="ngModel">
+                            <option [ngValue]="undefined" selected>--Select--</option>
+                            <option value="Y">Yes</option>
+                            <option value="N">No</option>
+                        </select>
+                        <label>Board Approval
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="CD_Board_Approval.invalid && (CD_Board_Approval.dirty || CD_Board_Approval.touched || formSubmitted)">
+                            <span *ngIf="CD_Board_Approval.errors.required">Board Approval is required</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- *ngIf="(consultant.CD_SupplementaryAgreement=='Y' && consultant.CD_Govt_Approval=='Y') || (consultant.CD_SupplementaryAgreement=='Y' && consultant.CD_Board_Approval=='Y')" -->
+            <div class="row" *ngIf="consultant.CD_SupplementaryAgreement=='Y'">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <!-- <input type="text" name="SA_Id" [(ngModel)]="supplement.SA_Id" #SA_Id="ngModel" class="custom-field" hidden> -->
+                        <input type="text" name="SA_ExtentinAcres" [disabled]="mode=='view'" maxlength="5" [(ngModel)]="supplement.SA_ExtentinAcres"
+                            #SA_ExtentinAcres="ngModel" class="custom-field" required pattern="^[0-9]*$">
+                        <label>Extent in Acres
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="SA_ExtentinAcres.invalid && (SA_ExtentinAcres.dirty || SA_ExtentinAcres.touched || formSubmitted)">
+                            <span *ngIf="SA_ExtentinAcres.errors.required">Extent is required</span>
+                            <span *ngIf="SA_ExtentinAcres.errors.pattern">Extent Acre should numbers</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" *ngIf="consultant.CD_SupplementaryAgreement=='Y'">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <select name="SA_F_ID_FK" [disabled]="mode=='view'" [(ngModel)]="supplement.SA_F_ID_FK"
+                            #SA_F_ID_FK="ngModel" style="width:100%;height: 35px;border-radius: 4px;" class="custom-field"
+                            required>
+                            <option [ngValue]="undefined" selected>--Select--</option>
+                            <option value="1">%</option>
+                            <option value="2">LumSum</option>
+
+                            <!-- <option [value]="fee.F_ID" *ngFor="let fee of feelist">{{fee.F_Name}}</option> -->
+                        </select>
+                        <label>Fee
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="SA_F_ID_FK.invalid && (SA_F_ID_FK.dirty || SA_F_ID_FK.touched || formSubmitted)">
+                            <span *ngIf="SA_F_ID_FK.errors.required">Fee is required</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" name="SA_Amount" [disabled]="mode=='view'" maxlength="3" [(ngModel)]="supplement.SA_Amount" pattern="^([0-9]\.[0-9]{1}|[0-9]\.[0-9]{2}|\.[0-9]{2}|[1-9][0-9]\.[0-9]{1}|[1-9][0-9]\.[0-9]{2}|[0-9][0-9]|[1-9][0-9]\.[0-9]{2})$|^([0-9]|[0-9][0-9]|[0-99])$|^100$"
+                            #SA_Amount="ngModel" class="custom-field" required>
+                        <label>Amount/Percentage.
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="SA_Amount.invalid && (SA_Amount.dirty || SA_Amount.touched || formSubmitted)">
+                            <span *ngIf="SA_Amount.errors.required">Amount/Percentage is required</span>
+                            <span *ngIf="SA_Amount.errors.pattern">Amount/Percentage Not Correct Pattern </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" *ngIf="consultant.CD_SupplementaryAgreement=='Y'">
+                <div class="col-md-2">
+                    Letter of Acceptance
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group">
+                        <input type="date" name="SA_LetterofAcceptance" [disabled]="mode=='view'" [(ngModel)]="supplement.SA_LetterofAcceptance"
+                            #SA_LetterofAcceptance="ngModel" class="custom-field" required>
+                        <label>Date.
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="SA_LetterofAcceptance.invalid && (SA_LetterofAcceptance.dirty || SA_LetterofAcceptance.touched || formSubmitted)">
+                            <span *ngIf="SA_LetterofAcceptance.errors.required">Field is required</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    Upload Letter
+                </div>
+                <div class="col-md-2">
+                    <input type="file" [disabled]="mode=='view'" #Image accept="application/pdf" (change)="SupLetterPDFUrlFileInput($event.target.files)"
+                        id="SA_Letter_Doc" name="SA_Letter_Doc" [(ngModel)]="supplement.SA_Letter_Doc" #SA_Letter_Doc="ngModel">
+                </div>
+                <!-- <div class="col-md-2">
+                    <img [src]="SupLetterPDFUrl" style="width:200px;height:130px;">
+                </div> -->
+                <div class="col-md-2">
+                    <a *ngIf="supplement.SA_Letter_Doc" [href]="supplement.SA_Letter_Doc" target="_blank" 
+         [class.disabled]="!supplement.SA_Letter_Doc" tabindex="-1" aria-disabled="true">
+        View </a>
+            
+          
+          <!-- Optionally, you can also disable the link when DGO_Upload is null -->
+          <a *ngIf="!supplement.SA_Letter_Doc" class="disabled" tabindex="-1" aria-disabled="true">
+            View
+          </a>
+                </div>
+            </div>
+
+            <div class="row" *ngIf="consultant.CD_SupplementaryAgreement=='Y'">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="text" name="SA_Aggrement_No" [disabled]="mode=='view'" maxlength="10" [(ngModel)]="supplement.SA_Aggrement_No"
+                            #SA_Aggrement_No="ngModel" class="custom-field" required>
+                        <label>Agreement No.
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="SA_Aggrement_No.invalid && (SA_Aggrement_No.dirty || SA_Aggrement_No.touched || formSubmitted)">
+                            <span *ngIf="SA_Aggrement_No.errors.required">Agreement No. is required</span>
+                            <span *ngIf="SA_Aggrement_No.errors.maxlength">Agreement No maxlength should be 10</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="date" name="SA_Aggrement_Date" [disabled]="mode=='view'" [(ngModel)]="supplement.SA_Aggrement_Date"
+                            #SA_Aggrement_Date="ngModel" class="custom-field" required>
+                        <label>Agreement Date.
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="SA_Aggrement_Date.invalid && (SA_Aggrement_Date.dirty || SA_Aggrement_Date.touched || formSubmitted)">
+                            <span *ngIf="SA_Aggrement_Date.errors.required">Agreement Date is required</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row" *ngIf="consultant.CD_SupplementaryAgreement=='Y'">
+                <div class="col-md-2">
+                    Upload Agreement
+                </div>
+                <div class="col-md-4">
+                    <input type="file" [disabled]="mode=='view'" #Image accept="application/pdf" (change)="SupAgreementPDFUrlFileInput($event.target.files)"
+                        id="SA_Aggrement_Doc" name="SA_Aggrement_Doc" [(ngModel)]="supplement.SA_Aggrement_Doc"
+                        #SA_Aggrement_Doc="ngModel">
+
+                </div>
+                <!-- <div class="col-md-2">
+                    <img [src]="SupAgreementPDFUrl" style="width:200px;height:130px;">
+                </div> -->
+                <div class="col-md-2">
+                    <a *ngIf="supplement.SA_Aggrement_Doc" [href]="supplement.SA_Aggrement_Doc" target="_blank" 
+         [class.disabled]="!supplement.SA_Aggrement_Doc" tabindex="-1" aria-disabled="true">
+        View </a>
+                   
+                 
+                 <!-- Optionally, you can also disable the link when DGO_Upload is null -->
+                 <a *ngIf="!supplement.SA_Aggrement_Doc" class="disabled" tabindex="-1" aria-disabled="true">
+                   View
+                 </a>
+                </div>
+            </div>
+
+            <div class="row" *ngIf="consultant.CD_SupplementaryAgreement=='Y'">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input type="date" name="SA_WorkOrderDate" [disabled]="mode=='view'" [(ngModel)]="supplement.SA_WorkOrderDate"
+                            #SA_WorkOrderDate="ngModel" class="custom-field" required>
+                        <label>Work Order Date.
+                            <span class="mandatory">*</span>
+                        </label>
+                        <div class="error-msg" *ngIf="SA_WorkOrderDate.invalid && (SA_WorkOrderDate.dirty || SA_WorkOrderDate.touched || formSubmitted)">
+                            <span *ngIf="SA_WorkOrderDate.errors.required">Work Order Date is required</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    Upload Work Order
+                </div>
+                <div class="col-md-2">
+                    <input type="file" [disabled]="mode=='view'" #Image accept="application/pdf" (change)="SupWOPDFUrlFileInput($event.target.files)"
+                        id="SA_WorkOrder_Doc" name="SA_WorkOrder_Doc" [(ngModel)]="supplement.SA_WorkOrder_Doc"
+                        #SA_WorkOrder_Doc="ngModel">
+                </div>
+                <div class="col-md-2">
+                    <a *ngIf="supplement.SA_WorkOrder_Doc" [href]="supplement.SA_WorkOrder_Doc" target="_blank" 
+         [class.disabled]="!supplement.SA_WorkOrder_Doc" tabindex="-1" aria-disabled="true">
+        View </a>
+                <!-- <div class="col-md-2">
+                    <img [src]="SupWOPDFUrl" style="width:200px;height:130px;">
+                </div> -->
+              
+                   
+      
+      <!-- Optionally, you can also disable the link when DGO_Upload is null -->
+      <a *ngIf="!supplement.SA_WorkOrder_Doc" class="disabled" tabindex="-1" aria-disabled="true">
+        View
+      </a>
+      
+                </div>
+            </div>
+
+            <div class="btn-wrapper" *ngIf="!(mode=='view')">
+                <button class="btn btn-primary" type="submit">{{mode=='edit'?'Update':'Save'}}</button>
+                <button class="btn btn-primary" type="reset">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>

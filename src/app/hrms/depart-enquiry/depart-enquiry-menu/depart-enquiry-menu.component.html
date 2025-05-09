@@ -1,0 +1,53 @@
+<!-- <div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      <div class="sidemenu">
+        <ul class="billmenu">
+          <li><a [routerLink]="['/home/dept-enquiry']">Complaint Registration </a></li>
+          <li><a [routerLink]="['complaint-reg-auth']"> Complaint Registration Authorization </a></li>
+          <li><a [routerLink]="['show-cause']"> Show Cause Notice </a></li>
+          <li><a [routerLink]="['scn-auth']"> SCN Authorization </a></li>
+          <li><a [routerLink]="['scn-remainer']"> SCN Reminder </a></li>
+          <li><a [routerLink]="['show-cause-ack']">SCN Acknowledgement & DGO's Reply</a></li>         
+          <li><a [routerLink]="['initiative-depart']">Initiate Departmental Enquiry</a></li>
+          <li><a [routerLink]="['enquiry-proceeding']">Enquiry Proceeding</a></li>
+          <li><a [routerLink]="['enquiry-closure']">Enquiry Closure</a></li>
+          <li><a [routerLink]="['external-enquiry-grid']">External Enquiry </a></li>
+          <li><a [routerLink]="['ex-enquiry-closure-grid']">External Enquiry Closure</a></li> -->
+          
+        <!-- </ul>
+      </div>
+    </div>
+    <div class="col-md-10">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div> -->
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      <div class="sidemenu">
+        <!-- <ul class="billmenu" *ngFor="let p of subpageslist">
+          <li><a [ngClass]="{'alert-primary':p.KSP_Redirect_URL === localurl}" (click)="geturl(p.KSP_Redirect_URL)" routerLink="{{p.KSP_Redirect_URL}}">{{p.KSP_Name}}</a></li>            
+        </ul> -->
+        <ul class="billmenu">
+          <li><a [routerLink]="['/home/dept-enquiry']">Complaint Registration </a></li>
+          <li><a [routerLink]="['complaint-reg-auth']"> Complaint Registration Authorization </a></li>
+          <li><a [routerLink]="['show-cause']"> Show Cause Notice </a></li>
+          <li><a [routerLink]="['scn-auth']"> SCN Authorization </a></li>
+          <li><a [routerLink]="['scn-remainer']"> SCN Reminder </a></li>
+          <li><a [routerLink]="['show-cause-ack']">SCN Acknowledgement & DGO's Reply</a></li>         
+          <li><a [routerLink]="['initiative-depart']">Initiate Departmental Enquiry</a></li>
+          <li><a [routerLink]="['enquiry-proceeding']">Enquiry Proceeding</a></li>
+          <li><a [routerLink]="['enquiry-closure']">Enquiry Closure</a></li>
+          <li><a [routerLink]="['external-enquiry-grid']">External Enquiry </a></li>
+          <li><a [routerLink]="['ex-enquiry-closure-grid']">External Enquiry Closure</a></li>           
+         </ul>
+      </div>
+    </div>
+    <div class="col-md-10">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

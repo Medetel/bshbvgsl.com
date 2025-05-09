@@ -1,0 +1,380 @@
+<div class="wrapper">
+  <div class="container-fluid">
+    <div class="title rowmarginfix themeheading">
+      Departmental Enquiry Details
+      <button class="btn btn-primary float-right" [routerLink]="['/home/dept-enquiry/enquiry-closure']">Back</button>
+      <span class="clearfix"></span>
+    </div>
+    <!--  -->
+
+    <!-- <div class="title rowmarginfix themeheading">
+      Initiate Departmental Enquiry
+      <span class="clearfix"></span>
+    </div> -->
+
+    <div class="border-view">
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <td class="text-center">Sl.No.</td>
+              <td class="text-center">DGo's Name </td>
+              <td class="text-center">Date</td>
+              <td class="text-center">Reply Recieved Date</td>
+              <td class="text-center"> Mode of Reply </td>
+              <td class="text-center"> Reply Period</td>
+              <!-- <td class="text-center"> View </td> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let aa of enqplist;let i=index;"> 
+              <td>{{i+1}}</td>             
+              <td>{{aa.DGO_NAME}}</td>
+              <td>{{aa.DOC_DATE | date:"dd/MM/yyyy"}}</td>              
+              <td>{{aa.SCNREPLY_RECVD_DATE  | date:"dd/MM/yyyy"}}</td>
+              <td>{{aa.SCN_MODE_REPLY}}</td>
+              <td>{{aa.SCNREPLY_REP_PRD}}</td>
+          <td class="text-center">
+              <!-- <a href="#" [routerLink]="['/home/dept-enquiry/initiative-depart-form','View']">
+                <i class="fa fa-lg fa-eye themecolor"></i> -->
+            <!-- </a> -->
+          </td>
+        </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+    <div class="title rowmarginfix themeheading">
+      Enquiry Proceedings
+    </div>
+
+    <div class="border-view">
+      <div class="table-responsive">
+        <div class="table-responsive">
+          <table class="table table-striped grid">
+            <thead>
+              
+              <tr>
+                <td>Sl No.</td>
+                <td>Enquiry No</td>
+                <td>Enquiry Date</td>
+                <td>Enquiry Officer</td>
+                <td>Proceeding No</td>
+                <td> Raised By</td>
+                <td>Remarks</td>
+                <!-- <td class="text-center">View</td>              -->
+               </tr>
+              <tr>
+    
+              </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let P of ProcList;let i=index;"> 
+                    <td>{{(i+1)}}.</td>
+                    <td>{{P.DOC_CODE}}</td>
+                    <td>{{P.ENQ_START_DATE  | date:'dd/MM/yyyy'}}</td>               
+                    <td>{{P.ENQ_OFFICER1}}</td>
+                    <td>{{P.DOC_CODE1}}</td> 
+                    <td>{{P.RAISED_BY}}</td> 
+                    <td>{{P.PROC_REMARKS}}</td> 
+                    <td class="text-center">
+                      <!-- <a href="#" [routerLink]="['/home/dept-enquiry/enquiry-proceeding-form',P.PROCEEDING_ID,'View']">
+                          <i class="fa fa-lg fa-eye themecolor"></i>
+                      </a> -->
+                  </td>
+                
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+
+    <!-- <div class="row">
+      <div class="col-md-4">
+        <label for=""> Proceeding No. :</label>
+      </div>
+      <div class="col-md-4">
+        <label for=""> Date :</label>
+      </div>
+      <div class="col-md-4">
+        <label for=""> Status : </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-10">
+        <div class="input-group">
+          <label for=""> Points of Discussion / Subject of Enquiry </label>
+          <input type="text" class="custom-field">
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="input-group">
+          <label for=""> Raised By </label>
+          <input type="text" class="custom-field">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-10">
+        <div class="input-group">
+          <label for=""> Reply Details </label>
+          <input type="text" class="custom-field">
+        </div>
+      </div>
+      <div class="col-md-2">
+        <div class="input-group">
+          <label for=""> Replied By </label>
+          <input type="text" class="custom-field">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="input-group">
+          <label for=""> Remarks </label>
+          <textarea class="custom-field" name="" id="" cols="30" rows="10"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="input-group">
+          <label for=""> Recommendation of Presenting Officer </label>
+          <input type="text" class="custom-field">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="input-group">
+          <label for=""> Recommendation of Enquiry Officer </label>
+          <input type="text" class="custom-field">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-2">
+        <label for=""> Upload Document </label>
+      </div>
+      <div class="col-md-4">
+        <label for=""> Recommendation of Enquiry Officer </label>
+        <input type="file">
+      </div>
+    </div>
+      -->
+    <!-- <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">DGO' Reply Details </label>
+            <input type="text" class="custom-field">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Witness Reply Details</label>
+            <input type="text" class="custom-field">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Remarks</label>
+            <input type="text" class="custom-field">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Enquiry Officers Comments</label>
+            <input type="text" class="custom-field">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Enquiry Officers Comments </label>
+            <input type="text" class="custom-field">
+          </div>
+        </div>
+        
+      </div>
+
+       <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Recommanndation of Enquiry Officer</label>
+            <input type="text" class="custom-field">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Recommanndation of Presenting Officer Officer </label>
+            <input type="text" class="custom-field">
+          </div>
+        </div>
+      </div>
+      -->
+
+
+    <div class="title rowmarginfix themeheading">
+      Enquiry Closure
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+          <div class="input-group">
+            <label for=""> Comments of Presenting Officer </label>
+            <input type="text" name="COMMENTS_PRES_OFF" maxlength="50" [(ngModel)]="e.COMMENTS_PRES_OFF"
+            #COMMENTS_PRES_OFF="ngModel" class="form-control" [disabled]="mode=='View'">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="input-group">
+            <label for=""> Comments of Enquiry Officer </label>
+            <input type="text" name="COMMENTS_ENQ_OFF" maxlength="50" [(ngModel)]="e.COMMENTS_ENQ_OFF"
+            #COMMENTS_ENQ_OFF="ngModel" class="form-control" [disabled]="mode=='View'">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Conclusion</label>
+            <select class="custom-field" [(ngModel)]="e.ENQ_CONCLUSION" #ENQ_CONCLUSION="ngModel" name="ENQ_CONCLUSION" [disabled]="mode=='View'">
+              <option value="undefined">--Select--</option>
+              <option value="Stop"> Stop Enquiry </option>
+              <option value="Close">Close Enquiry</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Allegation / Charges PROVED</label>
+            <select class="custom-field" [(ngModel)]="e.ENQ_ALLIGATION" #ENQ_ALLIGATION="ngModel" name="ENQ_ALLIGATION" [disabled]="mode=='View'">
+              <option value="undefined">--Select--</option>
+              <option value="YES">YES</option>
+              <option value="NO">NO</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <!-- <label for="">Conclusion Date :</label>  &nbsp;<span> {{sk.SCNREPLY_REP_PRD}} </span> -->
+        </div>
+        <div class="col-md-3">
+          <!-- <label for="">Total Proceeding : </label>  &nbsp;<span> {{sk.SCNREPLY_REP_PRD}} </span> -->
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Invoke Termination </label>
+            <select class="custom-field" [(ngModel)]="e.TERMINATION_IND" #TERMINATION_IND="ngModel" name="TERMINATION_IND" [disabled]="mode=='View'">
+              <option value="undefined">--Select--</option>
+              <option value="Y">Yes</option>
+              <option value="N">No</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Revoke Suspension</label>
+            <select class="custom-field" [(ngModel)]="e.REVOKE_SUSPND_IND" #REVOKE_SUSPND_IND="ngModel" name="REVOKE_SUSPND_IND" [disabled]="mode=='View'">
+              <option value="undefined">--Select--</option>
+              <option value="Y">Yes</option>
+              <option value="N">No</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Termination W.E.F</label>
+            <input type="Date" name="TERMINATION_WEF" maxlength="50" [(ngModel)]="e.TERMINATION_WEF"
+            #TERMINATION_WEF="ngModel" class="form-control" [disabled]="mode=='View'">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Revocation Date W.E.F</label>
+            <input type="Date" name="REVOKE_TERMINATION_WEF" maxlength="50" [(ngModel)]="e.REVOKE_TERMINATION_WEF"
+            #REVOKE_TERMINATION_WEF="ngModel" class="form-control" [disabled]="mode=='View'">
+          </div>
+        </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Punishment Type</label>
+          <input type="Date" name="Punishment_Type" maxlength="50" [(ngModel)]="e.Punishment_Type"
+          #Punishment_Type="ngModel" class="form-control" [disabled]="mode=='View'">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Punishment W.E.F</label>
+          <input type="Date" name="Punishment_WEF" maxlength="50" [(ngModel)]="e.Punishment_WEF"
+          #Punishment_WEF="ngModel" class="form-control" [disabled]="mode=='View'">
+        </div>
+      </div>
+  </div>
+    <!-- <div class="title rowmarginfix themeheading">
+        Points Discussed & Enquired
+      </div>
+      <br>
+      <div class="justify-content-end d-flex"><button class="btn btn-primary"> Add </button></div>
+      <br>
+      <div class="table-responsive">
+        <table class="table table-striped grid">
+          <thead>
+            <tr>
+              <td>Sl No.</td>
+              <td>Date</td>
+              <td>Raised by</td>
+              <td>Points of Discussion / Subject of Enquiry</td>
+              <td>Replied by</td>
+              <td> Reply Details</td>
+              <td>Remarks</td>
+              <td>Upload OM</td>
+            </tr>
+            <tr>
+  
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td> 1 </td>
+              <td> <input type="date" class="form-control"> </td>
+              <td>
+                <select name="" id="" class="form-control">
+                  <option value=""> --Select-- </option>
+                </select>
+              </td>
+              <td></td>
+              <td>
+                <select name="" id="" class="form-control">
+                  <option value=""> --Select-- </option>
+                </select>
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>  -->
+
+    <br>
+    <div class="justify-content-center d-flex">
+      <button class="btn btn-primary">Save</button> &nbsp;
+      <button type="reset" class="btn btn-primary">Cancel</button>
+    </div>
+    <br>
+  </div>
+</div>

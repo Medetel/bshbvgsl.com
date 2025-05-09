@@ -1,0 +1,2461 @@
+<div class="wrapper notify">
+
+
+    <div class="title themeheading" style="padding: 5px;background: rgba(129, 158, 130, 0.91);margin-bottom: 20px;">Types
+        of Notification
+
+        <span class="clearfix"></span>
+    </div>
+
+    <mat-tab-group style="min-height:200px; height:auto; max-width:2000px;">
+
+        <mat-tab label="Demand Survey with ID" *ngIf="(userRole=='Super Admin' || userRole=='EE' || userRole=='AEE'|| userRole =='Allotment')">
+            <div class="DemandSurveywithoutID">
+                <div class="title themeheading" style="padding: 5px;">{{title}}
+                    <div class="float-right">
+                        Items per page:
+                        <select name="SearchRows" #SearchRows="ngModel" [(ngModel)]="itemsPerPage" class="noofpage"
+                            (change)="itemsPerPageChanged(itemsPerPage, 1)">
+                            <option [ngValue]="5">5</option>
+                            <option [ngValue]="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="50">50</option>
+                        </select>
+                        <a class="btn btn-primary " routerLink="/home/bshbnotification/bshbnotificationform">Add</a>
+                    </div>
+                    <span class="clearfix"></span>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-striped grid">
+                        <thead>
+                            <tr>
+                                <td>Sl No.</td>
+                                <td>Notification No.</td>
+                                <td>Approved date</td>
+                                <td>Application last date</td>
+                                <td>Project
+                                </td>
+                                <!-- <td>Scheme
+                                </td>
+                                <td>Phase
+                                </td> -->
+                                <td class="text-center">View</td>
+                                <!-- <td class="text-center">Delete</td> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let n of DSWOIDNotification;let i=index;">
+                                <td>{{i+1}}.</td>
+                                <td>{{n.DSWOId_NO_Number}}</td>
+                                <td>{{n.DSWOId_NO_ApprovedDate | date:'dd-MM-yyyy'}}</td>
+                                <td>{{n.DSWOId_NO_LastDate | date:'dd-MM-yyyy'}}</td>
+                                <td>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <td>Project Name</td>
+                                                <td>Scheme Name</td>
+                                                <td>Phase Name</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let dswp of n.ProjectNotificationModel;">
+                                                <td>{{dswp.PD_Project_Name}}</td>
+                                                <td>{{dswp.Sch_Name}}</td>
+                                                <td>{{dswp.Phase_Name}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                                <td class="text-center">
+                                    <a href="#" [routerLink]="['/home/bshbnotification/bshbnotificationform',n.DSWOId_NO_Id,'view']">
+                                        <i class="fa fa-lg fa-eye themecolor"></i>
+                                    </a>
+                                </td>
+                                <!-- <td class="text-center">
+                                    <a href="javascript:void(0);">
+                                        <i class="fa fa-lg fa-trash themecolor"></i>
+                                    </a>
+                                </td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </mat-tab>
+
+        <mat-tab label="Separate notification for DQ" *ngIf="(userRole=='Super Admin' || userRole=='EE' || userRole=='AEE')">
+            <div class="SeparatenotificationforDQ">
+                <div class="title themeheading" style="padding: 5px;">{{title2}}
+                    <div class="float-right">
+                        Items per page:
+                        <select name="SearchRows" #SearchRows="ngModel" [(ngModel)]="itemsPerPage" class="noofpage"
+                            (change)="itemsPerPageChanged(itemsPerPage, 1)">
+                            <option [ngValue]="5">5</option>
+                            <option [ngValue]="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="50">50</option>
+                        </select>
+                        <!-- <a class="btn btn-primary " routerLink="/home/khbnotification/khbnotificationform">Add</a> -->
+                    </div>
+                    <span class="clearfix"></span>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-striped grid">
+                        <thead>
+                            <tr>
+                                <td>Sl No.</td>
+                                <td>Notification No.</td>
+                                <td>Approved date</td>
+                                <td>Application last date</td>
+                                <td>Scheme</td>
+                                <td>District</td>
+                                <td>Project</td>
+                                <td>Phase</td>
+                                <td class="text-center">Edit</td>
+                                <td class="text-center">Delete</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>10-03-2018</td>
+                                <td>20-04-2018</td>
+                                <td>MGRY</td>
+                                <td>Ramnagara</td>
+                                <td>BSHB</td>
+                                <td>II</td>
+                                <td class="text-center">
+                                    <a href="#">
+                                        <i class="fa fa-lg fa-edit themecolor"></i>
+                                    </a>
+                                </td>
+                                <td class="text-center">
+                                    <a href="javascript:void(0);">
+                                        <i class="fa fa-lg fa-trash themecolor"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Allotment Notification" style="margin-top: 30px;" *ngIf="(userRole=='Super Admin' || userRole=='EE' || userRole=='AEE')">
+            <div class="AllotmeNotifiaction">
+
+
+                <mat-tab-group style="min-height:200px; height:auto; max-width:2000px;">
+
+                    <mat-tab label="Notification for Lottery">
+                        <div class="NotificationforLottery">
+
+                            <div class="title themeheading" style="padding: 5px;">{{title7}}
+                                <!-- <div class="float-right">
+                                        Items per page:
+                                        <select name="SearchRows" #SearchRows="ngModel" [(ngModel)]="itemsPerPage" class="noofpage" (change)="itemsPerPageChanged(itemsPerPage, 1)">
+                                            <option [ngValue]="5">5</option>
+                                            <option [ngValue]="10">10</option>
+                                            <option value="20">20</option>
+                                            <option value="30">30</option>
+                                            <option value="40">40</option>
+                                            <option value="50">50</option>
+                                        </select>
+                                        <a class="btn btn-primary " routerLink="/home/khbnotification/khbnotificationform">Add</a>
+                                    </div> -->
+                                <span class="clearfix"></span>
+                            </div>
+
+                            <div class="title text-center">
+                                Place Details
+                            </div>
+
+                            <div class="table-responsive grid">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <td rowspan="2">Sl No.</td>
+                                            <td rowspan="2">District.</td>
+                                            <td rowspan="2">Taluk</td>
+                                            <td rowspan="2">Hobli</td>
+                                            <td rowspan="2">Village</td>
+                                            <td rowspan="2">Survey No</td>
+                                            <td colspan="2" class="text-center">Extent</td>
+                                            <td rowspan="2">Add</td>
+                                            <td rowspan="2">Delete</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Acres</td>
+                                            <td>Guntas</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+
+                                            <td>
+                                                <!-- <input type="text"> -->
+                                            </td>
+                                            <td>
+                                                <!-- <input type="text"> -->
+                                            </td>
+                                            <td>
+                                                <!-- <input type="text"> -->
+                                            </td>
+                                            <td>
+                                                <!-- <input type="text"> -->
+                                            </td>
+                                            <td>
+                                                <!-- <input type="text"> -->
+                                            </td>
+                                            <td>
+                                                <!-- <input type="text"> -->
+                                            </td>
+                                            <td>
+                                                <!-- <input type="text"> -->
+                                            </td>
+                                            <td style="font-size: 30px">+</td>
+                                            <td style="font-size: 30px">-</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="title text-center">
+
+                            </div>
+
+                            <div class="table-responsive grid">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <td rowspan="2">Sl No.</td>
+                                            <td rowspan="2">Category.</td>
+                                            <td rowspan="2">Available Sites</td>
+                                            <td rowspan="2">Available Houses</td>
+                                            <td rowspan="2">Registration Fee</td>
+                                            <td colspan="2">Initial Deposit (Rs)</td>
+                                            <td rowspan="2">Add</td>
+                                            <td rowspan="2">Delete</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Site</td>
+                                            <td>House</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+
+                                            <td>
+                                                <select onclick="this.setAttribute('value', this.value);" value=""
+                                                    class="custom-field">
+                                                    <option value="">EWS</option>
+                                                    <option value="">MIG</option>
+                                                    <option value="">LIG</option>
+                                                    <option value="">HIG-1</option>
+                                                    <option value="">HIG-2</option>
+
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input type="text">
+
+                                            </td>
+
+                                            <td>
+                                                <input type="text">
+
+                                            </td>
+                                            <td>
+                                                <input type="text">
+
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+
+                                            <td style="font-size: 30px">+</td>
+                                            <td style="font-size: 30px">-</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="date" placeholder=" " class="custom-field">
+                                        <label>Date of Allotment.</label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <input type="date" placeholder=" " class="custom-field">
+                                        <label>Date From</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <input type="date" placeholder=" " class="custom-field">
+                                        <label>Date To</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <input type="text" placeholder=" " class="custom-field">
+                                        <label>Venue.</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <input type="text" placeholder=" " class="custom-field">
+                                        <label>Time.</label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="title text-center">
+                                Set Bank Details
+                            </div>
+
+                            <div class="table-responsive grid">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <td rowspan="2">Sl No.</td>
+                                            <td rowspan="2">Bank Name.</td>
+                                            <td rowspan="2">Branch.</td>
+                                            <td rowspan="2">IFSC Code.</td>
+                                            <td rowspan="2">Account No.</td>
+
+                                            <td rowspan="2">Add</td>
+                                            <td rowspan="2">Delete</td>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>
+                                                <input type="text">
+                                            </td>
+                                            <td>
+                                                <input type="text">
+                                            </td>
+                                            <td>
+                                                <input type="text">
+                                            </td>
+                                            <td>
+                                                <input type="text">
+                                            </td>
+                                            <td style="font-size: 30px">+</td>
+                                            <td style="font-size: 30px">-</td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+
+
+                            <div class="title text-center">
+                                Communication Details
+                            </div>
+
+                            <div class="table-responsive grid">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <td rowspan="2">Sl No.</td>
+                                            <td rowspan="2">Website.</td>
+                                            <td rowspan="2">Contact No.</td>
+                                            <td rowspan="2">Extension No.</td>
+                                            <td rowspan="2">Add</td>
+                                            <td rowspan="2">Delete</td>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>
+                                                <input type="text">
+                                            </td>
+                                            <td>
+                                                <input type="text" size="2">
+                                                <input type="text" size="12">
+
+                                            </td>
+                                            <td>
+                                                <input type="text">
+                                            </td>
+
+                                            <td style="font-size: 30px">+</td>
+                                            <td style="font-size: 30px">-</td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <button class="btn btn-primary" style="width:200px"> Generate Notification</button>
+                                </div>
+                            </div>
+
+                            <div class="btn-wrapper" style="margin-top:50px">
+                                <button class="btn btn-primary">Edit</button>
+                                <button class="btn btn-primary">Save</button>
+                                <button class="btn btn-primary">Cancel</button>
+                            </div>
+
+                        </div>
+                    </mat-tab>
+
+                    <mat-tab label="Notification for Lottery Schedule">
+                        <div class="DemandSurveywithID">
+                            <div class="title themeheading" style="padding: 5px;">{{title8}}
+                                <!-- <div class="float-right">
+                                        Items per page:
+                                        <select name="SearchRows" #SearchRows="ngModel" [(ngModel)]="itemsPerPage" class="noofpage" (change)="itemsPerPageChanged(itemsPerPage, 1)">
+                                            <option [ngValue]="5">5</option>
+                                            <option [ngValue]="10">10</option>
+                                            <option value="20">20</option>
+                                            <option value="30">30</option>
+                                            <option value="40">40</option>
+                                            <option value="50">50</option>
+                                        </select>
+                                        <a class="btn btn-primary " routerLink="/home/khbnotification/khbnotificationform">Add</a>
+                                    </div> -->
+                                <span class="clearfix"></span>
+                            </div>
+
+
+                            <div class="title text-center">
+                                Place Details
+                            </div>
+
+                            <div class="table-responsive grid">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <td rowspan="2">Sl No.</td>
+                                            <td rowspan="2">District.</td>
+                                            <td rowspan="2">Taluk</td>
+                                            <td rowspan="2">Hobli</td>
+                                            <td rowspan="2">Village</td>
+                                            <td rowspan="2">Survey No</td>
+                                            <td colspan="2" class="text-center">Extent</td>
+                                            <td rowspan="2">Add</td>
+                                            <td rowspan="2">Delete</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Acres</td>
+                                            <td>Guntas</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+
+                                            <td>
+                                                <!-- <input type="text"> -->
+                                            </td>
+                                            <td>
+                                                <!-- <input type="text"> -->
+                                            </td>
+                                            <td>
+                                                <!-- <input type="text"> -->
+                                            </td>
+                                            <td>
+                                                <!-- <input type="text"> -->
+                                            </td>
+                                            <td>
+                                                <!-- <input type="text"> -->
+                                            </td>
+                                            <td>
+                                                <!-- <input type="text"> -->
+                                            </td>
+                                            <td>
+                                                <!-- <input type="text"> -->
+                                            </td>
+                                            <td style="font-size: 30px">+</td>
+                                            <td style="font-size: 30px">-</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="title text-center">
+
+                            </div>
+
+                            <div class="table-responsive grid">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <td rowspan="2">Sl No.</td>
+                                            <td rowspan="2">Category.</td>
+                                            <td rowspan="2">Available Sites</td>
+                                            <td rowspan="2">Available Houses</td>
+                                            <td rowspan="2">Registration Fee</td>
+                                            <td colspan="2">Intial Deposit(Rs)</td>
+                                            <td rowspan="2">Add</td>
+                                            <td rowspan="2">Delete</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Site</td>
+                                            <td>House</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+
+                                            <td>
+                                                <select onclick="this.setAttribute('value', this.value);" value=""
+                                                    class="custom-field">
+                                                    <option value="">EWS</option>
+                                                    <option value="">MIG</option>
+                                                    <option value="">LIG</option>
+                                                    <option value="">HIG-1</option>
+                                                    <option value="">HIG-2</option>
+
+                                                </select>
+                                            </td>
+                                            <td></td>
+
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+
+                                            <td style="font-size: 30px">+</td>
+                                            <td style="font-size: 30px">-</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <select onclick="this.setAttribute('value', this.value);" value="" class="custom-field">
+                                            <option value="">--Select--</option>
+                                            <option value="1"></option>
+                                        </select>
+                                        <label>Earlier Notification Reference Id</label>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="col-md-6">
+                                            <div class="input-group">
+                                                <input type="text" placeholder=" " class="custom-field">
+                                                <label>Earlier Notification Reference Id.</label>
+                                            </div>
+                                        </div> -->
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="date" placeholder=" " class="custom-field">
+                                        <label>Date.</label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="Date" placeholder=" " class="custom-field">
+                                        <label>Date of publishing of provisional list.</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <input type="text" placeholder=" " class="custom-field">
+                                        <label>Venue.</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <input type="text" placeholder=" " class="custom-field">
+                                        <label>Time.</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="Date" placeholder=" " class="custom-field">
+                                        <label>Last date for receiving objection.</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <input type="text" placeholder=" " class="custom-field">
+                                        <label>Venue.</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <input type="text" placeholder=" " class="custom-field">
+                                        <label>Time.</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="Date" placeholder=" " class="custom-field">
+                                        <label>Date of publishing of final list.</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <input type="text" placeholder=" " class="custom-field">
+                                        <label>Venue.</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="input-group">
+                                        <input type="text" placeholder=" " class="custom-field">
+                                        <label>Time.</label>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="title text-center">
+                                Set Bank Details
+                            </div>
+
+                            <div class="table-responsive grid">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <td rowspan="2">Sl No.</td>
+                                            <td rowspan="2">Bank Name.</td>
+                                            <td rowspan="2">Branch.</td>
+                                            <td rowspan="2">IFSC Code.</td>
+                                            <td rowspan="2">Account No.</td>
+
+                                            <td rowspan="2">Add</td>
+                                            <td rowspan="2">Delete</td>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>
+                                                <input type="text">
+                                            </td>
+                                            <td>
+                                                <input type="text">
+                                            </td>
+                                            <td>
+                                                <input type="text">
+                                            </td>
+                                            <td>
+                                                <input type="text">
+                                            </td>
+                                            <td style="font-size: 30px">+</td>
+                                            <td style="font-size: 30px">-</td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+
+                            <div class="title text-center">
+                                Communication Details
+                            </div>
+
+                            <div class="table-responsive grid">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <td rowspan="2">Sl No.</td>
+                                            <td rowspan="2">Website.</td>
+                                            <td rowspan="2">Contact No.</td>
+                                            <td rowspan="2">Extension No.</td>
+                                            <td rowspan="2">Add</td>
+                                            <td rowspan="2">Delete</td>
+                                        </tr>
+
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>
+                                                <input type="text">
+                                            </td>
+                                            <td>
+                                                <input type="text" size="2">
+                                                <input type="text" size="12">
+                                            </td>
+                                            <td>
+                                                <input type="text">
+                                            </td>
+
+                                            <td style="font-size: 30px">+</td>
+                                            <td style="font-size: 30px">-</td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <button class="btn btn-primary" style="width:200px"> Generate Notification</button>
+                                </div>
+                            </div>
+
+                            <div class="btn-wrapper" style="margin-top:50px">
+                                <button class="btn btn-primary">Edit</button>
+                                <button class="btn btn-primary">Save</button>
+                                <button class="btn btn-primary">Cancel</button>
+                            </div>
+                        </div>
+                    </mat-tab>
+
+                </mat-tab-group>
+
+            </div>
+        </mat-tab>
+
+        <mat-tab label="Auction Notification" *ngIf="(userRole=='Super Admin' || userRole=='AEE' || userRole=='EE' || userRole=='Allotment')">
+            <div class="NotificationID">
+                <div class="title themeheading" style="padding: 5px;">{{title4}}
+                    <button type="button" class="btn btn-primary float-right" *ngIf="auctionGrid" [hidden]="userRole=='EE'"
+                        (click)="Showauctionform()">Add</button>
+                    <button type="button" class="btn btn-primary float-right" *ngIf="auctionForm || ViewBiddersForm || UpdateBidderForm || selectProperty || minBid || auctionapproval"
+                        (click)="Showauctiongrid()">Back</button>
+                    <span class="clearfix"></span>
+                </div>
+
+                <div class="auction-bread-crumb" *ngIf="ViewBiddersForm || UpdateBidderForm || selectProperty || minBid || auctionapproval">
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="javascript:void(0);">Notification No.: {{auctionnot.AN_Number}}</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">Notification Date: {{auctionnot.AN_Date | date:'dd-MM-yyyy'}}</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">Auction Place: {{auctionnot.AN_AuctionPlace}}</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">Auction Fromdate: {{auctionnot.AN_FromDate | date:'medium'}}</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">Auction Todate: {{auctionnot.AN_ToDate | date:'medium'}}</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="table-responsive" id="auction-grid" *ngIf="auctionGrid">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <td rowspan="2">Sl No.</td>
+                                <td rowspan="2">Notification No.</td>
+                                <td rowspan="2">Notification Date</td>
+                                <td rowspan="2">Auction Place</td>
+                                <td rowspan="2">Auction Type</td>
+                                <td rowspan="2">Project Name</td>
+                                <td rowspan="2">Notification Status</td>
+                                <!-- <td>Base Price</td>  -->
+                                <td colspan="3" class="text-center" *ngIf="(userRole=='Super Admin' || userRole=='AEE'|| userRole =='Allotment')">Notification
+                                    Details</td>
+                                <td colspan="3" class="text-center" *ngIf="(userRole=='Super Admin' || userRole=='AEE'|| userRole =='Allotment')">Auction
+                                    Proceedings Details</td>
+                                <!-- <td>Bidders / H1</td>
+                                <td>Auction Approval</td>
+                                <td>Intimation Letter</td> -->
+                                <!-- <td>Notifiaction Letter</td> -->
+                            </tr>
+                            <tr>
+                                <td *ngIf="(userRole=='Super Admin' || userRole=='AEE'|| userRole =='Allotment')">Properties for Auction</td>
+                                <td *ngIf="(userRole=='Super Admin' || userRole=='AEE'|| userRole =='Allotment')">Update Base Price</td>
+                                <td>Notification Letter</td>
+                                <td *ngIf="(userRole=='Super Admin' || userRole=='AEE'|| userRole =='Allotment')">Bidders Details(H1)</td>
+                                <td *ngIf="(userRole=='Super Admin' || userRole=='EE'|| userRole =='Allotment')">Auction Approval</td>
+                                <td *ngIf="(userRole=='Super Admin' || userRole=='EE'|| userRole =='Allotment')">Intimation Letter</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let Not of notificationlist | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index">
+                                <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+                                <td>{{Not.AN_Number}}</td>
+                                <td>{{Not.AN_Date | date:'dd-MM-yyyy'}}</td>
+                                <td>{{Not.AN_AuctionPlace}}</td>
+                                <td>{{Not.AN_Auction_Type}}</td>
+                                <td>{{Not.Proj_Name}}</td>
+                                <td *ngIf="Not.Notification_Status=='' || Not.Notification_Status==null">Pending</td>
+                                <td *ngIf="Not.Notification_Status=='A' || Not.Notification_Status=='a'">Approved</td>
+                                <td *ngIf="Not.Notification_Status=='R' || Not.Notification_Status=='r'">Rejected
+                                    <span style="color: cornflowerblue" *ngIf="Not.Remarks=='A'"></span>
+                                    <span style="color: cornflowerblue">{{Not.Remarks}}</span>
+                                </td>
+
+                                <td *ngIf="(userRole=='Super Admin' || userRole=='AEE'|| userRole =='Allotment')">
+                                    <button class="btn btn-primary"  (click)="ShowSelectProperty(Not.AN_Id)">Add
+                                        ({{Not.No_properties}})</button>
+                                    <!-- <button [disabled]="Not.AN_Disable==1" class="btn btn-primary" (click)="ShowSelectProperty(Not.AN_Id)">Add ({{Not.No_properties}})</button> -->
+                                </td>
+                                <td *ngIf="(userRole=='Super Admin' || userRole=='AEE'|| userRole =='Allotment')">
+                                    <button class="btn btn-primary" (click)="ShowMin(Not.AN_Id)">Update({{Not.Updated_BasePrice}})</button>
+                                    <!-- <button [disabled]="Not.AN_Disable==1" class="btn btn-primary" (click)="ShowMin(Not.AN_Id)">Update({{Not.Updated_BasePrice}})</button> -->
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary" *ngIf="(Not.No_properties !=0)" style="width: 100px;" target="_blank" [routerLink]="['/auction-notification/',Not.AN_Id]">Print</a>
+                                </td>
+                                <td *ngIf="(userRole=='Super Admin' || userRole=='AEE'|| userRole =='Allotment')">
+                                    <button class="btn btn-primary" (click)="ShowUpdateBidder(Not.AN_Id)" [disabled]="Not.Notification_Status=='R' || Not.Notification_Status==' ' || Not.Notification_Status==null || Not.Updated_BasePrice == 0">Proceed
+                                        to
+                                        Update({{Not.Updated_Bidder}})</button>
+                                </td>
+                                <td *ngIf="(userRole=='Super Admin' || userRole=='EE' || userRole=='DGM')">
+                                    <button class="btn btn-primary" [disabled]="Not.Updated_Bidder == 0"(click)="ShowAuctionApproval(Not.AN_Id)">Processed
+                                        for Approval({{Not.Updated_Approval}})</button>
+                                </td>
+                                <td *ngIf="(userRole=='Super Admin' || userRole=='EE')">
+                                    <button class="btn btn-primary" [disabled]="Not.Updated_Approval == 0"   (click)="ShowViewBidder(Not.AN_Id)">Print</button>
+                                </td>
+                                <!-- <td>
+                                    <a class="btn btn-primary" style="width: 100px;" target="_blank" [routerLink]="['/auction-notification/',Not.AN_Id]">Print</a>
+                                </td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-11">
+                                <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)"
+                                    maxSize="9" directionLinks="true" autoHide="false" previousLabel="Previous"
+                                    nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                                    screenReaderCurrentLabel="You're on page">
+                                </pagination-controls>
+                            </div>
+                            <div class="col-md-1">
+                                Total:
+                                <span>{{totalItems}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notification Start-->
+
+                <div id="auction-form" class="container-fluid" *ngIf="auctionForm">
+                    <form #Notdetail="ngForm" name="form1" (ngSubmit)="SaveNotification(Notdetail)" autocomplete="off">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <input type="text" placeholder=" " maxlength="60" class="custom-field" name="AN_Number"
+                                        [(ngModel)]="Auction.AN_Number" #AN_Number="ngModel" required>
+                                    <label>Notification No.
+                                        <span class="mandatory">*</span>
+                                    </label>
+                                </div>
+                                <div class="error-msg" *ngIf="AN_Number.invalid && (AN_Number.dirty || AN_Number.touched || formSubmitted)">
+                                    <span *ngIf="AN_Number.errors.required">Notification No. is required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <input type="date" placeholder=" " maxlength="70" class="custom-field" name="AN_Date"
+                                        [(ngModel)]="Auction.AN_Date" #AN_Date="ngModel" required>
+                                    <label>Notification Date.
+                                        <span class="mandatory">*</span>
+                                    </label>
+                                </div>
+                                <div class="error-msg" *ngIf="AN_Date.invalid && (AN_Date.dirty || AN_Date.touched || formSubmitted)">
+                                    <span *ngIf="AN_Date.errors.required">Notification Date. is required</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <input type="text" placeholder=" " class="custom-field" name="AN_AuctionPlace"
+                                        [(ngModel)]="Auction.AN_AuctionPlace" #AN_AuctionPlace="ngModel" required>
+                                    <label>Auction Place.
+                                        <span class="mandatory">*</span>
+                                    </label>
+                                </div>
+                                <div class="error-msg" *ngIf="AN_AuctionPlace.invalid && (AN_AuctionPlace.dirty || AN_AuctionPlace.touched || formSubmitted)">
+                                    <span *ngIf="AN_AuctionPlace.errors.required">Auction Place. is required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <input type="datetime-local" placeholder=" " class="custom-field" name="AN_FromDate"
+                                        [(ngModel)]="Auction.AN_FromDate" #AN_FromDate="ngModel" required>
+                                    <label>Auction From Date/Time.
+                                        <span class="mandatory">*</span>
+                                    </label>
+                                </div>
+                                <div class="error-msg" *ngIf="AN_FromDate.invalid && (AN_FromDate.dirty || AN_FromDate.touched || formSubmitted)">
+                                    <span *ngIf="AN_FromDate.errors.required">Auction From Date/Time. is required</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <input type="datetime-local" placeholder=" " class="custom-field" name="AN_ToDate"
+                                        [(ngModel)]="Auction.AN_ToDate" #AN_ToDate="ngModel" required>
+                                    <label>Auction To Date/Time.
+                                        <span class="mandatory">*</span>
+                                    </label>
+                                </div>
+                                <div class="error-msg" *ngIf="AN_ToDate.invalid && (AN_ToDate.dirty || AN_ToDate.touched || formSubmitted)">
+                                    <span *ngIf="AN_ToDate.errors.required">Auction To Date/Time. is required</span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="">Upload price fixing committee proceedings(pdf)</label>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="file" name="AN_Upload" [(ngModel)]="Auction.AN_Upload" #AN_Upload="ngModel"
+                                    id="AN_Upload" (change)="ANUpload($event.target.files)" id="AN_Upload">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <input type="text" placeholder="50000" [pattern]="numericpattern" class="custom-field text-right"
+                                        name="AN_EMD" [(ngModel)]="Auction.AN_EMD" #AN_EMD="ngModel">
+                                    <label>EMD</label>
+                                </div>
+                                <div class="error-msg" *ngIf="AN_EMD.invalid && (AN_EMD.dirty || AN_EMD.touched || formSubmitted)">
+                                    <span *ngIf="AN_EMD.errors.pattern">EMD Amount is not valid.</span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <select style="width:100%;padding:6px;" class="custom-field" name="AN_Auction_Type"
+                                        [(ngModel)]="Auction.AN_Auction_Type" #AN_Auction_Type="ngModel" required>
+                                        <option [ngValue]="undefined" selected>--Select--</option>
+                                        <option value="EAuction">E-Auction</option>
+                                        <option value="Manual">Manual</option>
+                                    </select>
+                                    <label for="">Select Auction Type
+                                        <span class="mandatory">*</span>
+                                    </label>
+                                </div>
+                                <div class="error-msg" *ngIf="AN_Auction_Type.invalid && (AN_Auction_Type.dirty || AN_Auction_Type.touched || formSubmitted)">
+                                    <span *ngIf="AN_Auction_Type.errors.required">Select Auction Type is required</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <select style="width:100%;padding:6px;" class="custom-field" name="AN_Project_Id_Fk"
+                                        [(ngModel)]="Auction.AN_Project_Id_Fk" #AN_Project_Id_Fk="ngModel" required>
+                                        <option [ngValue]="undefined" selected>---Select---</option>
+                                        <option *ngFor="let project of projectlist" [value]="project.PD_Id">
+                                            {{project.PD_Project_Code}} - {{project.PD_Project_Name}} -
+                                            {{project.Phase_Name}}
+                                        </option>
+                                    </select>
+                                    <label for="">Select Project Name
+                                        <span class="mandatory">*</span>
+                                    </label>
+                                </div>
+                                <div class="error-msg" *ngIf="AN_Project_Id_Fk.invalid && (AN_Project_Id_Fk.dirty || AN_Project_Id_Fk.touched || formSubmitted)">
+                                    <span *ngIf="AN_Project_Id_Fk.errors.required">Select Project Name is required</span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6" *ngIf="Auction.AN_Auction_Type=='EAuction'">
+                                <div class="input-group">
+                                    <input type="datetime-local" placeholder="50000" class="custom-field" name="AN_POI_Date"
+                                        [(ngModel)]="Auction.AN_POI_Date" #AN_POI_Date="ngModel">
+                                    <label>POI Date</label>
+                                </div>
+                                <div class="error-msg" *ngIf="AN_POI_Date.invalid && (AN_POI_Date.dirty || AN_POI_Date.touched || formSubmitted)">
+                                    <span *ngIf="AN_POI_Date.errors.required">POI Date is required</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="title themeheading">
+                            Publish Details
+                        </div>
+                        <div class="container-fluid">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" placeholder=" " class="custom-field" name="ANC_Website"
+                                            [(ngModel)]="AuctionCD.ANC_Website" #ANC_Website="ngModel">
+                                        <label for="">Website
+                                            <span class="mandatory">*</span>
+                                        </label>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" placeholder=" " [pattern]="phoneno" maxlength="12" class="custom-field"
+                                            name="ANC_ContactNo" [(ngModel)]="AuctionCD.ANC_ContactNo" #ANC_ContactNo="ngModel">
+                                        <label for="">Contact No.
+                                            <span class="mandatory">*</span>
+                                        </label>
+                                        <div class="error-msg" *ngIf="ANC_ContactNo.invalid && (ANC_ContactNo.dirty || ANC_ContactNo.touched)">
+                                            <span *ngIf="ANC_ContactNo.errors?.pattern" style="color:red;">Contact No.
+                                                must be numeric</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" placeholder=" " [pattern]="phoneno" maxlength="3" class="custom-field"
+                                            name="ANC_ExtensionNo" [(ngModel)]="AuctionCD.ANC_ExtensionNo"
+                                            #ANC_ExtensionNo="ngModel">
+                                        <label for="">Extension No.</label>
+                                        <div class="error-msg" *ngIf="ANC_ExtensionNo.invalid && (ANC_ExtensionNo.dirty || ANC_ExtensionNo.touched)">
+                                            <span *ngIf="ANC_ExtensionNo.errors?.pattern" style="color:red;">Extension
+                                                No. must be numeric</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <button class="btn btn-primary" (click)="AddPublishDetails(AuctionCD)" type="button">Save
+                                    Publish Detail</button>
+                                <button class="btn btn-primary" type="button" (click)="resetpublishdetail()">Cancel</button>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <td rowspan="2">Sl No.</td>
+                                            <td rowspan="2">Website.</td>
+                                            <td rowspan="2">Contact No.</td>
+                                            <td rowspan="2">Extension No.</td>
+                                            <td rowspan="2">Delete</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let cddetail of CDDetails;let i=index">
+                                            <td>{{i+1}}</td>
+                                            <td>
+                                                {{cddetail.ANC_Website}}
+                                            </td>
+                                            <td>
+                                                {{cddetail.ANC_ContactNo}}
+                                            </td>
+                                            <td>
+                                                {{cddetail.ANC_ExtensionNo}}
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-primary" type="button" (click)="DeletePublishDetails(i)">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+
+                            <br>
+                            <div class="text-center">
+                                <button class="btn btn-primary" type="submit">Save</button>
+                                <button class="btn btn-primary" type="reset" (click)="resetnotification()">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- Notification  End-->
+
+                <div id="view-bidders" *ngIf="ViewBiddersForm">
+
+                    <div class="container-fluid">
+                        <br>
+                        <!-- <div class="subtitle text-center">
+                            E-AUCTION PROCEEDINGS FOR AUCTIONS HELD FROM _________ TO _________ </div> -->
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <td rowspan="2">Sl No</td>
+                                        <td rowspan="2">Auction No.</td>
+                                        <td rowspan="2">Property No.</td>
+                                        <td rowspan="2">Category.</td>
+                                        <td>Bid Price</td>
+                                        <td>Bidder Details</td>
+                                        <td rowspan="2">Address</td>
+                                        <td rowspan="2">Contact No.</td>
+                                        <td rowspan="2">Mail Id</td>
+                                    </tr>
+                                    <tr>
+                                        <td>H1</td>
+                                        <td>Name</td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngIf="Bidderdetails == '' || Bidderdetails == 'undefined' || Bidderdetails == 'null'">
+                                        <td colspan="10" class="text-center">No Bidders</td>
+                                    </tr>
+                                    <tr *ngFor="let bd of Bidderdetails;let i=index">
+                                        <td>{{i+1}}</td>
+                                        <td>{{bd.AN_Number}}</td>
+                                        <td>{{bd.B_Prop_No}}</td>
+                                        <td>{{bd.IC_Name}}</td>
+                                        <td>{{bd.B_Bid_Rate_Per_Sqft}}</td>
+                                        <td>{{bd.B_BName}}</td>
+                                        <td>{{bd.B_Address}}</td>
+                                        <td>{{bd.B_ContactNo}}</td>
+                                        <td>{{bd.B_EmailId}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="text-center" [hidden]="Bidderdetails == '' || Bidderdetails == 'undefined' || Bidderdetails == 'null'">
+                        <a type="button" class="btn btn-primary" target="_blank" [routerLink]="['/auction-intimation/',auctionnot.AN_Id]">Print
+                            Intimation Letter</a>
+                    </div>
+
+
+                </div>
+
+                <div id="update-bidders" class="container-fluid" *ngIf="UpdateBidderForm">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <td rowspan="2">Sl No.</td>
+                                    <td rowspan="2">Site / House</td>
+                                    <td rowspan="2">Property No.</td>
+                                    <td rowspan="2">Category</td>
+                                    <td rowspan="2">Intermediate / Corner</td>
+                                    <td rowspan="2">Odd / Regular</td>
+                                    <td class="text-center" colspan="2">Measurement</td>
+                                    <td rowspan="2">Plot area in sqm</td>
+                                    <td rowspan="2">Area in sqft</td>
+                                    <td rowspan="2">Base Price</td>
+                                    <td rowspan="2">Total Amt</td>
+                                    <td rowspan="2">Bidder / H1</td>
+                                </tr>
+                                <tr>
+                                    <td>East to West</td>
+                                    <td>North to South</td>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="auctionproperties == '' || auctionproperties == 'undefined' || auctionproperties == 'null'">
+                                <td colspan="16" class="text-center">No Data Found</td>
+                            </tbody>
+                            <tbody *ngFor="let ap of auctionproperties;let i=index">
+                                <tr *ngIf="ap.Price!=null">
+                                    <td>{{i+1}}</td>
+                                    <td>{{ap.PT_Property_Type}}</td>
+                                    <td>{{ap.PR_Property_No}}</td>
+                                    <td>{{ap.CA_CategoryName}}</td>
+                                    <td>{{ap.IC_Name}}</td>
+                                    <td>{{ap.OR_Name}}</td>
+                                    <td>{{ap.PR_M_East_west}}</td>
+                                    <td>{{ap.PR_M_North_South}}</td>
+                                    <td>{{ap.PR_Plot_Area}}</td>
+                                    <td>{{ap.AreaSqft | number:'3.1-2'}}</td>
+                                    <!-- | number:'1.0-0'}} number:'3.5-5'-->
+                                    <td>{{ap.Price | number:'3.1-2'}}</td>
+                                    <td>{{ap.baseAmt | number:'3.1-2'}}</td>
+                                    <td>
+                                        <button [ngClass]="ap.PR_Bidder===1?'btn btn-success':'btn btn-primary'"
+                                            data-toggle="modal" data-target="#update-bidder" [disabled]="ap.PR_Bidder==1"
+                                            (click)="GetPropertyDetails(ap.PR_Id,ap.PR_Property_No,ap.AN_EMD,ap.Price,ap.PR_Plot_Area)">{{ap.PR_Bidder===1?'Updated':'Update'}}</button>
+                                    </td>
+                                    <!-- data-toggle="modal"
+                                    data-target="#update-bidder" -->
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br>
+                </div>
+
+
+                <div id="selectProperty" class="container-fluid" *ngIf="selectProperty">
+                    <div class="text-right">
+                        <button class="btn btn-primary" [disabled] = "auctionnot.Notification_Status == 'A' || auctionnot.Notification_Status == 'R'" type="button" data-toggle="modal" data-target="#addProperty"
+                            (click)="GetPropertiesforSelect(auctionnot.AN_Id)">Add Property</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <td rowspan="2">Sl No.</td>
+                                    <td rowspan="2">Site / House</td>
+                                    <td rowspan="2">Property No.</td>
+                                    <td rowspan="2">Category</td>
+                                    <td rowspan="2">Intermediate / Corner</td>
+                                    <td rowspan="2">Odd / Regular</td>
+                                    <td class="text-center" colspan="2">Measurement</td>
+                                    <td rowspan="2">Plot area in sqm</td>
+                                    <!-- <td rowspan="2">Plinth area in sqm</td> -->
+                                    <td rowspan="2">Remove</td>
+                                </tr>
+                                <tr>
+                                    <td>East to West</td>
+                                    <td>North to South</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngIf="auctionproperties == '' || auctionproperties == 'undefined' || auctionproperties == 'null'">
+                                    <td colspan="13" class="text-center">No Data</td>
+                                </tr>
+                                <tr *ngFor="let ap of auctionproperties;let i=index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{ap.PT_Property_Type}}</td>
+                                    <td>{{ap.PR_Property_No}}</td>
+                                    <td>{{ap.CA_CategoryName}}</td>
+                                    <td>{{ap.IC_Name}}</td>
+                                    <td>{{ap.OR_Name}}</td>
+                                    <td>{{ap.PR_M_East_west}}</td>
+                                    <td>{{ap.PR_M_North_South}}</td>
+                                    <td>{{ap.PR_Plot_Area}}</td>
+                                    <!-- <td>{{ap.PR_Plinth_Area}}</td> -->
+                                    <td>
+                                        <button class="btn btn-primary" [disabled]="ap.PR_Status == 'Allotted' || auctionnot.Notification_Status == 'A'"  type="button" (click)="Deleteproperty(ap.PR_Id,ap.Price,auctionnot.AN_Id)">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br>
+                    <!-- <div class="text-center">
+                            <button class="btn btn-primary">Save</button>
+                            <button class="btn btn-primary">Cancel</button>
+                        </div> -->
+                </div>
+
+                <div id="minBid" class="container-fluid" *ngIf="minBid">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <td rowspan="2">Sl No.</td>
+                                    <td rowspan="2">Site / House</td>
+                                    <td rowspan="2">Property No.</td>
+                                    <td rowspan="2">Category</td>
+                                    <td rowspan="2">Intermediate / Corner</td>
+                                    <td rowspan="2">Odd / Regular</td>
+                                    <td class="text-center" colspan="2">Measurement</td>
+                                    <td rowspan="2">Plot area in sqm</td>
+                                    <td rowspan="2">Area in Sqft</td>
+                                    <td rowspan="2">Base Price</td>
+                                    <td rowspan="2">Total Amt</td>
+                                    <td rowspan="2">Update Base Price</td>
+                                    <!-- <td  rowspan="2">Update bidder</td>
+                                                <td  rowspan="2">Update bid value</td> -->
+                                    <!-- <td  rowspan="2">Remove</td> -->
+                                    <!-- <td  rowspan="2">Select</td> -->
+                                </tr>
+                                <tr>
+                                    <td>East to West</td>
+                                    <td>North to South</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngIf="auctionproperties == '' || auctionproperties == 'undefined' || auctionproperties == 'null'">
+                                    <td colspan="14" class="text-center">No Data</td>
+                                </tr>
+                                <tr *ngFor="let ap of auctionproperties;let i=index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{ap.PT_Property_Type}}</td>
+                                    <td>{{ap.PR_Property_No}}</td>
+                                    <td>{{ap.CA_CategoryName}}</td>
+                                    <td>{{ap.IC_Name}}</td>
+                                    <td>{{ap.OR_Name}}</td>
+                                    <td>{{ap.PR_M_East_west}}</td>
+                                    <td>{{ap.PR_M_North_South}}</td>
+                                    <td>{{ap.PR_Plot_Area}}</td>
+                                    <td>{{ap.AreaSqft | number:'3.1-2'}}</td>
+                                    <td>
+                                        <span *ngIf="ap.Price!=null">₹</span>{{ap.Price | number:'3.1-2'}}
+                                        <span *ngIf="ap.Price!=null">
+                                            <br>{{ap.PR_LastEdited | date:'medium'}}</span>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="ap.baseAmt!=0">₹</span>{{ap.baseAmt | number:'3.1-2'}}</td>
+                                    <td>
+
+                                        <div class="input-group">
+                                            <input type="text" class="custom-field text-right" name="PR_Base_Price"
+                                                (keyup)="Changeprice(i,ap.PR_Base_Price)" [(ngModel)]="ap.PR_Base_Price"
+                                                #PR_Base_Price="ngModel" [pattern]="numericpattern">
+                                            <div>
+                                                <!-- <span *ngIf="PD_EP_CostperAcre.errors.required">Estimate Project Cost is required</span> -->
+                                                <span *ngIf="PR_Base_Price.errors?.pattern" style="color:red;">Base
+                                                    Price must be numeric</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br>
+                    <div class="text-center">
+                        <button class="btn btn-primary" (click)="SaveBasePrice(auctionproperties,auctionnot.AN_Id)"
+                            type="reset">{{B_mode=='save'?'Save':'Update'}}</button>
+                        <button class="btn btn-primary" type="button" (click)="resetbaseprice()">Cancel</button>
+                    </div>
+                </div>
+
+                <div id="auctionapproval" class="container-fluid" *ngIf="auctionapproval">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <td>Sl No.</td>
+                                    <td>Bidder Name</td>
+                                    <td>Property No.</td>
+                                    <td>Category</td>
+                                    <td>Intermediate / Corner</td>
+                                    <td>Bidder Id</td>
+                                    <td>EMD Amount(Rs)</td>
+                                    <td>DD/Payment No.</td>
+                                    <td>DD Date/Payment URN</td>
+                                    <td>25% Payment Amt(Rs)</td>
+                                    <td>DD No.</td>
+                                    <td>DD Date</td>
+                                    <td>Bidder Bank Name</td>
+                                    <td>Bidder Branch</td>
+                                    <td>Bidder Account No.</td>
+                                    <td>Bidder IFSC Code</td>
+                                    <td>Bidding Type</td>
+                                    <td>Base Price</td>
+                                    <td>Bid Price</td>
+                                    <td>% increase</td>
+                                    <td>Photo</td>
+                                    <td>Address Proof</td>
+                                    <td>Id Proof</td>
+                                    <td>Note</td>
+                                    <td>Status</td>
+                                    <td>Single Bidder Remarks</td>
+                                    <td colspan="2" class="text-center">Action</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngIf="auctionbidders == '' || auctionbidders == 'undefined' || auctionbidders == 'null'">
+                                    <td colspan="18" class="text-center">No Data</td>
+                                </tr>
+                                <tr *ngFor="let ab of auctionbidders;let i=index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{ab.B_BName}}</td>
+                                    <td>{{ab.PR_Property_No}}</td>
+                                    <td>{{ab.CA_CategoryName}}</td>
+                                    <td>{{ab.IC_Name}}</td>
+                                    <td>{{ab.B_BidderId}}</td>
+                                    <td>{{ab.B_EMD_Amt | currency:'INR':true: '1.0-0'}}</td>
+                                    <td *ngIf="ab.B_Ins_No!=null">{{ab.B_Ins_No}}</td>
+                                    <td *ngIf="ab.B_Ins_Date!=null">{{ab.B_Ins_Date | date:'dd-MM-yyyy'}}</td>
+                                    <td *ngIf="ab.B_EMD_PayNo!=null">{{ab.B_EMD_PayNo}}</td>
+                                    <td *ngIf="ab.B_EMD_Urn!=null">{{ab.B_EMD_Urn}}</td>
+                                    <td>{{ab.B_perc_payment | currency:'INR':true: '1.0-0'}}</td>
+                                    <td>{{ab.B_DD_No}}</td>
+                                    <td>{{ab.B_DD_Date | date:'dd-MM-yyyy'}}</td>
+                                    <td>{{ab.B_Bidder_BankName}}</td>
+                                    <td>{{ab.B_Bidder_Branch}}</td>
+                                    <td>{{ab.B_Bidder_AccNo}}</td>
+                                    <td>{{ab.B_Bidder_Ifsc_Code}}</td>
+                                    <td>{{ab.B_Bidding_Type}}</td>
+                                    <td>₹{{ab.PR_Base_Price}}</td>
+                                    <td>₹{{ab.B_Bid_Rate_Per_Sqft}}</td>
+                                    <td>{{ab.percent | number}}</td>
+                                    <td>
+                                        <a class="float-right" *ngIf="ab.B_Photo_Sign!=null" target="_blank" href="{{ab.B_Photo_Sign}}">view</a>
+                                    </td>
+                                    <td>
+                                        <a class="float-right" *ngIf="ab.B_AddresProof!=null" target="_blank" href="{{ab.B_AddresProof}}">view</a>
+                                    </td>
+                                    <td>
+                                        <a class="float-right" *ngIf="ab.B_IdProof!=null" target="_blank" href="{{ab.B_IdProof}}">view</a>
+                                    </td>
+                                    <td>{{ab.B_Note}}</td>
+                                    <td *ngIf="ab.PR_Approval_Status=='A' || ab.PR_Approval_Status=='R'">{{ab.PR_Approval_Status=='A'?'Accepted':'Rejected'}}</td>
+                                    <td [hidden]="ab.PR_Approval_Status=='A' || ab.PR_Approval_Status=='R'"></td>
+                                    <td *ngIf="ab.B_Bidding_Type=='Single-Bidder'">Liable for Rejection</td>
+                                    <td *ngIf="ab.B_Bidding_Type!='Single-Bidder'"></td>
+                                    <td [ngClass]="ab.PR_Approval_Status==='A'?'issue':'notseen'">
+                                        <!-- <button [ngClass]="ab.PR_Approval_Status==='A'?'btn btn-success':'btn btn-primary'" [disabled]="ab.PR_Approval_Status=='A' || ab.PR_Approval_Status=='R'"
+                                            type="button" (click)="BidderApproveorReject(ab.PR_Id,'A',auctionnot.AN_Id)">{{ab.PR_Approval_Status==='A'?'Approved':'Approve'}}</button> -->
+                                        <input [disabled]="ab.PR_Approval_Status=='A' || ab.PR_Approval_Status=='R'"
+                                            required type="radio" id="inlineRadio1" value="A" name="AppRej" (click)="BidderApproveorReject(ab.PR_Id,'A',auctionnot.AN_Id)">Approve
+                                    </td>
+                                    <td [ngClass]="ab.PR_Approval_Status==='R'?'issuealert':'notseen'">
+                                        <!-- <button type="button" [disabled]="ab.PR_Approval_Status=='R' || ab.PR_Approval_Status=='A'" [ngClass]="ab.PR_Approval_Status==='R'?'btn btn-danger':'btn btn-primary'"
+                                            (click)="BidderApproveorReject(ab.PR_Id,'R',auctionnot.AN_Id)">{{ab.PR_Approval_Status==='R'?'Rejected':'Reject'}}</button> -->
+                                        <input [disabled]="ab.PR_Approval_Status=='R' || ab.PR_Approval_Status=='A'"
+                                            required type="radio" id="inlineRadio1" value="R" name="AppRej" (click)="BidderApproveorReject(ab.PR_Id,'R',auctionnot.AN_Id)">Reject
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="CA Site" *ngIf="(userRole=='Super Admin' || userRole=='EE' || userRole=='AEE')">
+            <div class="CASite">
+                <div class="title themeheading" style="padding: 5px;">{{title5}}
+                    <div class="float-right">
+                        Items per page:
+                        <select name="SearchRows" #SearchRows="ngModel" [(ngModel)]="itemsPerPage" class="noofpage"
+                            (change)="itemsPerPageChanged(itemsPerPage, 1)">
+                            <option [ngValue]="5">5</option>
+                            <option [ngValue]="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="50">50</option>
+                        </select>
+                        <a class="btn btn-primary " routerLink="/home/bshbnotification/bshbnotificationform">Add</a>
+                    </div>
+                    <span class="clearfix"></span>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-striped grid">
+                        <thead>
+                            <tr>
+                                <td>Sl No.</td>
+                                <td>Notification No.</td>
+                                <td>Approved date</td>
+                                <td>Application last date</td>
+                                <td>Scheme</td>
+                                <td>District</td>
+                                <td>Project</td>
+                                <td>Phase</td>
+                                <td class="text-center">Edit</td>
+                                <td class="text-center">Delete</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>10-03-2018</td>
+                                <td>20-04-2018</td>
+                                <td>MGRY</td>
+                                <td>Ramnagara</td>
+                                <td>BSHB</td>
+                                <td>II</td>
+                                <td class="text-center">
+                                    <a href="#">
+                                        <i class="fa fa-lg fa-edit themecolor"></i>
+                                    </a>
+                                </td>
+                                <td class="text-center">
+                                    <a href="javascript:void(0);">
+                                        <i class="fa fa-lg fa-trash themecolor"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </mat-tab>
+        <!-- Grid for Auction Notification View -->
+        <mat-tab label="Auction Notification View" *ngIf="(userRole=='COF'|| userRole=='DGM')">
+            <div class="NotificationID">
+                <div class="title themeheading" style="padding: 5px;">{{title4}}
+                    <button type="button" class="btn btn-primary float-right" *ngIf="auctionGrid" [hidden]="userRole=='COF' || userRole=='DGM'"
+                        (click)="Showauctionform()">Add</button>
+                    <button type="button" class="btn btn-primary float-right" *ngIf="auctionForm || ViewBiddersForm || UpdateBidderForm || selectProperty || minBid || auctionapproval"
+                        (click)="Showauctiongrid()">Back</button>
+                    <span class="clearfix"></span>
+                </div>
+
+
+                <div class="auction-bread-crumb" *ngIf="ViewBiddersForm || UpdateBidderForm || selectProperty || minBid || auctionapproval">
+                    <ul class="breadcrumb">
+                        <li>
+                            <a href="javascript:void(0);">Notification No.: {{auctionnot.AN_Number}}</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">Notification Date: {{auctionnot.AN_Date | date:'dd-MM-yyyy'}}</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">Auction Place: {{auctionnot.AN_AuctionPlace}}</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">Auction Fromdate: {{auctionnot.AN_FromDate | date:'medium'}}</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);">Auction Todate: {{auctionnot.AN_ToDate | date:'medium'}}</a>
+                        </li>
+                    </ul>
+                </div>
+
+
+                <div class="table-responsive" id="auction-grid" *ngIf="auctionGrid">
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <td rowspan="2">Sl No.</td>
+                                <td rowspan="2">Notification No.</td>
+                                <td rowspan="2">Notification Date</td>
+                                <td rowspan="2">Auction Place</td>
+                                <td rowspan="2">Auction Type</td>
+                            </tr>
+                            <tr>
+                                <td>Notification Letter</td>
+                                <td>Notification Approval/Reject</td>
+                                <td>Notification Status</td>
+                                <td>Remarks</td>
+                                <td>Auction Approval</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let Not of notificationlist | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index">
+                                <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+                                <td>{{Not.AN_Number}}</td>
+                                <td>{{Not.AN_Date | date:'dd-MM-yyyy'}}</td>
+                                <td>{{Not.AN_AuctionPlace}}</td>
+                                <td>{{Not.AN_Auction_Type}}</td>
+                                <td>
+                                    <a class="btn btn-primary" style="width: 100px;" target="_blank" [routerLink]="['/auction-notification/',Not.AN_Id]">View</a>
+                                </td>
+                                <td [ngClass]="Not.Notification_Status==='A'?'issue':'notseen'">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input class="form-check-input" [disabled]="Not.Notification_Status=='A' || Not.Notification_Status=='R' ||Not.No_properties == 0 || Not.Updated_BasePrice == 0"
+                                        required type="radio" id="inlineRadio1" value="A" name="AppRej" (click)="NotificationApproveor(Not.AN_Id)">Approve
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <input class="form-check-input" data-toggle="modal" data-target=".bd-example-modal-xl"
+                                        type="radio" id="inlineRadio2" value="R" name="AppRej" [disabled]="Not.Notification_Status=='A' || Not.Notification_Status=='R'||Not.No_properties == 0 || Not.Updated_BasePrice == 0"
+                                        (click)="NotificationReject(Not.AN_Id)">Reject
+                                </td>
+                                <td *ngIf="Not.Notification_Status=='' || Not.Notification_Status==null">-</td>
+                                <td *ngIf="Not.Notification_Status=='A' || Not.Notification_Status=='a'">Approved</td>
+                                <td *ngIf="Not.Notification_Status=='R' || Not.Notification_Status=='r'">Rejected</td>
+                                <!-- <td *ngIf="Not.Remarks=='A'">-</td>
+                                <td *ngIf="Not.Remarks!='A'">{{Not.Remarks}}</td> -->
+                                <td>
+                                    {{Not.Remarks}}
+                                </td>
+                                <td>
+                                    <button class="btn btn-primary" (click)="ShowAuctionApproval(Not.AN_Id)">View</button>
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-11">
+                                <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)"
+                                    maxSize="9" directionLinks="true" autoHide="false" previousLabel="Previous"
+                                    nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                                    screenReaderCurrentLabel="You're on page">
+                                </pagination-controls>
+                            </div>
+                            <div class="col-md-1">
+                                Total:
+                                <span>{{totalItems}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="auctionapproval" class="container-fluid" *ngIf="auctionapproval">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <td>Sl No.</td>
+                                    <td>Bidder Name</td>
+                                    <td>Property No.</td>
+                                    <td>Category</td>
+                                    <td>Intermediate / Corner</td>
+                                    <td>Bidder Id</td>
+                                    <td>EMD Amount(Rs)</td>
+                                    <td>DD/Payment No.</td>
+                                    <td>DD Date/Payment URN</td>
+                                    <td>25% Payment Amt(Rs)</td>
+                                    <td>DD No.</td>
+                                    <td>DD Date</td>
+                                    <td>Bidder Bank Name</td>
+                                    <td>Bidder Branch</td>
+                                    <td>Bidder Account No.</td>
+                                    <td>Bidder IFSC Code</td>
+
+                                    <td>Bidding Type</td>
+                                    <!-- <td>Bid rate/Sqft</td> -->
+                                    <td>Base Price</td>
+                                    <!-- <td>Base Amount Total</td> -->
+                                    <td>Bid Price</td>
+                                    <!-- <td>Bid Amount Total</td> -->
+                                    <td>% increase</td>
+                                    <td>Photo</td>
+                                    <td>Address Proof</td>
+                                    <td>Id Proof</td>
+                                    <td>Note</td>
+                                    <td>Status</td>
+                                    <td>Approved/rejected by</td>
+                                    <!-- <td>Single Bidder Remarks</td> -->
+
+                                    <!-- <td></td> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngIf="auctionbidders == '' || auctionbidders == 'undefined' || auctionbidders == 'null'">
+                                    <td colspan="18" class="text-center">No Data</td>
+                                </tr>
+                                <tr *ngFor="let ab of auctionbidders;let i=index" [hidden]="ab.PR_Approval_Status==null">
+                                    <td>{{i+1}}</td>
+                                    <td>{{ab.B_BName}}</td>
+                                    <td>{{ab.PR_Property_No}}</td>
+                                    <td>{{ab.CA_CategoryName}}</td>
+                                    <td>{{ab.IC_Name}}</td>
+                                    <td>{{ab.B_BidderId}}</td>
+                                    <td>₹{{ab.B_EMD_Amt}}</td>
+                                    <td *ngIf="ab.B_Ins_No!=null">{{ab.B_Ins_No}}</td>
+                                    <td *ngIf="ab.B_Ins_Date!=null">{{ab.B_Ins_Date | date:'dd-MM-yyyy'}}</td>
+                                    <td *ngIf="ab.B_EMD_PayNo!=null">{{ab.B_EMD_PayNo}}</td>
+                                    <td *ngIf="ab.B_EMD_Urn!=null">{{ab.B_EMD_Urn}}</td>
+                                    <td>₹{{ab.B_perc_payment}}</td>
+                                    <td>{{ab.B_DD_No}}</td>
+                                    <td>{{ab.B_DD_Date | date:'dd-MM-yyyy'}}</td>
+                                    <td>{{ab.B_Bidder_BankName}}</td>
+                                    <td>{{ab.B_Bidder_Branch}}</td>
+                                    <td>{{ab.B_Bidder_AccNo}}</td>
+                                    <td>{{ab.B_Bidder_Ifsc_Code}}</td>
+
+                                    <td>{{ab.B_Bidding_Type}}</td>
+                                    <!-- <td>{{ab.B_Bid_Rate_Per_Sqft}}</td> -->
+                                    <td>₹{{ab.PR_Base_Price}}</td>
+                                    <!-- <td>{{ab.baseAmt}}</td> -->
+                                    <td>₹{{ab.B_Bid_Rate_Per_Sqft}}</td>
+                                    <!-- <td>{{ab.bidAmt}}</td> -->
+                                    <td>{{ab.percent | number}}</td>
+                                    <td>
+                                        <a class="float-right" *ngIf="ab.B_Photo_Sign!=null" target="_blank" href="{{ab.B_Photo_Sign}}">view</a>
+                                    </td>
+                                    <td>
+                                        <a class="float-right" *ngIf="ab.B_AddresProof!=null" target="_blank" href="{{ab.B_AddresProof}}">view</a>
+                                    </td>
+                                    <td>
+                                        <a class="float-right" *ngIf="ab.B_IdProof!=null" target="_blank" href="{{ab.B_IdProof}}">view</a>
+                                    </td>
+                                    <td>{{ab.B_Note}}</td>
+                                    <td *ngIf="ab.PR_Approval_Status=='A' || ab.PR_Approval_Status=='R'">{{ab.PR_Approval_Status=='A'?'Accepted':'Rejected'}}</td>
+                                    <td [hidden]="ab.PR_Approval_Status=='A' || ab.PR_Approval_Status=='R'"></td>
+                                    <!-- <td *ngIf="ab.B_Bidding_Type=='Single-Bidder'">Liable for Rejection</td>
+                                    <td *ngIf="ab.B_Bidding_Type!='Single-Bidder'"></td> -->
+                                    <td>{{ab.UserName}}-{{ab.DI_District}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </mat-tab>
+
+    </mat-tab-group>
+
+
+
+    <!--update bidder popup-->
+    <div id="update-bidder" class="modal fade" role="dialog">
+        <form id="loader-spinner" #bidDetail="ngForm" name="bidform" (ngSubmit)="SaveBidder(bidDetail,auctionnot.AN_Id)"
+            autocomplete="off">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Update Bidder(H1) Details for Proceedings</h4>
+                        <button type="button" class="close" data-dismiss="modal" (click)="reset()">&times;</button>
+
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <span>Notification No.: </span>
+                                    <span>{{auctionnot.AN_Number}}</span>
+                                </div>
+                                <div class="col-md-6">
+                                    <span>Notification Date: </span>
+                                    <span>{{auctionnot.AN_Date | date:'dd-MM-yyyy'}}</span>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <span>Auction Place: </span>
+                                    <span>{{auctionnot.AN_AuctionPlace}}</span>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: 10px">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" oninput="this.value = this.value.toUpperCase()" class="custom-field"
+                                            name="B_Auc_RefNo" [(ngModel)]="bidder.B_Auc_RefNo" #B_Auc_RefNo="ngModel">
+                                        <label for="">Auction ref No.
+                                            <!-- <span class="mandatory">*</span> -->
+                                        </label>
+                                    </div>
+                                    <!-- <div class="error-msg" *ngIf="B_Auc_RefNo.invalid && (B_Auc_RefNo.dirty || B_Auc_RefNo.touched || formSubmitted)">
+                                        <span *ngIf="B_Auc_RefNo.errors.required">Auction ref No. is required</span>
+                                    </div> -->
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" class="custom-field" name="B_Pr_Id_Fk" [(ngModel)]="bidder.B_Pr_Id_Fk"
+                                            #B_Pr_Id_Fk="ngModel" hidden>
+                                        <input type="text" class="custom-field" name="B_Prop_No" [(ngModel)]="bidder.B_Prop_No"
+                                            #B_Prop_No="ngModel" readonly required>
+                                        <label for="">Property No.</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" readonly class="custom-field" [pattern]="numericpattern"
+                                            name="B_Base_Price" [(ngModel)]="bidder.B_Base_Price" #B_Base_Price="ngModel"
+                                            required (keyup)="getTotalBase(bidder.B_Base_Price)">
+                                        <label for="">Base Price
+                                            <span class="mandatory">*</span>
+                                        </label>
+                                    </div>
+                                    <!-- <div class="error-msg" *ngIf="B_Bid_Price.invalid && (B_Bid_Price.dirty || B_Bid_Price.touched || formSubmitted)">
+                                        <span *ngIf="B_Bid_Price.errors.required">Bid Price is required</span>
+                                        <span *ngIf="B_Bid_Price.errors?.pattern" style="color:red;">Bid Price must be numeric</span>
+                                    </div> -->
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" class="custom-field" [pattern]="numericpattern" name="B_Bid_Rate_Per_Sqft"
+                                            [(ngModel)]="bidder.B_Bid_Rate_Per_Sqft" #B_Bid_Rate_Per_Sqft="ngModel"
+                                            required (keyup)="getTotalBid(bidder.B_Bid_Rate_Per_Sqft)">
+                                        <label for="">Bid Rate per Sq.ft(H1)
+                                            <span class="mandatory">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="error-msg" *ngIf="B_Bid_Rate_Per_Sqft.invalid && (B_Bid_Rate_Per_Sqft.dirty || B_Bid_Rate_Per_Sqft.touched || formSubmitted)">
+                                        <span *ngIf="B_Bid_Rate_Per_Sqft.errors.required">Bid Rate per Sq.ft is
+                                            required</span>
+                                        <span *ngIf="B_Bid_Rate_Per_Sqft.errors?.pattern" style="color:red;">Bid Rate
+                                            per Sq.ft must be numeric</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" readonly class="custom-field" [pattern]="numericpattern"
+                                            name="BaseTotal" [(ngModel)]="prices.BaseTotal" #BaseTotal="ngModel"
+                                            required>
+                                        <label for="">Base Price Total
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" class="custom-field" [pattern]="numericpattern" name="BidTotal"
+                                            [(ngModel)]="prices.BidTotal" #BidTotal="ngModel" required>
+                                        <label for="">Bid Rate Total
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" oninput="this.value = this.value.toUpperCase()" class="custom-field"
+                                            maxlength="49" name="B_BName" [(ngModel)]="bidder.B_BName" #B_BName="ngModel"
+                                            required>
+                                        <label for="">Primary Bidder Name
+                                            <span class="mandatory">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="error-msg" *ngIf="B_BName.invalid && (B_BName.dirty || B_BName.touched || formSubmitted)">
+                                        <span *ngIf="B_BName.errors.required">Primary Bidder Name is required</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="">Is Joint Registration
+                                        <span class="mandatory">*</span>
+                                    </label>
+                                </div>
+                                <div class="col-md-3" style="margin-top: 2px;">
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" required type="radio" id="inlineRadio1"
+                                                value="Y" name="B_IsJoint" [(ngModel)]="bidder.B_IsJoint" #B_IsJoint="ngModel"
+                                                required> Yes
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" required type="radio" id="inlineRadio1"
+                                                value="N" name="B_IsJoint" [(ngModel)]="bidder.B_IsJoint" #B_IsJoint="ngModel"
+                                                required> No
+                                        </label>
+                                    </div>
+                                    <div class="error-msg" *ngIf="B_IsJoint.invalid && (B_IsJoint.dirty || B_IsJoint.touched || formSubmitted)">
+                                        <span *ngIf="B_IsJoint.errors.required">Is Joint Registration is required</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12" *ngIf="bidder.B_IsJoint=='Y'">
+                                    <div class="input-group">
+                                        <input type="text" oninput="this.value = this.value.toUpperCase()" class="custom-field"
+                                            maxlength="150" name="B_JointNames" [(ngModel)]="bidder.B_JointNames"
+                                            #B_JointNames="ngModel" required>
+                                        <label for="">Joint Applicant Names
+                                            <span class="mandatory">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="error-msg" *ngIf="B_JointNames.invalid && (B_JointNames.dirty || B_JointNames.touched || formSubmitted)">
+                                        <span *ngIf="B_JointNames.errors.required">Joint Applicant Names is required</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <textarea class="custom-field" name="B_Address" maxlength="249" [(ngModel)]="bidder.B_Address"
+                                            #B_Address="ngModel" required></textarea>
+                                        <label for="">Address1
+                                            <span class="mandatory">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="error-msg" *ngIf="B_Address.invalid && (B_Address.dirty || B_Address.touched || formSubmitted)">
+                                        <span *ngIf="B_Address.errors.required">Address is required</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <textarea class="custom-field" name="B_Address2" maxlength="249" [(ngModel)]="bidder.B_Address2"
+                                            #B_Address2="ngModel"></textarea>
+                                        <label for="">Address2
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" class="custom-field" maxlength="12" [pattern]="phoneno" name="B_ContactNo"
+                                            [(ngModel)]="bidder.B_ContactNo" #B_ContactNo="ngModel" required>
+                                        <label for="">Contact No.
+                                            <span class="mandatory">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="error-msg" *ngIf="B_ContactNo.invalid && (B_ContactNo.dirty || B_ContactNo.touched || formSubmitted)">
+                                        <span *ngIf="B_ContactNo.errors.required">Contact No. is required</span>
+                                        <span *ngIf="B_ContactNo.errors?.pattern" style="color:red;">Contact No. must
+                                            be numeric</span>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" class="custom-field" name="B_EmailId" [(ngModel)]="bidder.B_EmailId"
+                                            #B_EmailId="ngModel">
+                                        <label for="">Email Id.</label>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <select style="width:100%;padding:6px;" class="custom-field" name="B_Bidding_Type"
+                                            [(ngModel)]="bidder.B_Bidding_Type" #B_Bidding_Type="ngModel" required>
+                                            <option [ngValue]="undefined" selected>--Select--</option>
+                                            <option value="Single-Bidder">Single Bidder</option>
+                                            <option value="Multiple-Bidder">Multiple Bidder</option>
+                                        </select>
+                                        <label for="">Bidder Type
+                                            <span class="mandatory">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="error-msg" *ngIf="B_Bidding_Type.invalid && (B_Bidding_Type.dirty || B_Bidding_Type.touched || formSubmitted)">
+                                        <span *ngIf="B_Bidding_Type.errors.required">Bidder Type is required</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" *ngIf="bidder.B_Bidding_Type=='Multiple-Bidder'">
+                                    <div class="input-group">
+                                        <input type="text" class="custom-field" name="B_Total_Bidders" [(ngModel)]="bidder.B_Total_Bidders"
+                                            #B_Total_Bidders="ngModel" required>
+                                        <label for="">Total Bidders
+                                            <span class="mandatory">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="error-msg" *ngIf="B_Total_Bidders.invalid && (B_Total_Bidders.dirty || B_Total_Bidders.touched || formSubmitted)">
+                                        <span *ngIf="B_Total_Bidders.errors.required">Total Bidders is required</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="input-group">
+                                        <textarea class="custom-field" maxlength="399" name="B_Note" [(ngModel)]="bidder.B_Note"
+                                            #B_Note="ngModel"></textarea>
+                                        <label for="">Note</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="container-fluid">
+                            <div class="title themeheading">Uploads</div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label for="">Photo&Signature Doc(pdf)
+                                        <span class="mandatory">*</span>
+                                    </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="file" #Image accept="application/pdf" name="B_Photo_Sign" [(ngModel)]="bidder.B_Photo_Sign"
+                                        #B_Photo_Sign="ngModel" (change)="BidderPhoto($event.target.files)" id="B_Photo_Sign"
+                                        required>
+                                    <div class="error-msg" *ngIf="B_Photo_Sign.invalid && (B_Photo_Sign.dirty || B_Photo_Sign.touched || formSubmitted)">
+                                        <span *ngIf="B_Photo_Sign.errors.required">Photo&Signature Doc is required</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="">Address Proof(pdf)
+                                        <span class="mandatory">*</span>
+                                    </label>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="file" #Image accept="application/pdf" name="B_AddresProof" [(ngModel)]="bidder.B_AddresProof"
+                                        #B_AddresProof="ngModel" (change)="BidderAddresProof($event.target.files)" id="B_AddresProof">
+                                    <div class="error-msg" *ngIf="B_AddresProof.invalid && (B_AddresProof.dirty || B_AddresProof.touched || formSubmitted)">
+                                        <span *ngIf="B_AddresProof.errors.required">Address Proof is required</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <label for="">Id Proof(pdf)
+                                        <span class="mandatory">*</span>
+                                    </label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="file" #Image accept="application/pdf" name="B_IdProof" [(ngModel)]="bidder.B_IdProof"
+                                        #B_IdProof="ngModel" (change)="BidderIdProof($event.target.files)" id="B_IdProof">
+                                    <div class="error-msg" *ngIf="B_IdProof.invalid && (B_IdProof.dirty || B_IdProof.touched || formSubmitted)">
+                                        <span *ngIf="B_IdProof.errors.required">Id Proof is required</span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <br>
+                        <div class="container-fluid">
+                            <div class="title themeheading" *ngIf="auctionnot.AN_Auction_Type!='Manual'">Details of EMD
+                                Payments from E-Proc</div>
+                            <div class="title themeheading" *ngIf="auctionnot.AN_Auction_Type=='Manual'">Details of EMD
+                                Payments from Manual</div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" class="custom-field" name="B_EMD_Amt" [(ngModel)]="bidder.B_EMD_Amt"
+                                            #B_EMD_Amt="ngModel" readonly>
+                                        <label for="">EMD Amount</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" *ngIf="auctionnot.AN_Auction_Type!='Manual'">
+                                    <div class="input-group">
+                                        <input type="text" class="custom-field" oninput="this.value = this.value.toUpperCase()"
+                                            name="B_EMD_PayNo" [(ngModel)]="bidder.B_EMD_PayNo" #B_EMD_PayNo="ngModel"
+                                            required>
+                                        <label for="">EMD payment No.
+                                            <span class="mandatory">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="error-msg" *ngIf="B_EMD_PayNo.invalid && (B_EMD_PayNo.dirty || B_EMD_PayNo.touched || formSubmitted)">
+                                        <span *ngIf="B_EMD_PayNo.errors.required">EMD payment No. is required</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" *ngIf="auctionnot.AN_Auction_Type=='Manual'">
+                                    <div class="input-group">
+                                        <input type="text" class="custom-field" name="B_Ins_No" [(ngModel)]="bidder.B_Ins_No"
+                                            #B_Ins_No="ngModel" required>
+                                        <label for="">Instrument No.
+                                            <span class="mandatory">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="error-msg" *ngIf="B_Ins_No.invalid && (B_Ins_No.dirty || B_Ins_No.touched || formSubmitted)">
+                                        <span *ngIf="B_Ins_No.errors.required">Instrument No. is required</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="auctionnot.AN_Auction_Type=='Manual'">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="date" class="custom-field" name="B_Ins_Date" [(ngModel)]="bidder.B_Ins_Date"
+                                            #B_Ins_Date="ngModel" required>
+                                        <label for="">Instrument Date
+                                            <span class="mandatory">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="error-msg" *ngIf="B_Ins_Date.invalid && (B_Ins_Date.dirty || B_Ins_Date.touched || formSubmitted)">
+                                        <span *ngIf="B_Ins_Date.errors.required">Instrument Date is required</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" class="custom-field" name="B_Ins_Amt" [(ngModel)]="bidder.B_Ins_Amt"
+                                            #B_Ins_Amt="ngModel" required>
+                                        <label for="">Instrument Amount
+                                            <span class="mandatory">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="error-msg" *ngIf="B_Ins_Amt.invalid && (B_Ins_Amt.dirty || B_Ins_Amt.touched || formSubmitted)">
+                                        <span *ngIf="B_Ins_Amt.errors.required">Instrument Amount is required</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="auctionnot.AN_Auction_Type!='Manual'">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" class="custom-field" oninput="this.value = this.value.toUpperCase()"
+                                            name="B_EMD_Urn" [(ngModel)]="bidder.B_EMD_Urn" #B_EMD_Urn="ngModel"
+                                            required>
+                                        <label for="">EMD Payment URN
+                                            <span class="mandatory">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="error-msg" *ngIf="B_EMD_Urn.invalid && (B_EMD_Urn.dirty || B_EMD_Urn.touched || formSubmitted)">
+                                        <span *ngIf="B_EMD_Urn.errors.required">EMD Payment URN is required</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="container-fluid">
+                            <div class="title themeheading">25% Payment Details</div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" class="custom-field" name="B_perc_payment" [(ngModel)]="bidder.B_perc_payment"
+                                            #B_perc_payment="ngModel" required>
+                                        <label for="">25% payment including EMD
+                                            <span class="mandatory">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="error-msg" *ngIf="B_perc_payment.invalid && (B_perc_payment.dirty || B_perc_payment.touched || formSubmitted)">
+                                        <span *ngIf="B_perc_payment.errors.required">25% payment including EMD is
+                                            required</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <select style="width:100%;padding:6px;" class="custom-field" name="B_Payment_Mode"
+                                            [(ngModel)]="bidder.B_Payment_Mode" #B_Payment_Mode="ngModel" required>
+                                            <option [ngValue]="undefined" selected>--Select--</option>
+                                            <option value="DD">DD</option>
+                                            <option value="RTGS">RTGS</option>
+                                            <option value="NEFT">NEFT</option>
+                                        </select>
+                                        <label for="">Payment Mode(DD/NEFT/RTGS)
+                                            <span class="mandatory">*</span>
+                                        </label>
+                                    </div>
+
+                                    <div class="error-msg" *ngIf="B_Payment_Mode.invalid && (B_Payment_Mode.dirty || B_Payment_Mode.touched || formSubmitted)">
+                                        <span *ngIf="B_Payment_Mode.errors.required">Payment Mode is required</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" class="custom-field" name="B_DD_No" [(ngModel)]="bidder.B_DD_No"
+                                            #B_DD_No="ngModel" required>
+                                        <label for="">DD No./UTR No.
+                                            <span class="mandatory">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="error-msg" *ngIf="B_DD_No.invalid && (B_DD_No.dirty || B_DD_No.touched || formSubmitted)">
+                                        <span *ngIf="B_DD_No.errors.required">DD No./UTR No. is required</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="date" class="custom-field" name="B_DD_Date" [(ngModel)]="bidder.B_DD_Date"
+                                            #B_DD_Date="ngModel" required>
+                                        <label for="">Date
+                                            <span class="mandatory">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="error-msg" *ngIf="B_DD_Date.invalid && (B_DD_Date.dirty || B_DD_Date.touched || formSubmitted)">
+                                        <span *ngIf="B_DD_Date.errors.required">Date is required</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" oninput="this.value = this.value.toUpperCase()" class="custom-field"
+                                            name="B_Payment_BankName" [(ngModel)]="bidder.B_Payment_BankName"
+                                            #B_Payment_BankName="ngModel" required>
+                                        <label for="">Bank Name
+                                            <span class="mandatory">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="error-msg" *ngIf="B_Payment_BankName.invalid && (B_Payment_BankName.dirty || B_Payment_BankName.touched || formSubmitted)">
+                                        <span *ngIf="B_Payment_BankName.errors.required">Bank Name is required</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" oninput="this.value = this.value.toUpperCase()" class="custom-field"
+                                            name="B_Payment_Branch" [(ngModel)]="bidder.B_Payment_Branch"
+                                            #B_Payment_Branch="ngModel" required>
+                                        <label for="">Branch
+                                            <span class="mandatory">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="error-msg" *ngIf="B_Payment_Branch.invalid && (B_Payment_Branch.dirty || B_Payment_Branch.touched || formSubmitted)">
+                                        <span *ngIf="B_Payment_Branch.errors.required">Branch is required</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container-fluid">
+                            <div class="title themeheading">Bidder Account Details</div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" oninput="this.value = this.value.toUpperCase()" class="custom-field"
+                                            name="B_Bidder_BankName" [(ngModel)]="bidder.B_Bidder_BankName"
+                                            #B_Bidder_BankName="ngModel" required>
+                                        <label for="">Bank Name
+                                            <span class="mandatory">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="error-msg" *ngIf="B_Bidder_BankName.invalid && (B_Bidder_BankName.dirty || B_Bidder_BankName.touched || formSubmitted)">
+                                        <span *ngIf="B_Bidder_BankName.errors.required">Bank Name is required</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" oninput="this.value = this.value.toUpperCase()" class="custom-field"
+                                            name="B_Bidder_Branch" [(ngModel)]="bidder.B_Bidder_Branch"
+                                            #B_Bidder_Branch="ngModel" required>
+                                        <label for="">Branch Name
+                                            <span class="mandatory">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="error-msg" *ngIf="B_Bidder_Branch.invalid && (B_Bidder_Branch.dirty || B_Bidder_Branch.touched || formSubmitted)">
+                                        <span *ngIf="B_Bidder_Branch.errors.required">Branch Name is required</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" class="custom-field" [pattern]="phoneno" maxlength="18" name="B_Bidder_AccNo"
+                                            [(ngModel)]="bidder.B_Bidder_AccNo" #B_Bidder_AccNo="ngModel" required>
+                                        <label for="">Account No.
+                                            <span class="mandatory">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="error-msg" *ngIf="B_Bidder_AccNo.invalid && (B_Bidder_AccNo.dirty || B_Bidder_AccNo.touched || formSubmitted)">
+                                        <span *ngIf="B_Bidder_AccNo.errors.required">Account No. is required</span>
+                                        <span *ngIf="B_Bidder_AccNo.errors?.pattern" style="color:red;">Account No.
+                                            must be numeric</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <input type="text" oninput="this.value = this.value.toUpperCase()" maxlength="11"
+                                            class="custom-field" name="B_Bidder_Ifsc_Code" [(ngModel)]="bidder.B_Bidder_Ifsc_Code"
+                                            #B_Bidder_Ifsc_Code="ngModel" required>
+                                        <label for="">IFSC Code
+                                            <span class="mandatory">*</span>
+                                        </label>
+                                    </div>
+                                    <div class="error-msg" *ngIf="B_Bidder_Ifsc_Code.invalid && (B_Bidder_Ifsc_Code.dirty || B_Bidder_Ifsc_Code.touched || formSubmitted)">
+                                        <span *ngIf="B_Bidder_Ifsc_Code.errors.required">IFSC Code is required</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="text-center">
+                            <!-- <button class="btn btn-primary" type="submit" (click)="hidepop()">Save</button> -->
+                            <button class="btn btn-primary" type="submit" (click)="hidepop()" [disabled]="bidstatus==1">Save</button>
+                            <button class="btn btn-primary" data-dismiss="modal" (click)="reset()">Cancel</button>
+                        </div>
+                    </div>
+                    <!-- <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div> -->
+                </div>
+            </div>
+        </form>
+    </div>
+    <!--update bidder popup-->
+
+
+    <!--select property-->
+
+    <div id="addProperty" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Select Properties</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="container-fluid">
+                            <div class="row" style="background: none;">
+                                <div class="col-md-2">
+                                    <label for="" style="margin-top:5px;">Filter by</label>
+                                </div>
+                                <div class="col-md-3">
+                                    <select style="width:100%;padding:6px;" class="custom-field" name="SearchCriteria"
+                                        #SearchCriteria="ngModel" [(ngModel)]="search.SearchCriteria">
+                                        <option [ngValue]="undefined" selected>--Select--</option>
+                                        <option value="property-no">Property No.</option>
+                                        <option value="property-type">Inter/Corner</option>
+                                        <option value="category">Category</option>
+                                        <!-- <option value="">Type</option> -->
+                                    </select>
+
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="text" style="width:100%;padding:4px;" class="custom-field" name="SearchText"
+                                        #SearchText="ngModel" [(ngModel)]="search.SearchText" placeholder="Searchtext">
+
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-primary" (click)="SearchProperties(search.SearchCriteria,search.SearchText,auctionnot.AN_Id)">Search</button>
+                                    <button class="btn btn-primary" (click)="GetPropertiesforSelect(auctionnot.AN_Id)"
+                                        type="reset">Clear</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-2">Total selected</div>
+                        <div class="col-md-2">{{totalprop.TotalSelected}}</div>
+                        <div class="col-md-2">Total Available</div>
+                        <div class="col-md-2">{{totalprop.TotAvailable}}</div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <td rowspan="2">Sl No.</td>
+                                    <td rowspan="2">Site / House</td>
+                                    <td rowspan="2">Property No.</td>
+                                    <td rowspan="2">Category</td>
+                                    <td rowspan="2">Intermediate / Corner</td>
+                                    <td rowspan="2">Odd / Regular</td>
+                                    <td class="text-center" colspan="2">Measurement</td>
+                                    <td rowspan="2">Plot area in sqm</td>
+                                    <td rowspan="2">Status</td>
+                                    <!-- <td rowspan="2">Plinth area in sqm</td> -->
+                                    <td rowspan="2">Select</td>
+                                </tr>
+                                <tr>
+                                    <td>East to West</td>
+                                    <td>North to South</td>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="selectpropertieslist == '' || selectpropertieslist == 'undefined' || selectpropertieslist == 'null'">
+                                <td colspan="11" class="text-center">No Data Found</td>
+                            </tbody>
+                            <tbody *ngFor="let sp of selectpropertieslist;let i=index">
+                                <tr *ngIf="sp.PR_AN_Id_Fk==0 || sp.PR_AN_Id_Fk==auctionnot.AN_Id">
+                                    <td>{{i+1}}</td>
+                                    <td>{{sp.PT_Property_Type}}</td>
+                                    <td>{{sp.PR_Property_No}}</td>
+                                    <td>{{sp.CA_CategoryName}}</td>
+                                    <td>{{sp.IC_Name}}</td>
+                                    <td>{{sp.OR_Name}}</td>
+                                    <td>{{sp.PR_M_East_west}}</td>
+                                    <td>{{sp.PR_M_North_South}}</td>
+                                    <td>{{sp.PR_Plot_Area}}</td>
+                                    <td>{{sp.PR_Status}}</td>
+                                    <!-- <td>{{sp.PR_Plinth_Area}}</td> -->
+                                    <td *ngIf="sp.PR_Status == 'Available' || sp.PR_Status == 'Stray'">
+                                        <input type="checkbox" [value]="sp.PR_AuctionProperty" name="PR_AuctionProperty"
+                                            [checked]="sp.PR_AuctionProperty===true" [disabled]="sp.disab=='dis'"
+                                            (change)="changeCheckbox(sp.PR_Id,sp.PR_AuctionProperty)">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br>
+                    <div class="text-center">
+                        <button class="btn btn-primary" (click)="SavePropertiesforAuction(selectpropertieslist,auctionnot.AN_Id)"
+                            data-dismiss="modal">Save</button>
+                        <button class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--select property-->
+
+    <!--update bid value-->
+
+    <div id="updateBidValue" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Update Bid Value</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="">Previous Bid : 1000000</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <input type="text" class="custom-field">
+                                    <label for="">New Bid</label>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="text-center">
+                            <button class="btn btn-primary">Update Bid Value</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!--update bid value-->
+
+
+    <div role="dialog" id="auctionapprovalpopup" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Notes</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <textarea name="" id="" cols="30" rows="10" class="custom-field"></textarea>
+                                    <label for="">Notes</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Auction Notifiaction</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for=""> Remarks </label>
+                                    <textarea name="" id="" cols="30" rows="10" class="form-control" [(ngModel)]="R.Remarks"
+                                        #Remarks="ngModel" name="Remarks" required> </textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="text-center">
+                            <button class="btn btn-primary" data-dismiss="modal" (click)="save(R.Remarks)">Save</button>
+                            <button class="btn btn-primary" data-dismiss="modal" aria-label="Close">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

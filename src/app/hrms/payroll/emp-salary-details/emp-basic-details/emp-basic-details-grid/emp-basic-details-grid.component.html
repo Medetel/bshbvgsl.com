@@ -1,0 +1,67 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    Employee Salary Details   
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group" style="margin-top: 3px;">
+          <label for="">Employee Id</label>
+          <select class="custom-field" [(ngModel)]="a.EmpID" #EmpID="ngModel" name="EmpID" [disabled]="mode=='View'" (change)="ChangeEmp(a.EmpID)" required>
+          <option [value]="undefined" selected>---Select---</option>
+          <option [value]="ee.EMP_EMPLOYEE_ID" *ngFor="let ee of Emplist;">
+            {{ee.EMP_EMPLOYEE_CODE}} &nbsp; {{ee.EMP_FIRST_NAME}}
+          </option>
+        </select>
+        </div>
+      </div>
+      <div class="col-md-6">  
+     <label for="">Name :{{EmpDetails.EmpName}}</label>        
+      </div>      
+    </div>
+   <div class="row">
+     <div class="col-md-6"><label for="">Division :{{EmpDetails.DI_District}}</label></div>
+     <div class="col-md-6"><label for="">Department :{{EmpDetails.Department_Name}}  </label></div>
+   </div>
+   <div class="row">
+     <div class="col-md-6"><label for="">Employee Category : {{EmpDetails.Category}} </label></div>
+     <div class="col-md-6"><label for="">Employee Group :  {{EmpDetails.EmpGroup}} </label></div>
+   </div>
+   <div class="row">
+     <div class="col-md-6"><label for="">Employee Type : {{EmpDetails.EmpType}} </label></div>
+     <div class="col-md-6"><label for="">Designation : {{EmpDetails.desg_name}}  </label></div>
+   </div>
+   <div class="row">
+    <div class="col-md-6"><label for="">Pay Scale:  {{EmpDetails.scale_name}} </label></div>
+    <div class="col-md-6"><label for="">Basic Salary: {{EmpDetails.EMP_BASIC_PAY}} </label></div>
+  </div>
+  <div class="row">
+    <div class="col-md-1"> 
+      <a  [routerLink]="['/home/payroll/emp-basic-details-form',EmpId]">
+        <i class="fa fa-lg fa-eye themecolor"></i> 
+      </a>      
+    </div>
+    <div class="col-md-6"><label for="">View Current Salary Structure  </label></div>
+  </div>
+  </div>
+  
+  <br>
+  <ul class="billmenu-new header" *ngIf="disable == false">   
+    <li routerLinkActive="active">
+      <a [routerLink]="['fixed-allowances']">Fixed Earnings / Deductions</a>
+    </li> 
+    <li routerLinkActive="active">
+      <a [routerLink]="['variable-allowances']">Variable Allowances</a>
+    </li>
+    <li routerLinkActive="active">
+      <a [routerLink]="['variable-deductions']">Variable Deductions</a>
+    </li>
+    <li routerLinkActive="active">
+      <a [routerLink]="['loan-details']">Loan Details</a>
+    </li>
+  </ul>
+      <button class="btn btn-primary" type="submit" *ngIf="disable == true" (click)="DisableData()">Disable all data and readd</button> &nbsp;
+  <div class="overflow">
+    <router-outlet></router-outlet>
+  </div>
+</div>

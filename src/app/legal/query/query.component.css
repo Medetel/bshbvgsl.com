@@ -1,0 +1,15 @@
+.case-info .row{
+    padding:10px 0px 0px;
+}
+
+.case-info .row:nth-child(odd){
+    background: #f2f2f2;
+}
+
+.case-info label{
+    color:grey;
+}
+
+.case-info label span{
+    color:black;
+}

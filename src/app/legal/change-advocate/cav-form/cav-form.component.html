@@ -1,0 +1,131 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary float-right" [routerLink]="['/home/adv-change']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+
+  <form (ngSubmit)="mode=='edit'?SaveChangeAdvocate(ChangeAdv):SaveChangeAdvocate(ChangeAdv)" #ChangeAdv="ngForm" name="form1">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="input-group">
+          <select class="custom-field" [(ngModel)]="ca.CaseId" (ngModelChange)="onselectCase($event)" #CaseId="ngModel" name="CaseId" [disabled]="mode=='view'" required>
+            <option [value]="undefined" selected>---Select---</option>
+            <option [value]="c.Case_Id" *ngFor="let c of caselist;">
+              {{c.Case_No}} 
+            </option>
+        </select>
+          <label for="">Case No.
+            <span class="mandatory">*</span>
+          </label>
+        </div>
+      </div>
+
+      
+      <div class="col-md-4">
+        <div class="input-group">
+          <select class="custom-field" [(ngModel)]="ca.oldAdvocateId" #oldAdvocateId="ngModel" name="oldAdvocateId" 
+          [disabled]="mode=='view'" required>
+            <option [value]="undefined" selected>---Select---</option>            
+            <option [value]="a.AC_Adv_Id_FK" *ngFor="let a of advDetails;">
+              {{a.Adv_AdvocateName}} 
+            </option>
+        </select>
+          <label for="">Select Advocate to change.
+            <span class="mandatory">*</span>
+          </label>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="row padding-bottom">
+      <div class="col-md-3">Court :
+        <span>{{courtName}}</span>
+      </div>
+      <div class="col-md-3">CNR No. :
+        <span>{{casereglist.Case_CNR_No}}</span>
+      </div>
+      <div class="col-md-3">File No. :
+        <span>{{casereglist.Case_File_No}}</span>
+      </div>
+      <div class="col-md-3">Office :
+        <span>{{officeName}}</span>
+      </div>      
+    </div>  
+
+
+    <div class="row table-responsive tab">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <td>Sl No.</td>
+          <td>Member Name</td>
+          <td>Respondent</td>         
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of petDetails;let i=index;">
+          <td>{{i+1}}</td>
+          <td>{{p.CasePeti_PetitionerName}}</td>
+          <td>{{p.CasePeti_Respondent}}</td>          
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class=" row table-responsive tab">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <td>Sl No.</td>
+          <td>Current Advocates</td>         
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let a of advDetails;let i=index;">
+          <td>{{i+1}}</td>
+          <td>{{a.Adv_AdvocateName}}</td>         
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <br>
+
+
+    <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+
+              <select class="custom-field" [(ngModel)]="ca.NewAdv_Id" #NewAdv_Id="ngModel" name="NewAdv_Id" 
+                  [disabled]="mode=='view'" required>
+                    <option [value]="undefined" selected>---Select---</option>            
+                    <option [value]="a.Adv_Id" *ngFor="let a of allAdvocatelist;">
+                      {{a.Adv_Name}} 
+                    </option>
+                </select>
+
+            <label for="">Advocate Name
+                <span class="mandatory">*</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- <div class="col-md-6">
+            <div class="input-group">
+              <input type="date" class="custom-field">
+              <label for="">Appointment Date</label>
+            </div>
+          </div> -->
+      </div>
+  </div>
+  
+  <br>
+  <div class="text-center">
+    <button class="btn btn-primary">Save</button>
+    <button class="btn btn-primary">Cancel</button>
+  </div>
+  </form>
+</div>

@@ -1,0 +1,285 @@
+<!-- <div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary float-right" [routerLink]="['/home/landpurchase']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+
+
+  <form (ngSubmit)="mode=='edit'?UpdateLandPurchase(LandPurchaseForm):SaveLandPurchase(LandPurchaseForm)"
+    #LandPurchaseForm="ngForm" name="form1">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <select #LP_PD_Id_FK="ngModel" name="LP_PD_Id_FK" [(ngModel)]="l.LP_PD_Id_FK" class="custom-field" required
+              (change)="GetProjectId(l.LP_PD_Id_FK)">
+              <option value="undefined">---Select---</option>
+              <option *ngFor="let project of projectlist" [value]="project.PD_Id">
+                {{project.PD_Project_Code}} - {{project.PD_Project_Name}} - {{project.Phase_Name}}
+              </option>
+            </select>
+            <label>Project<span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="LP_PD_Id_FK.invalid && (LP_PD_Id_FK.dirty || LP_PD_Id_FK.touched || formInvalid)">
+              <span *ngIf="LP_PD_Id_FK.errors.required">Project is required.</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="l.LP_PR_Id_FK" #LP_PR_Id_FK="ngModel" name="LP_PR_Id_FK" (change)="GetOtherrelatedinfo(l.LP_PR_Id_FK)"
+              [disabled]="mode =='view'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="p.PR_Id_PK" *ngFor="let p of proposallist;">
+                {{p.PR_Id}} </option>
+            </select>
+            <label for="">Proposal Id
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="LP_PR_Id_FK.invalid && (LP_PR_Id_FK.dirty || LP_PR_Id_FK.touched || formInvalid)">
+              <span *ngIf="LP_PR_Id_FK.errors.required">Proposal Id is required.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <label for="">Procurement Type : </label><span>{{ProposalFor}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Scheme : </label><span>{{Sch_Name}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">District : </label><span>{{district}}</span>
+        </div>
+
+
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <label for="">Village : </label><span> {{Village}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Proposal receipt date : </label><span>{{Submitted_Date | date:'dd-MM-yyyy'}}</span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Note No. </label>
+            <input type="text" class="custom-field" [(ngModel)]="l.LP_Note_No" #LP_Note_No="ngModel" name="LP_Note_No">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Date</label>
+            <input type="date" class="custom-field" [(ngModel)]="l.LP_Note_Date" #LP_Note_Date="ngModel" name="LP_Note_Date">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-1">
+          <div class="input-group" style="margin-top: 26px;text-align: end;">
+            <label for="">File </label>
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="input-group">
+            <input type="file" #Image accept="application/pdf" (change)="imageUpload($event.target.files)" id="LP_file"
+             [(ngModel)]="l.LP_file" #LP_file="ngModel" name="LP_file">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Note </label>
+            <textarea name="" id="" cols="30" rows="3" class="custom-field" maxlength="300" [(ngModel)]="l.LP_Note" #LP_Note="ngModel" name="LP_Note"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-striped grid table-bordered">
+          <thead>
+            <tr>
+              <th rowspan="2">Sl.No</th>              
+              <th rowspan="2"> Land Owner Name </th>
+              <th rowspan="2">Survey No</th>
+              <th rowspan="2">Procurement Type</th>
+              <th rowspan="2">Extent</th>
+              <th rowspan="2">Akar</th>
+              <th colspan="4" class="text-center">Schedule</th>
+              <th rowspan="2" class="text-center"> Select </th>
+            </tr>
+            <tr>
+              <th>North</th>
+              <th>South</th>
+              <th>East</th>
+              <th>West</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let sur of Surveylist;let i=index">
+              <td>{{i+1}}</td>
+              <td>{{sur.LOD_LO_Name}}</td>
+              <td>{{sur.LD_SurveyNo}}</td>
+              <td>{{sur.MOP_Name}}</td>
+              <td>{{sur.LD_Extents}}</td>
+              <td>{{sur.LD_Akar}}</td>
+              <td>{{sur.LD_North}}</td>
+              <td>{{sur.LD_South}}</td>
+              <td>{{sur.LD_East}}</td>
+              <td>{{sur.LD_West}}</td>
+              <td class="text-center"> 
+                <input type="checkbox" [value]="sur.LD_Selected" name="LD_Selected" [checked]="sur.LD_Selected===true"
+                 (change)="changeCheckbox(sur.LD_Id,sur.LD_Selected)"> 
+                
+              </td>
+            </tr>
+           
+          </tbody>
+        </table>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+
+          <div class="input-group">
+            <input [disabled]="mode=='view'" type="date" [(ngModel)]="l.LP_DPC_Date" #LP_DPC_Date="ngModel" name="LP_DPC_Date"
+              class="custom-field" required>
+            <label for="">DPC Date
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="LP_DPC_Date.invalid && (LP_DPC_Date.dirty || LP_DPC_Date.touched || formInvalid)">
+              <span *ngIf="LP_DPC_Date.errors.required">DPC Date is required.</span>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-md-6">
+
+          <div class="input-group">
+            <input [disabled]="mode=='view'" type="date" [(ngModel)]="l.LP_BA_Date" #LP_BA_Date="ngModel" name="LP_BA_Date"
+              class="custom-field" required>
+            <label for="">Board Approval Date
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="LP_BA_Date.invalid && (LP_BA_Date.dirty || LP_BA_Date.touched || formInvalid)">
+              <span *ngIf="LP_BA_Date.errors.required">Board Approval Date is required.</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+         
+          <div class="input-group">
+            <input [disabled]="mode=='view'" type="text" [(ngModel)]="l.LP_GO_Number" #LP_GO_Number="ngModel" name="LP_GO_Number"
+              class="custom-field" required>
+            <label for="">Govt Order no.
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="LP_GO_Number.invalid && (LP_GO_Number.dirty || LP_GO_Number.touched || formInvalid)">
+              <span *ngIf="LP_GO_Number.errors.required">Govt Order no. is required.</span>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-md-6">
+       
+          <div class="input-group">
+            <input [disabled]="mode=='view'" type="date" [(ngModel)]="l.LP_GO_Date" #LP_GO_Date="ngModel" name="LP_GO_Date"
+              class="custom-field" required>
+            <label for="">Govt Order date
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="LP_GO_Date.invalid && (LP_GO_Date.dirty || LP_GO_Number.touched || formInvalid)">
+              <span *ngIf="LP_GO_Date.errors.required">Govt Order date is required.</span>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+       
+          <div class="input-group">
+            <input [disabled]="mode=='view'" type="text" [(ngModel)]="l.LP_ExtentPurchased" #LP_ExtentPurchased="ngModel"
+              name="LP_ExtentPurchased" class="custom-field" required>
+            <label for="">Extend Purchased
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="LP_ExtentPurchased.invalid && (LP_ExtentPurchased.dirty || LP_ExtentPurchased.touched || formInvalid)">
+              <span *ngIf="LP_ExtentPurchased.errors.required">Extend Purchased is required.</span>
+            </div>
+          </div>
+
+
+
+        </div>
+        <div class="col-md-6">
+        
+          <div class="input-group">
+            <input [disabled]="mode=='view'" type="text" [(ngModel)]="l.LP_RateperAcre" #LP_RateperAcre="ngModel" name="LP_RateperAcre"
+              class="custom-field" required>
+            <label for="">Rate / acre
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="LP_RateperAcre.invalid && (LP_RateperAcre.dirty || LP_RateperAcre.touched || formInvalid)">
+              <span *ngIf="LP_RateperAcre.errors.required">Rate / acre is required.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <textarea [disabled]="mode=='view'" type="text" [(ngModel)]="l.LP_Remarks" #LP_Remarks="ngModel" name="LP_Remarks"
+              class="custom-field"></textarea>
+            <label for="">Remarks</label></div>
+        </div>
+      </div>
+
+
+      <div class="text-center">
+        <button class="btn btn-primary" type="submit">Save</button><button class="btn btn-primary" type="button">Cancel</button>
+      </div>
+
+    </div>
+  </form>
+</div> -->
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      <div class="sidemenu">
+        <ul class="billmenu">
+          <li [routerLinkActiveOptions]="{exact: true}" routerLinkActive="submenu-active">
+            <a  [routerLink]="['/home/landpurchase/land-pur-agreement/']"> Agreement </a>
+          </li>
+          <li routerLinkActive="submenu-active">
+              <a [routerLink]="['land-pur-purchase']">Purchase</a>
+            </li>
+          <li routerLinkActive="submenu-active">
+            <a [routerLink]="['land-pur-payment']">Payment</a>
+          </li>
+          
+          <li routerLinkActive="submenu-active">
+            <a [routerLink]="['land-pur-profession']">Possession</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-10">
+        <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
+
+

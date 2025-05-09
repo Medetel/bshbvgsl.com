@@ -1,0 +1,126 @@
+<div class="wrapper">
+    <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm,itemsPerPage,1)">
+        <div class="title themeheading">
+            {{title}}
+            <div class="float-right">
+                Items per page:
+                <select name="SearchRows" #SearchRows="ngModel" [(ngModel)]="itemsPerPage" class="noofpage"
+                    (change)="itemsPerPageChanged(itemsPerPage, 1)">
+                    <option [ngValue]="5">5</option>
+                    <option [ngValue]="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                </select>
+                <button class="btn btn-primary" [routerLink]="['tender-form']">Add</button>
+            </div>
+
+            <span class="clearfix"></span>
+        </div>
+        <div class="searchbar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label>Search</label>
+                    </div>
+                    <div class="col-md-4">
+                        <select name="SearchCriteria" #SearchCriteria="ngModel" [(ngModel)]="s.SearchCriteria"
+                            class="form-control" required>
+                            <option [ngValue]="undefined" selected>---Select---</option>
+                            <option value="Tender_Notification_No">Notification No.</option>
+                            <option value="PD_Project_Name">Project</option>
+                            <option value="Tender_Type">Tender Type</option>
+                            <!-- <option value="">Value</option>                       -->
+                        </select>
+                        <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)"
+                            class="error-msg">
+                            <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="SearchText" #SearchText="ngModel" [(ngModel)]="s.SearchText" class="form-control" placeholder="Search.." required>
+                        <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+                            <div *ngIf="SearchText.errors.required">Search text is required</div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-default" type="submit">Search</button>
+                        <button class="btn btn-default" type="reset"
+                            (click)=" GetAllTechnicalTender(itemsPerPage, 1)">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <td>Sl No.</td>
+                        <td>Notification No.</td>
+                        <td>Tender Type</td>
+                        <td>Project</td>
+                        <td>Value</td>
+                        <td>Status</td>
+                        <td>View</td>
+                        <td>Edit</td>
+                        <td>Delete</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- <tr>
+          <td>1.</td>
+          <td>KHB-Ken-9876</td>
+          <td>Contract</td>
+          <td>Kenchalagudu</td>
+          <td>300000000</td>
+          <td>Active</td>
+          <td><a href="javascript:void(0);"><i class="fa fa-lg fa-eye themecolor"></i></a></td>
+          <td><a href="javascript:void(0);"><i class="fa fa-lg fa-edit themecolor"></i></a></td>
+          <td><a href="javascript:void(0);"><i class="fa fa-lg fa-trash themecolor"></i></a></td>
+        </tr>       -->
+                    <tr
+                        *ngFor="let tl of tenderlist | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems}; let i=index">
+                        <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+                        <td>{{tl.Tender_Notification_No}}</td>
+                        <td>{{tl.Tender_Type}}</td>
+                        <td>{{tl.PD_Project_Name}}</td>
+                        <td>{{tl.Value_of_work}}</td>
+                        <td>{{tl.status_name}}</td>
+                        <td>
+                            <a href="#" [routerLink]="['/home/tender/tender-form',tl.Tender_id,'view']">
+                                <i class="fa fa-lg fa-eye themecolor"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" [routerLink]="['/home/tender/tender-form',tl.Tender_id,'edit']">
+                                <i class="fa fa-lg fa-edit themecolor"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="javascript:void(0);" (click)="delete(tl.Tender_id)">
+                                <i class="fa fa-lg fa-trash themecolor"></i>
+                            </a>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-11">
+                        <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)"
+                            maxSize="9" directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+                            screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                            screenReaderCurrentLabel="You're on page">
+                        </pagination-controls>
+                    </div>
+                    <div class="col-md-1">
+                        Total:
+                        <span>{{totalItems}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

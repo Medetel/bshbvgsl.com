@@ -1,0 +1,337 @@
+<div class="wrapper">
+
+  <div class="title themeheading">{{title}}</div>
+  <form 
+    #Notice="ngForm" autocomplete="off">
+    <!-- (ngSubmit)="Not.NoType=='Ord'?SaveandPrintNoticeLetter(Notice,'ord'):SaveandPrintNoticeLetter(Notice,'not')" -->
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="input-group">
+            <select [(ngModel)]="Not.S_NotificationID" required #S_NotificationID="ngModel" name="S_NotificationID"
+              class="custom-field" (change)="GetNotificationProjects(Not.S_NotificationID,null)">
+              <option [ngValue]="undefined" selected>---Select---</option>
+              <option [ngValue]="n.DSWOId_NO_Id" *ngFor="let n of Notifications;">
+                {{n.DSWOId_NO_Number}}-{{n.DSWOId_NO_Id}}-{{n.PD_Project_Name}}-{{n.PD_Project_Code}}</option>
+            </select>
+            <label>Notification No.</label>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="input-group">
+            <select [(ngModel)]="Not.S_ProjectID" required #S_ProjectID="ngModel" name="S_ProjectID" class="custom-field"
+              (change)="GetNotificationProjects(null,Not.S_ProjectID)">
+              <option [ngValue]="undefined" selected>---Select---</option>
+              <option [ngValue]="p.PD_Id" *ngFor="let p of Projects;">
+                {{p.PD_Project_Code}}-{{p.PD_Project_Name}}</option>
+            </select>
+            <label>Project</label>
+          </div>
+        </div>
+        <!-- <div class="col-md-2">
+              <div class="input-group">
+                  <select [(ngModel)]="a.S_CatName" required #S_ProjectID="ngModel" name="S_ProjectID" class="custom-field"
+                      (change)="GETProjectNotificationDetails(a.S_NotificationID,a.S_ProjectID)">
+                      <option [ngValue]="undefined" selected>---Select---</option>
+                      <option [ngValue]="cat.CA_Id" *ngFor="let cat of Categories;">
+                          {{cat.CA_CategoryName}}</option>
+                  </select>
+                  <label>Category</label>
+              </div>
+          </div> -->
+
+        <!-- <div class="col-md-3">
+        <div class="input-group">
+          <input class="custom-field" type="date" [(ngModel)]="Not.DueDate" #DueDate="ngModel" name="DueDate">
+
+          <label>Due Date</label>
+        </div>
+      </div> -->
+
+        <div class="col-md-3">
+          <button class="btn btn-primary" type="button" (click)="GetNoticeList(Not.S_NotificationID,Not.S_ProjectID)">Go</button>
+        </div>
+      </div>
+      <div class="row">
+
+        <div class="col-md-3" style="margin-top: 12px;">
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" required type="radio" id="inlineRadio1" value="Not" name="NoType"
+                [(ngModel)]="Not.NoType" #NoType="ngModel"> Notice
+            </label>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" required type="radio" id="inlineRadio1" value="Ord" name="NoType"
+                [(ngModel)]="Not.NoType" #NoType="ngModel"> Order
+            </label>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="input-group">
+            <select [(ngModel)]="Not.NoticeNo" required #NoticeNo="ngModel" name="NoticeNo" class="custom-field"
+              [disabled]="Not.NoType=='Ord'">
+              <option [ngValue]="undefined" selected>---Select---</option>
+              <option [ngValue]="1">Notice-I</option>
+              <option [ngValue]="2">Notice-II</option>
+              <option [ngValue]="3">Notice-III</option>
+            </select>
+            <label>Notice</label>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="input-group">
+            <input class="custom-field" type="date" [(ngModel)]="Not.Notice_Date" #Notice_Date="ngModel" name="Notice_Date">
+            <label>Notice/Order Date</label>
+          </div>
+        </div>
+      </div>
+      <div class="btn-wrapper text-center" style="margin-top: 10px;">
+        <!-- <button class="btn btn-primary" data-target="#cost-popup" data-toggle="modal" [disabled]="a.S_NotificationID==undefined || a.S_ProjectID==undefined">Add Cost</button> -->
+        <!-- <button class="btn btn-primary" [disabled]="a.S_NotificationID==undefined || a.S_ProjectID==undefined" (click)="GetInstallmentPaySchedule(a.S_NotificationID,a.S_ProjectID)">Add Installment</button>
+          <button class="btn btn-primary" [disabled]="a.S_NotificationID==undefined || a.S_ProjectID==undefined" (click)="GetInstallmentPaySchedule(a.S_NotificationID,a.S_ProjectID)">Send to finance</button> -->
+        <!-- <button class="btn btn-primary" (click)="GetAllotmentList(a.S_NotificationID,a.S_ProjectID)">Go</button> -->
+      </div>
+      <div *ngIf="showprint==true" class="title themeheading">{{title1}}</div>
+
+
+      <!-- <div *ngFor="let data of AllotmentList;">
+          <div class="title themeheading">{{data.CA_CategoryName}}</div>
+
+
+          <table class="table table-striped" *ngFor="let list of data.Reservations">
+              <thead>
+                  <tr>
+                      <td id="cen" colspan="5">{{list.RES_Name}}</td>
+                  </tr>
+                  <tr>
+                      <td>Sl No.</td>
+                      <td>Token No.</td>
+                      <td>Registration No.</td>
+                      <td>Applicant Name.</td>
+                      <td>Property Type</td>
+                  </tr>
+
+              </thead>
+              <tbody>
+                  <tr *ngFor="let x of list.AllotedList;let i=index">
+                      <td>{{i+1}}</td>
+                      <td>{{x.APP_Token_No}}</td>
+                      <td>{{x.APP_Reg_No}}</td>
+                      <td>{{x.APP_PA_Name}}</td>
+                      <td>{{x.APP_PropertyType}}</td>
+                  </tr>
+              </tbody>
+          </table>
+
+      </div> -->
+
+
+
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <td>Sl No.</td>
+              <td>Reg No.</td>
+              <td>App No.</td>
+              <td>Name</td>
+              <!-- <td>Father Name</td> -->
+              <td>Property No.</td>
+              <td>Property Category</td>
+              <td>Property type</td>
+
+              <td>1st notice</td>
+              <td>2nd notice</td>
+              <td>3rd notice</td>
+              <td>Order</td>
+              <td>Upload Doc</td>
+              <td>Action</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let at of AllotmentList;let i=index;">
+              <td>{{i+1}}</td>
+              <td>{{at.APP_Reg_No}}</td>
+              <td>{{at.APP_No}}</td>
+              <td>{{at.APP_PA_Name}}</td>
+              <!-- <td>{{at.APP_PA_Relation_Name}}</td> -->
+              <td>{{at.PR_Property_No}}</td>
+              <td>{{at.CA_CategoryName}}</td>
+              <td>{{at.PT_Property_Type}}</td>
+              <td><input [disabled]="Not.NoType=='Ord' || Not.NoticeNo!=1 || at.N_Ist_Notice_Date!=null" type="checkbox"
+                  [value]="at.N_Ist_Notice" name="N_Ist_Notice" [checked]="at.N_Ist_Notice===true" (change)="changeCheckboxnI(at.APP_No)">
+                {{at.N_Ist_Notice_Date | date:'dd-MM-yyyy'}}</td>
+              <td><input [disabled]="Not.NoType=='Ord' || Not.NoticeNo!=2 || at.N_IIst_Notice_Date!=null" type="checkbox"
+                  [value]="at.N_IIst_Notice" name="N_IIst_Notice" [checked]="at.N_IIst_Notice===true" (change)="changeCheckboxnII(at.APP_No)">
+                {{at.N_IIst_Notice_Date | date:'dd-MM-yyyy'}}</td>
+              <td><input [disabled]="Not.NoType=='Ord' || Not.NoticeNo!=3 || at.N_IIIst_Notice_Date!=null" type="checkbox"
+                  [value]="at.N_IIIst_Notice" name="N_IIIst_Notice" [checked]="at.N_IIIst_Notice===true" (change)="changeCheckboxnIII(at.APP_No)">
+                {{at.N_IIIst_Notice_Date | date:'dd-MM-yyyy'}}</td>
+              <td><input [disabled]="Not.NoType=='Not' || at.N_Order_Date!=null" type="checkbox" [value]="at.N_Order"
+                  name="N_Order" [checked]="at.N_Order===true" (change)="changeCheckboxor(at.APP_No)">
+                {{at.N_Order_Date | date:'dd-MM-yyyy'}}</td>
+              <td><button [disabled]="at.N_Id==null" type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadpopup" (click)="Uploaddoc(at.APP_No,at.APP_PA_Name,at.N_Id)">Upload</button>
+                <a class="float-center" *ngIf="at.N_OrdDoc!=null" target="_blank" href="{{at.N_OrdDoc}}">view</a>
+              </td>
+              <td><button [disabled]="at.Enable==false" class="btn btn-primary" 
+                type="button" (click)="Not.NoType=='Ord'?SaveandPrintNoticeLetter(at.APP_Id,Not,'ord'):SaveandPrintNoticeLetter(at.APP_Id,Not,'not')">
+                {{Not.NoType=='Ord'?'Print Order Letter':'Print Notice Letter'}}</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+      <!-- <div class="btn-wrapper text-center" style="margin-top: 10px;">
+        <button class="btn btn-primary" type="submit">{{Not.NoType=='Ord'?'Save and Print Order Letter':'Save and Print
+          Notice Letter'}}</button>
+      </div> -->
+    </div>
+  </form>
+</div>
+
+
+<!-- <div class="modal" id="cost-popup">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h4 class="modal-title">Add Cost</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+ 
+      <div class="modal-body">
+        <div class="container-fluid">
+          <div class="row" style="background:#fff !important;">
+            <div class="col-md-12">
+              <div class="input-group">
+                <select [disabled]="mode=='View'" [(ngModel)]="cost.PFC_CA_ID_FK" required #PFC_CA_ID_FK="ngModel" name="PFC_CA_ID_FK"
+                  class="custom-field" required>
+                  <option [ngValue]="undefined" selected>---Select---</option>
+                  <option [value]="ca.CA_Id" *ngFor="let ca of Categories;">
+                    {{ca.CA_CategoryName}}</option>
+                </select>
+                <label>Category</label>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="background:#fff !important;">
+            <div class="col-md-12">
+              <div class="input-group">
+                <select [disabled]="mode=='View'" [(ngModel)]="cost.PFC_RES_ID_FK" required #PFC_RES_ID_FK="ngModel"
+                  name="PFC_RES_ID_FK" class="custom-field" required>
+                  <option [ngValue]="undefined" selected>---Select---</option>
+                  <option [value]="r.RES_Id" *ngFor="let r of Reservations;">
+                    {{r.RES_Name}}</option>
+                </select>
+                <label>Reservations</label>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="background:#fff !important;">
+            <div class="col-md-12">
+              <div class="input-group">
+                <input type="text" class="custom-field" [(ngModel)]="cost.PFC_Sqmt" #PFC_Sqmt="ngModel" name="PFC_Sqmt">
+
+                <label for="">Sqmt</label>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="background:#fff !important;">
+            <div class="col-md-12">
+              <div class="input-group">
+                <input type="text" class="custom-field" [(ngModel)]="cost.PFC_Cost_per_Sqmt" #PFC_Cost_per_Sqmt="ngModel"
+                  name="PFC_Cost_per_Sqmt" (keyup)="getFinalTotal()">
+                <label for="">Cost / Sqmt</label>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="background:#fff !important;">
+            <div class="col-md-12">
+              <div class="input-group">
+                <input type="text" class="custom-field" [(ngModel)]="cost.PFC_Final_Cost" #PFC_Final_Cost="ngModel"
+                  name="PFC_Final_Cost">
+                <label for="">Final Cost</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+   
+      <div class="modal-footer" style="text-align:center !important;">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="SaveCost(cost,a.S_NotificationID,a.S_ProjectID)">Save</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="modal" id="installments">
+  <div class="modal-dialog fade-in">
+    <div class="modal-content">
+      <div class="modal-header">Installment Details</div>
+      <div class="modal-body">
+        <div class="row no-gutters" style="background:#fff !important;">
+          <div class="col-md-12">
+            <div class="input-group">
+              <label for="">Installment No.</label>
+              <input type="text" class="custom-field" [(ngModel)]="Inst.INS_No" #INS_No="ngModel" name="INS_No"
+                [disabled]>
+            </div>
+          </div>
+        </div>
+        <div class="row no-gutters" style="background:#fff !important;">
+          <div class="col-md-12">
+            <div class="input-group">
+              <label for="">Installment Amount</label>
+              <input type="text" class="custom-field" [(ngModel)]="Inst.INS_Amt" #INS_Amt="ngModel" name="INS_Amt">
+            </div>
+          </div>
+        </div>
+        <div class="row no-gutters" style="background:#fff !important;">
+          <div class="col-md-12">
+            <div class="input-group">
+              <label for="">Installment Date</label>
+              <input type="date" class="custom-field" [(ngModel)]="Inst.INS_Due_Date" #INS_Due_Date="ngModel" name="INS_Due_Date">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal" (click)="UpdateInstallment(Inst,a.S_NotificationID,a.S_ProjectID,a.S_CatName)">Save</button><button
+          class="btn btn-primary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+
+
+<div class="modal fade" id="uploadpopup">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        Upload
+      </div>
+      <div class="modal-body">
+        <label for="">App No. : {{App_No}}<span></span></label>
+        <br>
+        <label for="">App Name: {{App_Name}}<span></span></label>
+          <br>
+          <input type="file" #Image accept="application/pdf" (change)="UploadOrderDoc($event.target.files)" id="N_OrdDoc"
+            style=" margin-left: 0px;" name="N_OrdDoc" [(ngModel)]="notice.N_OrdDoc" #N_OrdDoc="ngModel">
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" type='button' (click)="SavenoticeDoc()">Save</button><button class="btn btn-primary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

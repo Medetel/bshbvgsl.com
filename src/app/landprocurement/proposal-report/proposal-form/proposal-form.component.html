@@ -1,0 +1,257 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <div class="float-right">
+      <button class="btn btn-primary" [routerLink]="['/home/landprocurement']">Back</button>
+    </div>
+    <span class="clearfix"></span>
+  </div>
+
+  <form (ngSubmit)="mode=='edit'?UpdateProposalForm(ProposalForm):SaveProposalForm(ProposalForm)" #ProposalForm="ngForm"
+    name="form1">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-2">
+          <label style="color: blue;">Proposal for</label>
+        </div>
+        <div class="col-md-5">
+          <div class="form-check-inline">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="PR_For" #PR_For="ngModel" [(ngModel)]="pr.PR_For" type="radio"
+                id="inlineRadio1" value="Land Acquisition">Land Acquisition
+            </label>
+          </div>
+          <div class="form-check-inline">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="PR_For" #PR_For="ngModel" [(ngModel)]="pr.PR_For" type="radio"
+                id="inlineRadio1" value="Direct Purchase">Direct Purchase
+            </label>
+          </div>
+          <div class="form-check-inline">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="PR_For" #PR_For="ngModel" [(ngModel)]="pr.PR_For" type="radio"
+                id="inlineRadio1" value="Joint Ventures">Joint Ventures
+            </label>
+          </div>
+          <div class="form-check-inline">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="PR_For" #PR_For="ngModel" [(ngModel)]="pr.PR_For" type="radio"
+                id="inlineRadio1" value="Mix"> Acquisition/Purchase/Joint Ventures
+            </label>
+          </div>
+        </div>
+        <div class="col-md-3" *ngIf="mode == 'view' || mode == 'edit'">
+          <label style="color: blue;">Proposal Id</label>
+        </div>
+        <div class="col-md-2" *ngIf="mode == 'view' || mode =='edit'">
+          <p>{{pr.PR_Id}}</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="pr.PR_Distict_Id" #PR_Distict_Id="ngModel" name="PR_Distict_Id"
+              (change)="GetBlocks(pr.PR_Distict_Id)" [disabled]="mode =='view'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="d.DI_Id" *ngFor="let d of Districts;">
+                {{d.DI_District}} </option>
+            </select>
+            <label for="">District
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="PR_Distict_Id.invalid && (PR_Distict_Id.dirty || PR_Distict_Id.touched || formInvalid)">
+              <span *ngIf="PR_Distict_Id.errors.required">District selection is required.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="input-group"> <select class="custom-field" [(ngModel)]="pr.PR_Taluk_Id" #PR_Taluk_Id="ngModel"
+              name="PR_Taluk_Id" [disabled]="mode=='view'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="t.Block_Id" *ngFor="let t of Block;">
+                {{t.Block_Name}}
+              </option>
+            </select>
+            <label for="">Block
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="PR_Taluk_Id.invalid && (PR_Taluk_Id.dirty || PR_Taluk_Id.touched || formInvalid)">
+              <span *ngIf="PR_Taluk_Id.errors.required">Block selection is required.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="col-md-4">
+          <div class="input-group">
+            <input type="text" [disabled]="mode=='view'" [(ngModel)]="pr.PR_Village" maxlength="100"
+              #PR_Village="ngModel" name="PR_Village" class="custom-field" required>
+            <label for="">Village
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="PR_Village.invalid && (PR_Village.dirty || PR_Village.touched || formInvalid)">
+              <span *ngIf="PR_Village.errors.required">Village is required</span>
+            </div>
+          </div>
+        </div> -->
+      </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="input-group">
+            <input type="text" [disabled]="mode=='view'" [(ngModel)]="vi.PR_Village" pattern="^[A-Za-z]+$" maxlength="100" #PR_Village="ngModel"
+              name="PR_Village" class="custom-field">
+            <label for="">Village/City/Colony
+            </label>
+            <div class="error-msg"
+              *ngIf="PR_Village.invalid && (PR_Village.dirty || PR_Village.touched || formInvalid)">
+              <span *ngIf="PR_Village.errors.pattern">Village is must be alphabets</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <button type="button" [disabled]="mode=='view'" class="btn btn-primary" (click)="AddVillage(vi.PR_Village)">Add</button>
+        </div>
+
+        <div class="col-md-6">
+          <div class="table-responsive">
+            <table class="table table-striped grid table-bordered">
+              <thead>
+                <tr>
+                  <th rowspan="2">Sl.No</th>
+                  <th rowspan="2"> Village/City/Colony Name </th>
+                  <th rowspan="2"> Delete </th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let vill of villageDetails;let i=index">
+                  <td>{{i+1}}</td>
+                  <td>{{vill.PV_VillageName}}</td>
+                  <td [hidden]="mode=='view'">
+                    <i class="fa fa-minus" style="margin: 0px 3px;cursor: pointer !important;" (click)="RemoveVIDetails(i)"></i>
+                  </td>
+                </tr>
+                <!-- <tr>
+                <td>2</td>
+                
+                <td>Rvi</td>
+                <td>33</td>
+                <td>Land Purchase</td>
+                <td>44</td>
+                <td></td>
+                <td>road</td>
+                <td>school</td>
+                <td>lig</td>
+                <td>mig</td>
+                <td class="text-center"> <input type="checkbox"> </td>
+              </tr> -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="date" name="GramaChavadiDate" #GramaChavadiDate="ngModel" [(ngModel)]="pr.GramaChavadiDate"
+              class="custom-field" [disabled]="mode=='view'" required>
+            <label for="">GramaChavadi Date
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="GramaChavadiDate.invalid && (GramaChavadiDate.dirty || GramaChavadiDate.touched || formInvalid)">
+              <span *ngIf="GramaChavadiDate.errors.required">GramaChavadiDate is required.</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input *ngIf="mode!='view'" type="file" #Image accept="application/pdf" (change)="imageUpload2($event.target.files)"
+              id="GramachavadiUploadPath" name="GramachavadiUploadPath">
+            <a class="" *ngIf="pr.GramachavadiUploadPath!=null && hide" target="_blank" href="{{pr.GramachavadiUploadPath}}">view</a>
+            <label for="">Grama Chavadi Report</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input *ngIf="mode!='view'" type="file" #Image accept="application/pdf" (change)="imageUpload($event.target.files)"
+              id="PR_Report_Path" name="PR_Report_Path" [(ngModel)]="pr.PR_Report_Path" #PR_Report_Path="ngModel">
+            <a class="" *ngIf="pr.PR_Report_Path!=null && hide" target="_blank" href="{{pr.PR_Report_Path}}">view</a>
+            <label for="">Proposal Report</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <textarea [disabled]="mode=='view'" [(ngModel)]="pr.PR_Comments" maxlength="200" #PR_Comments="ngModel"
+              name="PR_Comments" cols="30" rows="10" class="custom-field"></textarea>
+            <label for=""> Comments
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="date" name="PR_Demandsurvey_Date" #PR_Demandsurvey_Date="ngModel" [(ngModel)]="pr.PR_Demandsurvey_Date"
+              class="custom-field" [disabled]="mode=='view'" required>
+            <label for="">Demand Survey Date
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="PR_Demandsurvey_Date.invalid && (PR_Demandsurvey_Date.dirty || PR_Demandsurvey_Date.touched || formInvalid)">
+              <span *ngIf="PR_Demandsurvey_Date.errors.required">Demand Survey Date is required.</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="file" #Image accept="application/pdf" (change)="imageDemandUpload($event.target.files)"
+              [disabled]="mode=='view'" [(ngModel)]="pr.PR_DemandSurveyFile" #PR_DemandSurveyFile="ngModel" name="PR_DemandSurveyFile"
+              id="PR_DemandSurveyFile">
+            <a class="" *ngIf="pr.PR_DemandSurveyFile!=null && hide" target="_blank" href="{{pr.PR_DemandSurveyFile}}">view</a>
+            <label for="">Demand Survey File
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="date" name="PR_Submitted_Date" #PR_Submitted_Date="ngModel" [(ngModel)]="pr.PR_Submitted_Date"
+              class="custom-field" [disabled]="mode=='view'" required>
+            <label for="">Submitted Date
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="PR_Submitted_Date.invalid && (PR_Submitted_Date.dirty || PR_Submitted_Date.touched || formInvalid)">
+              <span *ngIf="PR_Submitted_Date.errors.required">Submitted Date is required.</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" [disabled]="mode=='view'" [(ngModel)]="pr.PR_SubmittedBy" maxlength="100"
+              #PR_SubmittedBy="ngModel" name="PR_SubmittedBy" class="custom-field" required>
+            <label for="">Submitted To
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="PR_SubmittedBy.invalid && (PR_SubmittedBy.dirty || PR_SubmittedBy.touched || formInvalid)">
+              <span *ngIf="PR_SubmittedBy.errors.required">Submitted By is required.</span>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="text-center">
+        <button type="submit" [disabled]="mode=='view'" class="btn btn-primary">Save</button> &nbsp;
+        <button type="reset" [disabled]="mode=='view'" class="btn btn-primary">Cancel</button>
+        <!-- <button (click)="Cancel()" class="btn btn-primary">Cancel</button> -->
+      </div>
+    </div>
+  </form>
+</div>

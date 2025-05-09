@@ -1,0 +1,53 @@
+<div class="wrapper">
+    <div class="title themeheading">
+        {{title}}
+        <button class="btn btn-primary pull-right" [routerLink]="['/home/masters']">Back</button>
+        <span class="clearfix"></span>
+    </div>
+    <form (ngSubmit)="mode=='edit'?UpdateReligionDetails(Religion):SaveReligion(Religion)" #Religion="ngForm" name="Religion">
+    <div class="container-fluid">
+        <div class="row ">
+                <!-- *ngIf="mode=='View'" -->
+            <div class="col-md-6  col-sm-6" *ngIf="mode=='View'">
+                <div class="input-group">
+                    <label>Religion Code</label><br>
+                    <input class="custom-field" type="text" oninput="this.value = this.value.toUpperCase()"  maxlength="100"  name="Religion_Code" [(ngModel)]="r.Religion_Code"
+                            #Religion_Code="ngModel" disabled required >
+                </div>
+            </div>
+            <!-- <div class="col-md-6  col-sm-6">
+                <div class="input-group">
+                    <label>Status</label><br>
+                    <select class="custom-field" >   
+                        <option value="">--Select--</option>                     
+                        <option value="">Active</option>
+                        <option value="">Inactive</option>
+                    </select>
+                </div>
+            </div> -->
+            <div class="col-md-6  col-sm-6">
+                <div class="input-group">
+                    <label>Religion
+                        <span class="mandatory">*</span>
+                    </label><br>
+                    <input class="custom-field" type="text" style="text-transform: capitalize;"  maxlength="100"  name="Name" [(ngModel)]="r.Name"
+                      #Name="ngModel" [disabled]="mode=='View'"  required pattern="[A-Za-z]+" >    
+                </div>
+                <div class="error-msg pull-right"  *ngIf="Name.invalid && (Name.dirty || Name.touched || formInvalid)">
+                    <span  *ngIf="Name.errors.required">Name is required</span> 
+                    <span *ngIf="Name.errors?.pattern">Name should contain only aphabets.</span>                  
+                </div>
+            </div>
+        </div>
+        <!-- <div class="row ">
+            
+           
+        </div>        -->
+    </div>
+    <br>
+    <div class="text-center">
+            <button class="btn btn-primary" [disabled]="mode=='View'"   type="submit" >{{mode=='edit'?'Edit':'Save'}}</button> &nbsp;
+            <button class="btn btn-primary" [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button>
+    </div>
+</form>
+</div>

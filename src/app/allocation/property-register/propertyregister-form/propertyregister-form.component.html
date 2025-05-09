@@ -1,0 +1,126 @@
+<div class="wrapper propertyregister">
+    <div class="title themeheading">{{title}}<a class="btn btn-primary float-right" routerLink="/home/property">Back</a><span class="clearfix"></span></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <select onclick="this.setAttribute('value', this.value);" value="" class="custom-field">
+                    <option value=""></option>
+                      <option value="1">MGRY</option>
+                    </select>
+                    <label>Scheme</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <select onclick="this.setAttribute('value', this.value);" value="" class="custom-field">
+                        <option value=""></option>
+                      <option value="1">Ramnagara</option>
+                    </select>
+                    <label>District</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <select onclick="this.setAttribute('value', this.value);" value="" class="custom-field">
+                    <option value=""></option>
+                      <option value="1">BSHB</option>
+                    </select>
+                    <label>Project</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-group">
+                    <select onclick="this.setAttribute('value', this.value);" value="" class="custom-field">
+                     <option value=""></option>
+                      <option value="1">I</option>
+                      <option value="2">II</option>
+                      <option value="3">III</option>
+                    </select>
+                    <label>Phase</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive grid">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <td>Sl No.</td>
+              <td>Property No.</td>
+              <td colspan="2" class="text-center">GPS Data</td>   
+              <td>East</td>   
+              <td>West</td>       
+              <td>North</td>   
+              <td>South</td>       
+              <td colspan="2" class="text-center">Type</td>
+              <td>Property Quota</td>
+              <td>Dimension (sqmt)</td>
+              
+              <td>Property Status</td>
+              <td>Add</td>
+              <td>Edit</td>
+              <td>Delete</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td><input type="text" class="grid-input" value="1"></td>
+              <td><input type="text" class="grid-input"   value="12.154247"></td>
+              <td><input type="text" class="grid-input"   value="12.154247"></td>   
+              <td><input type="text" class="grid-input"   value="BDA Complex"></td>       
+              <td><input type="text" class="grid-input"   value="Mall"></td>   
+              <td><input type="text" class="grid-input"   value="Park"></td>   
+              <td><input type="text" class="grid-input"   value="Temple"></td>
+              <td><select class="grid-input">
+                    <option value="">--Category--</option>
+                  <option value="">Site</option>
+                  <option value="">House</option>
+                  <option value="">Apartment</option>
+              </select></td>
+              <td><select class="grid-input">
+                    <option value="">--Select--</option>
+                    <option value="">EWS</option>
+                    <option value="">HIG-1</option>
+                    <option value="">HIG-2</option>
+                    <option value="">MIG</option>
+                    <option value="">LIG</option>
+                </select></td>
+
+                <td><select name="" id="" class="grid-input">
+                        <option value="">---select---</option>
+                        <option value="">discretionary quota</option>
+                        <option value="">Corner Site</option>
+                        <option value="">Normal quota</option>
+                    </select></td>
+              
+              <td><input type="text" class="grid-input"   value="1000"></td>
+
+              <td><select name="" id="" class="grid-input">
+                    <option value="">---select---</option>
+                    <option value="">Blocked</option>
+                    <option value="">Litigation</option>
+                    <option value="">Ready for allotment</option>
+                    <option value="">Allotted</option>
+                    <option value="">Leasedeed</option>
+                    <option value="">khatha</option>
+                </select></td>             
+              <td><button class="btn btn-primary">Add</button></td>
+              <td><button class="btn btn-primary">Edit</button></td>
+              <td><button class="btn btn-primary">Delete</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  
+  
+      <div class="btn-wrapper">
+          <button class="btn btn-primary">Save as Draft</button>
+          <button class="btn btn-primary">Save</button>
+          <button class="btn btn-primary">Cancel</button>
+      </div>
+  
+  </div>

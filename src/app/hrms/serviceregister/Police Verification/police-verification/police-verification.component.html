@@ -1,0 +1,201 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    Employee Details
+    <button class="btn btn-primary float-right"
+      [routerLink]="['/home/serviceregister/policeverification']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <div class="container-fluid">
+
+    <form (ngSubmit)="mode=='edit'?UpdateEmplVerificationDetails(EmplDetails):SaveEmplVerificationDetails(EmplDetails)"
+      #EmplDetails="ngForm" name="form1">
+
+      <div class="row">
+        <!-- <div class="col-md-4" *ngIf="!((mode=='view')||(mode=='edit'))">
+          <div class="input-group">
+              <label for=""> Division code </label>
+              <select class="custom-field" [(ngModel)]="p.EMP_DIVISION_ID" #EMP_DIVISION_ID="ngModel"
+                name="EMP_DIVISION_ID"  (change)="ChangeOfDivision(p.EMP_DIVISION_ID)">
+                <option [value]="undefined" selected>---Select---</option>
+                <option [value]="d.DI_Id" *ngFor="let d of DistrictsList;">
+                  {{d.DI_District}}
+                </option>
+              </select>
+            </div>
+      </div>
+      <div class="col-md-4">
+          <div class="input-group">
+              <label for="">Emp Code </label>
+              <select select class="custom-field" [(ngModel)]="p.EMP_ID" #EMP_ID="ngModel" name="EMP_ID"
+                [disabled]="(mode=='view') || (mode=='edit')" (change)="ChangeOfEmployee(p.EMP_ID)">
+                <option [value]="" selected>--Select--</option>
+                <option [value]="emp.EMP_EMPLOYEE_ID" *ngFor="let emp of AllEmployeeList;">
+                  {{emp.EMP_EMPLOYEE_CODE}} &nbsp; {{emp.EMP_FIRST_NAME}}
+                </option>
+              </select>
+            </div>
+      </div> -->
+        <div class="col-md-6">
+          <label for=""> Employee Id :</label> &nbsp; <span class="name">{{detailsEmployee.EMP_EMPLOYEE_CODE}}</span>
+        </div>
+        <div class="col-md-6">
+          <label for=""> Name :</label> &nbsp; <span class="name"> {{detailsEmployee.EmpName}} </span>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4 ">
+          <label for="">Division : </label> &nbsp; <span class="name">{{detailsEmployee.DI_District}} </span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Department : </label> &nbsp; <span class="name">{{detailsEmployee.Department_Name}} </span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Designation : </label> &nbsp; <span class="name">{{detailsEmployee.desg_name}}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <label for="">Employee Category : </label> &nbsp; <span class="name">{{detailsEmployee.Category}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Employee Group : </label> &nbsp; <span class="name">{{detailsEmployee.EmpGroup}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Employee Type : </label> &nbsp; <span class="name">{{detailsEmployee.EmpType}}</span>
+        </div>
+      </div>
+
+      <div class="title themeheading rowmarginfix">
+        {{title2}}
+        <!-- <button class="btn btn-primary pull-right" *ngIf="mode=='view' || mode=='edit'" style="margin-top: -3px;" (click)="gotoAdd(EmployeeId)" type="button" >Add</button> -->
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Verification Type
+              <span class="mandatory">*</span>
+            </label>
+            <select class="custom-field" (change)="OnChangeVeri(p.VRF_TYPE)" [(ngModel)]="p.VRF_TYPE" #VRF_TYPE="ngModel" name="VRF_TYPE"
+              [disabled]="mode=='view'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="m.fix_code_id" *ngFor="let m of fixedcodelist;">
+                {{m.code_value}}
+              </option>
+            </select>
+          </div>
+          <div class="error-msg pull-right"  *ngIf="VRF_TYPE.invalid && (VRF_TYPE.dirty || VRF_TYPE.touched || formInvalid)">
+            <span  *ngIf="VRF_TYPE.errors.required">Verification Type is required</span>                      
+        </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Date
+              <span class="mandatory">*</span>
+            </label>
+            <input type="date" class="custom-field" [(ngModel)]="p.VRF_Date" #VRF_Date="ngModel" name="VRF_Date"
+              [disabled]="mode=='view'" required>
+          </div>
+          <div class="error-msg pull-right"  *ngIf="VRF_Date.invalid && (VRF_Date.dirty || VRF_Date.touched || formInvalid)">
+            <span  *ngIf="VRF_Date.errors.required">Verification Date is required</span>                      
+        </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Certifying Authority
+              <span class="mandatory">*</span>
+            </label>
+            <input type="text" class="custom-field" [(ngModel)]="p.VRF_CERRTIFY_AUTH" #VRF_CERRTIFY_AUTH="ngModel"
+              name="VRF_CERRTIFY_AUTH" [disabled]="mode=='view'" maxlength="50" required pattern = "[A-Za-z]+" >
+          </div>
+          <div class="error-msg pull-right"  *ngIf="VRF_CERRTIFY_AUTH.invalid && (VRF_CERRTIFY_AUTH.dirty || VRF_CERRTIFY_AUTH.touched || formInvalid)">
+            <span  *ngIf="VRF_CERRTIFY_AUTH.errors.required">Verification Date is required</span>
+            <span *ngIf="VRF_CERRTIFY_AUTH.errors?.pattern">Certifying authority should contain only alphabets</span>                      
+        </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Remarks </label>
+            <textarea name="" id="" cols="30" rows="10" class="custom-field" [(ngModel)]="p.VRF_REMARKS"
+              #VRF_CERRTIFY_AUTH="ngModel" name="VRF_REMARKS" [disabled]="mode=='view'" maxlength="50" ></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">
+          <label for="">Upload Document </label>
+        </div>
+        <div class="col-md-4">
+          <input input *ngIf="!hide" type="file" #Image accept="application/pdf"
+            (change)="imageUpload1($event.target.files)" id="DOC_UPLOAD_PATH">
+          <a class="" *ngIf="p.DOC_UPLOAD_PATH!=null && hide" target="_blank" href="{{p.DOC_UPLOAD_PATH}}">view</a>
+        </div>
+      </div>
+
+      <br>
+      <div class="text-center">
+        <button [disabled]="mode=='view'" class="btn btn-primary">{{mode=='Edit'?'Edit':'Save'}}</button> &nbsp;
+        <button [disabled]="mode=='view'" (click)="Cancel()" class="btn btn-primary">Cancel</button>
+      </div>
+
+
+      <!--  -->
+
+      <br>
+      <div class="table-responsive">
+        <table class="table table-stripped table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th>Sl.No</th>
+              <th>Verification Id</th>
+              <th>Verification Type</th>
+              <th>Certifying Authority</th>
+              <th class="text-center">View</th>
+              <th class="text-center">Edit</th>
+              <th class="text-center">Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let e of EmployeeVerificationDetails | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index">
+              <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>  
+              <td>{{e.VRF_ID}}</td>           
+              <td>{{e.code_value}}</td>
+              <td>{{e.VRF_CERRTIFY_AUTH}}</td>
+              <td class="text-center">
+                <a href="#" [routerLink]="['/home/serviceregister/policeverification-form',e.VRF_ID,'view',e.EMP_ID]">
+                  <i class="fa fa-lg fa-eye themecolor"></i>
+                </a>
+              </td>
+              <td class="text-center">
+                <a href="#" [routerLink]="['/home/serviceregister/policeverification-form',e.VRF_ID,'edit',e.EMP_ID]">
+                  <i class="fa fa-lg fa-edit themecolor"></i>
+                </a>
+              </td>
+              <td class="text-center">
+                <a (click)="delete(e.VRF_ID)">
+                  <i class="fa fa-lg fa-trash themecolor"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+
+      <br>
+
+      <br>
+      <!-- <div class="text-center">
+      <button class="btn btn-primary" [disabled]="mode=='view'" type="submit">Save</button> &nbsp;
+      <button class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button>
+    </div> -->
+
+    </form>
+
+  </div>
+</div>

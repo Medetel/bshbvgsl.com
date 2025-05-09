@@ -1,0 +1,159 @@
+.searchbar{
+    padding:10px;
+    background: #212121;
+}
+
+/* label{
+    
+        
+        color: #fff;
+        margin-top: 1px;
+    
+} */
+
+
+
+.form-control{
+    padding:4px;
+}
+
+select.form-control:not([size]):not([multiple]) {
+    height: calc(2rem + 2px);
+}
+
+button{
+    min-width:100px;
+    margin-right: 5px;
+}
+
+.menu{
+    width: 250px;
+}
+
+.notify.mat-tab-labels {
+    background: #babb93 !important;
+    margin-top: 27px;
+}
+
+.notify.mat-ink-bar{
+    height: 6px;
+}
+
+.notify.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: rgba(66, 24, 142, 0.3);
+}
+
+.notify.mat-tab-label, .mat-tab-link {
+  color: #000000;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.row{
+    padding: 1em 0px 0px 0px !important;
+    /* margin-bottom: -10px; */
+}
+
+/* .row:nth-child(odd){
+    background: #f2f2f2;
+} */
+
+#auction-form .grid input,
+#auction-form .grid select{
+    width:150px;
+}
+#auction-form .grid select{
+    height: 30px;
+}
+
+#view-bidders table td,
+#selectProperty table td{
+    padding:5px;
+    font-size:13px;
+}
+
+#selectProperty table button{
+    font-size:12px;
+    padding:3px;
+}
+
+#addProperty table{
+    font-size:12px;
+}
+
+
+/* Style the list */
+ul.breadcrumb {
+    padding: 10px 16px;
+    list-style: none;
+    background-color: #eee;
+}
+
+/* Display list items side by side */
+ul.breadcrumb li {
+    display: inline;
+    font-size: 12px;
+}
+
+/* Add a slash symbol (/) before/behind each list item */
+ul.breadcrumb li+li:before {
+    padding: 8px;
+    color: black;
+    content: "/\00a0";
+}
+
+/* Add a color to all links inside the list */
+ul.breadcrumb li a {
+    color: #0275d8;
+    text-decoration: none;
+}
+
+/* Add a color on mouse-over */
+ul.breadcrumb li a:hover {
+    color: #01447e;
+    text-decoration: underline;
+}
+
+td{
+    border: 1px solid #ddd;
+}
+
+#addProperty .table-responsive{
+    overflow-y: scroll;
+    height: 350px;
+}
+
+.issuealert{
+    background: #f8cccc;
+    }
+
+.issue{
+    background: #a7f3b0eb;
+}
+
+.notseen{
+    background: #edf0f1eb;
+}
+
+.bidder{
+    background: #90f09beb;
+}
+.mandatory{
+    color:red;
+}
+
+.Blue{
+    color:blue;    
+}
+
+.Green{
+    color:brown
+}
+
+.Red{
+    color:red;
+}
+
+.DGreen{
+    color: green
+}

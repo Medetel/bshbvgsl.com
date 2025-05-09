@@ -1,0 +1,43 @@
+.dates-selector{
+    padding:10px 15px;
+    background: #f3f3f3;
+}
+
+.dates-selector label{
+    margin-bottom: 0px;
+    text-align: right;
+    font-size:13px;
+    color:#0000ff;
+}
+
+.title{
+    font-size:1.3em;
+    padding:10px;
+    text-align: center;
+}
+
+.date{
+    font-size:14px;    
+}
+
+#allotedtable{
+    width:60%;
+    margin:20px auto;
+}
+
+.dates-selector button{
+    padding:3px 6px; 
+    font-size:17px;
+    margin-top: 25px;
+}
+
+#placewise-vacant {
+    font-size:14px;
+    width:98%;
+    margin:10px auto;
+}
+
+#placewise-vacant table thead{
+    color:#fff;
+    background: #808080;
+}

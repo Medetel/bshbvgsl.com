@@ -1,0 +1,150 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    Leave Application
+    <button class="btn btn-primary float-right" *ngIf="!gobackAuth"
+      [routerLink]="['/home/leaveapp/leave-application']">Back</button>
+    <button class="btn btn-primary float-right" *ngIf="gobackAuth"
+      [routerLink]="['/home/leaveapp/leave-authorization']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+
+  <form #EmplDetails="ngForm" name="form1">
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="">Leave Application No :{{c.AppNo}}</label>
+        </div>
+        <div class="col-md-4">
+          <label for="">Date : <span>{{c.DOC_DATE |date:'dd/MM/yyyy'}}</span></label>
+        </div>
+        <div class="col-md-4">
+          <label for="">Status : <span>{{c.LeaveStatus}}</span></label>
+        </div>
+      </div>
+    </div>
+    <div class="title themeheading">
+      Employee Details
+      <span class="clearfix"></span>
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-4" *ngIf="!((mode=='view')||(mode=='edit'))">
+          <div class="input-group">
+            <label for=""> Division code </label>
+            <select class="custom-field" [(ngModel)]="c.DI_Id" #DI_Id="ngModel" name="DI_Id" 
+              required (change)="loadgroup1(c.DI_Id)">
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="r.DI_Id" *ngFor="let r of religionList;">
+                {{r.DI_District}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4" *ngIf="!((mode=='view')||(mode=='edit'))">
+          <div class="input-group">
+            <label for="">Emp Code</label>
+            <select class="custom-field" [(ngModel)]="c.EMP_ID" #EMP_ID="ngModel" name="EMP_ID"
+              [disabled]="mode=='view'" required (change)="ChangeOfEmployee(c.EMP_ID)"
+              *ngIf="!((mode=='view')||(mode=='edit'))">
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="r.Emp_Employee_Id" *ngFor="let r of EmployeeList;">
+                {{r.Emp_Employee_Code}} &nbsp;  {{r.EMP_FIRST_NAME}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label for=""> Name :</label> &nbsp; <span>{{detailsEmployee.EmpName}}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 ">
+          <label for="">Division : </label> &nbsp; <span class="name">{{detailsEmployee.DI_District}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Department : </label> &nbsp; <span class="name">{{detailsEmployee.Department_Name}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Designation : </label> &nbsp; <span class="name">{{detailsEmployee.desg_name}}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <label for="">Employee Category : </label> &nbsp; <span class="name">{{detailsEmployee.Category}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Employee Group : </label> &nbsp; <span class="name">{{detailsEmployee.EmpGroup}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Employee Type : </label> &nbsp; <span class="name">{{detailsEmployee.EmpType}}</span>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="title themeheading">
+      Leave Details
+      <span class="clearfix"></span>
+    </div>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="c.LEAVE_TYPE" #LEAVE_TYPE="ngModel" name="LEAVE_TYPE"
+              [disabled]="mode=='view'" (change)="ChangeOfLeave(c.EMP_ID,c.LEAVE_TYPE)">
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="lt.Leave_id" *ngFor="let lt of leavetypelist;">
+                {{lt.Leave_name}}
+              </option>
+            </select>
+            <label for="">Leave Type</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label for="">Balance : {{LeaveBal}}</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="date" class="custom-field" [(ngModel)]="c.LEAVE_START_DATE" #LEAVE_START_DATE="ngModel"
+              name="LEAVE_START_DATE" [disabled]="mode=='view'" required>
+            <label for="">From Date</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="date" class="custom-field" [(ngModel)]="c.LEAVE_END_DATE" #LEAVE_END_DATE="ngModel"
+              name="LEAVE_END_DATE" [disabled]="mode=='view'"
+              (keydown.enter)="mydate(c.LEAVE_START_DATE,c.LEAVE_END_DATE)" required>
+            <label for="">To Date</label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6" *ngIf="c.LEAVE_START_DATE && c.LEAVE_END_DATE">
+          <div class="input-group">
+            <span for="">No. of Days : {{ calculateDateDifference(c.LEAVE_START_DATE, c.LEAVE_END_DATE) }}</span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <textarea class="custom-field" [(ngModel)]="c.Remarks" #Remarks="ngModel" name="Remarks"
+              [disabled]="mode=='view'"></textarea>
+            <label for="">Remarks</label>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="text-center">
+        <button class="btn btn-primary" [disabled]="mode=='view' || hide== true" type="button"
+          (click)="SaveEmplDetails(EmplDetails)">Save</button>
+        <button class="btn btn-primary" [disabled]="mode=='view' || hide== true" type="button"
+          (click)="Cancel()">Cancel</button>
+      </div>
+      <br>
+
+    </div>
+  </form>
+
+</div>

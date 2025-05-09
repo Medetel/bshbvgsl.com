@@ -1,0 +1,15 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      <div class="sidemenu">
+        <ul class="billmenu">
+          <li><a [routerLink]="['/home/request-property']"> Request Property </a></li>
+          <li><a [routerLink]="['request-property-approval']"> Request Property Approval </a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-10">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

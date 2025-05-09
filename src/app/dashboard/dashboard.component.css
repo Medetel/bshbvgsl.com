@@ -1,0 +1,217 @@
+.head {
+            padding: 20px;
+            background: #000;
+            font-size: 27px;
+            color: #fff;
+        }
+
+        .logo {
+            width: 40px;
+        }
+
+        .section {
+            padding: 10px;
+            background: #fff;
+            border: 1px solid #eae2e2;
+            box-shadow: 1px 1px 2px 0px #ccc;
+            margin: 10px;
+            height: auto;
+            text-align: center;
+        }
+
+        .section-heading {
+            font-size: 18px;
+            text-align: left;
+            padding: 5px 10px;
+            color: #444;
+            
+        }
+
+        .section-body {
+            text-align: justify;
+            font-size: 13px;
+            padding: 5px;
+            height: auto;
+            display: none;
+        }
+
+        .info-window {
+            padding: 0px 10px;
+        }
+
+        .divider {
+            border-top: 1px solid #eae9e9;
+            width: 100%;
+            margin: 5px auto;
+        }
+
+        #all_state{
+            position: absolute;
+            left: 500px;
+            bottom: 73%;
+            margin-left: 510px;
+            transform: translate(-20px, -50%);
+            font-style:normal;
+            color: black; /* A shade of pink/red for a vibrant look */
+            align-items: center;
+            font-size: 1.0em; /* Slightly increased font size for emphasis */
+            font-weight:normal; /* Added boldness for a more striking appearance */
+            border-radius: 8px; /* Rounded corners for a softer look */
+            padding: 10px; /* Some padding for better spacing */
+            background-color:#fcfbef; /* Light background color for contrast */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box shadow for depth */
+            transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out; /* Smooth transitions */
+         
+        }
+
+        .table-responsive td{
+            padding: 4px;
+        }
+
+        #pagination .ngx-pagination{
+            text-align: left ;
+            padding:0;
+        }
+        
+        .font-bold
+        {
+            font-weight: bold;
+        }
+
+        td{
+            border: 1px solid #ddd;
+            
+        }
+        .font-size td{
+            font-size: 12px;
+        }
+       .modal .table-responsive {
+            overflow-y: scroll;
+            height: 350px;
+        }
+        ul {
+            overflow: hidden;
+        }
+
+            @media (min-width: 992px){
+                .modal-lg {
+                    max-width: 1200px;
+                }
+            }
+           
+
+
+            /*  */
+            .chart-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh; /* Full viewport height */
+                width: 100%; /* Full width */
+                /* background-color: #f9f9f9;  */
+                margin-top: -10%;
+              }
+              
+              #pieChartDiv {
+                width: 500px; /* Ensure the chart has a fixed size */
+                height: 500px;
+              }
+              
+
+            .hiddentablerow{
+                padding: 0px 0px !important;
+            
+            }
+            
+            .table-info, .table-info>td, .table-info>th {
+                background-color: skyblue;
+                color: white;
+            }
+            .table-primary, .table-primary>td, .table-primary>th {
+                background-color: #6dd0c7;
+                color: white;
+            }
+        
+            .highlight {
+                stroke: #ff0000; /* Example: Red border */
+                stroke-width: 2px;
+              }
+            
+
+
+              #map {
+                position: relative;
+                width: 100%;
+                max-width: 1200px;
+                margin: 0 auto;
+                overflow: hidden;
+                border-radius: 12px;
+                /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); */
+                transition: all 0.3s ease-in-out;
+            }
+        
+          
+        
+            .map-wrapper {
+                position: relative;
+                display: block;
+                overflow: hidden;
+            }
+        
+            .map-img {
+                width: 100%;
+                height: auto;
+                border: 0;
+                border-radius: 8px;
+                transition: transform 0.3s ease;
+            }
+        
+          
+        
+            area {
+                outline: none;
+            }
+        
+            /* Tooltip styling */
+            
+        
+
+        
+            /* Enhanced Hover Effects */
+           
+            /* Responsive design improvements */
+            @media (max-width: 1200px) {
+                #map {
+                    max-width: 100%;
+                    margin: 0 20px;
+                }
+            }
+        
+            @media (max-width: 768px) {
+                #map {
+                    width: 100%;
+                    margin: 10px;
+                }
+        
+                .map-img {
+                    width: 100%;
+                    height: auto;
+                }
+            }
+        
+            /* Enhanced Mobile View */
+            @media (max-width: 480px) {
+                #map {
+                    padding: 5px;
+                    box-shadow: none;
+                }
+        
+                .map-img {
+                    filter: brightness(1.05);
+                }
+            }
+        
+
+              
+                
+            

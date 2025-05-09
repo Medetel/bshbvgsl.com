@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>BSHB E-Ghar</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">  
+  
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
+  <link rel="icon" type="image/x-icon" href="favicon.ico"> 
+  <script src="assets/Scripts/Plotly-2.35.2.min.js" charset="utf-8"></script>
+</head>
+<style type="text/css"> 
+  .app-loading {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
+
+  .app-loading .spinner {
+    width: 60px;
+    height: 60px;
+
+    border: 5px solid #c4c4c4;
+    border-top-color: rgb(1, 150, 21);
+    border-radius: 50%;
+    animation: spin 2s linear infinite;
+    margin-top: 50px;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+</style>
+<body>
+  <app-root>
+    <!-- loading layout replaced by app after startupp -->
+     <div class="app-loading">
+      <div class="logo"><img src="../assets/images/logo.png" class="img-responsive" />
+      </div>
+      <div class="loadingio-eclipse" viewBox="25 25 50 50"> </div>
+      <div class="loader"></div>
+      <svg class="spinner" viewBox="25 25 50 50">
+        <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+      </svg>
+    </div>
+  </app-root>
+   <!-- <app-login></app-login> -->
+</body>
+</html>

@@ -1,0 +1,27 @@
+<div class="container-fluid">
+  <div class="row" style="margin-bottom: -14px;">
+      <div class="col-md-3">
+              <select name="" id="" class="form-control martop20" (change)="NavigateUrl($event.target.value)">
+                      <option value="undefined">--Select--</option>
+                      <option *ngFor="let page of pageList" value="{{page.KP_Redirect_URL}}">{{page.KHB_Page}}</option>
+                  </select>
+      </div>
+      <div class="col-md-9">
+              <div style="position: relative;">
+                      <ul class="menu" id="u-menu" #panel>
+                          <li *ngFor="let p of pageList">
+                              <a href="" routerLink="{{p.KP_Redirect_URL}}" placement="bottom" ngbTooltip="{{p.KHB_Page}}" routerLinkActive="menu-active">
+                                  <img src="/assets/images/icons/{{p.KP_Image_URL}}">
+                              </a>
+                          </li>
+                      </ul>
+                      <button type="button" class="arrow move-left" (click)="scrollDivLeft()">
+                          <span class="fa fa-caret-left "></span>
+                      </button>
+                      <button type="button" class="arrow move-right" (click)="scrollDivRight()">
+                          <span class="fa fa-caret-right "></span>
+                      </button>
+                    </div>
+      </div>
+  </div>
+</div>

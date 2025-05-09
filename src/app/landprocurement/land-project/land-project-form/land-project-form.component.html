@@ -1,0 +1,348 @@
+<div class="wrapper">
+  <div class="title themeheading">{{title}}
+    <a class="btn btn-primary float-right" routerLink="/home/Land-planning">Back</a>
+    <span class="clearfix"></span>
+  </div>
+  <form (ngSubmit)="mode=='edit'?update(PD):onSubmit(PD)" #PD="ngForm" autocomplete="off">
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="project.PD_PR_Id_FK" #PD_PR_Id_FK="ngModel" name="PD_PR_Id_FK"
+              [disabled]="mode =='view'" required (change)="GetOtherrelatedinfo(project.PD_PR_Id_FK)">
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="p.PR_Id_PK" *ngFor="let p of proposallist;">
+                {{p.PR_Id}} </option>
+            </select>
+            <label for="">Proposal Id
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="PD_PR_Id_FK.invalid && (PD_PR_Id_FK.dirty || PD_PR_Id_FK.touched || formInvalid)">
+              <span *ngIf="PD_PR_Id_FK.errors.required">Proposal Id is required.</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+            <label for="">Procurement Type : {{ProposalFor}}</label>
+          </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" [disabled]="mode=='view'" maxlength="6" placeholder=" " name="PD_Project_Code" [(ngModel)]="project.PD_Project_Code"
+              #PD_Project_Code="ngModel" [ngClass]="{'view-font-color':mode=='view'}" required>
+            <label>Project Code
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="PD_Project_Code.invalid && (PD_Project_Code.dirty || PD_Project_Code.touched || formSubmitted)">
+              <span *ngIf="PD_Project_Code.errors.required">Project Code is required</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" [disabled]="mode=='view'" maxlength="100" placeholder=" " name="PD_Project_Name" [(ngModel)]="project.PD_Project_Name"
+              #PD_Project_Name="ngModel" [ngClass]="{'view-font-color':mode=='view'}"  required>
+            <label>Project Name
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="PD_Project_Name.invalid && (PD_Project_Name.dirty || PD_Project_Name.touched || formSubmitted)">
+              <span *ngIf="PD_Project_Name.errors.required">Project Name is required</span>
+              <!-- <span *ngIf="PD_Project_Name.errors?.pattern">Project Name must be alphabets</span> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">           
+            <select id="PD_Scheme" [disabled]="mode=='view'" [ngClass]="{'view-font-color':mode=='view'}" name="PD_Scheme"
+              [(ngModel)]="project.PD_Scheme" #PD_Scheme="ngModel" 
+              class="custom-field" required>
+              <option [ngValue]="undefined" selected>--Select--</option>
+              <option [value]="sch.Sch_Id" *ngFor="let sch of Schemelist">{{sch.Sch_Name}}</option>
+            </select>
+            <label>Scheme
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="PD_Scheme.invalid && (PD_Scheme.dirty || PD_Scheme.touched || formSubmitted)">
+              <span *ngIf="PD_Scheme.errors.required">Scheme is required</span>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+              <select [(ngModel)]="project.DSWOId_NO_Division_Id_Fk" name="DSWOId_NO_Division_Id_Fk" #DSWOId_NO_Division_Id_Fk="ngModel"
+                  class="custom-field" [disabled]="mode=='view'" (change)="GetAllDistricts(project.DSWOId_NO_Division_Id_Fk)" required>
+                  <option [ngValue]="undefined" selected>---Select---</option>
+                  <option [ngValue]="div.Division_Id" *ngFor="let div of DivisionList;">
+                      {{div.Division_Name}}</option>
+              </select>
+              <label>  Division
+                  <span class="mandatory">*</span>
+              </label>
+              <div class="error-msg" *ngIf="DSWOId_NO_Division_Id_Fk.invalid && (DSWOId_NO_Division_Id_Fk.dirty || DSWOId_NO_Division_Id_Fk.touched || formInvalid)">
+                  <span *ngIf="DSWOId_NO_Division_Id_Fk.errors.required">Notification Division is required</span>
+              </div>
+          </div>
+       </div>
+      
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+              <select [(ngModel)]="project.DSWOId_NO_DI_Id_Fk" name="DSWOId_NO_DI_Id_Fk" #DSWOId_NO_DI_Id_Fk="ngModel"
+                  class="custom-field" [disabled]="mode=='view'" (change)="GetBlocks(project.DSWOId_NO_DI_Id_Fk)" required  >
+                  <option [ngValue]="undefined" selected>---Select---</option>
+                  <option [ngValue]="di.District_Id_Fk" *ngFor="let di of DistrictList;">
+                      {{di.DI_District}}</option>
+              </select>
+              <label> District
+                  <span class="mandatory">*</span>
+              </label>
+              <div class="error-msg" *ngIf="DSWOId_NO_DI_Id_Fk.invalid && (DSWOId_NO_DI_Id_Fk.dirty || DSWOId_NO_DI_Id_Fk.touched || formInvalid)">
+                  <span *ngIf="DSWOId_NO_DI_Id_Fk.errors.required">Notification District is required</span>
+              </div>
+          </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group"> <select class="custom-field" [(ngModel)]="project.PD_TA_Id_FK" #PD_TA_Id_FK="ngModel"
+            name="PD_TA_Id_FK" [disabled]="mode=='view'" required>
+            <option [value]="undefined" selected>---Select---</option>
+            <option [value]="t.Block_Id" *ngFor="let t of Block;">
+              {{t.Block_Name}}
+            </option>
+          </select>
+          <label for="">Block
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="PD_TA_Id_FK.invalid && (PD_TA_Id_FK.dirty || PD_TA_Id_FK.touched || formInvalid)">
+            <span *ngIf="PD_TA_Id_FK.errors.required">Block selection is required.</span>
+          </div>
+        </div>
+      </div>
+     
+      </div>
+      <div class="row">
+        <div class="col-md-6">          
+          <div class="input-group">
+            <input type="text" class="custom-field" maxlength="150" [disabled]="mode=='view'" [ngClass]="{'view-font-color':mode=='view'}"
+              name="PD_Village" [(ngModel)]="project.PD_Village" #PD_Village="ngModel" readonly>
+            <label>Village/City/Colony</label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">           
+            <select id="PD_Phase"   [ngClass]="{'view-font-color':mode=='view'}" name="PD_Phase"
+              [(ngModel)]="project.PD_Phase" #PD_Phase="ngModel" 
+              class="custom-field" required disabled>
+              <option [ngValue]="undefined" selected>--Select--</option>
+              <option [ngValue]="1001" selected>Nil</option>
+              <option [value]="pha.Phase_Id" *ngFor="let pha of Phaselist">{{pha.Phase_Name}}</option>
+            </select>
+            <label>Phase
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="PD_Phase.invalid && (PD_Phase.dirty || PD_Phase.touched || formSubmitted)">
+              <span *ngIf="PD_Phase.errors.required">Phase is required</span>
+            </div>
+          </div>
+
+        </div>
+        <!-- <div class="col-md-6">
+          <div class="input-group">
+            <select name="PD_TA_Id_FK"  [ngClass]="{'view-font-color':mode=='view'}"
+              [(ngModel)]="project.PD_TA_Id_FK" #PD_TA_Id_FK="ngModel" (change)="getHobli(project.PD_TA_Id_FK,1)" 
+              class="custom-field" disabled>
+              <option [ngValue]="undefined" selected>--Select--</option>
+              <option [value]="t.TA_Id" *ngFor="let t of taluk">{{t.TA_Taluk}}</option>
+            </select>
+            <label>Taluk</label>
+            <div class="error-msg" *ngIf="PD_TA_Id_FK.invalid && (PD_TA_Id_FK.dirty || PD_TA_Id_FK.touched || formSubmitted)">
+              <span *ngIf="PD_TA_Id_FK.errors.required">Taluk is required</span>
+            </div>
+          </div>
+        </div> -->
+        <!-- <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" maxlength="150" [disabled]="mode=='view'" [ngClass]="{'view-font-color':mode=='view'}"
+              name="PD_Hobli" [(ngModel)]="project.PD_Hobli" #PD_Hobli="ngModel">
+            <label>Hobli</label>
+          </div>
+        </div>         -->
+      </div>
+      <div class="row">
+      
+
+       
+        <div class="col-md-6">
+          <div class="input-group">
+            <select id="district" name="PD_PT_ID_FK" [disabled]="mode=='view'" [ngClass]="{'view-font-color':mode=='view'}"
+              [(ngModel)]="project.PD_PT_ID_FK" #PD_PT_ID_FK="ngModel" 
+              class="custom-field" required>
+              <option [ngValue]="undefined" selected>--Select--</option>
+              <option [value]="o.PD_PT_ID_FK" *ngFor="let o of ptlist">{{o.PRT_Name}}</option>
+            </select>
+            <label>Project Type
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="PD_PT_ID_FK.invalid && (PD_PT_ID_FK.dirty || PD_PT_ID_FK.touched || formSubmitted)">
+              <span *ngIf="PD_PT_ID_FK.errors.required">Project Type is required</span>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" maxlength="20" [disabled]="mode=='view'" [ngClass]="{'view-font-color':mode=='view'}"
+              class="custom-field" name="PD_Longitude" [(ngModel)]="project.PD_Longitude" #PD_Longitude="ngModel"
+              required>
+            <label>Longitude
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="PD_Longitude.invalid && (PD_Longitude.dirty || PD_Longitude.touched || formSubmitted)">
+              <span *ngIf="PD_Longitude.errors.required">Longitude is required</span>             
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+       
+        
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" maxlength="20" [disabled]="mode=='view'" [ngClass]="{'view-font-color':mode=='view'}"
+              class="custom-field" name="PD_Latitude" [(ngModel)]="project.PD_Latitude" #PD_Latitude="ngModel" required>
+            <label>Latitude
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="PD_Latitude.invalid && (PD_Latitude.dirty || PD_Latitude.touched || formSubmitted)">
+              <span *ngIf="PD_Latitude.errors.required">Latitude is required</span>              
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" pattern="([0-9]*[.])?[0-9]+" maxlength="20" placeholder=" " [disabled]="mode=='view'" [ngClass]="{'view-font-color':mode=='view'}"
+              class="custom-field" name="PD_Extent_in_Acres" [(ngModel)]="project.PD_Extent_in_Acres"
+              #PD_Extent_in_Acres="ngModel" required>
+            <label>Extent in Acres
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="PD_Extent_in_Acres.invalid && (PD_Extent_in_Acres.dirty || PD_Extent_in_Acres.touched || formSubmitted)">
+              <span *ngIf="PD_Extent_in_Acres.errors.required">Extent in Acres is required</span>     
+              <span *ngIf="PD_Extent_in_Acres.errors.pattern">Enter valid data</span>        
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        
+       
+        <div class="col-md-2">
+          <h6>Feasibility Report</h6>
+        </div>
+        <div class="col-md-2">
+          <input type="file" #Image accept="application/txt" (change)="FeasibilityFileInput($event.target.files)" id="PD_Feasibility_Report"
+            style=" margin-left: -75px;" name="PD_Feasibility_Report" [(ngModel)]="project.PD_Feasibility_Report"
+            #PD_Feasibility_Report="ngModel">
+          
+        </div>
+
+        <div class="col-md-2">
+          <a class="float-right" *ngIf="project.PD_Feasibility_Report!=null && hide" target="_blank" href="{{project.PD_Feasibility_Report}}">view</a>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" maxlength="50" placeholder=" " [disabled]="mode=='view'" [ngClass]="{'view-font-color':mode=='view'}"
+              class="custom-field" name="PD_Gov_Order" [(ngModel)]="project.PD_Gov_Order" #PD_Gov_Order="ngModel"
+              required>
+            <label>G.O(Government Order)
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="PD_Gov_Order.invalid && (PD_Gov_Order.dirty || PD_Gov_Order.touched || formSubmitted)">
+              <span *ngIf="PD_Gov_Order.errors.required">G.O is required</span>
+            </div>
+          </div>
+        </div>    
+      </div>
+      <div class="row">
+     
+
+        
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" pattern="([0-9]*[.])?[0-9]+" maxlength="20" placeholder=" " [disabled]="mode=='view'" [ngClass]="{'view-font-color':mode=='view'}"
+              class="custom-field" name="PD_EP_CostperAcre" [(ngModel)]="project.PD_EP_CostperAcre" #PD_EP_CostperAcre="ngModel"
+              required>
+            <label>Estimate Project cost
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="PD_EP_CostperAcre.invalid && (PD_EP_CostperAcre.dirty || PD_EP_CostperAcre.touched || formSubmitted)">
+              <span *ngIf="PD_EP_CostperAcre.errors.required">Estimate Project Cost is required</span>  
+              <span *ngIf="PD_EP_CostperAcre.errors.pattern">Enter valid data</span>            
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col-md-2">
+          Mode of Procurement
+        </div>
+        <input type="checkbox" name="PD_MOP_Acuistion" [(ngModel)]="project.PD_MOP_Acuistion" #PD_MOP_Acuistion="ngModel"
+          style="width: 34px;height: 19px;margin-top: 2px;margin-right: -3px;" value="Acquisition" [disabled]="mode=='view'"> Acquisition
+        <input type="checkbox" name="PD_MOP_Purchase" [(ngModel)]="project.PD_MOP_Purchase" #PD_MOP_Purchase="ngModel"
+          style="width: 34px;height: 19px;margin-top: 2px;margin-right: -3px; margin-left:8px;" value="Purchase" [disabled]="mode=='view'">
+        Purchase
+        <input type="checkbox" name="PD_MOP_Landsharing" [(ngModel)]="project.PD_MOP_Landsharing" #PD_MOP_Landsharing="ngModel"
+          style="width: 34px;height: 19px;margin-top: 2px;margin-right: -3px;margin-left:8px;" value="LandSharing" [disabled]="mode=='view'">
+        LandSharing
+        <input type="checkbox" name="PD_MOP_JV" [(ngModel)]="project.PD_MOP_JV" #PD_MOP_JV="ngModel" style="width: 34px;height: 19px;margin-top: 2px;margin-right: -3px;margin-left:8px;"
+          value="JV" [disabled]="mode=='view'"> JV
+      </div> -->
+      <!-- <div class="row">
+       
+      
+      </div>      -->
+
+      <div class="col-md-2" >
+        <label>Mode of Procurement :
+          <span class="mandatory">*</span>
+        </label>
+     
+      {{modeofprocurement}}
+
+      </div>
+      <div  *ngIf="mode!= 'view'">
+      <input type="radio" name="mode_of_procurement" [(ngModel)]="project.PD_MOP_Acuistion" #PD_MOP_Acuistion="ngModel"
+      class="radio-button" style="width: 20px;height: 20px;margin-top: 2px;margin-right: 12px;" value="Acuistion" [disabled]="mode=='view'" required> 
+      <label>Acquisition
+        <span class="mandatory">*</span>
+      </label>
+      <input type="radio" name="mode_of_procurement" [(ngModel)]="project.PD_MOP_Purchase" #PD_MOP_Purchase="ngModel"
+      class="radio-button"  style="width: 20px;height: 20px;margin-top: 2px;margin-right: 12px;" value="Purchase" [disabled]="mode=='view'" required>
+      <label>Purchase
+        <span class="mandatory">*</span>
+      </label>
+      <input type="radio" name="mode_of_procurement" [(ngModel)]="project.PD_MOP_Landsharing" #PD_MOP_Landsharing="ngModel"
+      class="radio-button"  style="width: 20px;height: 20px;margin-top: 2px;margin-right: 12px;" value="LandSharing" [disabled]="mode=='view'" required>
+      <label>Land Sharing
+        <span class="mandatory">*</span>
+      </label>
+      <input type="radio" name="mode_of_procurement" [(ngModel)]="project.PD_MOP_JV" #PD_MOP_JV="ngModel" style="width: 20px;height: 20px;margin-top: 2px;margin-right: 12px;"
+      class="radio-button" value="JV" [disabled]="mode=='view'" required>  
+      <label>JV
+        <span class="mandatory">*</span>
+      </label>
+        </div>
+      </div>
+
+      <div class="btn-wrapper" style="margin-top: 10px;" *ngIf="!(mode=='view')">
+        <button class="btn btn-primary" type="submit">{{mode=='edit'?'Update':'Save'}}</button>
+        <button class="btn btn-primary" type="reset">Cancel</button>
+        <!-- <button (click)="Cancel()" class="btn btn-primary">Cancel</button> -->
+      </div>
+    </div>
+  </form>
+
+</div>

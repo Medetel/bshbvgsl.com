@@ -1,0 +1,31 @@
+
+.sidemenu{
+    background:#f3f3f3;
+}
+
+.sidemenu ul.billmenu{
+    padding-left:0px;
+    list-style: none;
+}
+
+.sidemenu ul.billmenu li a{
+    display: block !important;
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 2px;
+    font-size: 14px;
+    color: #444;    
+    text-decoration: none;
+}
+
+.sidemenu ul.billmenu li a:hover{
+    background: #B5A422;
+    color:#fff;
+}
+
+.submenu-active{
+    background: #B5A422;   
+}
+.submenu-active a{    
+    color:#fff;
+}

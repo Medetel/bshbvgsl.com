@@ -1,0 +1,48 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    Attendance & Leave
+  </div>
+  <div class="container-fluid">
+    <div class="row" style="margin-top: 25px;">
+      <div class="col-md-6">
+        <label for=""> Month Year Code : </label>
+        <span> {{monthcode}} </span>
+      </div>
+      <div class="col-md-6">
+        <label for="">Month :</label>
+        <span>{{month}} </span>
+      </div>
+    </div>
+  </div> 
+  <div class="table-responsive">
+    <table class="table table-bordered table-sm">
+      <thead>
+        <tr>
+          <td>Sl No</td>
+          <td>Emp Code</td>
+          <td>Employee Details</td>
+          <td>Working days</td>
+          <td>Attended Days </td>
+          <td>Paid Leaves </td>
+          <td>LOP </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of  AtteLeaveList; let i= index"> 
+          <td>{{i+1}}</td>
+          <td>{{e.EMP_EMPLOYEE_CODE}}</td>
+          <td>{{e.EMP_FIRST_NAME}} </td>
+          <td>{{e.WorkingDays}}</td>
+          <td>{{e.Attendend_days}}</td>
+          <td>{{e.PaidLeaves}}</td>
+          <td>{{e.LOP}}</td>
+        </tr>       
+      </tbody>
+    </table>
+  </div>
+  <br>
+  <div class="text-center">
+    <button class="btn btn-primary" [routerLink]="['/home/payroll/payroll-process-details/payroll-process-payroll',monthcode]">Proceed Payroll Process</button>
+  </div>
+</div>
+

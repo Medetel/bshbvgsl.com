@@ -1,0 +1,351 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+  </div>
+  <br>
+  <form  #ApplDetails="ngForm" name="ApplDetails">
+
+    <div class="container-fluid">
+      <!-- <div class="row">
+      <div class="search-hero">
+        <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442;  Start searching for a hero by id or name or country">
+      </div>
+      <table class="table table-striped">
+        <tbody>
+          <tr *ngFor="let hero of heroes | filter:searchText">
+            <td>{{hero.name}}</td>
+          </tr>
+        </tbody>
+      </table>
+      </div> -->
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="form-control custom-field" id="txtAppNo" name="APP_No" value="" #APP_No="ngModel"
+            [(ngModel)]="c.APP_No">
+            <!-- <select class="custom-field" (change)="GetApplicationnumbers($event.target.value)"
+              [disabled]="mode =='view'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="u.APP_Id" *ngFor="let u of u;">
+                {{u.APP_No}} </option>
+            </select> -->
+            <label for="txtAppNo">Application Number:</label>
+          </div>
+          
+        </div>
+        <div class="col-md-1">
+          <button class="btn btn-primary" (click)="GetByIdApplicant(c.APP_No)" >
+            Go
+          </button>
+        </div>
+      </div>
+     
+      <div class="row">
+        <div class="col-md-6">
+          <label for="">Name: &nbsp;&nbsp; {{c.APP_PA_Name}}</label><span class="name">   </span>
+          <label for="">Gender:&nbsp;&nbsp;{{c.APP_PA_Gender}}</label>  <span class="name">  </span>
+          <label for="">DOB:&nbsp;&nbsp;  {{c.APP_PA_DOB | date:'dd-MM-yyyy'}} </label>  <span class="name"> </span>
+          <label for="">Mobile Number:&nbsp;&nbsp; {{c.APP_PA_MobileNo}}</label> <span class="name">  </span>
+        </div>
+        <div  style="padding:20px;">
+          <div class="col-md-6" style="margin-right: 0px;">
+            <!-- <img src="../assets/images/icons/Profile.png" style="width:100px;height:100px;max-width:100%;" alt=""> -->
+            <img src="{{c.APP_PA_Photo}}" class="img-responsive" style="width:200px;height:130px;">
+          </div>
+        </div>
+      </div>
+      <!-- <div class="row">
+        <div class="col-md-6">
+          
+        </div>
+      </div> -->
+      <!-- <div class="row">
+      <div class="col-md-6">
+        <label>
+          <span class="field-title">Father Name </span>:
+        </label>
+      </div>
+      </div> -->
+      <!-- <div class="row">
+        <div class="col-md-6">
+         
+        </div>
+
+      </div> -->
+      
+      <!-- <div class="row">
+        <div class="col-md-6">
+          <label for="">Age</label>&nbsp;: &nbsp; <span class="name"> {{c.APP_PA_Age}} </span>
+        </div>
+      </div> -->
+      <!-- <div class="row">
+      <div class="col-md-6">
+        <label>
+          <span class="field-title">Scheme </span> :
+        </label>
+      </div>
+     </div> -->
+      <!-- <div class="row">
+        <div class="col-md-6">
+         
+        </div>
+      </div> -->
+      
+     
+
+      <!-- </div> -->
+
+      <div class="title" style="background: rgb(206, 196, 222);margin-bottom: 10px">
+        Permanent Address
+        <!-- <span class="text-sm">Date of modification : </span> -->
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" placeholder=" " maxlength="79" name="APP_VI_Name_PERM"
+              [(ngModel)]="c.APP_VI_Name_PERM" #APP_VI_Name_PERM="ngModel" required pattern="[a-zA-Z\s]+">
+          
+            <label>
+              Village Name
+              <span class="mandatory">*</span>
+              <div class="error-msg"
+                *ngIf="APP_VI_Name_PERM.invalid && (APP_VI_Name_PERM.dirty || APP_VI_Name_PERM.touched || formInvalid)">
+                <span *ngIf="APP_VI_Name_PERM.errors.required">Address is required</span>
+                <span *ngIf="APP_VI_Name_PERM.errors?.pattern"> Address must be alphabets characters</span>
+              </div>
+            </label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" placeholder=" " [(ngModel)]="c.Post_Office_PERM"
+              #Post_Office_PERM="ngModel" name="Post_Office_PERM" pattern="[a-zA-Z\s]+" required>
+            <label>
+              Post Office
+              <span class="mandatory">*</span>
+              <div class="error-msg"
+                *ngIf="Post_Office_PERM.invalid && (Post_Office_PERM.dirty || Post_Office_PERM.touched || formInvalid)">
+                <span *ngIf="Post_Office_PERM.errors.required"> Post Office is required</span>
+                <span *ngIf="Post_Office_PERM.errors?.pattern"> Post Office must be alphabets characters</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <!-- <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="c.APP_TA_Id_FK_PERM" #APP_TA_Id_FK_PERM="ngModel"
+              name="APP_TA_Id_FK_PERM" required>
+             
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="t.TA_Id" *ngFor="let t of Taluks;">
+                {{t.TA_Taluk}} </option>
+            </select>
+            <label>
+              Taluk
+              <span class="mandatory">*</span>
+              <div class="error-msg"
+                *ngIf="APP_TA_Id_FK_PERM.invalid && (APP_TA_Id_FK_PERM.dirty || APP_TA_Id_FK_PERM.touched || formInvalid)">
+                <span *ngIf="APP_TA_Id_FK_PERM.errors.required">Taluk is required</span>
+              </div>
+            </label>
+          </div>
+        </div> -->
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" placeholder=" " [(ngModel)]="c.Police_Station_PERM"
+              #Police_Station_PERM="ngModel" name="Police_Station_PERM" pattern="[a-zA-Z\s]+" required>
+            <label>
+              Police Station
+              <span class="mandatory">*</span>
+              <div class="error-msg"
+                *ngIf="Police_Station_PERM.invalid && (Police_Station_PERM.dirty || Police_Station_PERM.touched || formInvalid)">
+                <span *ngIf="Police_Station_PERM.errors.required"> Police Station is required</span>
+                <span *ngIf="Police_Station_PERM.errors?.pattern"> Police Station must be alphabets characters</span>
+              </div>
+            </label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="c.APP_DI_Id_FK_PERM" #APP_DI_Id_FK_PERM="ngModel"
+              name="APP_DI_Id_FK_PERM" (change)="GetTaluks(c.APP_DI_Id_FK_PERM)" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="d.DI_Id" *ngFor="let d of District;">
+                {{d.DI_District}} </option>
+            </select>
+            <label>
+              District
+              <span class="mandatory">*</span>
+              <div class="error-msg"
+                *ngIf="APP_DI_Id_FK_PERM.invalid && (APP_DI_Id_FK_PERM.dirty || APP_DI_Id_FK_PERM.touched || formInvalid)">
+                <span *ngIf="APP_DI_Id_FK_PERM.errors.required">District is required</span>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" placeholder=" " minlength="6" maxlength="6" pattern="^[0-9]*$"
+              name="APP_Pincode_PERM" [(ngModel)]="c.APP_Pincode_PERM" #APP_Pincode_PERM="ngModel"
+              required>
+            <label>
+              Pincode
+              <span class="mandatory">*</span>
+              <div class="error-msg"
+                *ngIf="APP_Pincode_PERM.invalid && (APP_Pincode_PERM.dirty || APP_Pincode_PERM.touched || formInvalid)">
+                <span *ngIf="APP_Pincode_PERM.errors.required">Pincode is required</span>
+                <span *ngIf="APP_Pincode_PERM.errors?.pattern">Pincode must be numeric characters</span>
+                <span *ngIf="APP_Pincode_PERM.errors.minlength">Pincode must be 6 characters</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="copyAddressCheckbox"
+              (change)="copyPermanentAddress($event.target.checked)">
+            <label class="form-check-label" for="copyAddressCheckbox">
+              Same as Permanent Address
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="title" style="background: rgb(206, 196, 222);margin-bottom: 18px">
+        Correspondense Address
+        <!-- <span class="text-sm">Date of modification : </span> -->
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" placeholder=" " maxlength="79" name="APP_VI_Name"
+              [(ngModel)]="c.APP_VI_Name" pattern="[a-zA-Z\s]+" #APP_VI_Name="ngModel" required>
+            <label>
+              Village Name
+              <span class="mandatory">*</span>
+              <div class="error-msg"
+                *ngIf="APP_VI_Name.invalid && (APP_VI_Name.dirty || APP_VI_Name.touched || formInvalid)">
+                <span *ngIf="APP_VI_Name.errors.required">Address is required</span>
+                <span *ngIf="APP_VI_Name.errors?.pattern"> Address must be alphabets characters</span>
+              </div>
+            </label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" placeholder=" " [(ngModel)]="c.Post_office_Co"
+              #Post_office_Co="ngModel" pattern="[a-zA-Z\s]+" name="Post_office_Co" required>
+            <label>
+              Post Office
+              <span class="mandatory">*</span>
+              <div class="error-msg"
+                *ngIf="Post_office_Co.invalid && (Post_office_Co.dirty || Post_office_Co.touched || formInvalid)">
+                <span *ngIf="Post_office_Co.errors.required"> Post Office is required</span>
+                <span *ngIf="Post_office_Co.errors?.pattern"> Post Office must be alphabets characters</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="row">
+        <!-- <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="newAddress.APP_TA_Id_FK" #APP_TA_Id_FK="ngModel" name="APP_TA_Id_FK"
+              required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="t.TA_Id" *ngFor="let t of Taluks;">
+                {{t.TA_Taluk}} </option>
+            </select>
+            <label>
+              Taluk
+              <span class="mandatory">*</span>
+              <div class="error-msg"
+                *ngIf="APP_TA_Id_FK.invalid && (APP_TA_Id_FK.dirty || APP_TA_Id_FK.touched || formInvalid)">
+                <span *ngIf="APP_TA_Id_FK.errors.required">Taluk is required</span>
+              </div>
+            </label>
+          </div>
+
+        </div> -->
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" placeholder=" " [(ngModel)]="c.Police_Station_Co"
+              #Police_Station_Co="ngModel" pattern="[a-zA-Z\s]+" name="Police_Station_Co">
+            <label>
+              Police Station
+              <span class="mandatory">*</span>
+              <div class="error-msg"
+                *ngIf="Police_Station_Co.invalid && (Police_Station_Co.dirty || Police_Station_Co.touched || formInvalid)">
+                <span *ngIf="Police_Station_Co.errors.required"> Police Station is required</span>
+                <span *ngIf="Police_Station_Co.errors?.pattern"> Police Station must be alphabets characters</span>
+              </div>
+            </label>
+
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="c.APP_DI_Id_FK" #APP_DI_Id_FK="ngModel"
+              name="APP_DI_Id_FK" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="co.DI_Id" *ngFor="let co of Districts;">
+                {{co.DI_District}} </option>
+            </select>
+            <label>
+              District
+              <span class="mandatory">*</span>
+              <div class="error-msg"
+                *ngIf="APP_DI_Id_FK.invalid && (APP_DI_Id_FK.dirty || APP_DI_Id_FK.touched || formInvalid)">
+                <span *ngIf="APP_DI_Id_FK.errors.required">District is required</span>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" placeholder=" " minlength="6" maxlength="6" pattern="^[0-9]*$"
+              name="APP_Pincode" [(ngModel)]="c.APP_Pincode" #APP_Pincode="ngModel" required>
+            <label>
+              Pincode
+              <span class="mandatory">*</span>
+              <div class="error-msg"
+                *ngIf="APP_Pincode.invalid && (APP_Pincode.dirty || APP_Pincode.touched || formInvalid)">
+                <span *ngIf="APP_Pincode.errors.required">Pincode is required</span>
+                <span *ngIf="APP_Pincode.errors?.pattern">Pincode must be numeric characters</span>
+                <span *ngIf="APP_Pincode.errors.minlength">Pincode must be 6 characters</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+      </div>
+
+
+
+      <div class="btn-wrapper">
+        <button class="btn btn-primary" type="submit"  (click)="UpdateApplicantAddress(ApplDetails)">Save</button>
+        <button class="btn btn-primary" type="button" (click)="resetForm()">Cancel</button>
+      </div>
+    </div>
+
+  </form>
+</div>

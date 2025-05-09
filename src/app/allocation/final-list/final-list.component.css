@@ -1,0 +1,15 @@
+.holder1{
+    padding:20px 10px 0px;background:#808080;color:#fff;
+}
+
+.holder1 label{
+    color:#fff !important;
+}
+
+.title{
+    font-size:30px !important;
+}
+
+.table-title{
+    background-color:rgba(0, 0, 0, 0.05) !important;
+}

@@ -1,0 +1,177 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    Allowances Codes
+    <button class="btn btn-primary float-right" [routerLink]="['/home/payroll/allowance-code-grid']">Back</button>
+  </div>
+
+
+  <form (ngSubmit)="mode=='edit'?UpdateAllowanceDedu(Details):SaveAllowanceDedu(Details)" #Details="ngForm"
+    name="form1">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6" *ngIf="mode =='edit'">
+          <div class="input-group">
+            <label style="margin-top: 17px;">Allowances Code : {{a.ED_CODE}}</label>
+          </div>
+        </div>
+        <div class=" col-md-6">
+          <div class="input-group">
+            <label>Allowances Description
+              <span class="mandatory">*</span></label>
+            <input class="custom-field" type="text" name="ED_DESC" maxlength="30" [(ngModel)]="a.ED_DESC"
+              #ED_DESC="ngModel" [disabled]="mode=='view'" required>
+          </div>
+           <div class="error-msg pull-right"  *ngIf="ED_DESC.invalid && (ED_DESC.dirty || ED_DESC.touched || formInvalid)">
+              <span  *ngIf="ED_DESC.errors.required">Description is required</span>             
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Print Name
+             <span class="mandatory">*</span></label>
+            <input class="custom-field" type="text" name="PRINT_DESC" maxlength="30" [(ngModel)]="a.PRINT_DESC"
+              #PRINT_DESC="ngModel" [disabled]="mode=='view'" required>
+          </div>
+           <div class="error-msg pull-right"  *ngIf="PRINT_DESC.invalid && (PRINT_DESC.dirty || PRINT_DESC.touched || formInvalid)">
+              <span  *ngIf="PRINT_DESC.errors.required">Print Description is required</span>             
+          </div>
+        </div>
+        <div class="col-md-6">
+
+          <!-- <div class="form-group">
+          <label>Allowance Type</label>        
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="Fixed_Variable_ind"  [(ngModel)]="a.Fixed_Variable_ind"
+            #Fixed_Variable_ind="ngModel" id="inlineRadio1" value="A">
+            <label class="form-check-label" for="inlineRadio1">Fixed</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+            <label class="form-check-label" for="inlineRadio2">Variable</label>
+          </div>
+        </div> -->
+
+
+          <div class="col-md-6">
+            <label style="color: blue;">Allowance Type</label> &nbsp;
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" name="Fixed_Variable_ind" #Fixed_Variable_ind="ngModel"
+                [(ngModel)]="a.Fixed_Variable_ind" type="radio" id="inlineRadio1" value="F" (click)="Fixed()" required>
+              <label class="form-check-label"> Fixed
+                <span class="mandatory">*</span> </label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" name="Fixed_Variable_ind" #Fixed_Variable_ind="ngModel"
+                [(ngModel)]="a.Fixed_Variable_ind" type="radio" id="inlineRadio1" value="V" (click)="Variable()" required>
+              <label class="form-check-label"> Variable 
+                <span class="mandatory">*</span> </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class=" col-md-6">
+          <div class="input-group">
+            <label>Calculation Basis
+            <span class="mandatory">*</span></label>
+            <select name="CLCIND" #CLCIND="ngModel" [(ngModel)]="a.CLCIND" class="custom-field" required>
+              <option value="">--Select--</option>
+              <option value="A">Actual Days per Month</option>
+              <option value="F">Fixed 30 Daysin Month</option>
+            </select>
+          </div>
+          <div class="error-msg pull-right"  *ngIf="CLCIND.invalid && (CLCIND.dirty || CLCIND.touched || formInvalid)">
+            <span  *ngIf="CLCIND.errors.required">Calculation Basis is required</span>             
+        </div>
+
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+
+            <!-- 
+
+          <label>Calculation Type</label>         
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="inlineRadio1" (change)="toggle1()" value="option1">
+            <label class="form-check-label" for="inlineRadio1">Flat Amount</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions1" id="inlineRadio2" value="option2" [routerLink]="['/home/payroll/payroll-masters/formula/formula-form']">
+            <label class="form-check-label" for="inlineRadio2">Formula</label>
+          </div> -->
+
+            <div class="col-md-6">
+              <label style="color: blue;">Calculation Type</label> &nbsp;
+              <div class="form-check form-check-inline">
+                <label class="form-check-label" *ngIf="show1 || (a.ED_Category !== 'F')">
+                  <span class="mandatory">*</span>
+                  <input class="form-check-input" name="ED_Category" #ED_Category="ngModel" [(ngModel)]="a.ED_Category"
+                    (change)="toggle1()" type="radio" id="inlineRadio1" value="A" required> Flat Amount
+                </label>
+              </div>
+              <div class="form-check form-check-inline" *ngIf="show1 || (a.ED_Category !== 'A')">
+                <label class="form-check-label">
+                  <span class="mandatory">*</span>
+                  <input class="form-check-input" name="ED_Category" #ED_Category="ngModel" [(ngModel)]="a.ED_Category"
+                    (change)="toggle2()" type="radio" id="inlineRadio1" value="F" required> Formula
+                </label>
+              </div>
+            </div>
+
+            <div *ngIf="show1 || (a.ED_Category == 'A')">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"> ₹ </span>
+                </div>
+                <input type="number" name="Flat_amt" #Flat_amt="ngModel" [(ngModel)]="a.Flat_amt" class="form-control" required>
+              </div>
+               <div class="error-msg pull-right"  *ngIf="Flat_amt.invalid && (Flat_amt.dirty || Flat_amt.touched || formInvalid)">
+              <span  *ngIf="Flat_amt.errors.required">Flat amout is required</span>             
+          </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Mandatory
+              <span class="mandatory">*</span>
+            </label>
+            <select name="Global_ind" #Global_ind="ngModel" [(ngModel)]="a.Global_ind" class="custom-field" required>
+              <option selected value="">--Select--</option>
+              <option value="Y">Yes</option>
+              <option value="N">No</option>
+            </select>
+          </div>
+          <div class="error-msg pull-right"  *ngIf="Global_ind.invalid && (Global_ind.dirty || Global_ind.touched || formInvalid)">
+            <span  *ngIf="Global_ind.errors.required">Flat amout is required</span>             
+        </div>
+        </div>
+        <div class=" col-md-6">
+          <div class="input-group">
+            <label>Mark this as Active
+              <span class="mandatory">*</span>
+            </label>
+            <select name="ACTIVE_IND" #ACTIVE_IND="ngModel" [(ngModel)]="a.ACTIVE_IND" class="custom-field" required>
+              <option value="">--Select--</option>
+              <option value="N">No</option>
+              <option value="Y">Yes</option>
+            </select>
+          </div>
+          <div class="error-msg pull-right"  *ngIf="ACTIVE_IND.invalid && (ACTIVE_IND.dirty || ACTIVE_IND.touched || formInvalid)">
+            <span *ngIf="ACTIVE_IND.errors.required">Flat amout is required</span>             
+        </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="text-center">
+      <button class="btn btn-primary" type="submit">Save</button> &nbsp;
+      <button class="btn btn-primary" type="reset" (click)="Cancel()">Cancel</button>
+    </div>
+  </form>
+</div>

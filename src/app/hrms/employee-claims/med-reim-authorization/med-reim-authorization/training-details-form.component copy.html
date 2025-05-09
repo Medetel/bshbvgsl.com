@@ -1,0 +1,207 @@
+<div class="wrapper">
+    <form (ngSubmit)="mode=='Edit'?UpdateTRN(TRN):SaveTRN(TRN)" #TRN="ngForm" name="TRN">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary float-right" [routerLink]="['/home/training']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <!--  -->
+  <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="row">
+            <div class="col-md-5">
+              <label for="">Nominee No. : </label>
+            </div>
+            <div class="col-md-7">
+              <span> {{T.DOC_CODE}} </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row">
+            <div class="col-md-5">
+              <label for="">Date. : </label>
+            </div>
+            <div class="col-md-7">
+              <span> {{T.Doc_Year | date:'dd/MM/yyyy'}} </span>
+            </div>
+          </div>
+        </div>
+        <div class=" col-md-4">
+          <label for="">Status : <span>Generated</span></label>
+        </div>
+      </div>
+    </div>
+
+  <div class="title themeheading">
+    Employee Details
+    <span class="clearfix"></span>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="input-group">
+          <label for=""> Division code </label>
+          <select class="custom-field" [(ngModel)]="T.DivisionId" #DivisionId="ngModel" name="DivisionId"
+          [disabled]="mode=='View' || mode=='Edit'"  (change)="GetEmployee(T.DivisionId)">
+          <option [value]="undefined" selected>---Select---</option>
+          <option [value]="d.DI_Id" *ngFor="let d of Districtlist;">
+            {{d.DI_District}}
+          </option>
+        </select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group">
+          <label for="">Emp Code </label>
+          <select class="custom-field" [(ngModel)]="T.EmpID" #EmpID="ngModel" name="EmpID"[disabled]="mode=='View'"
+          (change)="GetEmployeeForTheId(T.EmpID)" >
+          <option [value]="undefined" selected>---Select---</option>
+          <option [value]="ee.EMP_EMPLOYEE_ID" *ngFor="let ee of Emplist;">
+            {{ee.EMP_FIRST_NAME}}
+          </option>
+        </select>
+        </div>
+      </div>
+  
+      <div class="col-md-4">
+          <label for="">Name : </label> &nbsp;
+          <span> {{EmployeeDetails.EMP_FIRST_NAME}} </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 ">
+          <label for="">Division : </label> &nbsp;
+          <span> {{EmployeeDetails.DI_District}} </span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Department : </label> &nbsp;
+          <span> {{EmployeeDetails.Department_Name}} </span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Designation : </label> &nbsp;
+          <span> {{EmployeeDetails.desg_name}} </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <label for="">Employee Category : </label> &nbsp;
+          <span> {{EmployeeDetails.EMP_CATEGORY}} </span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Employee Group : </label> &nbsp;
+          <span> {{EmployeeDetails.EMP_GROUP}} </span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Employee Type : </label> &nbsp;
+          <span> {{EmployeeDetails.EMP_TYPE}} </span>
+        </div>
+      </div>
+  <!--  -->
+  <div class="container-fluid">
+    <div class="title rowmarginfix themeheading">
+      Training Details
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-sm-6">
+        <div class="input-group">
+          <label>Training Type</label><br>
+          <select class="custom-field" [(ngModel)]="T.TrainingId" #TrainingId="ngModel" name="TrainingId"[disabled]="mode=='View'"
+          >
+          <option [value]="undefined" selected>---Select---</option>
+          <option [value]="tt.fix_code_id" *ngFor="let tt of Trainingtypelist;">
+            {{tt.code_value}}
+          </option>
+        </select>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6">
+        <div class="input-group">
+          <label>Training Category</label><br>
+          <select class="custom-field" [(ngModel)]="T.CategoryId" #CategoryId="ngModel" name="CategoryId"[disabled]="mode=='View'"
+          >
+          <option [value]="undefined" selected>---Select---</option>
+          <option [value]="tc.fix_code_id" *ngFor="let tc of TrainingCategorylist;">
+            {{tc.code_value}}
+          </option>
+        </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-sm-6">
+        <div class="input-group">
+          <label> Conducted By </label><br>
+          <input type="text" name="Conductedby" maxlength="50" [(ngModel)]="T.Conductedby"
+          #Conductedby="ngModel" class="form-control" [disabled]="mode=='View'">
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6">
+        <div class="input-group">
+          <label>Registration No.</label><br>
+          <input type="text" name="Registration" maxlength="50" [(ngModel)]="T.Registration"
+          #Registration="ngModel" class="form-control" [disabled]="mode=='View'">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-sm-6">
+        <div class="input-group">
+          <label>Subject</label><br>
+          <input type="text" name="Subject" maxlength="50" [(ngModel)]="T.Subject"
+          #Subject="ngModel" class="form-control" [disabled]="mode=='View'">
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6">
+        <div class="input-group">
+          <label>Start Date</label><br>
+          <input type="Date" name="Start_Date" maxlength="50" [(ngModel)]="T.Start_Date"
+          #Start_Date="ngModel" class="form-control" [disabled]="mode=='View'">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-sm-6">
+        <div class="input-group">
+          <label>End Date</label><br>
+          <input type="Date" name="End_Date" maxlength="50" [(ngModel)]="T.End_Date"
+                #End_Date="ngModel" class="form-control" [disabled]="mode=='View'">
+        </div>
+      </div>
+      <div class=" col-md-6 col-sm-6">
+        <div class="input-group">
+          <label>Cretification Date </label><br>
+          <input type="Date" name="Cretification_Date" maxlength="50" [(ngModel)]="T.Cretification_Date"
+                #Cretification_Date="ngModel" class="form-control" [disabled]="mode=='View'">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-sm-6">
+        <div class="input-group">
+          <label>Remarks</label><br>
+          <input type="text" name="Remarks" maxlength="50" [(ngModel)]="T.Remarks"
+          #Remarks="ngModel" class="form-control" [disabled]="mode=='View'">
+        </div>
+      </div>
+      <div class="col-md-2 col-sm-2">
+        <label style="color:blue">Upload Certificate</label>
+      </div>
+      <div class="col-md-4 col-sm-4">
+          <input *ngIf="!hide" type="file" #Image accept="application/pdf"
+          (change)="imageUpload1($event.target.files)" id="Upload" name="Upload">
+        <a class="" target="_blank" href="{{T.Upload}}">View</a>
+      </div>
+    </div>
+  </div>
+  <br />
+
+
+  <div class="d-flex justify-content-center">
+      <button [disabled]="mode=='View'" class="btn btn-primary" type="submit">{{mode=='edit'?'Update':'Save'}}</button> &nbsp;
+      <button [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button>&nbsp;
+    </div>
+  <br>
+</div>
+    </form>

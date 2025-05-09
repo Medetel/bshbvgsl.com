@@ -1,0 +1,27 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      <div class="sidemenu">
+        <ul class="billmenu">
+          <li routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><a [routerLink]="['/home/leaveapp/']">Daily Attendance (In)</a></li>
+          <li routerLinkActive="active"><a [routerLink]="['daily-attendance-out']">Daily Attendance (Out)</a></li>
+          <li routerLinkActive="active"><a [routerLink]="['leave-application']">Leave Application</a></li>
+          <li routerLinkActive="active"><a [routerLink]="['leave-authorization']">Leave Approval</a></li>
+          <li routerLinkActive="active"><a [routerLink]="['leave-sanction']">Leave Sanction</a></li> 
+          <li routerLinkActive="active"><a [routerLink]="['monthly-leave-atten']">Monthly Leave & Attendance Process</a></li> 
+          <li routerLinkActive="active"><a [routerLink]="['time-roll-gen']">Time Roll Generation</a></li> 
+          <li routerLinkActive="active"><a [routerLink]="['time-roll-approval']">Time Roll Approval</a></li> 
+          <li routerLinkActive="active"><a [routerLink]="['time-roll-sanction']">Time Roll Sanction</a></li> 
+          <li routerLinkActive="active"><a [routerLink]="['arrear-grid']">Arrear Details</a></li> 
+          <li routerLinkActive="active"><a [routerLink]="['arrear-approval-grid']">Arrear Approval</a></li> 
+          <li routerLinkActive="active"><a [routerLink]="['arrear-sanction-grid']">Arrear Sanction</a></li> 
+          <li routerLinkActive="active"><a [routerLink]="['time-roll-fin']">Time Roll Finalization</a></li> 
+          <li routerLinkActive="active"><a [routerLink]="['time-roll-uninti']">Time Roll Unintigrated</a></li> 
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-10">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

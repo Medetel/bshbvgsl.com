@@ -1,0 +1,200 @@
+<div class="wrapper">
+  <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm,itemsPerPage,1)"> 
+  <div class="title themeheading">
+    View Agreements
+    <div class="float-right">
+      Items per page :
+      <select name="SearchRows" class="noofpage" (change)="itemsPerPageChanged(itemsPerPage, 1)">
+        <option [ngValue]="5">5</option>
+        <option [ngValue]="10">10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+        <option value="40">40</option>
+        <option value="50">50</option> 
+      </select>
+      <!-- <button class="btn btn-primary" [routerLink]="['/home/agreements/agreements-form']">Add</button> -->
+    </div>
+    <span class="clearfix"></span>
+  </div>
+  <div class="searchbar">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-1">
+          <label>Search</label>
+        </div>
+        <div class="col-md-4">
+          <select name="SearchCriteria" #SearchCriteria="ngModel" [(ngModel)]="s.SearchCriteria" class="form-control"
+            required>
+              <option [ngValue]="undefined" selected>---Select---</option>
+              <option value="Agmnt_Code">Agreement No.</option>
+              <option value="PD_Project_Name">Project Name</option>
+              <option value="PropertyReqCode">Property Request No.</option>
+              <option value="CUST_CODE">Customer No.</option>
+            </select>
+            <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)" class="error-msg">
+              <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+          <input type="text" name="SearchText" #SearchText="ngModel" [(ngModel)]="s.SearchText" class="form-control"
+          placeholder="Search.." required>
+        <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+          <div *ngIf="SearchText.errors.required">Search text is required</div>
+        </div>
+        </div>
+        <div class="col-md-3">
+          <button class="btn btn-default" type="submit">Search</button>
+          <button class="btn btn-default" type="reset" (click)="GetAllAgreementDetails(itemsPerPage, 1)">Clear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="table-responsive" id="auction-grid">
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <td rowspan="2">Sl No.</td>
+          <td colspan="3" class="text-center">Agreement Details</td>
+          <td colspan="3" class="text-center">Request Property Details</td>
+          <td colspan="2" class="text-center">Property Details</td>
+          <td colspan="2" class="text-center">Customer Details</td>
+          <td rowspan="2">Status</td>
+          <td rowspan="2">Add Agreement</td>
+          <td rowspan="2">View</td>
+          <td rowspan="2">Edit</td>
+          <td rowspan="2">Delete</td>
+        </tr>
+        <tr>
+          <td>Agreement No.</td>
+          <td>Agreement Date</td>
+          <td>Agreement Type</td>
+          <td>Prop-Request No.</td>
+          <td>Prop-Request Date</td>
+          <td>Prop-Request Type</td>
+          <td>Project</td>
+          <td>Total Property Nos.</td>
+          <td>Customer No</td>
+          <td>Customer Name</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="let A of AgreementList | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index">
+          <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}</td>
+          <td>{{A.Agmnt_Code}}</td>
+          <td>{{A.DOC_DATE | date:'dd/MM/yyyy'}}</td>
+          <td>{{A.AgrmntType}}</td>
+          <td>{{A.PropertyReqCode}}</td>
+          <td>{{A.PropertyReqDate | date:'dd/MM/yyyy'}}</td>
+          <td>{{A.Applant_Type}}</td>
+          <td>{{A.PD_Project_Name}}</td>
+          <td>{{A.Total_Property_Count}}</td>
+          <td>{{A.CUST_CODE}}</td>
+          <td>{{A.CUST_F_NAME}}</td>
+          <td *ngIf="A.Status=='' || A.Status=='null'">-</td>
+          <td *ngIf="A.Status=='G' || A.Status=='g'">Generated</td>
+          <td *ngIf="A.Status=='A' || A.Status=='a'">Approved</td>
+          <td *ngIf="A.Status=='R' || A.Status=='r'">Rejected</td>
+          <td class="text-center">  
+            <button class="btn btn-primary" [disabled]="A.Updated=='Y'" [routerLink]="['/home/agreements/agreements-form',A.REQP_ID,'Add',A.Applant_Type]">Add</button>
+          </td>
+          <td class="text-center">
+            <a href="#" [hidden]="A.Updated!='Y'" [routerLink]="['/home/agreements/agreements-form',A.REQP_ID,1,'View']">
+              <i class="fa fa-lg fa-eye themecolor"></i>
+            </a>
+          </td>
+          <td class="text-center">
+            <a href="#" [hidden]="A.Updated!='Y'" [routerLink]="['/home/agreements/agreements-form',A.REQP_ID,1,'Edit']">
+              <i class="fa fa-lg fa-edit themecolor"></i>
+            </a>
+          </td>
+          <td class="text-center">
+            <a href="javascript:void(0);" [hidden]="A.Updated!='Y'" (click)="DeleteAgreementDetails(A.REQP_ID)">
+              <i class="fa fa-lg fa-trash themecolor"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-11">
+          <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)" maxSize="9"
+            directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+            screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+            screenReaderCurrentLabel="You're on page">
+          </pagination-controls>
+        </div>
+        <div class="col-md-1">
+          Total:
+          <span>{{totalItems}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <td>Sl No.</td>
+          <td>Agreement Code</td>
+          <td>Date</td>
+          <td>Property Request Code</td>
+          <td>Project Name</td>
+          <td>Agreement Type</td>
+          <td> Start Date </td>          
+          <td> Renewal Date</td> 
+          <td>Status</td>
+          <td class="text-center">View</td>
+          <td class="text-center">Edit</td>
+          <td class="text-center">Delete</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+        *ngFor="let A of AgreementList | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index">
+        <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}</td>
+          <td>{{A.Agrmnt_Code}}</td>
+          <td>{{A.Date | date:'MM/dd/yyyy'}}</td>
+          <td>{{A.PropertyReqCode}}</td>
+          <td>{{A.PD_Project_Name}}</td>
+          <td>{{A.Agrmnt_Type}}</td>      
+          <td>{{A.Start_Date | date:'MM/dd/yyyy'}}</td>
+          <td>{{A.End_Date | date:'MM/dd/yyyy'}}</td>    
+          <td *ngIf="A.Status=='A'|| A.Status=='a'">Active</td>
+          <td class="text-center">
+            <a href="javascript:void(0);">
+              <i class="fa fa-lg fa-eye themecolor"></i>
+            </a>
+          </td>
+          <td class="text-center">
+            <a href="javascript:void(0);">
+              <i class="fa fa-lg fa-edit themecolor"></i>
+            </a>
+          </td>
+          <td class="text-center">
+            <a href="javascript:void(0);">
+              <i class="fa fa-lg fa-trash themecolor"></i>
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-11">
+          <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)" maxSize="9"
+            directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+            screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+            screenReaderCurrentLabel="You're on page">
+          </pagination-controls>
+        </div>
+        <div class="col-md-1">
+          Total:
+          <span>{{totalItems}}</span>
+        </div>
+      </div>
+    </div>
+  </div> -->
+</form>
+</div>

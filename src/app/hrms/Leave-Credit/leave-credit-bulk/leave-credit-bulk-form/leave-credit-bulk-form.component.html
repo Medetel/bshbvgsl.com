@@ -1,0 +1,189 @@
+<div class="wrapper">
+    <div class="title themeheading">
+      Leave Credit (Bulk)
+      <button class="btn btn-primary float-right" [routerLink]="['/home/leavecredit/leave-credit-bulk']">Back</button>
+      <span class="clearfix"></span>
+    </div>
+    <div class="container-fluid">
+      <!-- <div class="row">
+        <div class="col-md-4">
+          <label for="">Increment List No. :</label>
+        </div>
+        <div class="col-md-4">
+          <label for="">Date : </label>
+        </div>
+        <div class="col-md-4">
+          <label for="">Status :</label>
+        </div>
+      </div> -->
+  
+      <div class="row">
+        <div class="col-md-3" *ngIf="mode!='view'">
+          <div class="input-group">
+            <label for=""> Division </label>
+            <select class="custom-field" [(ngModel)]="lb.DIVISION_CODE" #DIVISION_CODE="ngModel"
+            name="DIVISION_CODE"  (change)="ChangeOfDivision(lb.DIVISION_CODE)">
+            <option [value]="undefined" selected>---Select---</option>
+            <option [value]=0>All</option>
+            <option [value]="d.DI_Id" *ngFor="let d of DistrictsList;">
+              {{d.DI_District}}
+            </option>
+          </select>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="input-group">
+            <label for="">Leave Type </label>
+            <select class="custom-field" [(ngModel)]="lb.leaveType" #leaveType="ngModel"
+            name="leaveType" [disabled]="mode=='view'">
+            <option [value]="undefined" selected>---Select---</option>
+            <option [value]="lt.Leave_id" *ngFor="let lt of leavetypelist;">
+              {{lt.Leave_name}}
+            </option>
+          </select>
+          </div>
+        </div>
+
+        <div class="col-md-3 ">
+            <div class="input-group">
+              <label for="">Credit No </label>             
+              <input class="custom-field" [(ngModel)]="lb.Credit" #Credit="ngModel"
+              name="Credit" type="text"  pattern="^[0-9]*$" >            
+            </div>
+            <div class="error-msg"
+            *ngIf="Credit.invalid && (Credit.dirty || Credit.touched || formInvalid)">
+            <span *ngIf="Credit.errors.pattern"> Credit should enter alphabets</span>
+          </div>
+          </div>
+
+          <div class="col-md-1" *ngIf="mode!='view'">
+            <button class="btn btn-primary" (click)="GenerateList(lb.DIVISION_CODE,lb.leaveType)">Generate Leave Credit List</button>
+          </div>
+  
+      </div>
+      <div class="row">     
+     </div>
+    
+     <div class="title themeheading rowmarginfix">
+        Leave Credit (Bulk)
+        <span class="clearfix"></span>
+      </div>
+  
+      <div class="table-responsive" id="auction-grid">
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <td rowspan="2">Sl No.</td>
+              <!-- <td rowspan="2">Leave Credit No.</td>
+              <td rowspan="2"> Date</td>    -->
+              <td colspan="5" class="text-center" >Employee Details</td>
+            
+              <td colspan="1" class="text-center">Closing Balance Details</td>
+              <td colspan="1" class="text-center">Leave Credit Details</td>
+            </tr>
+            <tr>
+              <td >Employee Id</td>
+              <td >Employee Name</td>
+              <td>Designation</td>
+              <td>Division</td>
+              <td>Department</td>  
+            
+              <!-- <td>Leave Type</td> -->
+              <td>NOS</td>
+              <!-- <td>Leave Type</td> -->
+              <td>Leave Credit</td>
+            </tr>
+          </thead>
+          <tbody>     
+            <tr *ngFor="let lb of leavebulklist; let i=index">
+              <td>{{i+1}}</td>
+              <td>{{lb.EMP_EMPLOYEE_CODE}}</td>
+              <td>{{lb.EMP_FIRST_NAME}}</td>
+              <td></td>
+              <td>{{lb.DI_District}}</td>
+              <td>{{lb.Department_Name}}</td>
+           
+            
+              <td>{{lb.Leave_Closing_balance}}</td>
+              <td>{{lb.Leave_Credi}}</td>
+             <!--  <td></td>
+              <td></td> -->
+                       <!-- <td class="text-center">
+                <a href="javascript:void(0)">
+                  <i class="fa fa-lg fa-eye themecolor" ></i>
+                </a>
+              </td> -->
+             
+                     <!-- <td>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                  <label class="form-check-label" for="inlineRadio1">Approve</label>
+                </div>
+              </td>
+              <td>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" data-toggle="modal" data-target=".bd-example-modal-xl" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                  <label class="form-check-label" for="inlineRadio2">Reject</label>
+                </div>
+              </td> -->
+      
+            </tr>
+      
+          </tbody>
+        </table>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-11">
+              <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)" maxSize="9"
+                directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+                screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                screenReaderCurrentLabel="You're on page">
+              </pagination-controls>
+            </div>
+            <div class="col-md-1">
+              Total:
+              <span>{{totalItems}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Leave Credit</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for=""> Remarks </label>
+                      <textarea name="" id="" cols="30" rows="10" class="form-control"> </textarea>
+                    </div>
+                  </div>
+                </div>
+                <br>
+                <div class="text-center">
+                  <button class="btn btn-primary">Save</button>
+                  <button class="btn btn-primary" data-dismiss="modal" aria-label="Close">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+     
+      <br> 
+      <div class="text-center" *ngIf="mode!='view'">
+        <button class="btn btn-primary" type="button" (click)="save(lb.Credit)">Save</button>
+        <button class="btn btn-primary">Cancel</button>
+      </div>
+      <br>
+    </div>
+  </div>

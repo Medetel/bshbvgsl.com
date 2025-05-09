@@ -1,0 +1,91 @@
+<div class="wrapper">
+
+    <form #searchForm="ngForm">
+        <div class="title themeheading">{{title}}
+            <div class="float-right">
+                Items per page:
+                <select name="SearchRows" class="noofpage">
+                    <option [ngValue]="5">5</option>
+                    <option [ngValue]="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                </select>
+                <a class="btn btn-primary " [routerLink]="['/home/payroll/attendance/attendance-form']">Add</a>
+            </div>
+            <span class="clearfix"></span>
+        </div>
+        <div class="searchbar">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-md-1">
+                          <label>Search</label>
+                      </div>
+                      <div class="col-md-4">
+                          <select name="SearchCriteria"  class="form-control" required>
+                              <option [ngValue]="undefined" selected>---Select---</option>                          
+                          </select>
+                          <!-- <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)" class="error-msg">
+                              <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+                          </div> -->
+                      </div>
+                      <div class="col-md-4">
+                          <input type="text" name="SearchText"  class="form-control" placeholder="Search.."
+                              required>
+                          <!-- <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+                              <div *ngIf="SearchText.errors.required">Search text is required</div>
+                          </div> -->
+                      </div>
+                      <div class="col-md-3">
+                          <button class="btn btn-default" type="submit">Search</button>
+                          <button class="btn btn-default" type="reset">Clear</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        <div class="table-responsive">
+            <table class="table table-striped grid">
+                <thead>
+                    <tr>
+                      <td>Sl No</td>
+                      <td>Employee Id</td>                        
+                      <td>Process month</td>
+                      <td>Number of days attended </td>
+                      <td>Leave availed </td>
+                      <td>Lose of pay </td>
+                      <td class="text-center">View</td>
+                      <td class="text-center">Edit</td>
+                      <td class="text-center">Delete</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>                        
+                        <td> 1 </td>
+                        <td></td>
+                        <td></td>                     
+                        <td></td>
+                        <td></td> 
+                        <td></td> 
+                        <td class="text-center">
+                            <a href="javascript:void(0);">
+                                <i class="fa fa-lg fa-eye themecolor"></i>
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <a href="javascript:void(0);" >
+                                <i class="fa fa-lg fa-edit themecolor"></i>
+                            </a>
+                        </td>
+                        <td class="text-center">
+                            <a href="javascript:void(0);">
+                                <i class="fa fa-lg fa-trash themecolor"></i>
+                            </a>
+                            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+  </div>

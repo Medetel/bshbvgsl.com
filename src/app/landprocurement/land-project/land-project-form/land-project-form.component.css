@@ -1,0 +1,20 @@
+.row{
+    padding: 20px 0px 0px !important;   
+}
+
+.row:nth-child(odd){
+    background: #f2f2f2;
+}
+
+.mandatory{
+    color:red;
+}
+
+.radio-button:checked {
+    accent-color: rgb(230, 247, 84); /* This will change the color of the radio button itself */
+  }
+
+  .radio-button:checked {
+    border: 2px solid red;
+    background-color: red; /* Optional: adds a red fill when checked */
+  }

@@ -1,0 +1,242 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button *ngIf="!fromUtility" class="btn btn-primary pull-right" [routerLink]="['/home/caseproceeding/cp-view',Case_Id]">Back</button>
+    <button  *ngIf="fromUtility" class="btn btn-primary pull-right" [routerLink]="['/home/log-view/reroute','reroute']">Back</button>
+    <span class="clearfix"></span>
+  </div> 
+
+      <div class="title2 fontsize row1">
+          <div class=" margin">  
+              <div class="col-md-1">&nbsp;</div>   
+              <div class="row">             
+                  <div class="col-md-3">
+                    <label for="">Case No <span>: {{caseDetails.Case_No}}</span></label>
+                  </div>
+                  <div class="col-md-3">
+                    <label for="">
+                      <label for="">Registration Date <span>:{{caseDetails.Case_Reg_Date| date:'dd/MM/yyyy'}}</span></label>
+                    </label>
+                  </div>
+                  <div class="col-md-3">
+                    <label for="">Court Name<span>: {{caseDetails.Court_Name}}</span></label>
+                  </div>     
+                  <div class="col-md-3">
+                    <label for="">Project Name<span>: {{caseProjectDetails.PD_Project_Name}}</span></label>
+                  </div>    
+                 </div> 
+                 <div class="row">   
+                  <div class="col-md-3">
+                    <label for="">District Name<span>: {{caseProjectDetails.DI_District}}</span></label>
+                  </div>   
+                  <div class="col-md-3">
+                    <label for="">Advocate Name<span>: {{Adv_AdvocateName}}</span></label>
+                  </div> 
+                  <div class="col-md-3">
+                    <label for="">Petitioner Name<span>: {{CasePeti_PetitionerName}}</span></label>
+                  </div> 
+                  <div class="col-md-3">
+                    <label for="">Scheme Name<span>: {{caseProjectDetails.Sch_Name}}</span></label>
+                  </div> 
+                  </div>
+                </div>                
+          </div>
+
+        <br>
+
+  <form (ngSubmit)="mode=='edit'?UpdateCaseProceeding(CaseProc):SaveCaseProceeding(CaseProc)" #CaseProc="ngForm" name="form1">
+  <div class="container-fluid">
+    <div class="row">      
+      <div class="col-md-2">
+        <label for="">Court Attended  <span class="mandatory">*</span>
+          <div class="error-msg float-right"
+            *ngIf="CaseProc_Courtattend.invalid && (CaseProc_Courtattend.dirty || CaseProc_Courtattend.touched || formInvalid)">
+            <span *ngIf="CaseProc_Courtattend.errors.required">Field is required</span>
+          </div></label>
+      </div>
+      <div class="col-md-4">
+        <div class="form-check-inline">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="CaseProc_Courtattend" (click)="CourtAttent('Y')" value="Y" [(ngModel)]="pf.CaseProc_Courtattend" 
+            #CaseProc_Courtattend="ngModel" required [disabled]="mode=='view'">
+            Yes
+          </label>
+        </div>
+        <div class="form-check-inline">
+          <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="CaseProc_Courtattend" (click)="CourtAttent('N')" value="N" [(ngModel)]="pf.CaseProc_Courtattend" 
+              #CaseProc_Courtattend="ngModel" required [disabled]="mode=='view'">No
+          </label>
+        </div>
+      </div>
+      <div class="col-md-6" *ngIf="hearingdateview">
+        <div class="input-group">
+          <input type="date" class="custom-field" name="CaseProc_HearingDate"  [(ngModel)]="pf.CaseProc_HearingDate" 
+          #CaseProc_HearingDate="ngModel" [disabled]="mode=='view'" required>
+          <label for="">If yes,Hearing Date
+              <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="CaseProc_HearingDate.invalid && (CaseProc_HearingDate.dirty || CaseProc_HearingDate.touched || formInvalid)">
+              <span *ngIf="CaseProc_HearingDate.errors.required">Hearing Date is required</span>
+            </div>
+        </div>
+      </div>      
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-2">
+            <label for="">Proceedings <span class="mandatory">*</span></label>
+          </div>
+          <div *ngIf="mode!='view'" class="col-md-4">            
+            <input  type="file" #Image accept="application/pdf" (change)="imageUpload($event.target.files)" id="CaseProc_ProceedingUploadpath" name="CaseProc_ProceedingUploadpath"
+            [(ngModel)]="pf.CaseProc_ProceedingUploadpath" #CaseProc_ProceedingUploadpath="ngModel" required>        
+            <div class="error-msg" *ngIf="CaseProc_ProceedingUploadpath.invalid && (CaseProc_ProceedingUploadpath.dirty || CaseProc_ProceedingUploadpath.touched || formInvalid)">
+              <span *ngIf="CaseProc_ProceedingUploadpath.errors.required">Proceedings is required</span>
+            </div>
+          </div>
+          <div *ngIf="mode=='view'" class="col-md-4"> 
+            <a class=""   *ngIf="pf.CaseProc_ProceedingUploadpath!=null" target="_blank" href="{{pf.CaseProc_ProceedingUploadpath}}">view</a>
+          </div>
+          <div class="col-md-6">
+              <div class="input-group">
+                <textarea class="custom-field" name="CaseProc_ProceedingNote"  [(ngModel)]="pf.CaseProc_ProceedingNote" 
+                #CaseProc_ProceedingNote="ngModel" [disabled]="mode=='view'" required></textarea> 
+
+                <label for="">Proceedings Note  <span class="mandatory">*</span></label>
+                <div class="error-msg" *ngIf="CaseProc_ProceedingNote.invalid && (CaseProc_ProceedingNote.dirty || CaseProc_ProceedingNote.touched || formInvalid)">
+                  <span *ngIf="CaseProc_ProceedingNote.errors.required">Proceedings Note is required</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+    <!-- <div class="row">
+     
+      
+    </div> -->
+    <div class="row">
+      <div class="col-md-2">
+        <label for="">Settlement done? <span class="mandatory">*</span>
+          <div class="error-msg float-right"
+            *ngIf="CaseProc_SettlementDone.invalid && (CaseProc_SettlementDone.dirty || CaseProc_SettlementDone.touched || formInvalid)">
+            <span *ngIf="CaseProc_SettlementDone.errors.required">Field is required</span>
+          </div></label>
+      </div>
+      <div class="col-md-4">
+        <div class="form-check-inline">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="optradio" (click)="Settlement('Y')" value="Y" name="CaseProc_SettlementDone" value="Y" [(ngModel)]="pf.CaseProc_SettlementDone" 
+            #CaseProc_SettlementDone="ngModel" [disabled]="mode=='view'" required>Yes           
+          </label>
+        </div>
+        <div class="form-check-inline">
+          <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="optradio" (click)="Settlement('N')" name="CaseProc_SettlementDone" value="N" [(ngModel)]="pf.CaseProc_SettlementDone" 
+              #CaseProc_SettlementDone="ngModel" [disabled]="mode=='view'" required>No
+          </label>
+        </div>
+      </div>
+      <div class="col-md-6" *ngIf="settlementdataview">
+        <div class="input-group">
+            <input type="date" class="custom-field" name="CaseProc_SettlementDate"  [(ngModel)]="pf.CaseProc_SettlementDate" 
+            #CaseProc_SettlementDate="ngModel" [disabled]="mode=='view'" required>
+          <label for="">Settlement Date
+              <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="CaseProc_SettlementDate.invalid && (CaseProc_SettlementDate.dirty || CaseProc_SettlementDate.touched || formInvalid)">
+              <span *ngIf="CaseProc_SettlementDate.errors.required">Settlement Date is required</span>
+            </div>
+        </div>
+      </div>      
+    </div>
+
+    <div class="row" *ngIf="settlementdataview">
+        <div class="col-md-2">
+            <label for="">Settlement Info</label>
+          </div>
+          <div class="col-md-4" *ngIf="mode!='view'">
+            <input  type="file" #Image accept="application/pdf" (change)="imageUpload($event.target.files)" id="CaseProc_SettlementUploadpath" name="CaseProc_SettlementUploadpath"
+            [(ngModel)]="pf.CaseProc_SettlementUploadpath" #Case_UploadPath="ngModel">           
+          </div>
+
+          <div *ngIf="mode=='view'" class="col-md-4"> 
+              <a class=""   *ngIf="pf.CaseProc_SettlementUploadpath!=null" target="_blank" href="{{pf.CaseProc_SettlementUploadpath}}">view</a>
+          </div>
+
+          <div class="col-md-6">
+              <div class="input-group">
+                  <input type="text" class="custom-field" name="CaseProc_SettlementAmount" pattern="^[0-9.]*$" maxlength="18" [(ngModel)]="pf.CaseProc_SettlementAmount" 
+                  #CaseProc_SettlementAmount="ngModel" [disabled]="mode=='view'" required>
+                <label for="">Settlement Amount
+                    <span class="mandatory">*</span>
+                </label>
+                <div class="error-msg" *ngIf="CaseProc_SettlementAmount.invalid && (CaseProc_SettlementAmount.dirty || CaseProc_SettlementDate.touched || formInvalid)">
+                    <span *ngIf="CaseProc_SettlementAmount.errors.required">Settlement Amount is required</span>
+                    <span *ngIf="CaseProc_SettlementAmount.errors?.pattern">Enter Valid ammount</span>
+                  </div>
+              </div>
+            </div>
+    </div>
+
+
+    <div class="row">  
+        <div class="col-md-6" *ngIf="settlementdataview">
+            <div class="input-group">
+                <textarea class="custom-field" name="CaseProc_SettlementNote"  [(ngModel)]="pf.CaseProc_SettlementNote" 
+                #CaseProc_SettlementNote="ngModel" [disabled]="mode=='view'"></textarea> 
+              <label for="">Settlement Note</label>
+            </div>
+          </div>
+      <div class="col-md-1">
+        <label for="">Status<span class="mandatory">*</span>
+          <div class="error-msg float-right"
+            *ngIf="CaseProc_Status.invalid && (CaseProc_Status.dirty || CaseProc_Status.touched || formInvalid)">
+            <span *ngIf="CaseProc_Status.errors.required">Field is required</span>
+          </div></label>
+      </div>
+      <div class="col-md-5">
+          <div class="form-check-inline">
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="optradio" (click)="Status('O')" name="CaseProc_Status" value="Ongoing" [(ngModel)]="pf.CaseProc_Status" 
+                #CaseProc_Status="ngModel" [disabled]="mode=='view'" required>Ongoing
+            </label>
+          </div>
+        <div class="form-check-inline">
+          <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="optradio" (click)="Status('D')" name="CaseProc_Status" value="Disposed" [(ngModel)]="pf.CaseProc_Status" 
+              #CaseProc_Status="ngModel" [disabled]="mode=='view'" required>Disposed
+          </label>
+        </div>
+      </div>
+   
+      
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-6" *ngIf="statusview == 'true'">
+            <div class="input-group">
+                <input type="date" class="custom-field" name="CaseProc_NextHearingDate"  [(ngModel)]="pf.CaseProc_NextHearingDate" 
+                #CaseProc_NextHearingDate="ngModel" [disabled]="mode=='view'" required>
+              <label for="">Next Hearing Date</label>
+            </div>
+          </div>
+          <div class="col-md-6" *ngIf="statusview == 'false'">
+            <div class="input-group">
+                <input type="date" class="custom-field" name="CaseProc_DisposedDate"  [(ngModel)]="pf.CaseProc_DisposedDate" 
+                #CaseProc_DisposedDate="ngModel" [disabled]="mode=='view'" required>
+              <label for="">If Disposed, Date</label>
+            </div>
+          </div>
+    </div>
+
+  </div>
+
+  <div class="container-fluid text-center">
+    <button [disabled]="mode=='view'" class="btn btn-primary">Save</button> &nbsp;
+    <button class="btn btn-primary" (click)="cancel()">Cancel</button>
+  </div>
+</form>
+</div>

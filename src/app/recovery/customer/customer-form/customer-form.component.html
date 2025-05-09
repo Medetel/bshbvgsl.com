@@ -1,0 +1,622 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    Add Master
+    <button class="btn btn-primary float-right" [routerLink]="['/home/customer-master']">Back</button>
+    <span class="" clearfix></span>
+  </div>
+  <form #Application="ngForm" (ngSubmit)="GetAllApplicantdetailsBySearch(searchText)">
+    <div class="add-click container-fluid">
+      <div class="selector" id="app-filter">
+        <div class="row justify-content-center">
+          <div class="col-md-4">
+            <div class="form-group input-group">
+              <input type="text" class="form-control custom-field" id="txtAppNo" name="Appno" value="" #Appno="ngModel"
+                [(ngModel)]="searchText">
+              <label for="">Applicant No.</label>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="input-group">
+              <input type="text" class="custom-field" #PR_App_AllotDate="ngModel" name="PR_App_AllotDate"
+                [(ngModel)]="formattedAllotDate" required>
+              <label for="">Allotment Date
+                <span class="mandatory">*</span>
+              </label>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <button class="btn btn-primary" type="submit">Go</button>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="col-md-6">
+       
+      </div> -->
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Name of Applicant
+              <!-- <span>{{applicant.APP_PA_Name}}</span> -->
+            </label>
+            <input type="text" class="custom-field" #APP_PA_Name="ngModel" name="APP_PA_Name"
+              [(ngModel)]="applicant.APP_PA_Name" required>
+
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label> Address of Applicant</label>
+            <input type="text" class="custom-field" #APP_Address1="ngModel" name="APP_Address1"
+              [(ngModel)]="applicant.APP_Address1" required>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Allotment Property Number</label>
+            <input type="text" class="custom-field" #PR_Property_No="ngModel" name="PR_Property_No"
+              [(ngModel)]="applicant.PR_Property_No" required>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label> Alloted property division</label>
+            <input class="custom-field" type="text">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Allotment Property Location</label>
+            <input type="text" class="custom-field" #DI_District="ngModel" name="DI_District"
+              [(ngModel)]="applicant.DI_District" required>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label> Category</label>
+            <input type="text" class="custom-field" #CA_CategoryName="ngModel" name="CA_CategoryName"
+              [(ngModel)]="applicant.CA_CategoryName" required>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Name of Scheme</label>
+            <input class="custom-field" type="text">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="date" class="custom-field">
+            <label for="">Date of Agreement
+              <span class="mandatory">*</span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="date" class="custom-field">
+            <label for=""> Date Of Lottery
+              <span class="mandatory">*</span>
+            </label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Cost of Property vidw letter of Allotment</label>
+            <input type="text" class="custom-field" #PR_Prop_FinalCost="ngModel" name="PR_Prop_FinalCost"
+              [(ngModel)]="applicant.PR_Prop_FinalCost" required>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Cost of Property vide Agreement</label>
+            <input class="custom-field" type="text">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="date" class="custom-field">
+            <label for=""> Date of Delivery of Possession
+              <span class="mandatory">*</span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="row">
+          <div class="col-md-6">
+            <div class="input-group">
+              <label>Earnest Money Along With Application</label>
+              <input class="custom-field" type="text">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="input-group">
+              <input type="date" class="custom-field">
+              <label for=""> Date of Payment
+                <span class="mandatory">*</span>
+              </label>
+            </div>
+          </div>
+        </div> -->
+      <div class="row">
+        <div class="col-md-4">
+          <div class="input-group">
+            <input type="text" class="custom-field">
+            <label for="">Earnest Money Along With Application
+            </label>
+          </div>
+          <div class="input-group">
+            <input type="date" class="custom-field">
+            <label for=""> Date of Payment
+              <span class="mandatory">*</span>
+            </label>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <button type="button" class="btn btn-primary">Add</button>
+        </div>
+
+        <div class="col-md-6">
+          <div class="table-responsive">
+            <table class="table table-striped grid table-bordered">
+              <thead>
+                <tr>
+                  <th rowspan="2">Sl.No</th>
+                  <th rowspan="2"> Earnest Money Along With Application </th>
+                  <th rowspan="2"> Date of Payment </th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="row">
+          <div class="col-md-6">
+            <div class="input-group">
+              <label>Intial deposit and Other Deposit(If any)</label>
+              <input class="custom-field" type="text">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="input-group">
+              <input type="date" class="custom-field">
+              <label for=""> Date of Payment
+                <span class="mandatory">*</span>
+              </label>
+            </div>
+          </div>
+        </div> -->
+      <div class="row">
+        <div class="col-md-4">
+          <div class="input-group">
+            <input type="text" class="custom-field" #P_Amount="ngModel" name="P_Amount" [(ngModel)]="applicant.P_Amount"
+              required>
+            <label for="">Intial deposit and Other Deposit(If any)
+            </label>
+          </div>
+          <br>
+          <div class="input-group">
+            <input type="date" class="custom-field">
+            <label for=""> Date of Payment
+              <span class="mandatory">*</span>
+            </label>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <button type="button" class="btn btn-primary">Add</button>
+        </div>
+
+        <div class="col-md-6">
+          <div class="table-responsive">
+            <table class="table table-striped grid table-bordered">
+              <thead>
+                <tr>
+                  <th rowspan="2">Sl.No</th>
+                  <th rowspan="2"> Intial deposit and Other Deposit(If any)</th>
+                  <th rowspan="2"> Date of Payment </th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Balance Amount Required to be Paid in the Installment</label>
+            <input class="custom-field" type="text">Rs.(Monthly)
+            <input class="custom-field" type="text">Rs.(Quaterly)
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="date" class="custom-field">
+            <label for=""> Date of Payment of Installments begin from
+              <span class="mandatory">*</span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>No of installments for Liquidity</label>
+            <input class="custom-field" type="text">Rs.(Monthly)
+            <input class="custom-field" type="text">Rs.(Quaterly)
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Normal Amount Paid for per Installment(Monthly) </label>
+            <input class="custom-field" type="text">@<input class="custom-field" type="text">%(monthly)
+          </div>
+        </div>
+      </div>
+      <div class="title themeheading">
+        Payment Calculation
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Delayed amount paid for per installment</label>
+            <input class="custom-field" type="text">@<input class="custom-field" type="text">%(monthly)
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Normal Amount Paid for per Installment(Quaterly) </label>
+            <input class="custom-field" type="text">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Delayed amount paid </label>
+            <input class="custom-field" type="text">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Area of Alloted Property,(Not applicable in flats)</label>
+            <input type="text" class="custom-field" #PR_Plot_Area="ngModel" name="PR_Plot_Area"
+              [(ngModel)]="applicant.PR_Plot_Area" required>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Extra Land Area (if any)</label>
+            <input class="custom-field" type="text">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Total Cost of Extra Land Area</label>
+            <input class="custom-field" type="text">
+          </div>
+          <div class="input-group">
+            <label>Rs.as on</label>
+            <input type="date" class="custom-field">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Different Amount Cost </label>
+            <input class="custom-field" type="text">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Rs.</label>
+            <input class="custom-field" type="text">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Different Amount Cost </label>
+            <input class="custom-field" type="text">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Rs.</label>
+            <input class="custom-field" type="text">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Details of Revised Cost,(If any) </label>
+            <input class="custom-field" type="text">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="date" class="custom-field">
+            <label for=""> Rs.as on date
+              <span class="mandatory">*</span>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Legal and Documentation charges Paid </label>
+            <input class="custom-field" type="text">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Details of Decretal amount ,if any </label>
+            <input class="custom-field" type="text">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="date" class="custom-field">
+            <label for=""> Rs.as on date
+              <span class="mandatory">*</span>
+            </label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Decretal amount paid </label>
+            <input class="custom-field" type="text">
+          </div>
+        </div>
+
+      </div>
+
+
+
+      <!-- <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label> First Name<span style="color:red;"> *</span>
+              <div *ngIf="CUST_F_NAME.invalid && (CUST_F_NAME.dirty || CUST_F_NAME.touched || formSubmitted)"
+                class="error-msg float-right">
+                <div *ngIf="CUST_F_NAME.errors.required">First Name is required</div>
+              </div>
+            </label>
+            <input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="c.CUST_F_NAME"
+              #CUST_F_NAME="ngModel" name="CUST_F_NAME" [disabled]="mode=='View'" required>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label> Last Name</label>
+            <input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="c.CUST_L_NAME"
+              #CUST_L_NAME="ngModel" name="CUST_L_NAME" [disabled]="mode=='View'" required>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Address -1</label>
+            <input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="c.CUST_ADRSS1"
+              #CUST_ADRSS1="ngModel" name="CUST_ADRSS1" [disabled]="mode=='View'" required>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label> Address -2</label>
+            <input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="c.CUST_ADRSS2"
+              #CUST_ADRSS2="ngModel" name="CUST_ADRSS2" [disabled]="mode=='View'" required>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label> State <span style="color:red;"> *</span>
+              <div *ngIf="CUST_ST_ID.invalid && (CUST_ST_ID.dirty || CUST_ST_ID.touched || formSubmitted)"
+                class="error-msg float-right">
+                <div *ngIf="CUST_ST_ID.errors.required">State is required</div>
+              </div>
+            </label>
+            <select class="custom-field" [(ngModel)]="c.CUST_ST_ID" #CUST_ST_ID="ngModel" name="CUST_ST_ID"
+              [disabled]="mode=='View'" required (change)="GetDistrictCustomerModel(c.CUST_ST_ID)">
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="s.ST_Id" *ngFor="let s of stateList;">
+                {{s.ST_StateName}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label> District <span style="color:red;"> *</span>
+              <div *ngIf="CUST_DI_ID.invalid && (CUST_DI_ID.dirty || CUST_DI_ID.touched || formSubmitted)"
+                class="error-msg float-right">
+                <div *ngIf="CUST_DI_ID.errors.required">District is required</div>
+              </div>
+            </label>
+            <select class="custom-field" [(ngModel)]="c.CUST_DI_ID" #CUST_DI_ID="ngModel" name="CUST_DI_ID"
+              [disabled]="mode=='View'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="d.DI_Id" *ngFor="let d of districtList;">
+                {{d.DI_District}}
+              </option>
+            </select>     
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label> Taluk </label>
+            <input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="c.CUST_TLK"
+              #CUST_TLK="ngModel" name="CUST_TLK" [disabled]="mode=='View'" required>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label> Pincode <span style="color:red;"> *</span>
+              <div *ngIf="CUST_PINCODE.invalid && (CUST_PINCODE.dirty || CUST_PINCODE.touched || formSubmitted)"
+                class="error-msg float-right">
+                <div *ngIf="CUST_PINCODE.errors.required">Pin Code is required</div>
+                <div *ngIf="CUST_PINCODE.errors.minlength">Pin Code Must be at least 6 Numbers long</div>
+                <div *ngIf="CUST_PINCODE.errors.maxlength"></div>
+              </div>
+            </label>
+
+            <input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="c.CUST_PINCODE"
+              #CUST_PINCODE="ngModel" name="CUST_PINCODE" minlength="6" maxlength="6" [disabled]="mode=='View'"
+              required>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label> Contact No. <span style="color:red;"> *</span>
+              <div *ngIf="CUST_CNT_NO.invalid && (CUST_CNT_NO.dirty || CUST_CNT_NO.touched || formSubmitted)"
+                class="error-msg float-right">
+                <div *ngIf="CUST_CNT_NO.errors.required">Contact Number is required</div>
+                <div *ngIf="CUST_CNT_NO.errors.minlength">Contact Number Must be at least 10 numbers long</div>
+                <div *ngIf="CUST_CNT_NO.errors.maxlength"></div>
+              </div>
+            </label>
+            <input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="c.CUST_CNT_NO"
+              #CUST_CNT_NO="ngModel" name="CUST_CNT_NO" minlength="10" maxlength="10" [disabled]="mode=='View'"
+              required>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label> Mobile No.
+            </label>
+            <input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="c.CUST_PHN_NO"
+              #CUST_PHN_NO="ngModel" name="CUST_PHN_NO" minlength="10" maxlength="10" [disabled]="mode=='View'">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label> Aadhar Card No. <span style="color:red;"> *</span>
+              <div *ngIf="CUST_ADHR_NO.invalid && (CUST_ADHR_NO.dirty || CUST_ADHR_NO.touched || formSubmitted)"
+                class="error-msg float-right">
+                <div *ngIf="CUST_ADHR_NO.errors.required">Aadhar Card No is required</div>
+                <div *ngIf="CUST_ADHR_NO.errors.minlength">Aadhar Card No Must be at least 12 numbers long</div>
+                <div *ngIf="CUST_ADHR_NO.errors.maxlength"></div>
+              </div>
+            </label>
+            <input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="c.CUST_ADHR_NO"
+              #CUST_ADHR_NO="ngModel" name="CUST_ADHR_NO" minlength="12" maxlength="12" [disabled]="mode=='View'"
+              required>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label> PAN Card No. <span style="color:red;"> *</span>
+              <div *ngIf="CUST_PAN_NO.invalid && (CUST_PAN_NO.dirty || CUST_PAN_NO.touched || formSubmitted)"
+                class="error-msg float-right">
+                <div *ngIf="CUST_PAN_NO.errors.required">PAN Card No is required</div>
+                <div *ngIf="CUST_PAN_NO.errors.minlength">PAN Card No Must be at least 12 numbers long</div>
+                <div *ngIf="CUST_PAN_NO.errors.maxlength"></div>
+              </div> </label>
+            <input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="c.CUST_PAN_NO"
+              #CUST_PAN_NO="ngModel" name="CUST_PAN_NO" minlength="12" maxlength="12" [disabled]="mode=='View'"
+              required>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label> Bank Account No. </label>
+            <input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="c.CUST_BANK_NO"
+              #CUST_BANK_NO="ngModel" name="CUST_BANK_NO" [disabled]="mode=='View'" required>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>Bank Name </label>
+            <input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="c.CUST_BNK_NAME"
+              #CUST_BNK_NAME="ngModel" name="CUST_BNK_NAME" [disabled]="mode=='View'" required>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label> Bank Code </label>
+            <input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="c.CUST_BNK_CODE"
+              #CUST_BNK_CODE="ngModel" name="CUST_BNK_CODE" [disabled]="mode=='View'" required>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label>IFSC Code
+            </label>
+            <input class="custom-field" type="text" style="text-transform: capitalize;" [(ngModel)]="c.CUST_IFSC"
+              #CUST_IFSC="ngModel" name="CUST_IFSC" [disabled]="mode=='View'">
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6" [hidden]="mode!='View' && mode!='Edit'">
+          <label> Customer No. : </label> &nbsp; <b>{{c.CUST_CODE}}</b>
+        </div>
+        <div class="col-md-6" [hidden]="mode!='View' && mode!='Edit'">
+          <div class="input-group">
+            <label> Status :</label>
+            <select name="Deleted" #Deleted="ngModel" [(ngModel)]="c.Deleted" class="form-control" required>
+              <option [ngValue]="undefined" selected>---Select---</option>
+              <option value="N" selected>Active</option>
+              <option value="Y" selected>Inactive</option>
+            </select>
+          </div>
+        </div>
+      </div> -->
+      <br>
+
+      <div class="d-flex justify-content-center">
+        <button class="btn btn-primary"> Save
+        </button> &nbsp;
+        <button class="btn btn-primary"> Cancel </button>
+      </div>
+
+    </div>
+  </form>
+</div>

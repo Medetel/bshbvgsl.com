@@ -1,0 +1,54 @@
+<!-- <div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      <div class="sidemenu">
+        <ul class="billmenu">
+          <li><a [routerLink]="['/home/emp-claims/']"> Medical Reimburesment </a></li>
+          <li><a [routerLink]="['medical-reim-authorization']"> Medical Reimburesment Approval </a></li>
+          <li><a [routerLink]="['medical-reim-sanction']"> Medical Reimburesment Sanction</a></li>
+         
+          <li><a [routerLink]="['htc-ltc']">HTC/LTC</a></li>
+          <li><a [routerLink]="['htc-ltc-authorization']">HTC/LTC Approval</a></li>
+          <li><a [routerLink]="['htc-ltc-sanction']">HTC/LTC Sanction</a></li>
+         
+          <li><a [routerLink]="['leave-encashment']">Leave Encashment</a></li>      
+          <li><a [routerLink]="['leave-encash-authorization']">Leave Encashment Approval</a></li>  
+          <li><a [routerLink]="['leave-encash-sanction']">Leave Encashment Sanction</a></li>    -->
+          <!-- <li><a [routerLink]="['leave-encashment-rec']">Leave Encashment Records</a></li>      -->
+        <!-- </ul>
+      </div>
+    </div>
+    <div class="col-md-10">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div> -->
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      <div class="sidemenu">
+        <!-- <ul class="billmenu" *ngFor="let p of subpageslist">
+          <li><a [ngClass]="{'alert-primary':p.KSP_Redirect_URL === localurl}" (click)="geturl(p.KSP_Redirect_URL)" routerLink="{{p.KSP_Redirect_URL}}">{{p.KSP_Name}}</a></li>             
+        </ul> -->
+        <ul class="billmenu">
+          <li><a [routerLink]="['/home/emp-claims/']"> Medical Reimburesment </a></li>
+          <li><a [routerLink]="['medical-reim-authorization']"> Medical Reimburesment Approval </a></li>
+          <li><a [routerLink]="['medical-reim-sanction']"> Medical Reimburesment Sanction</a></li>
+         
+          <li><a [routerLink]="['htc-ltc']">HTC/LTC</a></li>
+          <li><a [routerLink]="['htc-ltc-authorization']">HTC/LTC Approval</a></li>
+          <li><a [routerLink]="['htc-ltc-sanction']">HTC/LTC Sanction</a></li>
+         
+          <li><a [routerLink]="['leave-encashment']">Leave Encashment</a></li>      
+          <li><a [routerLink]="['leave-encash-authorization']">Leave Encashment Approval</a></li>  
+          <li><a [routerLink]="['leave-encash-sanction']">Leave Encashment Sanction</a></li>    
+           <li><a [routerLink]="['leave-encashment-rec']">Leave Encashment Records</a></li>      
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-10">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

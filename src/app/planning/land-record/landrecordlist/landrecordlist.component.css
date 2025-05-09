@@ -1,0 +1,103 @@
+.row{
+    padding: 1em 0px 0px 0px !important;
+    margin-bottom: -10px;
+}
+.row:nth-child(odd){
+    background: #ececec;
+}
+.row:nth-child(even){
+    background: white;
+}
+
+.field-title{
+    width:113px;
+    display:inline-block;
+    color:#807f7f;
+}
+
+.remarks-list{
+    width:100%;
+    height:230px;
+    overflow-y: scroll;
+    padding:0px 20px;
+}
+
+.remarks-list .remarks{
+    padding:10px;
+}
+.planning{
+    background: #e8e8ef;
+    }
+
+.plan{
+    background-color:#d3dcd3;
+    }
+ .proc{
+    background-color:#f5eaf5;
+ }
+
+ .planning-remarks{
+    padding: 5px 15px;
+    border-radius: 15px;
+    width: 85%;
+    background: lightblue;
+    margin-bottom: 5px;
+    float: left;
+ }
+
+ .planning-remarks .name,
+ .planning-remarks .date,
+ .procurement-remarks .name,
+ .procurement-remarks .date{
+    padding: 10px 10px 0px;
+    font-size: 16px;
+    text-transform: capitalize;
+    display: block;
+    font-weight: 600;
+}
+
+.procurement-remarks  .remark,
+.planning-remarks  .remark{
+    padding: 10px;
+    font-size: 16px;
+}
+
+
+ .procurement-remarks{
+    padding: 5px 15px;
+    border-radius: 15px;
+    width: 85%;
+    background: lightgreen;
+    margin-bottom: 5px;
+    float: right;
+ }
+
+ .fixedheight{
+     height:250px;
+ }
+
+ #dynmicUserIds[list] {
+     width: 150px;
+     height: 200px;
+     overflow-y: scroll
+ }
+    
+
+    /*  */
+/* 
+* {
+    margin:0; padding:0; font-family: arial, sans-serif; font-size: 40px; 
+    font-weight: bold; color: #444;
+}
+body {
+    height:100%; background:#F4F3EF;
+}
+.select select, .input input {
+    background: transparent; width: 220px; overflow:hidden; height: 65px; padding-left: 5px;    
+    padding-bottom: 5px; -webkit-appearance: none; -moz-appearance:none; 
+    appearance:none; border:none; cursor:pointer;
+}
+.select select {padding-top: 5px;}
+.select, .input {float:left; width: 220px; height: 65px; margin-right: 20px; 
+    overflow: hidden; background: #ddd;  border: 1px solid #ccc;
+} */

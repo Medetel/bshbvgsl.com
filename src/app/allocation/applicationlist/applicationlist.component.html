@@ -1,0 +1,94 @@
+<div class="wrapper">
+
+    <div class="title themeheading">Notification wise Applicant List
+        <button class="btn btn-primary pull-right" (click)="reloadPage()">Back</button>
+        <span class="clearfix"></span>
+    </div>
+    <div class="container-fluid">
+        <div class="row holder1">
+            <div class="col-md-4">
+                <div class="input-group">
+                    <select [(ngModel)]="s.S_NotificationID" required #S_NotificationID="ngModel" name="S_NotificationID" class="custom-field"
+                        (change)="GetProjects(s.S_NotificationID)">
+                        <option [ngValue]="undefined" selected>---Select---</option>
+                        <option [ngValue]="n.DSWOId_NO_Id" *ngFor="let n of Notifications;">
+                            {{n.DSWOId_NO_Number}}</option>
+                    </select>
+                    <label>Notification No.</label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="input-group">
+                    <select [(ngModel)]="s.S_ProjectID" required #S_ProjectID="ngModel" name="S_ProjectID" class="custom-field">
+                        <option [ngValue]="undefined" selected>---Select---</option>
+                        <option [ngValue]="p.PD_Id" *ngFor="let p of Projects;">
+                            {{p.PD_Project_Code}}-{{p.PD_Project_Name}}</option>
+                    </select>
+                    <label>Project</label>
+                </div>
+            </div>
+
+            <!-- <div class="col-md-3">
+                      <div class="input-group">
+                        <select [(ngModel)]="s.S_ReservationId" required #S_ReservationId="ngModel" name="S_ReservationId" class="custom-field">
+                          <option [ngValue]="undefined" selected>---Select---</option>
+                          <option [ngValue]="r.RES_Id" *ngFor="let r of Reservations;">
+                            {{r.RES_Name}}</option>
+                        </select>
+                        <label>Reservation.</label>
+                      </div>
+                    </div> -->
+            <div class="col-md-1">
+                <button type="button" class="btn btn-primary" (click)="GetApplicants(s.S_NotificationID,s.S_ProjectID)">Go </button>
+            </div>
+        </div>
+
+        <!-- <div class="row">
+            <div class="col-md-4">
+                <span>Notification Date:{{}}</span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <span>Last Date:{{}}</span>
+            </div>
+        </div> -->
+
+        <div class="table-responsive grid">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <td>Sl No.</td>
+                        <td>Application No.</td>
+                        <td>Registration No.</td>
+                        <td>Applicant Name</td>
+                        <td>Reservation</td>
+                        <td>Category</td>
+                        <td>Property Type</td>
+                        <td>Applied Date</td>
+                        <td>Initial Deposit</td>
+                        <!-- <td>View</td> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let p of Applicants;let i=index;">
+                        <td>{{i+1}}.</td>
+                        <td>{{p.APP_No}}</td>
+                        <td>{{p.APP_Reg_No}}</td>
+                        <td>{{p.APP_PA_Name}}</td>
+                       <td>{{p.APP_Reservation}}</td>
+                       <td>{{p.APP_Category}}</td>
+                       <td>{{p.APP_PropertyType}}</td>
+                        <td>{{p.APP_AppliedDate | date:'dd-MM-yyyy'}}</td>
+                        <td></td>
+                        <!-- <td>
+                            <a href="#" [routerLink]="['/home/applicant/applicantview',p.APP_Id,s.S_NotificationID]">
+                              <i class="fa fa-lg fa-eye themecolor"></i>
+                            </a>
+                          </td> -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <button>Push to Website</button>
+    </div>

@@ -1,0 +1,305 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="float-right btn btn-primary" [routerLink]="['/home/contractor']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <form (ngSubmit)="mode=='edit'? UpdateContractor(Contractorform):SaveContract(Contractorform)" #Contractorform="ngForm" autocomplete="off">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #Contractor_Code="ngModel" name="Contractor_Code" [(ngModel)]="i.Contractor_Code" pattern="^[a-zA-Z0-9 ]*$" [disabled]="mode=='view'" required>
+            <label for="">Contractor Code
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Contractor_Code.invalid && (Contractor_Code.dirty || Contractor_Code.touched || formInvalid)">
+              <span *ngIf="Contractor_Code.errors.required">Contract Code is required</span>
+              <span *ngIf="Contractor_Code.errors?.pattern">AlphaNumeric should enter</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #Contractor_name="ngModel" name="Contractor_name" [(ngModel)]="i.Contractor_name" pattern="^[a-zA-Z0-9 ]*$" [disabled]="mode=='view'" required>
+            <label for="">Contractor name
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Contractor_name.invalid && (Contractor_name.dirty || Contractor_name.touched || formInvalid)">
+              <span *ngIf="Contractor_name.errors.required">Contract Name is required</span>
+              <span *ngIf="Contractor_name.errors?.pattern">AlphaNumeric should enter</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <textarea class="custom-field" #Const_Address="ngModel" name="Const_Address" [(ngModel)]="i.Const_Address" [disabled]="mode=='view'" required></textarea>
+            <label for="">Address
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Const_Address.invalid && (Const_Address.dirty || Const_Address.touched || formInvalid)">
+              <span *ngIf="Const_Address.errors.required">Contractor Address is required</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <textarea class="custom-field" #Billing_Addr="ngModel" name="Billing_Addr" [(ngModel)]="i.Billing_Addr" [disabled]="mode=='view'" required></textarea>
+            <label for="">Billing Address
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Billing_Addr.invalid && (Billing_Addr.dirty || Billing_Addr.touched || formInvalid)">
+              <span *ngIf="Billing_Addr.errors.required">Billing Address is required</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #mobile_no="ngModel" name="mobile_no" [(ngModel)]="i.mobile_no" pattern="^[0-9]*$" maxlength="10" minlength="10" [disabled]="mode=='view'" required>
+            <label for="">Mobile Number
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="mobile_no.invalid && (mobile_no.dirty || mobile_no.touched || formInvalid)">
+              <span *ngIf="mobile_no.errors.required">Mobile Number is required</span>
+              <span *ngIf="mobile_no.errors.pattern">Mobile Number must be 10 digits</span>
+              <span *ngIf="mobile_no.errors.maxlength">Mobile Number must be 10 digits</span>
+              <span *ngIf="mobile_no.errors.minlength">Mobile Number must be 10 digits</span>
+
+
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="i.Civil_PMC" #Civil_PMC="ngModel" name="Civil_PMC"
+              [disabled]="mode=='view'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option value="Civil Works">Civil Works</option>
+              <option value="PMC Contractor">PMC Contractor</option>
+            </select>
+            <label for="">Civil Works or PMC Contractor
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Civil_PMC.invalid && (Civil_PMC.dirty || Civil_PMC.touched || formInvalid)">
+              <span *ngIf="Civil_PMC.errors.required">Civil PMC is required</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #Vendor="ngModel" name="Vendor" [(ngModel)]="i.Vendor" pattern="^[a-zA-Z0-9 ]*$" [disabled]="mode=='view'" required>
+            <label for="">Vendor
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Vendor.invalid && (Vendor.dirty || Vendor.touched || formInvalid)">
+              <span *ngIf="Vendor.errors.required">Vendor is required</span>
+              <span *ngIf="Vendor.errors?.pattern">AlphaNumeric should enter</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #Contact_Person="ngModel" name="Contact_Person" [(ngModel)]="i.Contact_Person" pattern="^[a-zA-Z0-9 ]*$"  [disabled]="mode=='view'" required>
+            <label for="">Contact Person
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Contact_Person.invalid && (Contact_Person.dirty || Contact_Person.touched || formInvalid)">
+              <span *ngIf="Contact_Person.errors.required">Contact Person is required</span>
+              <span *ngIf="Contact_Person.errors?.pattern">AlphaNumeric should enter</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #Cont_no="ngModel" name="Cont_no" [(ngModel)]="i.Cont_no" pattern="^[0-9]*$" maxlength="10" minlength="10" [disabled]="mode=='view'" required>
+            <label for="">Contact No.
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Cont_no.invalid && (Cont_no.dirty || Cont_no.touched || formInvalid)">
+              <span *ngIf="Cont_no.errors.required">Contact Number is required</span>
+              <span *ngIf="Cont_no.errors.pattern">Contact no must be 10 digits</span>
+              <span *ngIf="Cont_no.errors.maxlength">Contact Number must be 10 digits</span>
+              <span *ngIf="Cont_no.errors.minlength">Contact Number must be 10 digits</span>
+
+
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #email="ngModel" name="email" [(ngModel)]="i.email" pattern="^[a-zA-Z0-9._%-+]+@[a-z0-9.-]+\.[a-z]{2,3}$" [disabled]="mode=='view'" required>
+            <label for="">Email Id
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="email.invalid && (email.dirty || email.touched || formInvalid)">
+              <span *ngIf="email.errors.required">Email is required</span>
+              <span *ngIf="email.errors?.pattern">Email is invalid</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #Bank_name="ngModel" name="Bank_name" [(ngModel)]="i.Bank_name" [disabled]="mode=='view'" required>
+            <label for="">Bank Name
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Bank_name.invalid && (Bank_name.dirty || Bank_name.touched || formInvalid)">
+              <span *ngIf="Bank_name.errors.required">Bank Name is required</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #Branch="ngModel" name="Branch" [(ngModel)]="i.Branch" [disabled]="mode=='view'" required>
+            <label for="">Branch
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Branch.invalid && (Branch.dirty || Branch.touched || formInvalid)">
+              <span *ngIf="Branch.errors.required">Branch is required</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #Bank_Acc_no="ngModel" name="Bank_Acc_no" [(ngModel)]="i.Bank_Acc_no" maxlength="20" pattern="^[0-9]*$"  [disabled]="mode=='view'" required>
+            <label for="">Account No.
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Bank_Acc_no.invalid && (Bank_Acc_no.dirty || Bank_Acc_no.touched || formInvalid)">
+              <span *ngIf="Bank_Acc_no.errors.required">Account No. is required</span>
+              <span *ngIf="Bank_Acc_no.errors.pattern">Account No. is Invalid</span>
+              <span *ngIf="Bank_Acc_no.errors.maxlength">Account No. maximum 20 digits</span>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #IFSC="ngModel" name="IFSC" [(ngModel)]="i.IFSC" pattern="^[A-Z]{4}0\d{6}$" maxlength="11" placeholder="AAAA0000000" [disabled]="mode=='view'" required>
+            <label for="">IFSC Code
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="IFSC.invalid && (IFSC.dirty || IFSC.touched || formInvalid)">
+              <span *ngIf="IFSC.errors.required">IFSC code is required</span>
+              <span *ngIf="IFSC.errors.pattern">IFSC code is invalid</span>
+              <span *ngIf="IFSC.errors.maxlength">IFSC code must be 11 characters</span>
+              
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #Micr="ngModel" name="Micr" [(ngModel)]="i.Micr" pattern="^[0-9]*$" maxlength="9" minlength="9" [disabled]="mode=='view'" required>
+            <label for="">MICR
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Micr.invalid && (Micr.dirty || Micr.touched || formInvalid)">
+              <span *ngIf="Micr.errors.required">MICR is required</span>
+              <span *ngIf="Micr.errors.pattern">MICR is Invalid</span>
+              <span *ngIf="Micr.errors.maxlength">MICR must be 9 digits</span>
+              <span *ngIf="Micr.errors.minlength">MICR must be 9 digits</span>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #PAN_No="ngModel" name="PAN_No" [(ngModel)]="i.PAN_No" pattern="^[A-Z]{5}[0-9]{4}[A-Z]$" placeholder="ABCTY1234D" maxlength="10" [disabled]="mode=='view'" required>
+            <label for="">PAN Number
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="PAN_No.invalid && (PAN_No.dirty || PAN_No.touched || formInvalid)">
+              <span *ngIf="PAN_No.errors.required">Pan Number is required</span>
+              <span *ngIf="PAN_No.errors.pattern">Pan Number is Invalid</span>
+              <span *ngIf="PAN_No.errors.maxlength">Pan Number must be 10 characters</span>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #Tin_No="ngModel" name="Tin_No" [(ngModel)]="i.Tin_No" pattern="^[0-9]*$" maxlength="11" minlength="11" [disabled]="mode=='view'" required>
+            <label for="">TIN Number
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Tin_No.invalid && (Tin_No.dirty || Tin_No.touched || formInvalid)">
+              <span *ngIf="Tin_No.errors.required">TIN Number is required</span>
+              <span *ngIf="Tin_No.errors.pattern">TIN Number is Invalid</span>
+              <span *ngIf="Tin_No.errors.maxlength">TIN Number must be 11 digits</span>
+              <span *ngIf="Tin_No.errors.minlength">TIN Number must be 11 digits</span>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #Service_Tax_no="ngModel" name="Service_Tax_no" [(ngModel)]="i.Service_Tax_no" pattern="^[0-9]*$" maxlength="15" minlength="15"  [disabled]="mode=='view'" required>
+            <label for="">Service Tax no.
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Service_Tax_no.invalid && (Service_Tax_no.dirty || Service_Tax_no.touched || formInvalid)">
+              <span *ngIf="Service_Tax_no.errors.required">Service Tax no is required</span>
+              <span *ngIf="Service_Tax_no.errors.pattern">Service Tax no is Invalid</span>
+              <span *ngIf="Service_Tax_no.errors.maxlength">Service Tax no maxlength 15 digits</span>
+              <span *ngIf="Service_Tax_no.errors.minlength">Service Tax no maxlength 15 digits</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" #GST_Reg_no="ngModel" name="GST_Reg_no" [(ngModel)]="i.GST_Reg_no" placeholder="22AAAAA0000A1Z5" pattern="^([0][1-9]|[1-2][0-9]|[3][0-7])([A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[Z]{1}[0-9A-Z]{1})+$" maxlength="15" minlength="15" [disabled]="mode=='view'" required>
+            <label for="">GST Registraction Number
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="GST_Reg_no.invalid && (GST_Reg_no.dirty || GST_Reg_no.touched || formInvalid)">
+              <span *ngIf="GST_Reg_no.errors.required">GST Registraction Number is required</span>
+              <span *ngIf="GST_Reg_no.errors.pattern">GST Registraction Number is Invalid</span>
+              <span *ngIf="GST_Reg_no.errors.maxlength">GST Registraction Number maxlength is 15 digits</span>
+              <span *ngIf="GST_Reg_no.errors.minlength">GST Registraction Number minimum length is 15 digits</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="i.Status" #Status="ngModel" name="Status"
+              [disabled]="mode=='view'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option value=3>Active</option>
+              <option value=4>Inactive</option>
+            </select>
+            <label for="">Status
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Status.invalid && (Status.dirty || Status.touched || formInvalid)">
+              <span *ngIf="Status.errors.required">Status is required</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center">
+        <button class="btn btn-primary" [disabled]="mode=='view'" type="submit">Save</button>&nbsp;
+        <button class="btn btn-primary" [disabled]="mode=='view'" type="reset">Cancel</button>
+      </div>
+
+    </div>
+  </form>
+</div>

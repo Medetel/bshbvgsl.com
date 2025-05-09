@@ -1,0 +1,257 @@
+<div class="wrapper">
+  <form (ngSubmit)="mode=='Edit'?UpdateCMP(CMP):SaveCMP(CMP)" #CMP="ngForm" name="CMP">
+    <div class="container-fluid">
+      <div class="title rowmarginfix themeheading">
+        Add Complaints Registration
+        <button *ngIf="back == 'Reg'" class="btn btn-primary float-right" [routerLink]="['/home/dept-enquiry']">Back</button>
+        <button *ngIf="back == 'Auth'" class="btn btn-primary float-right" [routerLink]="['/home/dept-enquiry/complaint-reg-auth']">Back</button>  
+        <button *ngIf="back == 'scn'" class="btn btn-primary float-right" [routerLink]="['/home/dept-enquiry/show-cause-form',COMPLAINT_ID,Scn_Id,'SCN',mode]">Back</button>    
+        <button *ngIf="back == 'Idecomp'" class="btn btn-primary float-right" [routerLink]="['/home/dept-enquiry/initiative-depart-form',EnqId,'ENQ',mode]">Back</button>  
+       <button *ngIf="back == 'prcoc'" class="btn btn-primary float-right" [routerLink]="['/home/dept-enquiry/enquiry-proceeding-form']">Back</button>      
+        <span class="clearfix"></span>
+      </div>
+
+
+    
+
+      <div class="row">
+        <div class="col-md-4">
+          <label for=""> Complaint No : </label>       <span> {{C.DOC_CODE}} </span>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group ">
+            <span for="">Date : </span>   <span> {{C.Doc_Year | date:'dd/MM/yyyy'}} </span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group ">        
+            <span for="" *ngIf="C.DOC_STATUS=='G'">Status : Generated</span> 
+            <span for="" *ngIf="C.DOC_STATUS=='R'">Status : Rejected</span> 
+            <span for="" *ngIf="C.DOC_STATUS=='A'">Status : Approved</span>                    
+          </div>
+        </div>
+      </div>
+
+      <div class="title themeheading rowmarginfix">
+        DGO's Details
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="input-group">
+            <label for=""> Division Code : <span style="color:red;">*</span> </label>
+            <select class="custom-field" [(ngModel)]="C.DivisionId" #DivisionId="ngModel" name="DivisionId"
+              [disabled]="mode=='View' || mode == 'Edit'" (change)="GetEmployee(C.DivisionId)" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="d.DI_Id" *ngFor="let d of Districtlist;">
+                {{d.DI_District}}
+              </option>
+            </select>
+          </div>
+          <div class="error-msg" *ngIf="DivisionId.invalid && (DivisionId.dirty || DivisionId.touched || formInvalid)">
+            <span *ngIf="DivisionId.errors.required">Division is required</span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group">
+            <label for="">Emp Code : <span style="color:red;">*</span></label>
+            <select class="custom-field" [(ngModel)]="C.EmpID" #EmpID="ngModel" name="EmpID" [disabled]="mode=='View' || mode =='Edit'"
+              (change)="GetEmployeeForTheId(C.EmpID)" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="ee.EMP_EMPLOYEE_ID" *ngFor="let ee of Emplist;">
+                {{ee.EMP_EMPLOYEE_CODE}} &nbsp; {{ee.EMP_FIRST_NAME}}
+              </option>
+            </select>
+          </div>
+          <div class="error-msg" *ngIf="EmpID.invalid && (EmpID.dirty || EmpID.touched || formInvalid)">
+            <span *ngIf="EmpID.errors.required">Employee Id is required</span>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <label for="">Name : </label> &nbsp;
+          <span> {{EmployeeDetails.EMP_FIRST_NAME}} </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 ">
+          <label for="">Division : </label> &nbsp;
+          <span> {{EmployeeDetails.DI_District}} </span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Department : </label> &nbsp;
+          <span> {{EmployeeDetails.Department_Name}} </span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Designation : </label> &nbsp;
+          <span> {{EmployeeDetails.desg_name}} </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <label for="">Employee Category : </label> &nbsp;
+          <span> {{EmployeeDetails.EMP_CATEGORY}} </span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Employee Group : </label> &nbsp;
+          <span> {{EmployeeDetails.EMP_GROUP}} </span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Employee Type : </label> &nbsp;
+          <span> {{EmployeeDetails.EMP_TYPE}} </span>
+        </div>
+      </div>
+      <br>
+      <div class="title rowmarginfix themeheading">
+        Complaint Details
+      </div>
+      <div class="row">
+        
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Initiated By <span style="color:red;">*</span> </label>
+            <select [(ngModel)]="C.COMPLAINT_INITIATED_BY" #COMPLAINT_INITIATED_BY="ngModel"
+              name="COMPLAINT_INITIATED_BY" [disabled]="mode=='View'" required class="custom-field">
+              <option value="undefined">--Select--</option>
+              <option value="Public"> Public </option>
+              <option value="Department">Department</option>
+              <!-- <option value="Inv.Auth">Investigation Auth</option> -->
+            </select>
+          </div>
+          <div class="error-msg" *ngIf="COMPLAINT_INITIATED_BY.invalid && (COMPLAINT_INITIATED_BY.dirty || COMPLAINT_INITIATED_BY.touched || formInvalid)">
+            <span *ngIf="COMPLAINT_INITIATED_BY.errors.required">Initiated is required</span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for=""> Complaint Date <span style="color:red;">*</span> </label>
+            <input type="Date" name="COMPLAINT_INITIATED_DATE" [min]="minDate" [max]="maxDate" [(ngModel)]="C.COMPLAINT_INITIATED_DATE"
+              #COMPLAINT_INITIATED_DATE="ngModel" class="form-control" [disabled]="mode=='View'" required>
+          </div>
+          <div class="error-msg" *ngIf="COMPLAINT_INITIATED_DATE.invalid && (COMPLAINT_INITIATED_DATE.dirty || COMPLAINT_INITIATED_DATE.touched || formInvalid)">
+            <span *ngIf="COMPLAINT_INITIATED_DATE.errors.required">Complaint Date is required</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for=""> Nature of Complaint <span style="color:red;">*</span></label>
+            <input type="text" name="COMPLNT_NATURE" maxlength="50" [(ngModel)]="C.COMPLNT_NATURE"
+              #COMPLNT_NATURE="ngModel" class="form-control" [disabled]="mode=='View'" class="custom-field" required>
+          </div>
+          <div class="error-msg" *ngIf="COMPLNT_NATURE.invalid && (COMPLNT_NATURE.dirty || COMPLNT_NATURE.touched || formInvalid)">
+            <span *ngIf="COMPLNT_NATURE.errors.required">Nature of Complaint is required</span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for=""> Complainee's Name  <span style="color:red;">*</span></label>
+            <input type="text" name="COMPLNT_COMP_NAME" maxlength="50" [(ngModel)]="C.COMPLNT_COMP_NAME"
+              #COMPLNT_COMP_NAME="ngModel" class="form-control" [disabled]="mode=='View'" required class="custom-field" pattern="[A-Za-z]+">
+          </div>
+          <div class="error-msg" *ngIf="COMPLNT_COMP_NAME.invalid && (COMPLNT_COMP_NAME.dirty || COMPLNT_COMP_NAME.touched || formInvalid)">
+            <span *ngIf="COMPLNT_COMP_NAME.errors.required">Complainee's Name is required</span>
+            <span *ngIf="COMPLNT_COMP_NAME.errors.pattern">Complainee's Name should accept only alphabets</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for=""> Complainee's Address  <span style="color:red;">*</span> </label>
+            <textarea type="text" name="COMPLNT_COMP_ADD" maxlength="100" [(ngModel)]="C.COMPLNT_COMP_ADD"
+              #COMPLNT_COMP_ADD="ngModel" class="form-control" [disabled]="mode=='View'" class="custom-field" required></textarea>
+          </div>
+          <div class="error-msg" *ngIf="COMPLNT_COMP_ADD.invalid && (COMPLNT_COMP_ADD.dirty || COMPLNT_COMP_ADD.touched || formInvalid)">
+            <span *ngIf="COMPLNT_COMP_ADD.errors.required">Complainee's Address is required</span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for=""> Complainee's Contact No. <span style="color:red;">*</span> </label>
+            <input type="text" name="COMPLNT_COMP_CONTACT" pattern="^[0-9]{10,12}$" maxlength="12" [(ngModel)]="C.COMPLNT_COMP_CONTACT"
+              #COMPLNT_COMP_CONTACT="ngModel" class="form-control" [disabled]="mode=='View'" class="custom-field" required>
+          </div>
+          <div class="error-msg" *ngIf="COMPLNT_COMP_CONTACT.invalid && (COMPLNT_COMP_CONTACT.dirty || COMPLNT_COMP_CONTACT.touched || formInvalid)">
+            <span *ngIf="COMPLNT_COMP_CONTACT.errors.required">Complainee's Contact No is required</span>
+            <span *ngIf="COMPLNT_COMP_CONTACT.errors?.pattern">Enter Valid Mobile No.</span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for=""> Complaint Addressed to <span style="color:red;">*</span></label>
+            <select [(ngModel)]="C.COMPLNT_ADDR_TO" #COMPLNT_ADDR_TO="ngModel" name="COMPLNT_ADDR_TO"
+              [disabled]="mode=='View'" class="custom-field" required>
+              <option value="undefined">--Select--</option>
+              <option value="Commisionar"> Commisioner</option>
+              <option value="Secretary">Secretary</option>
+              <!-- <option value="DGM">DGM</option> -->
+            </select>
+          </div>
+          <div class="error-msg" *ngIf="COMPLNT_ADDR_TO.invalid && (COMPLNT_ADDR_TO.dirty || COMPLNT_ADDR_TO.touched || formInvalid)">
+            <span *ngIf="COMPLNT_ADDR_TO.errors.required"> Complaint Addressed to is required</span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-inline">
+            <div class="form-group ">
+              <label for="" style="color:blue;"> Upload Complaint Document </label>
+            </div> &nbsp;
+            <div class="form-group ">
+              <input *ngIf="!hide" type="file" #Image accept="application/pdf" (change)="imageUpload1($event.target.files)"
+                id="COMPLNT_UPLOAD_PATH" name="COMPLNT_UPLOAD_PATH">
+              <a *ngIf="C.COMPLNT_UPLOAD_PATH" href="{{C.COMPLNT_UPLOAD_PATH}}" target="_blank"
+                [class.disabled]="!C.COMPLNT_UPLOAD_PATH" tabindex="-1" aria-disabled="true">
+                View
+              </a>
+        
+              <!-- Optionally, you can also disable the link when DGO_Upload is null -->
+              <a *ngIf="!C.COMPLNT_UPLOAD_PATH" class="disabled" tabindex="-1" aria-disabled="true">
+                View
+              </a>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Description / Details </label>
+            <input type="text" name="COMPLNT_DESC" maxlength="50" [(ngModel)]="C.COMPLNT_DESC" #COMPLNT_DESC="ngModel"
+              class="form-control" [disabled]="mode=='View'"  pattern="^[a-zA-Z0-9]*$" >
+          </div>
+          <div class="error-msg" *ngIf="COMPLNT_DESC.invalid && (COMPLNT_DESC.dirty || COMPLNT_DESC.touched || formInvalid)">
+            <span *ngIf="COMPLNT_DESC.errors.required"> Description/Details should enter alphanumerics</span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Remarks </label>
+            <textarea name="COMPLNT_REMARKS" maxlength="50" [(ngModel)]="C.COMPLNT_REMARKS" #COMPLNT_REMARKS="ngModel"
+              [disabled]="mode=='View'" class="custom-field"></textarea>
+          </div>
+        </div>
+      </div>
+
+    <div class="row" *ngIf="mode === View">
+      <div class="col-md-6">
+      <div class="input-group">
+        <label for="">Reply </label>
+        <textarea name="Reply_Comp" maxlength="50" [(ngModel)]="C.Reply_Comp" #Reply_Comp="ngModel"
+          [disabled]="mode=='View'" class="custom-field"></textarea>
+      </div>
+      </div>
+    </div>
+      <br>
+      <div class="d-flex justify-content-center">
+        <button [disabled]="mode=='View'" class="btn btn-primary"
+          type="submit">{{mode=='Edit'?'Update':'Save'}}</button> &nbsp;
+        <button [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button>&nbsp;
+      </div>
+      <br>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,8 @@
+.row{
+    padding:20px;
+}
+
+
+.row:nth-child(odd){
+    background: #ececec;
+}

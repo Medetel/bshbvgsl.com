@@ -1,0 +1,37 @@
+<div class="wrapper">
+  <div class="title themeheading">
+      {{title}}
+      <button class="btn btn-primary float-right" [routerLink]="['/home/category']">Back</button>
+      <span class="clearfix"></span>
+  </div>
+
+  <form (ngSubmit)="mode=='edit'?UpdateCategory(Category):SaveCategory(Category)" #Category="ngForm" name="Category">
+
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-md-4">
+          <div class="input-group form-group">
+            <input type="text" class="custom-field" name="CA_CategoryName" maxlength="50" [(ngModel)]="c.CA_CategoryName"
+              #CA_CategoryName="ngModel" [disabled]="mode=='view'" required>
+            <label for="">Category
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="CA_CategoryName.invalid && (CA_CategoryName.dirty || CA_CategoryName.touched || formInvalid)">
+              <span *ngIf="CA_CategoryName.errors.required">Category is required</span>
+            </div>
+          </div>
+        </div>
+      </div>
+   
+      <div class="btn-wrapper text-center">
+        <button [disabled]="mode=='view'"class="btn btn-primary" type="submit">Save</button>
+        <button [disabled]="mode=='view'" class="btn btn-primary" type="reset" >Cancel</button>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+
+
+

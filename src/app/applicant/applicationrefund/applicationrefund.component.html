@@ -1,0 +1,93 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary float-right" [routerLink]="['/home/appstatus']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+
+<form>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3">
+        <label for="">Reg No. :
+          <span>{{AppRefundData.APP_Reg_No}}</span>
+        </label>
+      </div>
+      <div class="col-md-3">
+        <label for="">App No. :
+          <span>{{AppRefundData.APP_No}}</span>
+        </label>
+      </div>
+      <div class="col-md-3">
+        <label for="">Name
+          <span> : {{AppRefundData.APP_PA_Name}}</span>
+        </label>
+      </div>
+      <div class="col-md-3">
+        <label for="">App Status :
+          <span>{{APP_Status}}</span>
+        </label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label for="">Project Code - Name
+          <span> : {{AppRefundData.PD_Project_Name}}</span>
+        </label>
+      </div>
+      <div class="col-md-3">
+        <label for="">Phase :
+          <span>{{AppRefundData.PD_Phase}}</span>
+        </label>
+      </div>
+      <div class="col-md-3">
+        <label for="">Scheme
+          <span>: {{AppRefundData.PD_Scheme}}</span>
+        </label>
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td>Sl No.</td>
+            <td>Transaction date</td>
+            <td colspan="3">Particulars</td>
+            <td class="text-center">Amount</td>
+            <!-- <td class="text-center">Credit Amt</td> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let refund of AppRefundData.ApplicantTransDetailsModel;let i=index">
+            <td>{{i+1}}</td>
+            <td>{{refund.TransactionDate | date:'dd-MM-yyyy'}}</td>
+            <td colspan="3">{{refund.Particulars}}</td>
+            <td class="text-center">{{refund.Amount}}</td>
+            <!-- <td class="text-right"></td> -->
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="5" class="text-right">Total</td>
+            <td class="text-center">{{Total}}</td>
+            <!-- <td>Total Credit</td> -->
+            <!-- <td class="text-right">00.00</td> -->
+          </tr>
+          <!-- <tr>
+            <td colspan="6" class="text-right">Closing Balance</td>
+            <td class="text-right">1163500.00</td>
+          </tr> -->
+        </tfoot>
+      </table>
+    </div>
+
+    <div class="text-center">
+      <button class="btn btn-primary" (click)="SaveRefundDetails(AppRefundData.APP_No,Total)">Request Refund from KHB</button>
+    </div>
+
+  </div>
+
+</form>
+
+
+</div>

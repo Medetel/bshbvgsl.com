@@ -1,0 +1,28 @@
+.row{
+    padding: 1em 0px 0px 0px !important;
+    margin-bottom: -10px;
+}
+
+td{
+    border: 1px solid #ddd;
+}
+.mandatory{
+    color:red;
+}
+@media print{
+    nav,#print-no-display,.btn,.menu, #footer,.print-no-display{
+        display:none !important;
+    }
+   
+}
+
+
+/* @media print{
+    nav,.nav,#application-menu,.title,#app-filter,.table-responsive,#footer,.btn{
+        display:none !important;
+    }
+} */
+
+.themeheading-new{
+    background-color: #b3d2dc;
+}

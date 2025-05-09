@@ -1,0 +1,105 @@
+<div class="wrapper">
+  <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm,itemsPerPage,1)">
+    <div class="title themeheading">{{title}}
+      <div class="float-right">
+        Items per page:
+        <select name="SearchRows" #SearchRows="ngModel" [(ngModel)]="itemsPerPage" class="noofpage"  (change)="itemsPerPageChanged(itemsPerPage, 1)">
+          <option [ngValue]="5">5</option>
+          <option [ngValue]="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="40">40</option>
+          <option value="50">50</option>
+        </select>
+        <a class="btn btn-primary" routerLink="/home/project-phase/project-phase-form">Add</a>
+      </div>
+      <span class="clearfix"></span>
+    </div>
+
+    <div class="searchbar">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-1">
+            <label>Search</label>
+          </div>
+          <div class="col-md-4">
+            <select name="SearchCriteria" #SearchCriteria="ngModel" [(ngModel)]="s.SearchCriteria" class="form-control"
+              required>
+              <option [ngValue]="undefined" selected>---Select---</option>
+              <option value="projectcode">Project Code</option>
+              <option value="projectname">Project Name</option>
+            </select>
+            <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)" class="error-msg">
+              <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <input type="text" name="SearchText" #SearchText="ngModel" [(ngModel)]="s.SearchText" class="form-control"
+              placeholder="Search.." required>
+            <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+              <div *ngIf="SearchText.errors.required">Search text is required</div>
+            </div>
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-default" type="submit">Search</button>
+            <button class="btn btn-default" type="reset" (click)="GetAllProjectsPhase(itemsPerPage, 1)">Clear</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-striped grid">
+        <thead>
+          <tr>
+            <td>Sl No.</td>
+            <td>Project Code</td>
+            <td>Project Name</td>
+            <td>Phase</td>
+            <td>Total No.of Survey Number</td>
+            <td>Selected Survey Number</td>
+
+            <td class="text-center">View</td>
+            <!-- <td class="text-center">edit</td> -->
+            <!-- <td class="text-center">Delete</td> -->
+
+            <!-- <td class="text-center">View</td>
+          <td class="text-center">Edit</td>
+          <td class="text-center">Delete</td> -->
+          </tr>
+        </thead>
+        <tbody *ngFor="let pd of projectlist | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index">
+          <tr *ngIf="pd.Phase_Name!=null">
+            <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+            <td>{{pd.PD_Project_Code}}</td>
+            <td>{{pd.PD_Project_Name}}</td>
+            <td>{{pd.Phase_Name}}</td>
+            <td>{{pd.Received}}</td>
+            <td>{{pd.UsedSurveyNo}}</td>
+            <td class="text-center">
+              <a href="#" [routerLink]="['/home/project-phase/project-phase-form', pd.PD_Id, pd.PP_Id, 'view']">
+                <i class="fa fa-lg fa-eye themecolor"></i>
+              </a>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-11">
+            <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)" maxSize="9"
+              directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+              screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+            </pagination-controls>
+          </div>
+          <div class="col-md-1">
+            Total:
+            <span>{{totalItems}}</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </form>
+</div>

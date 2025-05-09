@@ -1,0 +1,1017 @@
+<div class="header">
+  <img src="../assets/images/app-banner.jpg" class="img-responsive" />
+</div>
+<div class="wrapper application">
+  <div class="title themeheading">
+    {{title}}<button class="btn btn-primary pull-right" [routerLink]="['/apply-allotment']">Back</button>
+  </div>
+
+  <form #Application="ngForm" (ngSubmit)="mode=='save'?SaveApplication(Application):UpdateApplication(app.APP_Id,Application)"
+    name="form1" novalidate>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-2" style="margin-top: 12px;">
+          <label>
+            1. Application No.:
+            <span class="clearfix"></span>
+          </label>
+        </div>
+        <div class="col-md-4" style="margin-top: 10px; margin-left: -41px;">
+          {{app.APP_No}}
+        </div>
+        <div class="col-md-3" style="margin-top: 12px;">
+          <label>
+            2. Is Joint Registration<span class="mandatory">*</span>
+            <div class="error-msg float-right" *ngIf="APP_IsJoint.invalid && (APP_IsJoint.dirty || APP_IsJoint.touched || formInvalid)">
+              <span *ngIf="APP_IsJoint.errors.required">Field is required</span>
+            </div>
+            <span class="clearfix"></span>
+          </label>
+        </div>
+        <div class="col-md-3" style="margin-top: 12px;">
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" required type="radio" id="inlineRadio1" value="Y" name="APP_IsJoint"
+                [(ngModel)]="app.APP_IsJoint" #APP_IsJoint="ngModel"> Yes
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" required type="radio" id="inlineRadio1" value="N" name="APP_IsJoint"
+                [(ngModel)]="app.APP_IsJoint" #APP_IsJoint="ngModel"> No
+            </label>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row" style=" background: #d1dee8;">
+        <h5>Project Details</h5>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <label>
+            <span class="field-title">3. Project Name</span>:
+            <span>{{PD.PD_Project_Name}}</span>
+          </label>
+        </div>
+        <div class="col-md-6">
+          <label>
+            <span class="field-title">4. Project Place</span>:
+            <span>{{PD.NO_AuctionPlace}}</span>
+          </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label>
+            <span class="field-title">5. District Name</span>:
+            <span>{{PD.DI_District}}</span>
+          </label>
+        </div>
+        <div class="col-md-6">
+          <label>
+            <span class="field-title">6. District Code</span>:
+            <span>{{PD.DI_Code}}</span>
+          </label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label>
+            <span class="field-title">7. Notification No</span>:
+            <span>{{PD.NO_Number}}</span>
+          </label>
+        </div>
+        <div class="col-md-6">
+          <label>
+            <span class="field-title">8. Notification Date</span>:
+            <span>{{PD.NO_Date | date:'dd-MM-yyyy'}}</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2" style="margin-top: 12px;">
+          <label>
+            9. Property Type<span class="mandatory">*</span>
+            <div class="error-msg float-right" *ngIf="APP_PropertyType.invalid && (APP_PropertyType.dirty || APP_PropertyType.touched || formInvalid)">
+              <span *ngIf="APP_PropertyType.errors.required">Property Type is required</span>
+            </div>
+            <span class="clearfix"></span>
+          </label>
+        </div>
+        <div class="col-md-4" style="margin-top: 12px;">
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input required class="form-check-input" type="radio" value="House" name="APP_PropertyType" [(ngModel)]="app.APP_PropertyType"
+                #APP_PropertyType="ngModel" id="inlineRadio1"> House
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input required class="form-check-input" type="radio" value="Site" name="APP_PropertyType" [(ngModel)]="app.APP_PropertyType"
+                #APP_PropertyType="ngModel" id="inlineRadio1"> Site
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input required class="form-check-input" type="radio" value="Flat" name="APP_PropertyType" [(ngModel)]="app.APP_PropertyType"
+                #APP_PropertyType="ngModel" id="inlineRadio1"> Flat
+            </label>
+          </div>
+        </div>
+
+
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <select [(ngModel)]="app.APP_CA_Id_FK" required #APP_CA_Id_FK="ngModel" name="APP_CA_Id_FK" class="custom-field">
+              <option [ngValue]="undefined" selected>---Select---</option>
+              <option [ngValue]="ca.CA_Id" *ngFor="let ca of Categories;">
+                {{ca.CA_CategoryName}}</option>
+            </select>
+            <label>
+              10. Property category<span class="mandatory">*</span>
+              <div class="error-msg" *ngIf="APP_CA_Id_FK.invalid && (APP_CA_Id_FK.dirty || APP_CA_Id_FK.touched || formInvalid)">
+                <span *ngIf="APP_CA_Id_FK.errors.required">Property Category is required</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="row" style=" background: #d1dee8;">
+        <h5>Applicant Details</h5>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" oninput="this.value = this.value.toUpperCase()" placeholder=" "
+              minlength="3" maxlength="40" name="APP_PA_Name" [(ngModel)]="app.APP_PA_Name" #APP_PA_Name="ngModel"
+              required>
+            <label> Applicant's Name<span class="mandatory">*</span>
+              <div class="error-msg" *ngIf="APP_PA_Name.invalid && (APP_PA_Name.dirty || APP_PA_Name.touched || formInvalid)">
+                <span *ngIf="APP_PA_Name.errors.required">Name field is required</span>
+                <span *ngIf="APP_PA_Name.errors.minlength">Name must be atleast 3 characters</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" oninput="this.value = this.value.toUpperCase()" placeholder=" "
+              minlength="3" maxlength="40" name="APP_PA_Relation_Name" [(ngModel)]="app.APP_PA_Relation_Name"
+              #APP_PA_Relation_Name="ngModel">
+            <label> Father/Husband/Wife Name<span class="mandatory">*</span>
+              <div class="error-msg" *ngIf="APP_PA_Relation_Name.invalid && (APP_PA_Relation_Name.dirty || APP_PA_Relation_Name.touched || formInvalid)">
+                <span *ngIf="APP_PA_Relation_Name.errors.minlength">Name must be atleast 3 characters</span>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="app.APP_IsJoint=='Y'">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" oninput="this.value = this.value.toUpperCase()" placeholder=" "
+              minlength="3" maxlength="40" name="APP_SA_Name" [(ngModel)]="app.APP_SA_Name" #APP_SA_Name="ngModel">
+            <label>
+              11. Applicant's Name-II
+              <div class="error-msg" *ngIf="APP_SA_Name.invalid && (APP_SA_Name.dirty || APP_SA_Name.touched)">
+                <!-- <span *ngIf="APP_SA_Name.errors.required">Name field is required</span> -->
+                <span *ngIf="APP_SA_Name.errors.minlength">Name must be atleast 3 characters</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <select [(ngModel)]="app.APP_SA_Relation_Id_FK" #APP_SA_Relation_Id_FK="ngModel" name="APP_SA_Relation_Id_FK"
+              class="custom-field">
+              <option [ngValue]="undefined" selected>---Select---</option>
+              <option [ngValue]="r.Relation_Id" *ngFor="let r of Relations;">
+                {{r.Relation_Name}}</option>
+            </select>
+            <label for="">
+              Relationship
+              <!-- <div class="error-msg" *ngIf="APP_SA_Relation_Id_FK.invalid && (APP_SA_Relation_Id_FK.dirty || APP_SA_Relation_Id_FK.touched)">
+                                    <span *ngIf="APP_SA_Relation_Id_FK.errors.required">Relationship field is required</span>
+                                </div> -->
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-3">
+          <label>
+            13. Applicant Gender<span class="mandatory">*</span>
+            <div class="error-msg" *ngIf="APP_PA_Gender.invalid && (APP_PA_Gender.dirty || APP_PA_Gender.touched || formInvalid)">
+              <span *ngIf="APP_PA_Gender.errors.required">Gender is required</span>
+            </div>
+          </label>
+        </div>
+        <div class="col-md-3">
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" required type="radio" id="inlineRadio1" value="Male" name="APP_PA_Gender"
+                [(ngModel)]="app.APP_PA_Gender" #APP_PA_Gender="ngModel"> Male
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" required type="radio" id="inlineRadio1" value="Female" name="APP_PA_Gender"
+                [(ngModel)]="app.APP_PA_Gender" #APP_PA_Gender="ngModel"> Female
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" required type="radio" id="inlineRadio1" value="Transgender" name="APP_PA_Gender"
+                [(ngModel)]="app.APP_PA_Gender" #APP_PA_Gender="ngModel"> Transgender
+            </label>
+          </div>
+        </div>
+        <div class="col-md-3" *ngIf="app.APP_IsJoint=='Y'">
+          <label>
+            13.Secondary Applicant Gender
+            <!-- <div class="error-msg" *ngIf="APP_SA_Gender.invalid">
+                            <span *ngIf="APP_SA_Gender.errors.required">Gender is required</span>
+                        </div> -->
+          </label>
+        </div>
+        <div class="col-md-3" *ngIf="app.APP_IsJoint=='Y'">
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" id="inlineRadio1" value="Male" name="APP_SA_Gender"
+                [(ngModel)]="app.APP_SA_Gender" #APP_SA_Gender="ngModel"> Male
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" id="inlineRadio1" value="Female" name="APP_SA_Gender"
+                [(ngModel)]="app.APP_SA_Gender" #APP_SA_Gender="ngModel"> Female
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" id="inlineRadio1" value="Transgender" name="APP_SA_Gender"
+                [(ngModel)]="app.APP_SA_Gender" #APP_SA_Gender="ngModel"> Transgender
+            </label>
+          </div>
+        </div>
+
+
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input (change)=CalculateAge(app.APP_PA_DOB); type="date" class="custom-field" placeholder=" " name="APP_PA_DOB"
+              [(ngModel)]="app.APP_PA_DOB" #APP_PA_DOB="ngModel" required>
+            <label>
+              14. Applicant's Date of Birth<span class="mandatory">*</span>
+              <div class="error-msg" *ngIf="APP_PA_DOB.invalid && (APP_PA_DOB.dirty || APP_PA_DOB.touched || formInvalid)">
+                <span *ngIf="APP_PA_DOB.errors.required">DOB is required</span>
+              </div>
+            </label>
+          </div>
+        </div>
+        <div class="col-md-6" style="margin-top: 12px;">
+          <label>
+            <span class="field-title">15. Age (in Years)</span>:
+            <span *ngIf="APP_PA_Age!=undefined"> {{APP_PA_Age}}Years</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="app.APP_IsJoint=='Y'">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input (change)=CalculateSAAge(app.APP_SA_DOB); type="date" class="custom-field" placeholder=" " name="APP_SA_DOB"
+              [(ngModel)]="app.APP_SA_DOB" #APP_SA_DOB="ngModel">
+            <label>
+              14.Secondary Applicant's Date of Birth
+              <!-- <div class="error-msg" *ngIf="APP_SA_DOB.invalid && (APP_SA_DOB.dirty || APP_SA_DOB.touched)">
+                                <span *ngIf="APP_SA_DOB.errors.required">DOB is required</span>
+                            </div> -->
+            </label>
+          </div>
+        </div>
+        <div class="col-md-6" style="margin-top: 12px;">
+          <label>
+            <span class="field-title">15. Age (in Years)</span>:
+            <span *ngIf="APP_SA_Age!=undefined"> {{APP_SA_Age}}Years</span>
+          </label>
+        </div>
+      </div>
+
+
+      <div class="row">
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" oninput="this.value = this.value.toUpperCase()" placeholder=" "
+              minlength="10" maxlength="10" name="APP_PA_PanNo" [(ngModel)]="app.APP_PA_PanNo" #APP_PA_PanNo="ngModel"
+              required>
+            <label>
+              15.Applicant's I.T.Pan No.(if available)<span class="mandatory">*</span>
+              <div class="error-msg" *ngIf="APP_PA_PanNo.invalid && (APP_PA_PanNo.dirty || APP_PA_PanNo.touched || formInvalid)">
+                <span *ngIf="APP_PA_PanNo.errors.minlength">PAN No. must be atleast 10 characters</span>
+                <span *ngIf="APP_PA_PanNo.errors.required">PAN No. is required</span>
+              </div>
+            </label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" placeholder=" " minlength="12" maxlength="12" [pattern]="numericpattern"
+              name="APP_PA_AdharNo" [(ngModel)]="app.APP_PA_AdharNo" #APP_PA_AdharNo="ngModel" required>
+            <label>
+              16.Applicant's Aadhaar No.<span class="mandatory">*</span>
+              <div class="error-msg" *ngIf="APP_PA_AdharNo.invalid && (APP_PA_AdharNo.dirty || APP_PA_AdharNo.touched || formInvalid)">
+                <span *ngIf="APP_PA_AdharNo.errors.minlength">Aadhaar No. must be 12 characters</span>
+                <span *ngIf="APP_PA_AdharNo.errors.required">Aadhaar No. is required</span>
+                <span *ngIf="APP_PA_AdharNo.errors?.pattern">Aadhaar No. must be numeric characters</span>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="app.APP_IsJoint=='Y'">
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" oninput="this.value = this.value.toUpperCase()" placeholder=" "
+              minlength="10" maxlength="10" name="APP_SA_PanNo" [(ngModel)]="app.APP_SA_PanNo" #APP_SA_PanNo="ngModel">
+            <label>
+              15. Secondary Applicant's I.T.Pan No.(if available)
+              <div class="error-msg" *ngIf="APP_SA_PanNo.invalid">
+                <span *ngIf="APP_SA_PanNo.errors.minlength">PAN No. must be atleast 10 characters</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" placeholder=" " [pattern]="numericpattern" minlength="12" maxlength="12"
+              name="APP_SA_AdharNo" [(ngModel)]="app.APP_SA_AdharNo" #APP_SA_AdharNo="ngModel">
+            <label>
+              16.Secondary Applicant's Aadhaar No.
+              <div class="error-msg" *ngIf="APP_SA_AdharNo.invalid && (APP_SA_AdharNo.dirty || APP_SA_AdharNo.touched)">
+                <span *ngIf="APP_SA_AdharNo.errors.minlength">Aadhaar No. must be 12 characters</span>
+                <span *ngIf="APP_SA_AdharNo.errors?.pattern">Aadhaar No. must be numeric characters</span>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <select [(ngModel)]="app.APP_Relegion_Id_FK" required #APP_Relegion_Id_FK="ngModel" name="APP_Relegion_Id_FK"
+              class="custom-field">
+              <option [ngValue]="undefined" selected>---Select---</option>
+              <option [ngValue]="r.Relegion_Id" *ngFor="let r of Relegions;">
+                {{r.Relegion_Name}}</option>
+            </select>
+            <label>
+              17. Religion<span class="mandatory">*</span>
+              <div class="error-msg" *ngIf="APP_Relegion_Id_FK.invalid && (APP_Relegion_Id_FK.dirty || APP_Relegion_Id_FK.touched || formInvalid)">
+                <span *ngIf="APP_Relegion_Id_FK.errors.required">Religion field is required</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <select [(ngModel)]="app.APP_Reservation_Id_FK" required #APP_Reservation_Id_FK="ngModel" name="APP_Reservation_Id_FK"
+              class="custom-field">
+              <option [ngValue]="undefined" selected>---Select---</option>
+              <option [ngValue]="r.RES_Id" *ngFor="let r of Reservations;">
+                {{r.RES_Name}}</option>
+            </select>
+            <label>
+              18. Reservation<span class="mandatory">*</span>
+              <div class="error-msg" *ngIf="APP_Reservation_Id_FK.invalid && (APP_Reservation_Id_FK.dirty || APP_Reservation_Id_FK.touched || formInvalid)">
+                <span *ngIf="APP_Reservation_Id_FK.errors.required">Reservation field is required</span>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" minlength="5" maxlength="10" [pattern]="numericpattern" placeholder=" "
+              name="APP_AnnualIncome" (change)="CheckAnnualIncome(app.APP_CA_Id_FK,app.APP_AnnualIncome)" [(ngModel)]="app.APP_AnnualIncome"
+              #APP_AnnualIncome="ngModel" required>
+            <label>
+              19. Annual Income (Rs.)<span class="mandatory">*</span>
+              <div class="error-msg" *ngIf="APP_AnnualIncome.invalid && (APP_AnnualIncome.dirty || APP_AnnualIncome.touched || formInvalid)">
+                <span *ngIf="APP_AnnualIncome.errors.minlength">Annual Income must be 5 characters</span>
+                <span *ngIf="APP_AnnualIncome.errors.required">Annual Income is required</span>
+                <span *ngIf="APP_AnnualIncome.errors?.pattern">Annual Income must be numeric characters</span>
+              </div>
+              <span class="error-msg">{{app.APP_AnnualIncomeErrorMessage}}</span>
+            </label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" placeholder=" " minlength="1" maxlength="2" [pattern]="numericpattern"
+              name="APP_YearsResiding" [(ngModel)]="app.APP_YearsResiding" #APP_YearsResiding="ngModel" required>
+            <label>
+              20. No. of Years residing in Karnataka<span class="mandatory">*</span>
+              <div class="error-msg" *ngIf="APP_YearsResiding.invalid && (APP_YearsResiding.dirty || APP_YearsResiding.touched || formInvalid)">
+                <span *ngIf="APP_YearsResiding.errors.required">No. of Years in Karnataka is required</span>
+                <span *ngIf="APP_YearsResiding.errors?.pattern">No. of Years in Karnataka must be numeric characters</span>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" placeholder=" " oninput="this.value = this.value.toUpperCase()" class="custom-field"
+              minlength="3" maxlength="40" name="APP_NomineeName" [(ngModel)]="app.APP_NomineeName" #APP_NomineeName="ngModel"
+              required>
+            <label>
+              21. Name of the Nominee
+              <div class="error-msg" *ngIf="APP_NomineeName.invalid && (APP_NomineeName.dirty || APP_NomineeName.touched || formInvalid)">
+                <span *ngIf="APP_NomineeName.errors.minlength">Name must be atleast 3 characters</span>
+                <span *ngIf="APP_NomineeName.errors.required">NomineeName is required</span>
+              </div>
+            </label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <select [(ngModel)]="app.APP_Nominee_Relation_Id_FK" #APP_Nominee_Relation_Id_FK="ngModel" name="APP_Nominee_Relation_Id_FK"
+              class="custom-field" required>
+              <option [ngValue]="undefined" selected>---Select---</option>
+              <option [ngValue]="r.Relation_Id" *ngFor="let r of Relations;">
+                {{r.Relation_Name}}</option>
+            </select>
+            <label>22. Relationship with the Nominee<span class="mandatory">*</span>
+              <div class="error-msg" *ngIf="APP_Nominee_Relation_Id_FK.invalid && (APP_Nominee_Relation_Id_FK.dirty || APP_Nominee_Relation_Id_FK.touched || formInvalid)">
+                <span *ngIf="APP_Nominee_Relation_Id_FK.errors.required">Reservation field is required</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+
+      </div>
+
+      <!-- <div class="row" style=" background: #d1dee8;">
+                <h5 style="margin-left:555px">Address for Communication Details</h5>
+            </div> -->
+      <div class="row" style=" background: #d1dee8;">
+        <h5>Communication Details</h5>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <textarea class="custom-field" placeholder=" " maxlength="80" name="APP_Address1" [(ngModel)]="app.APP_Address1"
+              #APP_Address1="ngModel" required></textarea>
+            <label>
+              23. Address 1<span class="mandatory">*</span>
+              <div class="error-msg" *ngIf="APP_Address1.invalid && (APP_Address1.dirty || APP_Address1.touched || formInvalid)">
+                <span *ngIf="APP_Address1.errors.required">Address 1 is required</span>
+              </div>
+            </label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <textarea class="custom-field" placeholder=" " maxlength="80" name="APP_Address2" [(ngModel)]="app.APP_Address2"
+              #APP_Address2="ngModel" required></textarea>
+            <label>
+              24. Address 2
+              <div class="error-msg" *ngIf="APP_Address2.invalid && (APP_Address2.dirty || APP_Address2.touched || formInvalid)">
+                <span *ngIf="APP_Address2.errors.required">Address 2 is required</span>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="app.APP_DI_Id_FK" #APP_DI_Id_FK="ngModel" name="APP_DI_Id_FK"
+              (change)="GetTaluks(app.APP_DI_Id_FK)" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="d.DI_Id" *ngFor="let d of Districts;">
+                {{d.DI_District}} </option>
+            </select>
+            <label>
+              25. District<span class="mandatory">*</span>
+              <div class="error-msg" *ngIf="APP_DI_Id_FK.invalid && (APP_DI_Id_FK.dirty || APP_DI_Id_FK.touched || formInvalid)">
+                <span *ngIf="APP_DI_Id_FK.errors.required">District is required</span>
+              </div>
+            </label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="app.APP_TA_Id_FK" #APP_TA_Id_FK="ngModel" name="APP_TA_Id_FK"
+               required>
+               <!-- (change)="GetHobli(app.APP_TA_Id_FK)" -->
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="t.TA_Id" *ngFor="let t of Taluks;">
+                {{t.TA_Taluk}} </option>
+            </select>
+            <label>
+              26.Taluk<span class="mandatory">*</span>
+              <div class="error-msg" *ngIf="APP_TA_Id_FK.invalid && (APP_TA_Id_FK.dirty || APP_TA_Id_FK.touched || formInvalid)">
+                <span *ngIf="APP_TA_Id_FK.errors.required">Taluk is required</span>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <!-- <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="app.APP_HO_Id_FK" #APP_HO_Id_FK="ngModel" name="APP_HO_Id_FK" (change)="GetVillages(app.APP_HO_Id_FK)"
+              required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="h.HO_Id" *ngFor="let h of Hoblis;">
+                {{h.HO_Name}} </option>
+            </select>
+            <label>
+              25.Hobli<span class="mandatory">*</span>
+              <div class="error-msg" *ngIf="APP_HO_Id_FK.invalid && (APP_HO_Id_FK.dirty || APP_HO_Id_FK.touched || formInvalid)">
+                <span *ngIf="APP_HO_Id_FK.errors.required">Hobli is required</span>
+              </div>
+            </label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="app.APP_VI_Id_FK" #APP_VI_Id_FK="ngModel" name="APP_VI_Id_FK" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="v.VI_Id" *ngFor="let v of Villages;">
+                {{v.VI_Village}} </option>
+            </select>
+            <label>
+              26. Village<span class="mandatory">*</span>
+              <div class="error-msg" *ngIf="APP_VI_Id_FK.invalid && (APP_VI_Id_FK.dirty || APP_VI_Id_FK.touched || formInvalid)">
+                <span *ngIf="APP_VI_Id_FK.errors.required">Village is required</span>
+              </div>
+            </label>
+          </div>
+        </div> -->
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" placeholder=" " maxlength="49"  name="APP_HO_Name"
+              [(ngModel)]="app.APP_HO_Name" #APP_HO_Name="ngModel">
+            <label>
+              Hobli
+            </label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" placeholder=" " maxlength="59"  name="APP_VI_Name"
+              [(ngModel)]="app.APP_VI_Name" #APP_VI_Name="ngModel">
+            <label>
+              Village
+            </label>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" placeholder=" " minlength="6" maxlength="6" [pattern]="numericpattern"
+              name="APP_Pincode" [(ngModel)]="app.APP_Pincode" #APP_Pincode="ngModel" required>
+            <label>
+              25. Pincode<span class="mandatory">*</span>
+              <div class="error-msg" *ngIf="APP_Pincode.invalid && (APP_Pincode.dirty || APP_Pincode.touched || formInvalid)">
+                <span *ngIf="APP_Pincode.errors.required">Pincode is required</span>
+                <span *ngIf="APP_Pincode.errors?.pattern">Pincode must be numeric characters</span>
+                <span *ngIf="APP_Pincode.errors.minlength">Pincode must be 6 characters</span>
+              </div>
+            </label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" placeholder=" " minlength="10" maxlength="13" [pattern]="numericpattern"
+              name="APP_PA_MobileNo" [(ngModel)]="app.APP_PA_MobileNo" #APP_PA_MobileNo="ngModel" required>
+            <label>
+              26. Applicant's Mobile Number<span class="mandatory">*</span>(SMS will be sent to this mobile number.)
+              <div class="error-msg" *ngIf="APP_PA_MobileNo.invalid && (APP_PA_MobileNo.dirty || APP_PA_MobileNo.touched || formInvalid)">
+                <span *ngIf="APP_PA_MobileNo.errors.required">Mobile Number is required</span>
+                <span *ngIf="APP_PA_MobileNo.errors?.pattern">Mobile Number must be numeric characters</span>
+                <span *ngIf="APP_PA_MobileNo.errors.minlength">Mobile Number must be atleast 10 characters</span>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" placeholder=" " name="APP_PA_AlternateNo" minlength="10" maxlength="13"
+              [pattern]="numericpattern" [(ngModel)]="app.APP_PA_AlternateNo" #APP_PA_AlternateNo="ngModel" required>
+            <label>
+              27.Alternate Mobile Number<span class="mandatory">*</span>
+              <div class="error-msg" *ngIf="APP_PA_AlternateNo.invalid && (APP_PA_AlternateNo.dirty || APP_PA_AlternateNo.touched || formInvalid)">
+                <span *ngIf="APP_PA_AlternateNo.errors.required">Mobile Number is required</span>
+                <span *ngIf="APP_PA_AlternateNo.errors?.pattern">Mobile Number must be numeric characters</span>
+                <span *ngIf="APP_PA_AlternateNo.errors.minlength">Mobile Number must be atleast 10 characters</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" [pattern]="emailpattern" placeholder=" " name="APP_PA_Email"
+              [(ngModel)]="app.APP_PA_Email" #APP_PA_Email="ngModel" required>
+            <label>
+              28.Applicant's Email<span class="mandatory">*</span>
+              <div class="error-msg" *ngIf="APP_PA_Email.invalid && (APP_PA_Email.dirty || APP_PA_Email.touched || formInvalid)">
+                <span *ngIf="APP_PA_Email.errors.required">Email is required</span>
+                <span *ngIf="APP_PA_Email.errors?.pattern">Email is invalid</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+
+      </div>
+
+      <div class="row" *ngIf="app.APP_IsJoint=='Y'">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" placeholder=" " minlength="10" maxlength="13" [pattern]="numericpattern"
+              name="APP_SA_MobileNo" [(ngModel)]="app.APP_SA_MobileNo" #APP_SA_MobileNo="ngModel">
+            <label>
+              27.Secondary Applicant's Mobile Number
+              <div class="error-msg" *ngIf="APP_SA_MobileNo.invalid && (APP_SA_MobileNo.dirty || APP_SA_MobileNo.touched)">
+                <span *ngIf="APP_SA_MobileNo.errors?.pattern">Mobile Number must be numeric characters</span>
+                <span *ngIf="APP_SA_MobileNo.errors.minlength">Mobile Number must be atleast 10 characters</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" placeholder=" " [pattern]="emailpattern" name="APP_SA_Email"
+              [(ngModel)]="app.APP_SA_Email" #APP_SA_Email="ngModel">
+            <label>
+              28. Secondary Applicant's Email
+              <div class="error-msg" *ngIf="APP_SA_Email.invalid && (APP_SA_Email.dirty || APP_SA_Email.touched)">
+                <span *ngIf="APP_SA_Email.errors?.pattern">Email is invalid</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+
+      </div>
+
+
+
+      <div class="row" style=" background: #d1dee8;">
+        <h5>Bank Details</h5>
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" oninput="this.value = this.value.toUpperCase()" placeholder=" "
+              name="APP_BankName" [(ngModel)]="app.APP_BankName" #APP_BankName="ngModel" required>
+            <label>
+              29. Name of the Bank<span class="mandatory">*</span>
+              <div class="error-msg" *ngIf="APP_BankName.invalid && (APP_BankName.dirty || APP_BankName.touched || formInvalid)">
+                <span *ngIf="APP_BankName.errors.required">Bank Name is required</span>
+              </div>
+            </label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" oninput="this.value = this.value.toUpperCase()" placeholder=" "
+              name="APP_BankBranch" [(ngModel)]="app.APP_BankBranch" #APP_BankBranch="ngModel" required>
+            <label>
+              30.Branch Name<span class="mandatory">*</span>
+              <div class="error-msg" *ngIf="APP_BankBranch.invalid && (APP_BankBranch.dirty || APP_BankBranch.touched || formInvalid)">
+                <span *ngIf="APP_BankBranch.errors.required">Bank Branch is required</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" oninput="this.value = this.value.toUpperCase()" placeholder=" "
+              name="APP_IFSC" [(ngModel)]="app.APP_IFSC" #APP_IFSC="ngModel" required>
+            <label>
+              31. IFSC Code<span class="mandatory">*</span>
+              <div class="error-msg" *ngIf="APP_IFSC.invalid && (APP_IFSC.dirty || APP_IFSC.touched || formInvalid)">
+                <span *ngIf="APP_IFSC.errors.required">IFSC Code is required</span>
+              </div>
+            </label>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" placeholder=" " name="APP_AccountNo" [(ngModel)]="app.APP_AccountNo"
+              #APP_AccountNo="ngModel" required>
+            <label>
+              32. Account Number<span class="mandatory">*</span>
+              <div class="error-msg" *ngIf="APP_AccountNo.invalid && (APP_AccountNo.dirty || APP_AccountNo.touched || formInvalid)">
+                <span *ngIf="APP_AccountNo.errors.required">Account Number is required</span>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="row" style=" background: #d1dee8;">
+        <h5>Upload Files</h5>
+      </div>
+
+
+      <div class="row">
+        <div class="col-md-2">
+          <label>
+            33.Applicant's Photo
+            <br>
+            <span class="error-msg">{{app.APP_PA_PhotoErrorMessage}}</span>
+          </label>
+        </div>
+        <div class="col-md-2">
+          <input type="file" #Image accept="image/*" (change)="PAPhotoFileInput($event.target.files)" id="APP_PA_Photo"
+            name="APP_PA_Photo" #APP_PA_Photo="ngModel" [(ngModel)]="app.APP_PA_Photo">
+        </div>
+        <div class="col-md-2">
+          <img [src]="PAPhotoimageUrl" style="width:200px;height:130px;">
+        </div>
+
+
+        <div class="col-md-2" *ngIf="app.APP_IsJoint=='Y'">
+          <label>33. Secondary Applicant's Photo
+            <br>
+            <span class="error-msg">{{app.APP_SA_PhotoErrorMessage}}</span>
+          </label>
+        </div>
+        <div class="col-md-2" *ngIf="app.APP_IsJoint=='Y'">
+          <input type="file" #Image accept="image/*" (change)="SAPhotoFileInput($event.target.files)" id="APP_SA_Photo"
+            [(ngModel)]="app.APP_SA_Photo" name="APP_SA_Photo" #APP_SA_Photo="ngModel">
+        </div>
+        <div class="col-md-2" *ngIf="app.APP_IsJoint=='Y'">
+          <img [src]="SAPhotoimageUrl" style="width:200px;height:130px;">
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-2">
+          <label>34.Applicant's Signature
+            <br>
+            <span class="error-msg">{{app.APP_PA_SignatureErrorMessage}}</span>
+          </label>
+        </div>
+        <div class="col-md-2">
+          <input type="file" #Image accept="image/*" (change)="PASignatureFileInput($event.target.files)" id="APP_PA_Signature"
+            [(ngModel)]="app.APP_PA_Signature" name="APP_PA_Signature" #APP_PA_Signature="ngModel">
+        </div>
+        <div class="col-md-2">
+          <img [src]="PASignatureimageUrl" style="width:200px;height:130px;">
+        </div>
+
+
+        <div class="col-md-2" *ngIf="app.APP_IsJoint=='Y'">
+          <label>34. Secondary Applicant's Signature
+            <br>
+            <span class="error-msg">{{app.APP_SA_SignatureErrorMessage}}</span>
+          </label>
+        </div>
+        <div class="col-md-2" *ngIf="app.APP_IsJoint=='Y'">
+          <input type="file" #Image accept="image/*" (change)="SASignatureFileInput($event.target.files)" id="APP_SA_Signature"
+            [(ngModel)]="app.APP_SA_Signature" name="APP_SA_Signature" #APP_SA_Signature="ngModel">
+        </div>
+        <div class="col-md-2" *ngIf="app.APP_IsJoint=='Y'">
+          <img [src]="SASignatureimageUrl" style="width:200px;height:130px;">
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-md-2">
+          <label>35.Applicant's Aadhaar Card
+            <br>
+            <span class="error-msg">{{app.APP_PAAadhaarErrorMessage}}</span>
+          </label>
+        </div>
+        <div class="col-md-2">
+          <input type="file" #Image accept="image/*" (change)="PAAadhaarFileInput($event.target.files)" id="APP_PA_AdharCard"
+            [(ngModel)]="app.APP_PA_AdharCard" name="APP_PA_AdharCard" #APP_PA_AdharCard="ngModel">
+        </div>
+        <div class="col-md-2">
+          <img [src]="PAAadhaarimageUrl" style="width:200px;height:130px;">
+        </div>
+
+
+        <div class="col-md-2" *ngIf="app.APP_IsJoint=='Y'">
+          <label>35. Secondary Applicant's Aadhaar Card
+            <br>
+            <span class="error-msg">{{app.APP_SAAadhaarErrorMessage}}</span>
+          </label>
+        </div>
+        <div class="col-md-2" *ngIf="app.APP_IsJoint=='Y'">
+          <input type="file" #Image accept="image/*" (change)="SAAadhaarFileInput($event.target.files)" id=""
+            [(ngModel)]="app.APP_SA_AdharCard" name="APP_SA_AdharCard" #APP_SA_AdharCard="ngModel">
+        </div>
+        <div class="col-md-2" *ngIf="app.APP_IsJoint=='Y'">
+          <img [src]="SAAadhaarimageUrl" style="width:200px;height:130px;">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2">
+          <label>36. Upload other document(PDF)
+            <br>
+            <span class="error-msg">{{app.ESW_CertificateErrorMessage}}</span>
+          </label>
+        </div>
+        <div class="col-md-2">
+          <input type="file" #Image accept="application/pdf" (change)="ESWFileInput($event.target.files)" id="APP_ESW_Certificate"
+            [(ngModel)]="app.APP_ESW_Certificate" name="APP_ESW_Certificate" #APP_ESW_Certificate="ngModel">
+        </div>
+        <div class="col-md-2" *ngIf="mode=='Update'">
+          <a href="{{app.APP_ESW_Certificate}}" target="_blank">View</a>>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-2">
+          <label>37. Upload Caste or other Cerficate(PDF)<span class="mandatory">*</span>
+            <br>
+            <span class="error-msg">{{app.Caste_CertificateErrorMessage}}</span>
+          </label>
+        </div>
+        <div class="col-md-2">
+          <input type="file" #Image accept="application/pdf" (change)="CasteFileInput($event.target.files)" id="APP_Caste_Certificate"
+            [(ngModel)]="app.APP_Caste_Certificate" name="APP_Caste_Certificate" #APP_Caste_Certificate="ngModel">
+        </div>
+        <!-- <div class="error-msg" *ngIf="APP_Caste_Certificate.invalid && (APP_Caste_Certificate.dirty || APP_Caste_Certificate.touched || formInvalid)">
+          <span *ngIf="APP_Caste_Certificate.errors.required">Cerficate is required</span>
+        </div> -->
+        <div class="col-md-2" *ngIf="mode=='update'">
+          <a href="{{app.APP_Caste_Certificate}}" target="_blank">View</a>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+
+          <label style="color: red">
+            <span style="font-size: 20px;color: black"></span>
+            I hereby declare that the above furnished information and documents uploaded are genunine and true to my
+            knowledge if found
+            fraudulent/incorrect, my application shall be liable for rejection and initial deposit paid by me shall be
+            forfieted
+            by KHB.
+
+          </label>
+
+          <input type="checkbox" #terms="ngModel" [ngModel]="app.terms" name="terms"> I agree to the terms and
+          conditions of Karnataka Housing Board, Allotment Rules & Regulations 1983.
+          <br>
+          <!-- <div class="error-msg float-left" *ngIf="terms.invalid">
+                         <span *ngIf="terms.errors.required">Accept the Terms</span> 
+                    </div> -->
+        </div>
+      </div>
+
+      <div class="row" style=" background: #d1dee8;">
+        <h5>Payment</h5>
+      </div>
+
+
+      <div class="row">
+
+        <div class="col-md-4" style="margin-top: 12px;">
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" id="inlineRadio1" value="CHALLAN" name="APP_Payment_type"
+                [(ngModel)]="app.APP_Payment_type" #APP_Payment_type="ngModel"> Bank Challan
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" id="inlineRadio1" value="NEFT" name="APP_Payment_type"
+                [(ngModel)]="app.APP_Payment_type" #APP_Payment_type="ngModel"> NEFT
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" id="inlineRadio1" value="RTGS" name="APP_Payment_type"
+                [(ngModel)]="app.APP_Payment_type" #APP_Payment_type="ngModel"> RTGS
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <label class="form-check-label">
+              <input class="form-check-input" type="radio" id="inlineRadio1" value="Online" name="APP_Payment_type"
+                [(ngModel)]="app.APP_Payment_type" #APP_Payment_type="ngModel"> Online
+            </label>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="container-fluid">
+        <div class="row" style="background:#fff !important;">
+          <div class="col-md-6">
+            <div class="input-group">
+              <select class="custom-field" name="APP_Bank_Id" [(ngModel)]="app.APP_Bank_Id" #APP_Bank_Id="ngModel"
+                [disabled]="app.APP_Payment_type=='Online' || app.APP_Payment_type=='RTGS' || app.APP_Payment_type=='NEFT'"
+                required>
+                <option [ngValue]="undefined" selected>---Select---</option>
+                <option value="{{ban.BA_Id}}" *ngFor="let ban of banklist">{{ban.BA_BankName}}</option>
+              </select>
+              <label>Select Bank</label>
+              <div class="error-msg" *ngIf="APP_Bank_Id.invalid && (APP_Bank_Id.dirty || APP_Bank_Id.touched || formInvalid)">
+                <span *ngIf="APP_Bank_Id.errors.required">Bank is required</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <label style="color: red" [hidden]="app.APP_Payment_type=='Online'">
+              <span style="font-size: 20px;color: black"></span>
+              Instruction: Please make payment through the challan or NEFT or RTGS and update Bank Reference Number or
+              UTR Number on the link sent to your email-id or Mobile Number
+            </label>
+          </div>
+        </div>
+
+      </div>
+
+      <hr>
+      <div class="row" style="margin-top: 25px;">
+        <div class="col-md-12 text-center">
+          <!-- routerLink="/home/applicantview" -->
+          <!-- <button type="submit" class="btn btn-custom" [disabled]="s.SR_ServiceNo==null || s.SR_ServiceNo==''">{{mode=='save'?'Register':'Update'}}</button>
+           -->
+          <!-- <a class="btn btn-primary" href="assets\images\icons\Challan.html" type="submit" download="Challan.html">{{mode=='save'?'Save and Download Challan':'Update'}}</a> -->
+          <button class="btn btn-primary" type="submit" *ngIf="app.APP_Payment_type=='Online'">{{mode=='save'?'Register
+            and Pay Online':'Update'}}</button>
+          <button class="btn btn-primary" type="submit" *ngIf="app.APP_Payment_type=='NEFT' || app.APP_Payment_type=='RTGS'">{{mode=='save'?'Register':'Update'}}</button>
+          <button class="btn btn-primary" type="submit" *ngIf="app.APP_Payment_type=='CHALLAN' || app.APP_Payment_type==undefined">{{mode=='save'?'Register
+            and Download Challan':'Update'}}</button>
+          <button class="btn btn-primary" type="button">Cancel</button>
+          <!-- <a class="btn btn-primary" target="_Blank" [routerLink]="['/khb-challan/',APP_Id]" [hidden]="app.APP_Payment_type=='Online' || app.APP_Payment_type=='RTGS' || app.APP_Payment_type=='NEFT'|| app.APP_Payment_type==undefined">Download Challan</a> -->
+
+        </div>
+      </div>
+    </div>
+
+  </form>
+
+</div>

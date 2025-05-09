@@ -1,0 +1,464 @@
+<div class="wrapper">
+    <form (ngSubmit)="mode=='Edit'?UpdateMedical(Medical):SaveMedical(Medical)" #Medical="ngForm" name="Medical">
+
+  
+  <div class="container-fluid">
+    <div class="title rowmarginfix themeheading">
+      View Medical Reimbursement / Mediclaim
+      <button class="btn btn-primary float-right" [routerLink]="['/home/emp-claims']">Back</button>
+      <span class="clearfix"></span>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label for=""> Reimbursement No :</label>   <span> {{m.DOC_CODE}} </span>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group">
+          <span for="">Date :</span>   <span> {{m.DOC_CODE}} </span>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group ">
+          <span for="" *ngIf="m.DOC_STATUS=='G'">Status : Generated</span>  
+        </div>
+      </div>
+    </div>
+    <div class="title rowmarginfix themeheading">
+      Employee Details
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="input-group">
+          <label for=""> Division code </label>
+          <select class="custom-field" [(ngModel)]="m.DivisionId" #DivisionId="ngModel" name="DivisionId"
+          disabled (change)="GetEmployee(m.DivisionId)">
+          <option [value]="undefined" selected>---Select---</option>
+          <option [value]="d.DI_Id" *ngFor="let d of Districtlist;">
+            {{d.DI_District}}
+          </option>
+        </select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group">
+          <label for="">Emp Code </label>
+          <select class="custom-field" [(ngModel)]="m.EmpID" #EmpID="ngModel" name="EmpID" [disabled]="mode=='View'"
+          (change)="GetEmployeeForTheId(m.EmpID)">
+          <option [value]="undefined" selected>---Select---</option>
+          <option [value]="ee.EMP_EMPLOYEE_ID" *ngFor="let ee of Emplist;">
+            {{ee.EMP_EMPLOYEE_CODE}} &nbsp; {{ee.EMP_FIRST_NAME}}
+          </option>
+        </select>
+        </div>
+      </div>
+      <div class="col-md-4">
+          <label for="">Name : </label> &nbsp; <span> {{EmployeeDetails.EMP_FIRST_NAME}} </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 ">
+          <label for="">Division : </label> &nbsp; <span> {{EmployeeDetails.DI_District}} </span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Department : </label> &nbsp; <span> {{EmployeeDetails.Department_Name}} </span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Designation : </label> &nbsp; <span> {{EmployeeDetails.desg_name}} </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <label for="">Employee Category : </label> &nbsp;<span> {{EmployeeDetails.EMP_CATEGORY}} </span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Employee Group : </label> &nbsp; <span> {{EmployeeDetails.EMP_GROUP}} </span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Employee Type : </label> &nbsp;<span> {{EmployeeDetails.EMP_TYPE}} </span>
+        </div>
+      </div>
+    <div class="title rowmarginfix themeheading">
+      Treatment Details
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Mediclaim for </label>
+          <select name="CLAIM_FOR" #CLAIM_FOR="ngModel" [(ngModel)]="m.CLAIM_FOR" 
+          class="custom-field" [disabled]="mode=='View'" (change)="BindData(m.CLAIM_FOR,m.EmpID)">
+            <option value="undefined">--Select--</option>
+            <option value="S">Self</option>
+            <option value="D">Dependent</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <div class="input-group">
+            <label for="">Patients Name : </label>
+
+            <input type="text" name="PATIENT_NAME" #PATIENT_NAME="ngModel" [(ngModel)]="m.PATIENT_NAME" *ngIf="m.CLAIM_FOR=='S'" [disabled]="mode=='View'" class="custom-field">
+           
+            <select class="custom-field" [(ngModel)]="m.PATIENT_NAME" #PATIENT_NAME="ngModel" name="PATIENT_NAME" *ngIf="m.CLAIM_FOR=='D'"
+            [disabled]="mode=='View'" >
+            <option [value]="undefined" selected>---Select---</option>
+            <option [value]="p.DEPND_NAME" *ngFor="let p of patientlist;">
+              {{p.DEPND_NAME}}
+            </option>
+          </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Place of illness </label>
+          <input type="text" name="PLACE_OF_ILLNESS" #PLACE_OF_ILLNESS="ngModel" [(ngModel)]="m.PLACE_OF_ILLNESS" [disabled]="mode=='View'" class="custom-field">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for=""> Nature of illness </label>
+          <input type="text" name="ILLNESS_DESCRIPTION" #ILLNESS_DESCRIPTION="ngModel" [(ngModel)]="m.ILLNESS_DESCRIPTION" [disabled]="mode=='View'" class="custom-field">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Date </label>
+          <input type="date"  name="ILLNESS_DATE" #ILLNESS_DATE="ngModel" [(ngModel)]="m.ILLNESS_DATE" [disabled]="mode=='ILLNESS_DATE'" class="custom-field">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for=""> Details of the amount Claimed</label>
+          <input type="text" name="AMOUNT_CLAIMED" #AMOUNT_CLAIMED="ngModel" [(ngModel)]="m.AMOUNT_CLAIMED"[disabled]="mode=='View'" class="custom-field">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for=""> Total Amount(claimed) </label>
+          <input type="text" name="Total_AMOUNT_CLAIMED" #Total_AMOUNT_CLAIMED="ngModel" [(ngModel)]="m.Total_AMOUNT_CLAIMED"[disabled]="mode=='View'" class="custom-field">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for=""> Total Amount Sanctioned </label>
+          <input type="text" name="AMOUNT_SANCTIONED" #AMOUNT_SANCTIONED="ngModel" [(ngModel)]="m.AMOUNT_SANCTIONED"[disabled]="mode=='View'" class="custom-field">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Enclosed Documents </label>
+          <input type="text" name="Enclosed_Doc" #Enclosed_Doc="ngModel" [(ngModel)]="m.Enclosed_Doc"[disabled]="mode=='View'" class="custom-field">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for=""> Upload Documents </label>
+          <input *ngIf="!hide" type="file" #Image accept="application/pdf"
+          (change)="imageUploadM($event.target.files)" id="DOC_Upload" name="DOC_Upload">
+        <a class="" target="_blank" href="{{m.DOC_Upload}}">View</a>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Health Status</label>
+          <input type="text" name="HEALTH_STATUS" #HEALTH_STATUS="ngModel" [(ngModel)]="m.HEALTH_STATUS"[disabled]="mode=='View'" class="custom-field">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">Treatment Recomandations </label>
+          <input type="text" name="DOCTORS_RECMD" #DOCTORS_RECMD="ngModel" [(ngModel)]="m.DOCTORS_RECMD"[disabled]="mode=='View'" class="custom-field">
+        </div>
+      </div>
+    </div>
+    <ul class="nav nav-tabs" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" data-toggle="tab" href="#Hospital-Bill-Details">Hospital Bill Details</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#Pharmacy-Bill-Details">Pharmacy Bill Details</a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <div id="Hospital-Bill-Details" class="container-fluid tab-pane active">
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-group">
+              <label for="">Name of The Hospital</label>
+              <select class="custom-field" [(ngModel)]="H.HOSPITAL_ID" #HOSPITAL_ID="ngModel" name="HOSPITAL_ID"
+              [disabled]="mode=='View'">
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="h.hsptl_id" *ngFor="let h of hsptltlist;">
+                {{h.hsptl_name}}
+              </option>
+            </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="input-group">
+              <label for="">Doctors Name</label>
+              <input type="text" name="DOCTOR_NAME" #DOCTOR_NAME="ngModel" [(ngModel)]="H.DOCTOR_NAME"[disabled]="mode=='View'" class="custom-field">
+        </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-group">
+              <label for="">Consultation Date</label>
+              <input type="date" name="CONSULT_DATE" #CONSULT_DATE="ngModel" [(ngModel)]="H.CONSULT_DATE"[disabled]="mode=='View'" class="custom-field">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="input-group">
+              <label for="">Admitted Date</label>
+              <input type="date" name="ADMIT_DATE" #ADMIT_DATE="ngModel" [(ngModel)]="H.ADMIT_DATE"[disabled]="mode=='View'" class="custom-field">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-group">
+              <label for="">Discharge Date</label>
+              <input type="date" name="DISCHARGE_DATE" #DISCHARGE_DATE="ngModel" [(ngModel)]="H.DISCHARGE_DATE"[disabled]="mode=='View'" class="custom-field">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="input-group">
+              <label for="">Bill No</label>
+              <input type="text" name="BILL_NO" #BILL_NO="ngModel" [(ngModel)]="H.BILL_NO"[disabled]="mode=='View'" class="custom-field">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-group">
+              <label for="">Bill Date</label>
+              <input type="date" name="BILL_DATE" #BILL_DATE="ngModel" [(ngModel)]="H.BILL_DATE"[disabled]="mode=='View'" class="custom-field">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="input-group">
+              <label for="">Bill Amount</label>
+              <input type="text" name="BILL_AMOUNT" #BILL_AMOUNT="ngModel" [(ngModel)]="H.BILL_AMOUNT"[disabled]="mode=='View'" class="custom-field">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-group">
+              <label for="">MOU / A.H</label>
+              <input type="text" name="MOU" #MOU="ngModel" [(ngModel)]="H.MOU"[disabled]="mode=='View'" class="custom-field">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="input-group">
+              <label for="">Upload Document</label>
+              <input *ngIf="!hide" type="file" #Image accept="application/pdf"
+              (change)="imageUploadH($event.target.files)" id="HSP_DOC_UPLOAD_PATH" name="HSP_DOC_UPLOAD_PATH">
+            <a class="" target="_blank" href="{{H.HSP_DOC_UPLOAD_PATH}}">View</a>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="text-center">
+            <button [disabled]="mode=='View'" class="btn btn-primary" type="button"
+            (click)="AddHsptlDetails(H)" type="button">Add</button> &nbsp;
+
+      <button [disabled]="mode=='View'" class="btn btn-primary" type="button"
+            (click)="ClearHosptl()">Cancel </button>
+         </div>
+        <br>
+        <div class="table-responsive" id="Hospital-Bill-Details">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <td>SL.No</td>
+                <td>Name of The Hospital</td>
+                <td>Doctors Name</td>
+                <td>Consultation Date</td>
+                <td>Admitted Date</td>
+                <td>Discharge Date</td>
+                <td>Bill No</td>
+                <td>Bill Date</td>
+                <td>Bill Amount</td>
+                <td> MOU / A.H</td>
+                <td>Upload Document</td>
+                <td>Remove </td>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- <tr>
+                <td>1</td>
+                <td>
+                 
+                    <select name="PATIENT_NAME" #PATIENT_NAME="ngModel" [(ngModel)]="m.PATIENT_NAME" [disabled]="mode=='View'" class="custom-field">
+                        <option value="undefined">--Select--</option>
+                        <option [value]="h.DEPND_NAME" *ngFor="let h og Hosptallist"></option>
+                        {{p.DEPND_NAME}}              
+                      </select>
+                </td>
+                <td>
+                    <input type="text" name="HEALTH_STATUS" #HEALTH_STATUS="ngModel" [(ngModel)]="m.HEALTH_STATUS"[disabled]="mode=='View'" class="custom-field">
+                </td>
+                <td>
+                    <input type="text" name="HEALTH_STATUS" #HEALTH_STATUS="ngModel" [(ngModel)]="m.HEALTH_STATUS"[disabled]="mode=='View'" class="custom-field">
+                </td>
+                <td>
+                    <input type="text" name="HEALTH_STATUS" #HEALTH_STATUS="ngModel" [(ngModel)]="m.HEALTH_STATUS"[disabled]="mode=='View'" class="custom-field">
+                </td>
+                <td>
+                    <input type="text" name="HEALTH_STATUS" #HEALTH_STATUS="ngModel" [(ngModel)]="m.HEALTH_STATUS"[disabled]="mode=='View'" class="custom-field">
+                </td>
+                <td>
+                    <input type="text" name="HEALTH_STATUS" #HEALTH_STATUS="ngModel" [(ngModel)]="m.HEALTH_STATUS"[disabled]="mode=='View'" class="custom-field">
+                </td>
+                <td>
+                    <input type="text" name="HEALTH_STATUS" #HEALTH_STATUS="ngModel" [(ngModel)]="m.HEALTH_STATUS"[disabled]="mode=='View'" class="custom-field">
+                </td>
+                <td>
+                    <input type="text" name="HEALTH_STATUS" #HEALTH_STATUS="ngModel" [(ngModel)]="m.HEALTH_STATUS"[disabled]="mode=='View'" class="custom-field">
+                </td>
+                <td></td>
+                <td>
+                  <input type="file">
+                </td>
+              </tr> -->
+            
+              <tr *ngFor="let H of HosptalDetails;let i=index;">          
+                  <td>{{i+1}}</td>
+                <td *ngIf="H.HOSPITAL_ID==h.hsptl_id">{{h.hsptl_name}}</td>
+                 <td>{{H.DOCTOR_NAME}}</td>
+                 <td>{{H.CONSULT_DATE}}</td>
+
+                 <td>{{H.ADMIT_DATE}}</td>
+                 <td>{{H.DISCHARGE_DATE}}</td>
+                 <td>{{H.BILL_NO}}</td>
+                 <td>{{H.BILL_DATE}}</td>
+                 <td>{{H.BILL_AMOUNT}}</td>
+                  <td>{{H.MOU}}</td>
+              <td>
+                  <a class="" target="_blank" href="{{H.HSP_DOC_UPLOAD_PATH}}">View</a>
+              </td>           
+                                  
+                 <td *ngIf="!hide" (click)="hsptlDetailsremove(i)"><i
+                  class="fa fa-lg fa-trash themecolor"></i>
+      </td>
+                </tr>
+            
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div id="Pharmacy-Bill-Details" class="container-fluid tab-pane fade">
+        <div class="table-responsive" id="Pharmacy-Bill-Details">
+            <div class="row">
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <label for=""> Pharmacy/MedicalShop</label>
+                    <input type="text" name="PHARMACY_NAME"  #PHARMACY_NAME="ngModel" [(ngModel)]="p.PHARMACY_NAME" [disabled]="mode=='View'" class="custom-field">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <label for="">Bill No</label>
+                    <input type="text" name="BILL_NO"  #BILL_NO="ngModel" [(ngModel)]="p.BILL_NO" [disabled]="mode=='View'" class="custom-field">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <label for="">Bill Date</label>
+                    <input type="date" name="BILL_DATE"  #BILL_DATE="ngModel" [(ngModel)]="p.BILL_DATE" [disabled]="mode=='View'" class="custom-field">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <label for="">Bill Amount</label>
+                    <input type="text" name="BILL_AMOUNT"  #BILL_AMOUNT="ngModel" [(ngModel)]="p.BILL_AMOUNT" [disabled]="mode=='View'" class="custom-field">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="input-group">
+                    <label for="">Upload Document</label>
+                    <input *ngIf="!hide" type="file" #Image accept="application/pdf"
+                    (change)="imageUploadP($event.target.files)" id="PHAR_DOC_UPLOAD_PATH" name="PHAR_DOC_UPLOAD_PATH">
+                  <a class="" target="_blank" href="{{p.PHAR_DOC_UPLOAD_PATH}}">View</a>
+                  </div>
+                </div>
+                <!-- <div class="col-md-6">
+                  <div class="input-group">
+                    <label for=""></label>
+                    <input type="text" class="custom-field">
+                  </div>
+                </div> -->
+              </div>
+             <br>
+             <div class="text-center">
+                <button [disabled]="mode=='View'" class="btn btn-primary" type="button"
+                (click)="AddPharmacyDetails(p)" type="button">Add</button> &nbsp;
+    
+          <button [disabled]="mode=='View'" class="btn btn-primary" type="button"
+                (click)="ClearPharmcy()">Cancel </button>
+             </div>
+             
+          <br>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <td>SL.No</td>
+                <td> Pharmacy/MedicalShop </td>
+                <td>Bill No</td>
+                <td>Bill Date</td>
+                <td>Bill Amount</td>
+                <td>Upload Document</td>
+                <td>Remove </td>
+              </tr>
+            </thead>
+            <tbody>             
+                <tr *ngFor="let P of PharmcyDetails;let i=index;">          
+                    <td>{{i+1}}</td>
+                  <td>{{p.PHARMACY_NAME}}</td>
+                   <td>{{p.BILL_NO}}</td>
+                   <td>{{p.BILL_DATE}}</td>  
+                   <td>{{p.BILL_AMOUNT}}</td>
+                   <td>
+                      <a class="" target="_blank" href="{{p.PHAR_DOC_UPLOAD_PATH}}">View</a>
+                   </td>
+                  
+                  
+                
+        
+                   <td *ngIf="!hide" (click)="PharmcyDetailsremove(i)"><i
+                    class="fa fa-lg fa-trash themecolor"></i>
+        </td>
+                  </tr>
+              
+            
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="justify-content-center d-flex">
+        <button [disabled]="mode=='View'" class="btn btn-primary" type="submit">{{mode=='edit'?'Update':'Save'}}</button> &nbsp;
+    </div>
+    <br>
+  </div>
+</form>
+</div>

@@ -1,0 +1,192 @@
+<div class="wrapper propertyregister">
+  <div class="title themeheading">{{title}}<a class="btn btn-primary float-right" routerLink="/home/change-property">Back</a>
+      <span class="clearfix"></span>
+  </div>
+  <div class="container-fluid">
+      <!-- <div class="row">
+        <div class="col-md-6">
+            <div class="input-group">
+              
+              <select id="PD_Scheme" [disabled]="mode=='view'" name="PD_Scheme" [(ngModel)]="c.PD_Scheme"
+                #PD_Scheme="ngModel" 
+                class="custom-field" required>
+                <option [ngValue]="undefined" selected>--Select--</option>
+                <option [value]="sch.Sch_Id" *ngFor="let sch of Schemelist">{{sch.Sch_Name}}</option>
+              </select>
+              <label>Scheme
+                <span class="mandatory">*</span>
+              </label>
+              <div class="error-msg" *ngIf="PD_Scheme.invalid && (PD_Scheme.dirty || PD_Scheme.touched || formSubmitted)">
+                <span *ngIf="PD_Scheme.errors.required">Scheme is required</span>
+              </div>
+            </div>
+  
+          </div>
+          <div class="col-md-6">
+            <div class="input-group">
+              <select class="custom-field" [(ngModel)]="c.APP_DI_Id_FK_PERM" #APP_DI_Id_FK_PERM="ngModel"
+                name="APP_DI_Id_FK_PERM"  required>
+                <option [value]="undefined" selected>---Select---</option>
+                <option [value]="d.DI_Id" *ngFor="let d of District;">
+                  {{d.DI_District}} </option>
+              </select>
+              <label>
+                District
+                <span class="mandatory">*</span>
+                <div class="error-msg"
+                  *ngIf="APP_DI_Id_FK_PERM.invalid && (APP_DI_Id_FK_PERM.dirty || APP_DI_Id_FK_PERM.touched || formInvalid)">
+                  <span *ngIf="APP_DI_Id_FK_PERM.errors.required">District is required</span>
+                </div>
+              </label>
+            </div>
+          </div>
+      </div> -->
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [disabled]="mode=='view'" [(ngModel)]="c.PD_Id" #PD_Id="ngModel"
+              name="PD_Id"  required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option [ngValue]="pr.PD_Id" *ngFor="let pr of Projects;">
+                {{pr.PD_Project_Name}}-{{pr.PD_Project_Code}}</option>
+            </select>
+            <label>
+              Project
+              <span class="mandatory">*</span>
+             
+            </label>
+            <div class="error-msg" *ngIf="PD_Id.invalid && (PD_Id.dirty || PD_Id.touched || formSubmitted)">
+              <span *ngIf="PD_Id.errors.required">Project is required</span>
+            </div>
+          </div>
+            <!-- <div class="input-group">
+                <select [(ngModel)]="c.DSWOId_NOPD_Pd_Id_FK" name="DSWOId_NOPD_Pd_Id_FK" #DSWOId_NOPD_Pd_Id_FK="ngModel"
+                    (ngModelChange)="GetProjectDetails(p.DSWOId_NOPD_Pd_Id_FK)" class="custom-field" >
+                    <option [ngValue]="undefined" selected>---Select---</option>
+                    <option [ngValue]="pr.PD_Id" *ngFor="let pr of Projects;">
+                        {{pr.PD_Project_Name}}-{{pr.PD_Project_Code}}</option>
+                </select>
+
+                <label>Project<span class="mandatory">*</span>
+                  
+                </label>
+            </div> -->
+        </div>
+        
+       
+          <div class="col-md-6">
+            <div class="input-group">
+              
+              <select id="Sch_Id" [disabled]="mode=='view'" name="Sch_Id" [(ngModel)]="c.Sch_Id"
+                #Sch_Id="ngModel" 
+                class="custom-field" required>
+                <option [ngValue]="undefined" selected>--Select--</option>
+                <option [value]="sch.Sch_Id" *ngFor="let sch of Schemelist">{{sch.Sch_Name}}</option>
+              </select>
+              <label>Scheme
+                <span class="mandatory">*</span>
+              </label>
+              <div class="error-msg" *ngIf="Sch_Id.invalid && (Sch_Id.dirty || Sch_Id.touched || formSubmitted)">
+                <span *ngIf="Sch_Id.errors.required">Scheme is required</span>
+              </div>
+            </div>
+  
+          </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <select id="Phase_Id" [disabled]="mode=='view'" name="Phase_Id" [(ngModel)]="c.Phase_Id"
+              #Phase_Id="ngModel"  class="custom-field" required>
+              <option [ngValue]="undefined" selected>--Select--</option>
+              <option [value]="pha.Phase_Id" *ngFor="let pha of Phaselist">{{pha.Phase_Name}}</option>
+            </select>
+            <label>Phase
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Phase_Id.invalid && (Phase_Id.dirty || Phase_Id.touched || formSubmitted)">
+              <span *ngIf="Phase_Id.errors.required">Phase is required</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-1">
+          <button class="btn btn-primary" 
+              type="button" (click)="SearchProjects(c.PD_Id,c.Sch_Id,c.Phase_Id)">Go</button>
+      </div>
+      </div>
+
+      <!-- <div class="row">
+          <div class="col-md-6">
+                  <div class="input-group">
+                          <input type="text" placeholder=" " class="custom-field" disabled>
+                          <label>Property Quota Change ID</label>
+                      </div>
+          </div>
+          <div class="col-md-6">
+              <div class="input-group">
+                  <input type="date" placeholder=" " class="custom-field">
+                  <label>Date</label>
+              </div>
+          </div>
+      </div> -->
+
+      
+  </div>
+
+  <div class="table-responsive grid">
+      <table class="table table-striped">
+          <thead>
+              <tr>
+                  <td>Sl No.</td>
+                  <td>Property No.</td>
+                  <!-- <td colspan="2" class="text-center">GPS Data</td>    -->
+                  <td>East</td>   
+                  <td>West</td>       
+                  <td>North</td>   
+                  <td>South</td> 
+                  <td>Current quota</td>
+                  <td>New Quota</td>
+                  <td>Add</td>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let q of changequotaList;let i=index;">
+                <td>{{i+1}}.</td>
+                  <td>
+                     {{q.PR_Property_No}}
+                  </td>
+                  <!-- <td>{{q.}}</td> -->
+                  <td>{{q.PR_B_East}}</td>   
+                  <td>{{q.PR_B_West}}</td>       
+                  <td>{{q.PR_B_North}}</td>   
+                  <td>{{q.PR_B_South}}</td>   
+                  <td>{{q.RES_Name}}</td>
+                 
+                  <td>
+                      <select class="grid-input" name="RES_Id" [(ngModel)]="q.RES_Id"
+                      #RES_Id="ngModel" >
+                          <option value="">---Select---</option>
+                          <option value="5">Handicapped (Person with Disability)</option>
+                          <option value="12">SC (Scheduled Caste)</option>
+                          <option value="13">ST (Scheduled Tribe)</option>
+                          <option value="18">General</option>
+                          <option value="19">Extremely Backward Class</option>
+                          <option value="20">Backward Class</option>
+                      </select>
+                  </td>
+                  <td><button class="btn btn-primary" (click)="Updatechangequota(q.PR_Id,q.RES_Id)">Update</button></td>
+              </tr>
+              
+              
+          </tbody>
+      </table>
+  </div>
+
+
+  <!-- <div class="btn-wrapper">
+      <button class="btn btn-primary">Save</button>
+      <button class="btn btn-primary">Cancel</button>
+  </div> -->
+
+</div>

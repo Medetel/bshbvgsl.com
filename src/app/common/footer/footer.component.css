@@ -1,0 +1,17 @@
+.footer{
+    background: #212121;
+    color:#fff;
+    text-align: center;
+    padding:10px;
+    position: absolute;
+    bottom: -50px;
+    right:0;
+    left:0;
+    margin-top:20px;
+}
+
+@media print{
+    #footer{
+        display:none;
+    }
+}

@@ -1,0 +1,345 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    Property Exchange
+    <!-- <button class="btn btn-primary float-right" [routerLink]="['/home/appstatus']">Back</button> -->
+    <span class="clearfix"></span>
+  </div>
+  <div class="container-fluid">
+    <hr>
+    <!-- <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" placeholder=" " class="custom-field">
+          <label>Notification No.</label>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="date" placeholder=" " class="custom-field">
+          <label>Notification Date.</label>
+        </div>
+      </div>
+    </div> -->
+    <div class="wrapper">
+      <!-- <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm,itemsPerPage,1)"> -->
+        <div class="searchbar">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-1">
+                <label for="">Search</label>
+              </div>
+              <div class="col-md-3">
+                <select class="form-control" name="SearchCriteriap" #SearchCriteriap="ngModel" [(ngModel)]="s.SearchCriteriap">
+                    <option [ngValue]="undefined" selected>---Select Project---</option>
+                  <option [value]="p.PD_Id" *ngFor="let p of ProjectNameList">
+                    {{p.PD_Id}} - {{p.PD_Project_Name}} - {{p.DI_District}} </option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <input type="text" name="SearchTextp" #SearchTextp="ngModel" [(ngModel)]="s.SearchTextp" class="form-control"
+                  placeholder="Search Property No.." required>
+              </div>
+              <div class="col-md-3">
+                <button class="btn btn-default" type="button" (click)="onSearchProperty(s.SearchCriteriap,s.SearchTextp,itemsPerPage,1)">Search</button>
+                <button class="btn btn-default" type="reset" (click)="GetAllPropertiesforexcng(itemsPerPage, 1)">Clear</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      <!-- </form> -->
+    </div>
+
+    <div class="title themeheading">
+      {{title}}
+      <!-- <a class="btn btn-primary float-right" routerLink="/home/allotmentcancellation/project-names">Back</a> -->
+    </div>
+    <div class="table-responsive">
+      <table class="table table-striped grid">
+        <thead>
+          <tr>
+            <td>Sl No.</td>
+            <td>Project</td>
+            <td>Property No</td>
+            <td>Category</td>
+            <td>Property Type</td>
+            <td>Area(in Sqmt)</td>
+            <td>Type</td>
+            <td>Final Cost(in Rs)</td>
+            <td>Status</td>
+            <td></td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pd of proplist | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index">
+            <!-- [ngClass]="{'inactive':pd.PD_Inactive=='Y'}" -->
+            <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+            <td>{{pd.PD_Project_Name}}</td>
+            <td>{{pd.PR_Property_No}}</td>
+            <td>{{pd.CA_CategoryName}}</td>
+            <td>{{pd.PT_Property_Type}}</td>
+            <td>{{pd.PR_Plot_Area}}</td>
+            <td>{{pd.IC_Name}}</td>
+            <td>{{pd.PR_Prop_FinalCost}}</td>
+            <td>{{pd.PR_Status}}</td>
+            <td><button class="btn btn-primary"  (click)="SelectVacantProp(pd.PR_Prop_FinalCost,pd.PT_Property_Type,pd.CA_CategoryName,pd.PR_Property_No,pd.PR_Plot_Area,pd.CA_Dimension,pd.PR_Id)">Select</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-11">
+            <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)" maxSize="9"
+              directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+              screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+            </pagination-controls>
+          </div>
+          <div class="col-md-1">
+            Total:
+            <span>{{totalItems}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wrapper">
+      <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm,itemsPerPage,1)">
+        <div class="searchbar">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-1">
+                <label for="">Search</label>
+              </div>
+              <div class="col-md-3">
+                <select name="SearchCriteria" #SearchCriteria="ngModel" [(ngModel)]="s.SearchCriteria" class="form-control"
+                  required>
+                  <option [ngValue]="undefined" selected>---Select---</option>
+                  <option value="Appno">App. No.</option>
+                  <option value="Applicant_Name">Applicant Name</option>
+                  <option value="ProjectName">Project Name</option>
+                  <option value="PropNo">Property No.</option>
+                  <option value="Status">Status</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <input type="text" name="SearchText" #SearchText="ngModel" [(ngModel)]="s.SearchText" class="form-control"
+                  placeholder="Search.." required>
+              </div>
+              <div class="col-md-3">
+                <button class="btn btn-default" type="submit">Search</button>
+                <button class="btn btn-default" type="reset" (click)="GetApplicantDataforExcng(itemsPerPage, 1)">Clear</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="title themeheading">
+      {{title1}}
+    </div>
+
+    <!-- <div class="container mt-3">
+    
+          <div class="d-inline-flex p-3 bg-primary text-white" style="width:100%;">  
+          <div class="p-2" style="background:#58174df2;">Total Realization(Rs) :10000000</div>
+          <div class="p-2" style="background:#a0417ff2;">Total Received(Rs) :2000000</div>
+          <div class="p-2" style="background:#654f34;">Amount to be Realized(Rs) :30000000</div>
+            <div class="p-2 bg-success">30</div>
+            <div class="p-2 bg-danger">20</div>
+            <div class="p-2 bg-warning">10</div>
+          </div>
+        </div> -->
+
+    <div class="table-responsive">
+      <table class="table table-striped grid">
+        <thead>
+          <tr>
+            <td>Sl No.</td>
+            <td>App No.</td>
+            <td>App Name</td>
+            <td>Notification No.</td>
+            <td>Property No.</td>
+            <td>Project Name</td>
+            <td>Category</td>
+            <td>Property Type</td>
+            <td>Final Cost</td>
+            <td>Status</td>
+            <td>View</td>
+          </tr>
+
+        </thead>
+        <tbody>
+          <tr *ngFor="let appl of Applicantlist | paginate: { id: 'pagination',itemsPerPage: itemsPerPageA,currentPage: currentPageA,totalItems: totalItemsA }; let i=index">
+            <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}.</td>
+            <td>{{appl.APP_No}}</td>
+            <td>{{appl.APP_PA_Name}}</td>
+            <td>{{appl.DSWOId_NO_Number}}</td>
+            <td>{{appl.LOD_Property_No}}<span [hidden]="appl.Prop_Cat==null">/</span>{{appl.Prop_Cat}}</td>
+            <td>{{appl.PD_Project_Name}}</td>
+            <td>{{appl.CA_CategoryName}}</td>
+            <td>{{appl.APP_PropertyType}}</td>
+            <td>{{appl.PR_Prop_FinalCost}}</td>
+            <td>
+              <!-- <button class="btn btn-primary" [routerLink]="['/home/appstatus/status']">Status</button> -->
+              {{appl.APP_Status}}
+            </td>
+            <td>
+              <button class="btn btn-primary" (click)="SelectAllotProp(appl.LOD_Property_No,appl.CA_CategoryName,appl.PD_Project_Name,appl.PR_Id,appl.APP_No)">Exchange</button>
+            </td>
+            <!-- <td>
+              <button class="btn btn-primary">Cancel</button>
+            </td>
+            <td>
+              <button class="btn btn-primary" style="width:150px">Revised</button>
+            </td> -->
+          </tr>
+        </tbody>
+      </table>
+      <!-- <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-11">
+            <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)" maxSize="9"
+              directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+              screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+            </pagination-controls>
+          </div>
+          <div class="col-md-1">
+            Total:
+            <span>{{totalItemsA}}</span>
+          </div>
+        </div>
+      </div> -->
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+<div class="wrapper">
+  <!-- <div class="title themeheading">
+    {{title}}
+  </div> -->
+
+
+
+
+  <div class="container-fluid">
+
+    <div class="row" style="background: rgb(183, 183, 165);margin-top: 10px">
+      <div class="col-md-4">
+        <div class="input-group">
+          <input type="text" name="PE_Old_Pr_No" [(ngModel)]="Excng.PE_Old_Pr_No" #PE_Old_Pr_No="ngModel" class="custom-field"
+            readonly>
+          <label>Exchange Property No.
+            <span class="mandatory">*</span>
+          </label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group">
+          <input type="text" name="PD_Project_Name" [(ngModel)]="Excng.PD_Project_Name" #PD_Project_Name="ngModel"
+            class="custom-field" readonly>
+          <label>Project Name.</label>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group">
+          <input type="text" name="CA_CategoryName" [(ngModel)]="Excng.CA_CategoryName" #CA_CategoryName="ngModel"
+            class="custom-field" readonly>
+          <label>Category.</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" name="PE_Excng_Pr_No" [(ngModel)]="Excng.PE_Excng_Pr_No" #PE_Excng_Pr_No="ngModel" class="custom-field"
+            readonly>
+          <label>Vacant Property No
+            <span class="mandatory">*</span>
+          </label>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" name="PR_Prop_FinalCost" [(ngModel)]="Excng.PR_Prop_FinalCost" #PR_Prop_FinalCost="ngModel"
+            class="custom-field" readonly>
+          <label>Cost</label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" name="CA_Dimension" [(ngModel)]="Excng.CA_Dimension" #CA_Dimension="ngModel" class="custom-field"
+            readonly>
+          <label>Dimension(in Mtr)</label>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" name="PR_Plot_Area" [(ngModel)]="Excng.PR_Plot_Area" #PR_Plot_Area="ngModel" class="custom-field"
+            readonly>
+
+          <label>Area(in Sqmt)</label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" name="App_CA_CategoryName" [(ngModel)]="Excng.App_CA_CategoryName" #CA_CategoryName="ngModel"
+            class="custom-field" readonly>
+
+          <label>Category</label>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" name="PT_Property_Type" [(ngModel)]="Excng.PT_Property_Type" #PT_Property_Type="ngModel"
+            class="custom-field" readonly>
+
+          <label>Type</label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" name="PE_Advice_Ref" maxlength=149 [(ngModel)]="Excng.PE_Advice_Ref" #PE_Advice_Ref="ngModel"
+            class="custom-field">
+          <label>Exchange Order Advice Reference</label>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="date" name="PE_Excng_date" [(ngModel)]="Excng.PE_Excng_date" #PE_Excng_date="ngModel" class="custom-field">
+          <label>Exchange Date
+            <span class="mandatory">*</span>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="file" name="PE_Upload_doc" (change)="PE_Upload_doc($event.target.files)" id="PE_Upload_doc"
+            [(ngModel)]="Excng.PE_Upload_doc" #PE_Upload_doc="ngModel" class="custom-field">
+          <label>Upload</label>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="btn-wrapper">
+      <button class="btn btn-primary" (click)="SaveExchange(Excng)">Confirm Exchange of Property</button>
+      <!--<button class="btn btn-primary">Cancel</button>-->
+    </div>
+  </div>
+</div>

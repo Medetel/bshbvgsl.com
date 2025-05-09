@@ -1,0 +1,193 @@
+<div class="title themeheading">
+  {{title}}
+  <button class="btn btn-primary float-right" [routerLink]="['/home/appstatus']">Back</button>
+  <span class="clearfix"></span>
+</div>
+<form (ngSubmit)="Payinstallment(Insta,installment,AppData.APP_No)" #Insta="ngForm" autocomplete="off">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- <div class="col-md-3">
+      <label for="">Reg No. :
+        <span>KEC-12345</span>
+      </label>
+    </div> -->
+      <div class="col-md-3">
+        <label for="">App No. :
+          <span>{{AppData.APP_No}}</span>
+        </label>
+      </div>
+      <div class="col-md-3">
+        <label for="">Name
+          <span> : {{AppData.APP_PA_Name}}</span>
+        </label>
+      </div>
+      <div class="col-md-3">
+        <label for="">App Status :
+          <span>{{APP_Status}}</span>
+        </label>
+      </div>
+      <div class="col-md-3">
+        <label for="">Project Name
+          <span> :{{AppData.PD_Project_Name}}</span>
+        </label>
+      </div>
+    </div>
+    <div class="row">
+
+      <div class="col-md-3">
+        <label for="">Phase :
+          <span>{{AppData.Phase_Name}}</span>
+        </label>
+      </div>
+      <div class="col-md-3">
+        <label for="">Scheme
+          <span>: {{AppData.Sch_Name}}</span>
+        </label>
+      </div>
+      <div class="col-md-3">
+        <label for="">Property No. :
+          <span>{{AppData.PropertyNo}}</span>
+        </label>
+      </div>
+      <div class="col-md-3">
+        <label for="">ID Amount(in Rs)
+          <span>: {{AppData.ID | number}}</span>
+        </label>
+      </div>
+    </div>
+    <!-- <div class="row">
+    <div class="col-md-2">
+      <label for="">Payment Mode</label>
+    </div>
+    <div class="col-md-4">
+        <div class="form-check-inline">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="optradio">Online
+            </label>
+          </div>
+          <div class="form-check-inline">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="optradio">Offline
+            </label>
+          </div>
+    </div>
+    <div class="col-md-2">
+      <label for="">If Online</label>
+    </div>
+    <div class="col-md-4">
+        <div class="form-check-inline">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="optradio">RTGS
+            </label>
+          </div>
+          <div class="form-check-inline">
+            <label class="form-check-label">
+              <input type="radio" class="form-check-input" name="optradio">NEFT
+            </label>
+          </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="input-group"><input type="text" class="custom-field"><label for="">Transaction Reference No.</label></div>
+    </div>
+    <div class="col-md-3">
+      <div class="input-group"><input type="text" class="custom-field"><label for="">Amount</label></div>
+    </div>
+    <div class="col-md-3">
+      <div class="input-group"><input type="text" class="custom-field"><label for="">Date</label></div>
+    </div>
+    <div class="col-md-3">
+      <div class="input-group"><input type="text" class="custom-field"><label for="">Installment No.</label></div>
+    </div>
+  </div> -->
+
+
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <td>Sl no.</td>
+            <td>Payment Description</td>
+            <td>Pay By</td>
+            <td>Amount(in Rs)</td>
+            <td>Status</td>
+            <td class="text-center">select</td>
+          </tr>
+        </thead>
+        <tbody *ngFor="let pca of AppData.PCAModel;let i=index">
+          <tr>
+            <td>{{i+1}}</td>
+            <td>{{pca.PCA_InstallmemntNo=='Initial_Deposit'?'ID':pca.PCA_InstallmemntNo}}</td>
+            <td>{{pca.Duedate | date:'dd-MM-yyyy'}}</td>
+            <td>{{pca.PCA_Amount}}</td>
+            <td>{{pca.paymentStatus==0?'Not Paid':'Paid'}}</td>
+            <td class="text-center">
+              <input type="checkbox" [hidden]="pca.paymentStatus==1" [value]="pca.Select" name="Select" [checked]="pca.Select===true" (change)="changeCheckbox(pca.AB_Id,pca.Select)">
+
+              <!-- <input [hidden]="pca.paymentStatus==1" class="form-check-input" type="radio" id="inlineRadio1" value="select" name="Select"
+              [(ngModel)]="pca.Select" #Select="ngModel"> -->
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-2">
+        <label for="">Payment Method</label>
+      </div>
+      <div class="col-md-4">
+        <div class="form-check-inline">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="optradio" value="Challan" name="P_PaymentMode" [(ngModel)]="installment.P_PaymentMode"
+              #P_PaymentMode="ngModel" required>Bank Challan
+          </label>
+        </div>
+        <div class="form-check-inline">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="optradio" value="NEFT" name="P_PaymentMode" [(ngModel)]="installment.P_PaymentMode"
+              #P_PaymentMode="ngModel" required>NEFT
+          </label>
+        </div>
+        <div class="form-check-inline">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="optradio" value="RTGS" name="P_PaymentMode" [(ngModel)]="installment.P_PaymentMode"
+              #P_PaymentMode="ngModel" required>RTGS
+          </label>
+        </div>
+        <div class="form-check-inline">
+          <label class="form-check-label">
+            <input type="radio" class="form-check-input" name="optradio" value="Online" name="P_PaymentMode" [(ngModel)]="installment.P_PaymentMode"
+              #P_PaymentMode="ngModel" required>Online
+          </label>
+        </div>
+        <div class="error-msg" *ngIf="P_PaymentMode.invalid && (P_PaymentMode.dirty || P_PaymentMode.touched || formSubmitted)">
+          <span *ngIf="P_PaymentMode.errors.required">Payment Method is required</span>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <select class="custom-field" name="P_BankId" [(ngModel)]="installment.P_BankId" #P_BankId="ngModel" required>
+            <option [ngValue]="undefined" selected>---Select---</option>
+            <option value="{{ban.BA_Id}}" *ngFor="let ban of banklist">{{ban.BA_BankName}}</option>
+          </select>
+          <label>Select Bank</label>
+          <div class="error-msg" *ngIf="P_BankId.invalid && (P_BankId.dirty || P_BankId.touched || formSubmitted)">
+            <span *ngIf="P_BankId.errors.required">Bank Name is required</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="text-center" *ngIf="APP_Status=='Allotted'">
+      <button class="btn btn-primary" type="submit">Save</button>
+      <button class="btn btn-primary" *ngIf="download==1" type="button" [routerLink]="['/khb-challan-insta/',AppData.App_Id,AmtType]">Download Challan</button>
+      <!-- <button class="btn btn-primary">Cancel</button> -->
+    </div>
+  </div>
+</form>

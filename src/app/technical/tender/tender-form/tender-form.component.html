@@ -1,0 +1,306 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary float-right" [routerLink]="['/home/tender']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <form (ngSubmit)="mode=='edit'? UpdateTender(TenderForm):SaveTender(TenderForm)" #TenderForm="ngForm"
+    autocomplete="off">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="i.Notification_Type" #Notification_Type="ngModel"
+              name="Notification_Type" [disabled]="mode=='view'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option value="Contractor">Contractor</option>
+              <option value="PMC">PMC</option>
+            </select>
+            <label for="">Notification Type
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="Notification_Type.invalid && (Notification_Type.dirty || Notification_Type.touched || formInvalid)">
+              <span *ngIf="Notification_Type.errors.required">Notification Type is required.</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+
+            <select class="custom-field" [(ngModel)]="i.Tender_Type" #Tender_Type="ngModel" name="Tender_Type"
+              [disabled]="mode=='view'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option value="Internal Tender">Internal Tender</option>
+              <option value="E-Allot">E-Allot</option>
+            </select>
+            <label for="">Tender Type
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="Tender_Type.invalid && (Tender_Type.dirty || Tender_Type.touched || formInvalid)">
+              <span *ngIf="Tender_Type.errors.required">Tender Type is required.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" placeholder=" " [(ngModel)]="i.Tender_Notification_No"
+              #Tender_Notification_No="ngModel" name="Tender_Notification_No" [disabled]="mode=='view'" pattern="^[a-zA-Z0-9 ]*$" required>
+            <label for="">Tender Notification No.
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="Tender_Notification_No.invalid && (Tender_Notification_No.dirty || Tender_Notification_No.touched || formInvalid)">
+              <span *ngIf="Tender_Notification_No.errors.required">Tender Notification No is required.</span>
+              <span *ngIf="Tender_Notification_No.errors?.pattern">AlphaNumeric should enter</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <textarea name="" id="" cols="30" rows="10" class="custom-field" [(ngModel)]="i.Description"
+              #Description="ngModel" name="Description" [disabled]="mode=='view'" required  maxlength="255"></textarea>
+            <label for="">Description
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="Description.invalid && (Description.dirty || Description.touched || formInvalid)">
+              <span *ngIf="Description.errors.required">Description No is required (Maximum 255 characters).</span>
+              <!-- <span *ngIf="Description.errors.maxlength">Description should be less than 255 characters</span> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="date" class="custom-field" [(ngModel)]="i.Notification_Date" #Notification_Date="ngModel"
+              placeholder=" " name="Notification_Date" [disabled]="mode=='view'" required>
+            <label for="">Notification Date
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg"
+              *ngIf="Notification_Date.invalid && (Notification_Date.dirty || Notification_Date.touched || formInvalid)">
+              <span *ngIf="Notification_Date.errors.required">Notification Date is required.</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <!-- <select class="custom-field" > -->
+            <select class="custom-field" #Project_Code="ngModel" name="Project_Code"
+              [(ngModel)]="i.Project_Code" list="dynmicUserIds" [disabled]="mode=='view'" required >
+            <!-- <datalist id="dynmicUserIds"> -->
+              <option [value]="undefined" selected>---Select Project Name---</option>        
+              <option [value]="c.PD_Id" *ngFor="let c of projectcode;">
+                {{c.PD_Project_Code}} - {{c.PD_Project_Name}}
+              </option>
+            <!-- </datalist> -->
+            </select>
+            <label for="">Project Name
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Project_Code.invalid && (Project_Code.dirty || Project_Code.touched || formInvalid)">
+             <span *ngIf="Project_Code.errors.required">Project Name is required</span>
+            </div> 
+          </div>
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <input *ngIf="!hide" type="file" #Image accept="application/pdf"
+            (change)="Tender_Document_Upload($event.target.files)" id="Tender_Document" [disabled]="mode=='view'" required>
+          <a class="" *ngIf="mode=='view'"  target="_blank" href="{{i.Tender_Document}}">view</a>
+
+          <label for="">Tender Document Copy 
+            <span class="mandatory">*</span>
+          </label>
+        </div>
+
+        <div class="col-md-6">
+          <input *ngIf="!hide" type="file" #Image accept="application/pdf"
+            (change)="Publication_Document_Upload($event.target.files)" id="Publication_Document"
+            name="Publication_Document" [(ngModel)]="i.Publication_Document" #Publication_Document="ngModel"
+            [disabled]="mode=='view'" required>
+          <a class="" *ngIf="i.Publication_Document!=null && hide" target="_blank"
+            href="{{i.Publication_Document}}">view</a>
+
+          <label for="">Publication Copy
+            <span class="mandatory">*</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="i.Tender_Category" #Tender_Category="ngModel"
+              name="Tender_Category" [disabled]="mode=='view'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option value="Site">Site</option>
+              <option value="Flat">Flat</option>
+              <option value="House">House</option>
+            </select>
+            <label for="">Tender Category 
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Tender_Category.invalid && (Tender_Category.dirty || Tender_Category.touched || formInvalid)">
+        <span *ngIf="Tender_Category.errors.required">Tender Category is required</span>
+      </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <textarea name="" id="" cols="30" rows="10" class="custom-field" [(ngModel)]="i.Nature_of_work"
+              #Nature_of_work="ngModel" name="Nature_of_work" [disabled]="mode=='view'" required maxlength="50"></textarea>
+            <label for="">Nature of Work
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Nature_of_work.invalid && (Nature_of_work.dirty || Nature_of_work.touched || formInvalid)">
+              <span *ngIf="Nature_of_work.errors.required">Nature of Work is required (Maximum 50 characters)</span>
+              <!-- <span *ngIf="Nature_of_work.errors.maxlength">Nature of Work should be 50 characters only</span> -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" placeholder=" " name="Value_of_work" [(ngModel)]="i.Value_of_work"
+              #Value_of_work="ngModel" [disabled]="mode=='view'"  [pattern]="numericpattern" required>
+            <label for="">Value of Work
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Value_of_work.invalid && (Value_of_work.dirty || Value_of_work.touched || formInvalid)">
+              <span *ngIf="Value_of_work.errors.required">Value of Work is required</span>
+              <span *ngIf="Value_of_work.errors?.pattern">Value of Work must be numeric characters</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" placeholder=" " name="EMD_AMT" [(ngModel)]="i.EMD_AMT"
+              #EMD_AMT="ngModel" [disabled]="mode=='view'"  [pattern]="numericpattern" required>
+            <label for="">EMD AMOUNT
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="EMD_AMT.invalid && (EMD_AMT.dirty || EMD_AMT.touched || formInvalid)">
+              <span *ngIf="EMD_AMT.errors.required">EMD is required</span>
+              <span *ngIf="EMD_AMT.errors?.pattern">EMD must be numeric characters</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+        <div class="input-group">
+        <input type="text" class="custom-field" placeholder=" " name="Demand_Darft_AMT" [(ngModel)]="i.Demand_Darft_AMT"
+        #Demand_Darft_AMT="ngModel" [disabled]="mode=='view'" pattern="^[0-9]*$"  required>
+        <label for="">Demand Draft Amount
+        <span class="mandatory">*</span>
+        </label>
+        <div class="error-msg" *ngIf="Demand_Darft_AMT.invalid && (Demand_Darft_AMT.dirty || Demand_Darft_AMT.touched || formInvalid)">
+        <span *ngIf="Demand_Darft_AMT.errors.required">Demand Draft Amount is required</span>
+        <span *ngIf="Demand_Darft_AMT.errors?.pattern">Demand Draft Amount must be numeric characters</span>
+        </div>
+        </div>
+        </div>
+        <div class="col-md-6">
+        <div class="input-group">
+        <input type="text" class="custom-field" placeholder=" " name="Bank_Gurantee_AMT" [(ngModel)]="i.Bank_Gurantee_AMT"
+        #Bank_Gurantee_AMT="ngModel" [disabled]="mode=='view'" pattern="^[0-9]*$"  required>
+        <label for="">Bank Gurantee Amount
+        <span class="mandatory">*</span>
+        </label>
+        <div class="error-msg" *ngIf="Bank_Gurantee_AMT.invalid && (Bank_Gurantee_AMT.dirty || Bank_Gurantee_AMT.touched || formInvalid)">
+        <span *ngIf="Bank_Gurantee_AMT.errors.required">Bank Gurantee Amount is required</span>
+        <span *ngIf="Bank_Gurantee_AMT.errors?.pattern">Bank Gurantee Amount must be numeric characters</span>
+        </div>
+        </div>
+        </div>
+        </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+          <input type="text" class="custom-field" placeholder=" " name="Other_AMT" [(ngModel)]="i.Other_AMT"
+          #Other_AMT="ngModel" [disabled]="mode=='view'" pattern="^[0-9]*$"  required>
+          <label for="">Other Amount
+          <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Other_AMT.invalid && (Other_AMT.dirty || Other_AMT.touched || formInvalid)">
+          <span *ngIf="Other_AMT.errors.required">Other Amount is required</span>
+          <span *ngIf="Other_AMT.errors?.pattern">Other Amount must be numeric characters</span>
+          </div>
+          </div>
+          </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" class="custom-field" placeholder=" " name="Tender_Fee" [(ngModel)]="i.Tender_Fee"
+              #Tender_Fee="ngModel" [disabled]="mode=='view'"  [pattern]="numericpattern" required>
+            <label for="">Tender Fee
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Tender_Fee.invalid && (Tender_Fee.dirty || Tender_Fee.touched || formInvalid)">
+              <span *ngIf="Tender_Fee.errors.required">Tender Fee is required</span>
+              <span *ngIf="Tender_Fee.errors?.pattern">Tender Fee must be numeric characters</span>
+            </div>
+          </div>
+        </div>
+       
+
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <input type="text" placeholder=" " class="custom-field" name="Tender_Period" [(ngModel)]="i.Tender_Period"
+              #Tender_Period="ngModel" [disabled]="mode=='view'"  maxlength="30" required>
+            <label for="">Tender Period
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Tender_Period.invalid && (Tender_Period.dirty || Tender_Period.touched || formInvalid)">
+              <span *ngIf="Tender_Period.errors.required">Tender Period is required</span>
+              <!-- <span *ngIf="Tender_Period.errors.maxlength">Tender period should be 30 characters only </span> -->
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <select class="custom-field" [(ngModel)]="i.Status" #Status="ngModel" name="Status"
+              [disabled]="mode=='view'" required>
+              <option [value]="undefined" selected>---Select---</option>
+              <option value=3>Active</option>
+              <option value=4>Inactive</option>
+              <option value=12>Sent to eProcurement</option>
+              <option value=13>Finalized</option>
+              <option value=5>Withdrawn notification</option>
+            </select>
+            <label for="">Status
+              <span class="mandatory">*</span>
+            </label>
+            <div class="error-msg" *ngIf="Status.invalid && (Status.dirty || Status.touched || formInvalid)">
+              <span *ngIf="Status.errors.required">Status is required</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="text-center">
+        <button class="btn btn-primary" type="submit" [disabled]="mode=='view'">Save</button> &nbsp; <button
+          class="btn btn-primary" type="reset" [disabled]="mode=='view'">Cancel</button>
+      </div>
+
+    </div>
+  </form>
+
+</div>

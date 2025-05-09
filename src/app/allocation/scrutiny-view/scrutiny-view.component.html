@@ -1,0 +1,1297 @@
+<div class="wrapper">
+    <div class="title themeheading">
+        {{title}}
+    </div>
+    <form #s="ngForm" action="">
+        <div class="main-wrapper">
+            <div class="form">
+                <div class="header">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="container-fluid">
+                                <br>
+                                <div class="row no-gutters">
+                                    <div class="col-md-12">
+                                        <h5 class="modern-underline"> Project Details</h5>
+                                    </div>
+                                   <br><br>
+                                    <div class="col-md-6">
+                                        <span class="field-title">Project Name : </span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="field-value">{{PND.PD_Project_Name}}</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="field-title">Project Place : </span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="field-value">{{PND.DI_District}}</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="field-title">Property Type : </span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="field-value"> {{AFD.APP_PropertyType}}</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="field-title">Category : </span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="field-value">{{AFD.Categories.CA_CategoryName}}</span>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <span class="field-title">Notification No. : </span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="field-value">{{PND.DSWOId_NO_Number}}</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="field-title">Notification Date : </span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="field-value">{{PND.DSWOId_NO_Date| date:'dd-MM-yyyy'}}</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="field-title">Division : </span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="field-value">{{AFD.Division_Name}} </span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="field-title">District : </span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="field-value">{{PND.DI_District}} &nbsp; {{PND.DI_Code}} </span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="field-title">Primary Applicant No. : </span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="field-value"> {{AFD.APP_No}}</span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="field-title">Registration No. : </span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <span class="field-value"> {{AFD.APP_REG_NO}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <div class="photo-section">
+                                <span>Primary Applicant Photo</span>
+                                <br>
+                                &nbsp; <img src="{{AFD.APP_PA_Photo}}" class="applicant-img" alt="">
+                            </div>
+                            <br>
+                            <br>
+                            <div class="photo-section">
+
+                                <span> Primary Applicant Signature</span>
+                                <br>
+                                &nbsp; <img src="{{AFD.APP_PA_Signature}}" class="applicant-img">
+                            </div>
+                        </div>
+                        <div class="col-md-3 text-center" *ngIf="AFD.APP_IsJoint=='Yes'">
+                            <div class="photo-section">
+                                <span>Secondary Applicant Photo</span>
+                                <br>
+                                &nbsp; <img src="{{AFD.APP_SA_Photo}}" class="applicant-img" alt="">
+                                <span *ngIf="AFD.APP_IsJoint=='No'">NA</span>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="photo-section">
+                                <span>Secondary Applicant Signature</span>
+                                <br>
+                                &nbsp; <img src="{{AFD.APP_SA_Signature}}" class="applicant-img">
+                                <span *ngIf="AFD.APP_IsJoint=='No'">NA</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="body">
+                    <div class="container-fluid">
+                        <br>
+                        <div class="row no-gutters">   
+                            <br>
+                            <div class="col-md-12">
+                                <h5 class="modern-underline"> Primary Applicant Details </h5>
+                            </div>
+                            <br>
+                            <div class="col-md-3">
+                                <span class="field-title">Primary Applicant Name : </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.APP_PA_Name}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title">Primary Applicant Date of Birth : </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.APP_PA_DOB| date:'dd-MM-yyyy'}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title">Primary Applicant Age : </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.APP_PA_Age}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title">Joint Application: </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.APP_IsJoint}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title">Primary Applicant Gender : </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.APP_PA_Gender}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title">Primary Applicant Mobile Number : </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.APP_PA_MobileNo}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title">Primary Applicant Email : </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.APP_PA_Email}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title">Primary Applicant Reservation : </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.Reservations.RES_Name}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title">Primary Applicant Voter Id Card No: </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.Aadhar_No}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title">Primary Applicant PAN No: </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.APP_PA_PanNo}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title">Father/Mother/Husband/Wife : </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.APP_PA_Relation_Name}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title">Name of the Nominee : </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.APP_NomineeName}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title">Account Number : </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.APP_AccountNo}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title"> Name of Bank  : </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.APP_BankBranch}} </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title">IFSC Code : </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.APP_IFSC}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title">Bank Branch  : </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.branchcode}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title">Caste Certificate No. : </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.IDProof_No}}</span>
+                            </div>  
+                           
+                            <br>
+                            <br>
+                            <div class="col-md-12">
+                                <h5 class="modern-underline"> Secondary Applicant Details </h5>
+                            </div>
+                            <br>
+
+                            <div class="col-md-3">
+                                <span class="field-title">Secondary Applicant Name : </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value" *ngIf="AFD.APP_IsJoint=='Yes'">{{AFD.APP_SA_Name}}</span>
+                                <span class="field-value" *ngIf="AFD.APP_IsJoint=='No'">NA</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title">Secondary Applicant Date of Birth : </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value" *ngIf="AFD.APP_IsJoint=='Yes'">{{AFD.APP_SA_DOB |
+                                    date:'dd-MM-yyyy'}}</span>
+                                <span class="field-value" *ngIf="AFD.APP_IsJoint=='No'">NA</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title" >Secondary Applicant Age : </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value" *ngIf="AFD.APP_IsJoint=='Yes'">{{AFD.APP_SA_Age}}</span>
+                                <span class="field-value" *ngIf="AFD.APP_IsJoint=='No'">NA</span>
+                            </div>                          
+                            <div class="col-md-3">
+                                <span class="field-title">Secondary Applicant Relationship : </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value"
+                                    *ngIf="AFD.APP_IsJoint=='Yes'">{{AFD.APP_SA_Relation_Name}}</span>
+                                <span class="field-value" *ngIf="AFD.APP_IsJoint=='No'">NA</span>
+                            </div>                        
+                            <div class="col-md-3">
+                                <span class="field-title">Secondary Applicant PAN No : </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value" *ngIf="AFD.APP_IsJoint=='Yes'">{{AFD.APP_SA_PanNo}}</span>
+                                <span class="field-value" *ngIf="AFD.APP_IsJoint=='No'">NA</span>
+                            </div>
+
+                           
+                            <br>
+                            <br>
+
+                            <div class="col-md-12">
+                                <h5 class="modern-underline"> Registration Payment Details </h5>
+                            </div>
+                            <br>                
+
+                            <div class="col-md-3">
+                                <span class="field-title">Registration Amount Deposited: </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.PAmount}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title">Registration Date of Deposit: </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.APP_Payment_Trans_Date | date:'dd-MM-yyyy'}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title">Registration Bank and Branch : </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.Bank_Branch}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title"> Registration Net Banking / Credit Card / Debit Card / UPI:
+                                </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.Payment_Mode}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title"> Registration Transaction / Bank Challan No: </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.BankChallan_No}}</span>
+                            </div>
+                                                  
+                            <br><br>
+                            <div class="col-md-12">
+                                <h5 class="modern-underline">  Application Fees Details </h5>
+                            </div> 
+                            <br>   
+                            <div class="col-md-3">
+                                <span class="field-title">Payment Method:</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.Appfee_payment_Method}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title">Transaction No: </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.Appfee_Transaction_Id}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title">Payment Amount:</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.Appfee_Paid_Amount}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title">Payment Date: </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.Appfee_Payment_Date | date:'dd-mm-yyyy'}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title">Bank Name: </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.Appfee_Bank_Name_New}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title"> Branch Name:</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.Appfee_branch}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title">Payment Mode </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.Appfee_Payment_Mode}}</span>
+                                <span class="field-value" *ngIf="AFD.Appfee_Payment_Mode==' '">NA</span>
+                            </div>
+
+                            <br><br>
+                            <div class="col-md-12">
+                                <h5 class="modern-underline"> Initial Deposit/EMD Details </h5>
+                            </div> 
+                            <br>   
+                            <div class="col-md-3">
+                                <span class="field-title"> Payment Method: </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.ID_payment_Method}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title"> Transaction No: </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.ID_Transaction_Id}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title">Payment Amount:  </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.ID_Paid_Amount}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title"> Payment Date: </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.ID_Payment_Date | date:'dd-mm-yyyy'}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title"> Bank Name: </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.ID_Bank_Name_New}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title"> Branch Name:</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.ID_branch}}</span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title">Payment Mode: </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">{{AFD.ID_Payment_Mode}}</span>                               
+                            </div>
+
+
+                            <br><br>
+                            <div class="col-md-12">
+                                <h5 class="modern-underline"> Primary Applicant Address Details </h5>
+                            </div> 
+                            <br>
+
+                            <div class="col-md-3">
+                                <span class="field-title">Primary Applicant Permanent Address : </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">
+                                    <label for="">District</label> - {{AFD.AppPermdist}}
+                                    <br><label for="">Village</label> - {{AFD.APP_VI_Name_PERM}}
+                                    <!-- <br>{{AFD.APP_DI_Id_FK_PERM}} -->
+                                   
+                                    <br><label for="">Police Station</label> - {{AFD.Police_Station_PERM}}
+                                    <br><label for="">Post Office</label> - {{AFD.Post_Office_PERM}}
+                                    <br><label for="">Pincode</label> - {{AFD.APP_Pincode_PERM}}
+                                    <!-- <br>{{AFD.Permanent_APP_Village_Name}},
+                                    <br> {{AFD.Permanent_APP_Pincode}} -->
+                                </span>
+                            </div>
+                            
+                            <div class="col-md-3">
+                                <span class="field-title"> Primary Applicant Correspondense Address : </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">
+                                    <label for="">District</label> - {{AFD.APPCorrDist}}
+                                    <br><label for="">Village</label> - {{AFD.APP_VI_Name}}
+                                    <!-- <br>{{AFD.APP_DI_Id_FK}} -->
+                                 
+                                    <br><label for="">Police Station</label> - {{AFD.Police_Station_Co}}
+                                    <br><label for="">Post Office</label> - {{AFD.Post_Office_Co}}
+                                    <br><label for="">Pincode</label> -  {{AFD.APP_Pincode}}
+                                    <!-- <br>{{AFD.Permanent_APP_Village_Name}},
+                                    <br> {{AFD.Permanent_APP_Pincode}} -->
+                                </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-title">Applicant's Father/Husband/Wife Address : </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">
+                                    <label for="">District</label> - {{AFD.AppFathDist}}
+                                    <br><label for="">Village</label> - {{AFD.APP_FS_Village}}
+                                    <!-- <br>{{AFD.APP_FS_District_Fk}} -->
+                                   
+                                    <br><label for="">Police Station</label> - {{AFD.App_FS_Police_Station}}
+                                    <br><label for="">Post Office</label> - {{AFD.APP_FS_Post_Office}}
+                                    <br><label for="">Pincode</label> - {{AFD.APP_FS_Zipcode}}
+                                    <!-- <br>{{AFD.Permanent_APP_Village_Name}},
+                                    <br> {{AFD.Permanent_APP_Pincode}} -->
+                                </span>
+                            </div>
+                            <br>
+                            <div class="col-md-12">
+                                <h5 class="modern-underline"> Secondary Applicant Address Details </h5>
+                            </div>
+                            <br>
+                            <div class="col-md-3">
+                                <span class="field-title">Secondary Applicant Permanent Address : </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">
+                                    <label for="">District</label> - {{AFD.SecPermDist}}
+                                    <br><label for="">Village</label> - {{AFD.Sec_APP_Village_PERM}}
+                                    <!-- <br>{{AFD.Sec_APP_District_Fk_PERM}} -->
+                                   
+                                    <br><label for="">Police Station</label> - {{AFD.Sec_App_Police_Station_PERM}}
+                                    <span class="field-value" *ngIf="AFD.APP_IsJoint=='No'">NA</span>
+                                    <br><label for="">Post Office</label> - {{AFD.Sec_APP_Post_Office_PERM}}
+                                    <br><label for="">Pincode</label> - {{AFD.Sec_APP_Zipcode_PERM}}
+                                    <!-- <br>{{AFD.Permanent_APP_Village_Name}},
+                                    <br> {{AFD.Permanent_APP_Pincode}} -->
+                                </span>
+                                
+                            </div>
+
+                            <div class="col-md-3">
+                                <span class="field-title">Secondary Applicant Correspondense Address: </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">
+                                    <label for="">District</label> - {{AFD.SecCorrDist}}
+                                    <br><label for="">Village</label> - {{AFD.Sec_APP_Village_Co}}
+                                    <!-- <br>{{AFD.Sec_APP_District_Fk_Co}} -->
+                                   
+                                    <br><label for="">Police Station</label> - {{AFD.Sec_App_Police_Station_Co}}
+                                    <span class="field-value" *ngIf="AFD.APP_IsJoint=='No'">NA</span>
+                                    <br><label for="">Post Office</label> - {{AFD.Sec_APP_Post_Office_Co}}
+                                    <br><label for="">Pincode</label> - {{AFD.Sec_APP_Zipcode_Co}}
+                                    <!-- <br>{{AFD.Permanent_APP_Village_Name}},
+                                    <br> {{AFD.Permanent_APP_Pincode}} -->
+                                </span>
+                                
+                            </div>
+                           
+                            <div class="col-md-3">
+                                <span class="field-title">Secondary Father/Husband/Wife Address : </span>
+                            </div>
+                            <div class="col-md-3">
+                                <span class="field-value">
+                                    <label for="">District</label> - {{AFD.SecFathDist}}
+                                    <br><label for="">Village</label> - {{AFD.Co_APP_FS_Village}}
+                                    <!-- <br>{{AFD.Co_APP_FS_District_Fk}} -->
+                                    
+                                    <br><label for="">Police Station</label> - {{AFD.Co_App_FS_Police_Station}}
+                                    <span class="field-value" *ngIf="AFD.APP_IsJoint=='No'">NA</span>
+                                    <br><label for="">Post Office</label> - {{AFD.Co_APP_FS_Post_Office}}
+                                    <br><label for="">Pincode</label> - {{AFD.Co_APP_FS_Zipcode}}
+                                    <!-- {{AFD.Permanent_APP_Village_Name}},
+                                   <br>{{AFD.Permanent_APP_Pincode}} -->
+                                </span>
+                                <!-- <span class="field-value" *ngIf="AFD.APP_IsJoint=='No'">NA</span> -->
+                            </div>
+
+                            <br><br>
+                            <div class="col-md-12">
+                                <h5 class="modern-underline"> Document Details </h5>
+                            </div> 
+                       
+                            
+                            <div class="col-md-3">
+                                <span class="field-title">Primary Applicant Voter Id Card: </span>
+                            </div>
+                            <div class="col-md-1">
+                                <span class="field-value" *ngIf="AFD.APP_PA_AdharCard!='NA.pdf'">
+                                    <a class="modern-button" target="_Blank" href="{{AFD.APP_PA_AdharCard}}">View</a>
+                                </span>
+                                <span class="field-value" *ngIf="AFD.APP_PA_AdharCard=='NA.pdf'">NA</span>
+                            </div>
+                            
+                            <div class="col-md-2" >         
+                                <div *ngIf="AFD.APP_PA_AdharCard != 'NA.pdf'">                       
+                                  <span class="mandatory">Verified :</span> &nbsp;
+                                  <div class="error-msg float-right"
+                                    *ngIf="isAdharVer.invalid && (isAdharVer.dirty || isAdharVer.touched || formInvalid)">
+                                    <span *ngIf="isAdharVer.errors.required">Field is required</span>
+                                  </div>
+                                  <!-- <span class="clearfix"></span>  &nbsp;                                                         -->
+                                <div class="form-check form-check-inline">                                 
+                                    <input class="form-check-input" required type="radio" id="inlineRadio1" value="Yes" name="isAdharVer"
+                                      [(ngModel)]="AFD.isAdharVer" #isAdharVer="ngModel" (change)="isButtonDisabled()"> Yes                                 
+                                </div>
+                                <div class="form-check form-check-inline">                               
+                                    <input class="form-check-input" required type="radio" id="inlineRadio1" value="No" name="isAdharVer"
+                                      [(ngModel)]="AFD.isAdharVer" #isAdharVer="ngModel" (change)="isButtonDisabled()"> No                                 
+                                </div>
+                                </div>
+                            </div>
+                        
+
+                            <br><br>
+
+
+                            <div class="col-md-3"> 
+                                <span class="field-title">Primary Applicant PAN Card: </span>
+                            </div>
+                            <div class="col-md-1">
+                                <span class="field-value" *ngIf="AFD.APP_PA_PanCard != 'NA.pdf'">
+                                    <a  class="modern-button" target="_blank" href="{{AFD.APP_PA_PanCard}}">View</a>
+                                </span>
+                                <span class="field-value" *ngIf="AFD.APP_PA_PanCard == 'NA.pdf'">NA</span>
+                            </div>
+                            <div class="col-md-2">          
+                                <div *ngIf="AFD.APP_PA_PanCard != 'NA.pdf'">                 
+                                <span class="mandatory">Verified :</span> &nbsp;
+                                <div class="error-msg float-right"
+                                    *ngIf="isPanVer.invalid && (isPanVer.dirty || isPanVer.touched || formInvalid)">
+                                    <span *ngIf="isPanVer.errors.required">Field is required</span>
+                                </div>
+
+                                <div class="form-check form-check-inline">                                 
+                                    <input class="form-check-input" required type="radio" id="inlineRadio1" value="Yes" name="isPanVer"
+                                        [(ngModel)]="AFD.isPanVer" #isPanVer="ngModel" (change)="isButtonDisabled()"> Yes                                 
+                                </div>
+                                <div class="form-check form-check-inline">                               
+                                    <input class="form-check-input" required type="radio" id="inlineRadio2" value="No" name="isPanVer"
+                                        [(ngModel)]="AFD.isPanVer" #isPanVer="ngModel" (change)="isButtonDisabled()"> No                                 
+                                </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-3">
+                                <span class="field-title">Caste Certificate : </span>
+                            </div>
+                            <div class="col-md-1">
+                                <a class="modern-button" target="_Blank" href="{{AFD.APP_Caste_Certificate}}"
+                                    *ngIf="AFD.APP_Caste_Certificate!='NA.pdf'">View</a>
+                                <span class="field-value" *ngIf="AFD.APP_Caste_Certificate=='NA.pdf'">NA</span>
+                            </div>
+                            <div class="col-md-2" >   
+                                <div *ngIf="AFD.APP_Caste_Certificate != 'NA.pdf'">                                
+                                <span class="mandatory">Verified :</span> &nbsp;
+                                <div class="error-msg float-right"
+                                  *ngIf="isCasteVer.invalid && (isCasteVer.dirty || isCasteVer.touched || formInvalid)">
+                                  <span *ngIf="isCasteVer.errors.required">Field is required</span>
+                                </div>
+                                <!-- <span class="clearfix"></span>                                                          -->
+                              <div class="form-check form-check-inline">                                 
+                                  <input class="form-check-input" required type="radio" id="inlineRadio1" value="Yes" name="isCasteVer"
+                                    [(ngModel)]="AFD.isCasteVer" #isCasteVer="ngModel" (change)="isButtonDisabled()"> Yes                                 
+                              </div>
+                              <div class="form-check form-check-inline">                               
+                                  <input class="form-check-input" required type="radio" id="inlineRadio1" value="No" name="isCasteVer"
+                                    [(ngModel)]="AFD.isCasteVer" #isCasteVer="ngModel" (change)="isButtonDisabled()"> No                                 
+                              </div>
+                              </div>
+                            </div>
+                               
+                            <br><br>
+
+                            <div class="col-md-3">
+                                <span class="field-title">Disability Certificate : </span>
+                            </div>
+                            <div class="col-md-1">
+                                <a class="modern-button" target="_Blank" href="{{AFD.APP_Disability_Certificate}}"
+                                    *ngIf="AFD.APP_Disability_Certificate!='NA.pdf'">View</a>
+                                <span class="field-value" *ngIf="AFD.APP_Disability_Certificate=='NA.pdf'">NA</span>
+                            </div>
+                            <div class="col-md-2" >   
+                                <div *ngIf="AFD.APP_Disability_Certificate != 'NA.pdf'">                               
+                                <span class="mandatory">Verified :</span> &nbsp;
+                                <div class="error-msg float-right"
+                                  *ngIf="isDisVer.invalid && (isDisVer.dirty || isDisVer.touched || formInvalid)">
+                                  <span *ngIf="isDisVer.errors.required">Field is required</span>
+                                </div>
+                                <!-- <span class="clearfix"></span>                                                          -->
+                              <div class="form-check form-check-inline">                                 
+                                  <input class="form-check-input" required type="radio" id="inlineRadio1" value="Yes" name="isDisVer"
+                                    [(ngModel)]="AFD.isDisVer" #isDisVer="ngModel" (change)="isButtonDisabled()"> Yes                                 
+                              </div>
+                              <div class="form-check form-check-inline">                               
+                                  <input class="form-check-input" required type="radio" id="inlineRadio1" value="No" name="isDisVer"
+                                    [(ngModel)]="AFD.isDisVer" #isDisVer="ngModel" (change)="isButtonDisabled()"> No                                 
+                              </div>
+                              </div>
+                            </div>
+
+
+
+                            <div class="col-md-3">
+                                <span class="field-title">Applicant Affidavit Certificate : </span>
+                            </div>
+                            <div class="col-md-1">
+                                <a class="modern-button" target="_Blank" href="{{AFD.APP_Affidavit_Certificate}}"
+                                    *ngIf="AFD.APP_Affidavit_Certificate!='NA.pdf'">View</a>
+                                <span class="field-value" *ngIf="AFD.APP_Affidavit_Certificate=='NA.pdf'">NA</span>
+                            </div>
+                            <div class="col-md-2" >      
+                                <div *ngIf="AFD.APP_Affidavit_Certificate != 'NA.pdf'">                           
+                                <span class="mandatory">Verified :</span> &nbsp;
+                                <div class="error-msg float-right"
+                                  *ngIf="isAppAffVer.invalid && (isAppAffVer.dirty || isAppAffVer.touched || formInvalid)">
+                                  <span *ngIf="isAppAffVer.errors.required">Field is required</span>
+                                </div>
+                                <!-- <span class="clearfix"></span>                                                          -->
+                              <div class="form-check form-check-inline">                                 
+                                  <input class="form-check-input" required type="radio" id="inlineRadio1" value="Yes" name="isAppAffVer"
+                                    [(ngModel)]="AFD.isAppAffVer" #isAppAffVer="ngModel" (change)="isButtonDisabled()"> Yes                                 
+                              </div>
+                              <div class="form-check form-check-inline">                               
+                                  <input class="form-check-input" required type="radio" id="inlineRadio1" value="No" name="isAppAffVer"
+                                    [(ngModel)]="AFD.isAppAffVer" #isAppAffVer="ngModel" (change)="isButtonDisabled()"> No                                 
+                              </div>
+                              </div>
+                            </div>
+
+                            <br><br>
+
+                            <div class="col-md-3">
+                                <span class="field-title">Land Acquisation Certificate : </span>
+                            </div>
+                            <div class="col-md-1">
+                                <a class="modern-button" target="_Blank" href="{{AFD.APP_LA_Certificate}}"
+                                    *ngIf="AFD.APP_LA_Certificate!='NA.pdf'">View</a>
+                                <span class="field-value" *ngIf="AFD.APP_LA_Certificate=='NA.pdf'">NA</span>
+                            </div>
+                            <div class="col-md-2" >            
+                                <div *ngIf="AFD.APP_LA_Certificate != 'NA.pdf'">                       
+                                <span class="mandatory">Verified :</span> &nbsp;
+                                <div class="error-msg float-right"
+                                  *ngIf="isLandAcqVer.invalid && (isLandAcqVer.dirty || isLandAcqVer.touched || formInvalid)">
+                                  <span *ngIf="isLandAcqVer.errors.required">Field is required</span>
+                                </div>
+                                <!-- <span class="clearfix"></span>                                                          -->
+                              <div class="form-check form-check-inline">                                 
+                                  <input class="form-check-input" required type="radio" id="inlineRadio1" value="Yes" name="isLandAcqVer"
+                                    [(ngModel)]="AFD.isLandAcqVer" #isLandAcqVer="ngModel" (change)="isButtonDisabled()"> Yes                                 
+                              </div>
+                              <div class="form-check form-check-inline">                               
+                                  <input class="form-check-input" required type="radio" id="inlineRadio1" value="No" name="isLandAcqVer"
+                                    [(ngModel)]="AFD.isLandAcqVer" #isLandAcqVer="ngModel" (change)="isButtonDisabled()"> No                                 
+                              </div>
+                              </div>
+                            </div>
+
+
+
+
+                            <div class="col-md-3">
+                                <span class="field-title">Ex-Serviceman Certificate : </span>
+                            </div>
+                            <div class="col-md-1">
+                                <a class="modern-button" target="_Blank" href="{{AFD.APP_Exserviceman_Certificate}}"
+                                    *ngIf="AFD.APP_Exserviceman_Certificate!='NA.pdf'">View</a>
+                                <span class="field-value" *ngIf="AFD.APP_Exserviceman_Certificate=='NA.pdf'">NA</span>
+                            </div>
+                            <div class="col-md-2" >        
+                                <div *ngIf="AFD.APP_Exserviceman_Certificate != 'NA.pdf'">                    
+                                <span class="mandatory">Verified :</span> &nbsp;
+                                <div class="error-msg float-right"
+                                  *ngIf="isExSerVer.invalid && (isExSerVer.dirty || isExSerVer.touched || formInvalid)">
+                                  <span *ngIf="isExSerVer.errors.required">Field is required</span>
+                                </div>
+                                <!-- <span class="clearfix"></span>                                                          -->
+                              <div class="form-check form-check-inline">                                 
+                                  <input class="form-check-input" required type="radio" id="inlineRadio1" value="Yes" name="isExSerVer"
+                                    [(ngModel)]="AFD.isExSerVer" #isExSerVer="ngModel" (change)="isButtonDisabled()"> Yes                                 
+                              </div>
+                              <div class="form-check form-check-inline">                               
+                                  <input class="form-check-input" required type="radio" id="inlineRadio1" value="No" name="isExSerVer"
+                                    [(ngModel)]="AFD.isExSerVer" #isExSerVer="ngModel" (change)="isButtonDisabled()"> No                                 
+                              </div>
+                              </div>
+                            </div>
+
+
+                            <br><br>
+
+
+
+
+
+
+                            <div class="col-md-3">
+                                <span class="field-title">POD Certificate : </span>
+                            </div>
+                            <div class="col-md-1">
+                                <a class="modern-button" target="_Blank" href="{{AFD.APP_POD_Certificate}}"
+                                    *ngIf="AFD.APP_POD_Certificate!='NA.pdf'">View</a>
+                                <span class="field-value" *ngIf="AFD.APP_POD_Certificate=='NA.pdf'">NA</span>
+                            </div>
+                            <div class="col-md-2" >   
+                                <div *ngIf="AFD.APP_POD_Certificate != 'NA.pdf'">                               
+                                <span class="mandatory">Verified :</span> &nbsp;
+                                <div class="error-msg float-right"
+                                  *ngIf="isPODVer.invalid && (isPODVer.dirty || isPODVer.touched || formInvalid)">
+                                  <span *ngIf="isPODVer.errors.required">Field is required</span>
+                                </div>
+                                <!-- <span class="clearfix"></span>                                                          -->
+                              <div class="form-check form-check-inline">                                 
+                                  <input class="form-check-input" required type="radio" id="inlineRadio1" value="Yes" name="isPODVer"
+                                    [(ngModel)]="AFD.isPODVer" #isPODVer="ngModel" (change)="isButtonDisabled()"> Yes                                 
+                              </div>
+                              <div class="form-check form-check-inline">                               
+                                  <input class="form-check-input" required type="radio" id="inlineRadio1" value="No" name="isPODVer"
+                                    [(ngModel)]="AFD.isPODVer" #isPODVer="ngModel" (change)="isButtonDisabled()"> No                                 
+                              </div>
+                              </div>
+                            </div>
+
+
+
+                            <div class="col-md-3">
+                                <span class="field-title">Income Certificate : </span>
+                            </div>
+                            <div class="col-md-1">
+                                <a class="modern-button" target="_Blank" href="{{AFD.APP_Income_Certificate}}"
+                                    *ngIf="AFD.APP_Income_Certificate!='NA.pdf'">View</a>
+                                <span class="field-value" *ngIf="AFD.APP_Income_Certificate=='NA.pdf'">NA</span>
+                            </div>
+                            <div class="col-md-2" >          
+                                <div *ngIf="AFD.APP_Income_Certificate != 'NA.pdf'">                          
+                                <span class="mandatory">Verified :</span> &nbsp;
+                                <div class="error-msg float-right"
+                                  *ngIf="isIncomeVer.invalid && (isIncomeVer.dirty || isIncomeVer.touched || formInvalid)">
+                                  <span *ngIf="isIncomeVer.errors.required">Field is required</span>
+                                </div>
+                                <!-- <span class="clearfix"></span>                                                          -->
+                              <div class="form-check form-check-inline">                                 
+                                  <input class="form-check-input" required type="radio" id="inlineRadio1" value="Yes" name="isIncomeVer"
+                                    [(ngModel)]="AFD.isIncomeVer" #isIncomeVer="ngModel" (change)="isButtonDisabled()"> Yes                                 
+                              </div>
+                              <div class="form-check form-check-inline">                               
+                                  <input class="form-check-input" required type="radio" id="inlineRadio1" value="No" name="isIncomeVer"
+                                    [(ngModel)]="AFD.isIncomeVer" #isIncomeVer="ngModel" (change)="isButtonDisabled()"> No                                 
+                              </div>
+                              </div>
+                            </div>
+
+                              <br><br>
+
+                            <div class="col-md-3">
+                                <span class="field-title">Resident Certificate : </span>
+                            </div>
+                            <div class="col-md-1">
+                                <a class="modern-button" target="_Blank" href="{{AFD.APP_Resident_certificate}}"
+                                    *ngIf="AFD.APP_Resident_certificate!='NA.pdf'">View</a>
+                                <span class="field-value" *ngIf="AFD.APP_Resident_certificate=='NA.pdf'">NA</span>
+                            </div>
+                            <div class="col-md-2" >           
+                                <div *ngIf="AFD.APP_Resident_certificate != 'NA.pdf'">                      
+                                <span class="mandatory">Verified :</span> &nbsp;
+                                <div class="error-msg float-right"
+                                  *ngIf="isResiVer.invalid && (isResiVer.dirty || isResiVer.touched || formInvalid)">
+                                  <span *ngIf="isResiVer.errors.required">Field is required</span>
+                                </div>
+                                <!-- <span class="clearfix"></span>                                                          -->
+                              <div class="form-check form-check-inline">                                 
+                                  <input class="form-check-input" required type="radio" id="inlineRadio1" value="Yes" name="isResiVer"
+                                    [(ngModel)]="AFD.isResiVer" #isResiVer="ngModel" (change)="isButtonDisabled()"> Yes                                 
+                              </div>
+                              <div class="form-check form-check-inline">                               
+                                  <input class="form-check-input" required type="radio" id="inlineRadio1" value="No" name="isResiVer"
+                                    [(ngModel)]="AFD.isResiVer" #isResiVer="ngModel" (change)="isButtonDisabled()"> No                                 
+                              </div>
+                              </div>
+                            </div>
+
+
+
+                            <div class="col-md-3">
+                                <span class="field-title">Affidavit Certificate : </span>
+                            </div>
+                            <div class="col-md-1">
+                                <a class="modern-button" target="_Blank" href="{{AFD.Affidavit}}" *ngIf="AFD.Affidavit!='NA.pdf'">View</a>
+                                <span class="field-value" *ngIf="AFD.Affidavit=='NA.pdf'">NA</span>
+                            </div>
+                            <div class="col-md-2" >            
+                                <div *ngIf="AFD.Affidavit != 'NA.pdf'">                       
+                                <span class="mandatory">Verified :</span> &nbsp;
+                                <div class="error-msg float-right"
+                                  *ngIf="isAffiVer.invalid && (isAffiVer.dirty || isAffiVer.touched || formInvalid)">
+                                  <span *ngIf="isAffiVer.errors.required">Field is required</span>
+                                </div>
+                                <!-- <span class="clearfix"></span>                                                          -->
+                              <div class="form-check form-check-inline">                                 
+                                  <input class="form-check-input" required type="radio" id="inlineRadio1" value="Yes" name="isAffiVer"
+                                    [(ngModel)]="AFD.isAffiVer" #isAffiVer="ngModel" (change)="isButtonDisabled()"> Yes                                 
+                              </div>
+                              <div class="form-check form-check-inline">                               
+                                  <input class="form-check-input" required type="radio" id="inlineRadio1" value="No" name="isAffiVer"
+                                    [(ngModel)]="AFD.isAffiVer" #isAffiVer="ngModel" (change)="isButtonDisabled()"> No                                 
+                              </div>
+                              </div>
+                            </div>
+
+                            <br><br>
+
+
+
+
+
+                            <div class="col-md-3">
+                                <span class="field-title">Secondary Affidavit Certificate : </span>
+                            </div>
+                            <div class="col-md-1">
+                                <a class="modern-button" target="_Blank" href="{{AFD.APP_Secondary_Affidavit}}"
+                                    *ngIf="AFD.APP_Secondary_Affidavit!= 'NA.pdf'">View</a>
+                                <span class="field-value" *ngIf="AFD.APP_Secondary_Affidavit== 'NA.pdf'">NA</span>
+                            </div>
+                            <div class="col-md-2" >       
+                                <div *ngIf="AFD.APP_Secondary_Affidavit != 'NA.pdf'">                         
+                                <span class="mandatory">Verified :</span> &nbsp;
+                                <div class="error-msg float-right"
+                                  *ngIf="isSecAffVer.invalid && (isSecAffVer.dirty || isSecAffVer.touched || formInvalid)">
+                                  <span *ngIf="isSecAffVer.errors.required">Field is required</span>
+                                </div>
+                                <!-- <span class="clearfix"></span>                                                          -->
+                              <div class="form-check form-check-inline">                                 
+                                  <input class="form-check-input" required type="radio" id="inlineRadio1" value="Yes" name="isSecAffVer"
+                                    [(ngModel)]="AFD.isSecAffVer" #isSecAffVer="ngModel" (change)="isButtonDisabled()"> Yes                                 
+                              </div>
+                              <div class="form-check form-check-inline">                               
+                                  <input class="form-check-input" required type="radio" id="inlineRadio1" value="No" name="isSecAffVer"
+                                    [(ngModel)]="AFD.isSecAffVer" #isSecAffVer="ngModel" (change)="isButtonDisabled()"> No                                 
+                              </div>
+                              </div>
+                            </div>
+
+
+
+
+                            <div class="col-md-3">
+                                <span class="field-title">Manifesto Signature : </span>
+                            </div>
+                            <div class="col-md-1">
+                                <a class="modern-button" target="_Blank" href="{{AFD.manifesto_sig}}" *ngIf="AFD.manifesto_sig!='NA.pdf'">View</a>
+                                <span class="field-value" *ngIf="AFD.manifesto_sig=='NA.pdf'">NA</span>
+                            </div>
+                            <div class="col-md-2" >    
+                                <div *ngIf="AFD.manifesto_sig != 'NA.pdf'">                              
+                                <span class="mandatory">Verified :</span> &nbsp;
+                                <div class="error-msg float-right"
+                                  *ngIf="isManiSigVer.invalid && (isManiSigVer.dirty || isManiSigVer.touched || formInvalid)">
+                                  <span *ngIf="isManiSigVer.errors.required">Field is required</span>
+                                </div>
+                                <!-- <span class="clearfix"></span>                                                          -->
+                              <div class="form-check form-check-inline">                                 
+                                  <input class="form-check-input" required type="radio" id="inlineRadio1" value="Yes" name="isManiSigVer"
+                                    [(ngModel)]="AFD.isManiSigVer" #isManiSigVer="ngModel" (change)="isButtonDisabled()"> Yes                                 
+                              </div>
+                              <div class="form-check form-check-inline">                               
+                                  <input class="form-check-input" required type="radio" id="inlineRadio1" value="No" name="isManiSigVer"
+                                    [(ngModel)]="AFD.isManiSigVer" #isManiSigVer="ngModel" (change)="isButtonDisabled()"> No                                 
+                              </div>
+                              </div>
+                            </div>
+
+                            <br><br>
+                            <div class="col-md-3">
+                                <span class="field-title">Secondary Manifesto Signature : </span>
+                            </div>
+                            <div class="col-md-1">
+                                <a class="modern-button" target="_Blank" href="{{AFD.manifesto_sig_sec}}"
+                                    *ngIf="AFD.manifesto_sig_sec!='NA.pdf'">View</a>
+                                <span class="field-value" *ngIf="AFD.manifesto_sig_sec=='NA.pdf'">NA</span>
+                            </div>
+                            <div class="col-md-2">
+                                <!-- Conditionally show the Verified section based on the 'NA.pdf' condition -->
+                                <div *ngIf="AFD.manifesto_sig_sec != 'NA.pdf'">
+                                    <span class="mandatory">Verified :</span> &nbsp;
+                                    <div class="error-msg float-right" 
+                                         *ngIf="isSecManiSigVer.invalid && (isSecManiSigVer.dirty || isSecManiSigVer.touched || formInvalid)">
+                                        <span *ngIf="isSecManiSigVer.errors.required">Field is required</span>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" required type="radio" id="inlineRadio1" value="Yes" name="isSecManiSigVer"
+                                               [(ngModel)]="AFD.isSecManiSigVer" #isSecManiSigVer="ngModel" (change)="isButtonDisabled()"> Yes
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" required type="radio" id="inlineRadio2" value="No" name="isSecManiSigVer"
+                                               [(ngModel)]="AFD.isSecManiSigVer" #isSecManiSigVer="ngModel" (change)="isButtonDisabled()"> No
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <span class="field-title">Bank Passbook Details: </span>
+                            </div>
+                            <div class="col-md-1">
+                                <a class="modern-button" target="_Blank" href="{{AFD.bank_passbook}}"
+                                    *ngIf="AFD.bank_passbook!='NA.pdf'">View</a>
+                                <span class="field-value" *ngIf="AFD.bank_passbook=='NA.pdf'">NA</span>
+                            </div>
+                            <div class="col-md-2">              
+                                <div *ngIf="AFD.bank_passbook != 'NA.pdf'">                  
+                                <span class="mandatory">Verified :</span> &nbsp;
+                                <div class="error-msg float-right"
+                                  *ngIf="isbapassVer.invalid && (isbapassVer.dirty || isbapassVer.touched || formInvalid)">
+                                  <span *ngIf="isbapassVer.errors.required">Field is required</span>
+                                </div>
+                                <!-- <span class="clearfix"></span>                                                          -->
+                              <div class="form-check form-check-inline">                                 
+                                  <input class="form-check-input" required type="radio" id="inlineRadio1" value="Yes" name="isbapassVer"
+                                    [(ngModel)]="AFD.isbapassVer" #isbapassVer="ngModel" (change)="isButtonDisabled()"> Yes                                 
+                              </div>
+                              <div class="form-check form-check-inline">                               
+                                  <input class="form-check-input" required type="radio" id="inlineRadio1" value="No" name="isbapassVer"
+                                    [(ngModel)]="AFD.isbapassVer" #isbapassVer="ngModel" (change)="isButtonDisabled()"> No                                 
+                              </div>
+                              </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <span class="field-title">Voter Id Card: </span>
+                            </div>
+                            <div class="col-md-1">
+                                <a class="modern-button" target="_Blank" href="{{AFD.VoterCard}}"
+                                    *ngIf="AFD.VoterCard!='NA.pdf'">View</a>
+                                <span class="field-value" *ngIf="AFD.VoterCard=='NA.pdf'">NA</span>
+                            </div>
+                            <div class="col-md-2">              
+                                <div *ngIf="AFD.VoterCard != 'NA.pdf'">                  
+                                <span class="mandatory">Verified :</span> &nbsp;
+                                <div class="error-msg float-right"
+                                  *ngIf="isVoterCardVer.invalid && (isVoterCardVer.dirty || isVoterCardVer.touched || formInvalid)">
+                                  <span *ngIf="isVoterCardVer.errors.required">Field is required</span>
+                                </div>
+                                <!-- <span class="clearfix"></span>                                                          -->
+                              <div class="form-check form-check-inline">                                 
+                                  <input class="form-check-input" required type="radio" id="inlineRadio1" value="Yes" name="isVoterCardVer"
+                                    [(ngModel)]="AFD.isVoterCardVer" #isVoterCardVer="ngModel" (change)="isButtonDisabled()"> Yes                                 
+                              </div>
+                              <div class="form-check form-check-inline">                               
+                                  <input class="form-check-input" required type="radio" id="inlineRadio1" value="No" name="isVoterCardVer"
+                                    [(ngModel)]="AFD.isVoterCardVer" #isVoterCardVer="ngModel" (change)="isButtonDisabled()"> No                                 
+                              </div>
+                              </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+        <!-- <div class="row">
+            <div class="col-md-6">
+                <label><span class="field-title">Application No.</span> {{AFD.APP_No}}</label>
+            </div>
+            <div class="col-md-6">
+                <label><span class="field-title">Joint Application ? </span> {{AFD.APP_IsJoint}} </label>
+            </div>
+        </div>
+  
+        <div class="row">
+          <div class="col-md-6">
+              <label><span class="field-title">Project Name</span> {{PND.PD_Project_Name}}</label>
+          </div>
+          <div class="col-md-6">
+              <label><span class="field-title">Project place</span> {{PND.TA_Taluk}}</label>
+          </div>
+        </div> -->
+  
+        <!-- <div class="row">
+            <div class="col-md-6">
+                <label><span class="field-title">Property Type</span>  {{AFD.APP_PropertyType}}</label>
+            </div>
+            <div class="col-md-6">
+              <label><span class="field-title"> Category</span> {{AFD.Categories.CA_CategoryName}}</label>
+          </div>
+        </div> -->
+  
+        <!-- <div class="row">
+            <div class="col-md-6">
+                <label><span class="field-title">District</span>  {{PND.DI_District}}</label>
+            </div>
+            <div class="col-md-6">
+              <label><span class="field-title">District Code</span>  {{PND.DI_Code}}</label>
+          </div>
+        </div> -->
+  
+        <!-- <div class="row">
+            <div class="col-md-6">
+                <label><span class="field-title">Notification No.</span> {{PND.DSWOId_NO_Number}}</label>
+            </div>
+            <div class="col-md-6">
+                  <label><span class="field-title">Notification Date</span> {{PND.DSWOId_NO_Date| date:'dd-MM-yyyy'}}</label>
+              </div>
+        </div> -->
+  
+        <!-- <div class="row">
+            <div class="col-md-6">
+                <label><span class="field-title">Applicant Name</span> {{AFD.APP_PA_Name}}</label>
+            </div>
+            <div class="col-md-6">
+                  <label><span class="field-title">Date of Birth</span> {{AFD.APP_PA_DOB| date:'dd-MM-yyyy'}}</label>
+              </div>
+        </div> -->
+  
+        <!-- <div class="row">
+          <div class="col-md-6">
+              <label><span class="field-title">Age</span> {{AFD.APP_PA_Age}}</label>
+          </div>
+          <div class="col-md-6">
+                <label><span class="field-title">Gender</span> {{AFD.APP_PA_Gender}}</label>
+            </div>
+      </div> -->
+  
+      <!-- <div class="row">
+          <div class="col-md-6">
+              <label><span class="field-title">Primary Mobile Number</span> {{AFD.APP_PA_AlternateNo}}</label>
+          </div>
+          <div class="col-md-6">
+                <label><span class="field-title">Alternate Mobile Number</span>{{AFD.APP_PA_MobileNo}}</label>
+            </div>
+      </div> -->
+  
+      <!-- <div class="row">
+          <div class="col-md-6">
+              <label><span class="field-title">Email</span>{{AFD.APP_PA_Email}}</label>
+          </div>
+          <div class="col-md-6" *ngIf="AFD.APP_IsJoint=='Y'">
+              <label><span class="field-title">Secondary Applicant Relationship </span> {{AFD.APP_SA_Relation_Name}}</label>
+          </div>
+      </div> -->
+  
+        <!-- <div class="row" *ngIf="AFD.APP_IsJoint=='Y'">
+              <div class="col-md-6">
+                  <label><span class="field-title">Secondary Applicant Name</span> {{AFD.APP_SA_Name}}</label>
+              </div>
+              <div class="col-md-6">
+                    <label><span class="field-title">Secondary Applicant Date of Birth</span>{{AFD.APP_SA_DOB| date:'dd-MM-yyyy'}}</label>
+                </div>
+          </div> -->
+      
+      <!-- <div class="row" *ngIf="AFD.APP_IsJoint=='Y'">
+          <div class="col-md-6" >
+              <label><span class="field-title">Secondary Applicant Age</span> {{AFD.APP_SA_Age}}</label>
+          </div>
+          <div class="col-md-6">
+                <label><span class="field-title">Secondary Applicant Gender</span> {{AFD.APP_SA_Gender}}</label>
+            </div>
+      </div> -->
+  
+        <!-- <div class="row"  *ngIf="AFD.APP_IsJoint=='Y'">
+  
+              <div class="col-md-6">
+                    <label><span class="field-title">Secondary Applicant Mobile Number</span>{{AFD.APP_SA_MobileNo}}</label>
+                </div>
+                <div class="col-md-6">
+                  <label><span class="field-title">Secondary Applicant  Email</span>{{AFD.APP_SA_Email}}</label>
+              </div>
+          </div> -->
+       
+        <!-- <div class="row">
+            <div class="col-md-6">
+                  <label><span class="field-title">PAN No.</span> {{AFD.APP_PA_PanNo}}</label>
+              </div>
+              <div class="col-md-6" >
+                  <label><span class="field-title">Adhar Card No</span> {{AFD.APP_PA_PanNo}}</label>
+              </div>
+        </div> -->
+  
+        <!-- <div class="row" *ngIf="AFD.APP_IsJoint=='Y'">
+          <div class="col-md-6">
+              <label><span class="field-title">Secondary Applicant PAN No.</span>{{AFD.APP_SA_PanNo}}</label>
+          </div>
+          <div class="col-md-6">
+                <label><span class="field-title">Secondary Applicant Adhar No</span>{{AFD.APP_SA_PanNo}} </label>
+            </div>
+      </div> -->
+       
+        <!-- <div class="row">
+          <div class="col-md-6">
+              <label><span class="field-title">Religion</span>{{AFD.Relegions.Relegion_Name}}</label>
+          </div>
+          <div class="col-md-6">
+                <label><span class="field-title">Reservation</span> {{AFD.Reservations.RES_Name}}</label>
+            </div>
+      </div> -->
+       
+      <!-- <div class="row" >
+          <div class="col-md-6">
+              <label><span class="field-title">Annual Income</span> {{AFD.APP_AnnualIncome}}</label>
+          </div>
+          <div class="col-md-6">
+              <label><span class="field-title">Address</span> {{AFD.APP_Address}} <br>{{AFD.APP_Address2}}<br>
+                  {{AFD.DistrictandTaluks.VI_Village}} <br>{{AFD.DistrictandTaluks.HO_Name}}<br>
+                  {{AFD.DistrictandTaluks.TA_Taluk}} {{AFD.DistrictandTaluks.DI_District}}
+              </label>
+          </div>
+        </div> -->
+  
+          <!-- <div class="row">
+              <div class="col-md-6">
+                    <label><span class="field-title">Bank</span> {{AFD.APP_BankName}}</label>
+                </div>
+                <div class="col-md-6">
+                    <label><span class="field-title">Branch</span> {{AFD.APP_BankBranch}}</label>
+                </div>
+          </div> -->
+  
+        <!-- <div class="row">
+          <div class="col-md-6">
+              <label><span class="field-title">Account Number</span>{{AFD.APP_AccountNo}} </label>
+          </div>
+            <div class="col-md-6">
+                <label><span class="field-title">IFSC Code</span> {{AFD.APP_IFSC}}</label>
+            </div>
+        </div> -->
+     
+        <!-- <div class="row">          
+            <div class="col-md-6">
+                <label><span class="field-title">Name of the Nominee</span> {{AFD.APP_NomineeName}}</label>
+            </div>
+            <div class="col-md-6">
+                  <label><span class="field-title">Relationship of the nominee</span> {{AFD.APP_Nominee_Relation_Name}}</label>
+              </div>
+        </div> -->
+     
+         <!-- <div class="row">
+              <div class="col-md-6">
+                      <label><span class="field-title">Applicant Photo</span> <img src="{{AFD.APP_PA_Photo}}" style="width:200px;height:130px;"> </label>
+                  </div>
+                  <div class="col-md-6">
+                          <label><span class="field-title">Applicant Signature</span><img src="../assets/images/default.jpg" style="width:200px;height:130px;"> </label>
+                      </div>
+        </div>
+         -->
+        <!-- <div class="row">
+            <div class="col-md-4" *ngIf="AFD.APP_PA_Photo!=null">
+                    <label><span class="field-title">Applicant Photo</span> <img src="{{AFD.APP_PA_Photo}}" style="width:200px;height:130px;"> </label>
+                </div>
+                <div class="col-md-4" *ngIf="AFD.APP_PA_Signature!=null">
+                        <label><span class="field-title">Applicant Signature</span><img src="{{AFD.APP_PA_Signature}}" style="width:200px;height:130px;"> </label>
+                    </div>
+                    <div class="col-md-4" *ngIf="AFD.APP_PA_AdharCard!=null">
+                            <label><span class="field-title">Aadhaar Card copy upload</span> <img src="{{AFD.APP_PA_AdharCard}}" style="width:200px;height:130px;"> </label>
+                        </div>
+      </div> -->
+      
+      <!-- <div class="row" *ngIf="AFD.APP_IsJoint=='Y'">
+            <div class="col-md-4" *ngIf="AFD.APP_SA_Photo!=null">
+                    <label><span class="field-title">Secondary Applicant Photo</span> <img src="{{AFD.APP_SA_Photo}}" style="width:200px;height:130px;"> </label>
+                </div>
+                <div class="col-md-4"  *ngIf="AFD.APP_SA_Signature!=null">
+                        <label><span class="field-title"> Secondary Applicant Signature</span><img src="{{AFD.APP_SA_Signature}}" style="width:200px;height:130px;"> </label>
+                    </div>
+                    <div class="col-md-4"  *ngIf="AFD.APP_SA_AdharCard!=null">
+                            <label><span class="field-title"> Secondary Aadhaar Card copy upload</span> <img src="{{AFD.APP_SA_AdharCard}}" style="width:200px;height:130px;"> </label>
+                        </div>
+      </div> -->
+      
+
+      <!-- <div class="row">
+                <div class="col-md-6" *ngIf="AFD.APP_ESW_Certificate!=null">
+                        <label><span class="field-title">ESW Cerficate</span>
+                            <a href="{{AFD.APP_ESW_Certificate}}">View</a> </label>
+                    </div>
+                    <div class="col-md-6" *ngIf="AFD.APP_Caste_Certificate!=null">
+                            <label><span class="field-title">Caste Cerficate</span>
+                              <a href="{{AFD.APP_Caste_Certificate}}">View</a> </label>
+                        </div>
+      </div> -->
+
+        <!--<div class="row">
+              <div class="col-md-6">
+                      <label><span class="field-title">Aadhaar Card copy upload</span> <img src="../assets/images/default.jpg" style="width:200px;height:130px;"> </label>
+                  </div>
+                  <div class="col-md-6">
+                          <label><span class="field-title">Upload ESW Cerficate</span><img src="../assets/images/default.jpg" style="width:200px;height:130px;"> </label>
+                      </div>
+        </div>
+        
+        <div class="row">
+              <div class="col-md-6">
+                  <label><span class="field-title">Upload Caste Cerficate</span><img src="../assets/images/default.jpg" style="width:200px;height:130px;"> </label>
+              </div>
+             
+          </div> -->
+    <!-- </div>
+  </div> -->
+  <!-- </form> -->
+  <!-- </div> -->
+  
+  <div class="btn-wrapper text-wrapper">
+    <button class="btn btn-primary" routerLink="/home/scrutiny"> Back </button>
+    <button class="btn btn-primary" data-toggle="modal" data-target="#not-eligible">Not Eligible</button>
+    <button class="btn btn-primary" (click)="Eligible(AFD.APP_Id,'Y','note',AFD.APP_No,AFD.isAdharVer,AFD.isPanVer,AFD.isCasteVer,AFD.isDisVer,AFD.isAppAffVer,AFD.isLandAcqVer,AFD.isExSerVer,AFD.isPODVer,AFD.isIncomeVer,AFD.isResiVer,
+    AFD.isAffiVer,AFD.isSecAffVer,AFD.isManiSigVer,AFD.isSecManiSigVer)" >Eligible</button>
+  </div>
+
+  <!-- [disabled]="isButtonDisabled()" -->
+  <div class="modal fade" id="not-eligible">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+    
+          <!-- Modal Header -->
+          <div class="modal-header">
+            <h4 class="modal-title">Reason For InEligibility</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+    
+          <!-- Modal body -->
+          <div class="modal-body">
+            <div class="container-fluid" style="border:none !important;">
+              <div class="row" style="background:#fff !important;">
+                <div class="col-md-12">
+                  <div class="input-group">
+                    <textarea [(ngModel)]="s.APP_Note" #APP_Note="ngModel" name="APP_Note" id="" cols="30" rows="10" style="height:150px;resize:none;" class="custom-field"></textarea>
+                    <label for="">Reason</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+          <!-- Modal footer -->
+          <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="NotEligible(AFD.APP_Id,'N',s.APP_Note,AFD.APP_No)">Confirm</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+          </div>
+    
+        </div>
+      </div>
+    </div>

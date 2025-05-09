@@ -1,0 +1,239 @@
+<div class="wrapper">
+  <form (ngSubmit)="mode=='Edit'?UpdatePromotion(PromoDetails):SavePromotion(PromoDetails)" #PromoDetails="ngForm"
+    name="PromoDetails">
+    <div class="title themeheading">
+      Add Promotion
+      <button class="btn btn-primary float-right" (click)="Back()">Back</button>
+      <!-- <button class="btn btn-primary float-right" [routerLink]="['/home/promotion/pro-auth-grid']" *ngIf="BackId=='2'">Back</button>
+      <button class="btn btn-primary float-right" [routerLink]="['/home/promotion/pro-sanction']" *ngIf="BackId=='3'">Back</button> -->
+      <span class="clearfix"></span>
+    </div>
+    <div class="container-fluid">
+
+      <div class="row">
+        <div class="col-md-4">
+          <label>Promotion No: &nbsp; <span class="name"> {{a.Promotion_No}} </span> </label>
+        </div>
+        <div class="col-md-4"><label for="">Date : <span>{{a.CREATED_DATE | date:'dd/MM/yyyy'}}</span></label></div>
+        <div class="col-md-4">
+          <label for="">Status : 
+            <span *ngIf="a.DOC_STATUS=='G'">Generated</span>
+            <span *ngIf="a.DOC_STATUS=='A'">Approved</span>
+            <span *ngIf="a.DOC_STATUS=='R'">Rejected</span>
+            <span *ngIf="a.DOC_STATUS=='S'">Sanctioned</span>
+          </label></div>
+      </div>
+      <div class="title rowmarginfix themeheading">
+        Employee Details
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="input-group">
+            <label for=""> Division code </label>
+            <select class="custom-field" [(ngModel)]="a.EMP_DIVISION_ID" #EMP_DIVISION_ID="ngModel"
+              name="EMP_DIVISION_ID" [disabled]="mode=='View'" (change)="ChangeOfDivision(a.EMP_DIVISION_ID)">
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="d.DI_Id" *ngFor="let d of DistrictsList;">
+                {{d.DI_District}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group">
+            <label for="">Emp Code</label>
+            <select select class="custom-field" [(ngModel)]="a.PROMOTION_EMP_ID" #PROMOTION_EMP_ID="ngModel"
+              name="PROMOTION_EMP_ID" [disabled]="mode=='View'" (change)="ChangeOfEmployee(a.PROMOTION_EMP_ID)">
+              <option [value]="" selected>--Select--</option>
+              <option [value]="emp.EMP_EMPLOYEE_ID" *ngFor="let emp of AllEmployeeList;">
+                {{emp.EMP_EMPLOYEE_CODE}} &nbsp; {{emp.EMP_FIRST_NAME}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label for=""> Name :</label> &nbsp; <span class="name"> {{detailsEmployee.EmpName}} </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4 ">
+          <label for="">Division : </label> &nbsp; <span class="name">{{detailsEmployee.DI_District}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Department : </label> &nbsp; <span class="name">{{detailsEmployee.Department_Name}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Designation : </label> &nbsp; <span class="name">{{detailsEmployee.desg_name}}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <label for="">Employee Category : </label> &nbsp; <span class="name">{{detailsEmployee.Category}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Employee Group : </label> &nbsp; <span class="name">{{detailsEmployee.EmpGroup}}</span>
+        </div>
+        <div class="col-md-4">
+          <label for="">Employee Type : </label> &nbsp; <span class="name">{{detailsEmployee.EmpType}}</span>
+        </div>
+      </div>
+
+      <div class="title rowmarginfix themeheading">
+        Present Designation & Pay scale
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <label>Present Designation :{{detailsEmployee.desg_name}}</label>
+        </div>
+        <div class="col-md-6">
+          <label>Present Pay Scale :{{detailsEmployee.scale_name}}</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label>Present Basic Pay :{{detailsEmployee.EMP_BASIC_PAY}}</label>
+        </div>
+        <div class="col-md-6">
+          <label>Last Promotion Type :</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label>Last Promotion Date :{{detailsEmployee.EMP_Last_Promotiont_Date|date:'dd/MM/yyyy'}}</label>
+        </div>
+      </div>
+
+      <div class="title rowmarginfix themeheading">
+        Promotion Details [After Promotion]
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+        <div class="input-group">
+        <label for="">Existing Post</label>
+        <select class="custom-field" [(ngModel)]="a.crrnt_post" #crrnt_post="ngModel"
+        name="crrnt_post" [disabled]="mode=='View'">
+        <option [value]="undefined" selected>---Select---</option>
+        <option [value]="e.fix_code_id" *ngFor="let e of existingpost;">
+        {{e.code_value}}
+        </option>
+        </select>
+        </div>
+        </div>
+        <div class="col-md-6">
+        <div class="input-group">
+        <label for="">Promoted Post</label>
+        <select class="custom-field" [(ngModel)]="a.prompt_post" #prompt_post="ngModel"
+        name="prompt_post" [disabled]="mode=='View'">
+        <option [value]="undefined" selected>---Select---</option>
+        <option [value]="p.fix_code_id" *ngFor="let p of promotingpost;">
+        {{p.code_value}}
+        </option>
+        </select>
+        </div>
+        </div>
+        </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Designation</label>
+            <select class="custom-field" [(ngModel)]="a.PROMOTION_DESIGNATION_ID" #PROMOTION_DESIGNATION_ID="ngModel"
+              name="PROMOTION_DESIGNATION_ID" [disabled]="mode=='View'">
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="d.desg_id" *ngFor="let d of DesignationList;">
+                {{d.desg_name}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Pay Scale</label>
+            <select class="custom-field" [(ngModel)]="a.PROMOTION_PAY_SCALE_ID" #PROMOTION_PAY_SCALE_ID="ngModel"
+              name="PROMOTION_PAY_SCALE_ID" [disabled]="mode=='View'"
+              (change)="ChangeOfScale(a.PROMOTION_PAY_SCALE_ID)">
+              <option [value]="undefined" selected>---Select---</option>
+              <option [value]="s.scale_id" *ngFor="let s of ScaleList;">
+                {{s.scale_name}}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Basic Pay :</label>
+            <input type="text" [(ngModel)]="a.PROMOTION_BASIC_PAY" #PROMOTION_BASIC_PAY="ngModel"
+              name="PROMOTION_BASIC_PAY" [disabled]="mode=='View'" class="custom-field"  pattern="^[0-9]*$" >
+          </div>
+          <div class="error-msg"
+          *ngIf="PROMOTION_BASIC_PAY.invalid && (PROMOTION_BASIC_PAY.dirty || PROMOTION_BASIC_PAY.touched || formInvalid)">
+          <span *ngIf="PROMOTION_BASIC_PAY.errors.pattern"> Basic Pay should ontain only numericals</span>
+        </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Promotion Type</label>
+            <select class="custom-field" [(ngModel)]="a.PROMOTION_TYPE" #PROMOTION_TYPE="ngModel" name="PROMOTION_TYPE"
+            [disabled]="mode=='View'">
+              <option undefined>--Select--</option>
+              <option value="R">Regular</option>
+              <option value="T">Time Bound</option>
+            </select>
+          </div>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Promotion W.E.F</label>
+            <input type="date" class="custom-field" [(ngModel)]="a.PROMOTION_WEF" #PROMOTION_WEF="ngModel"
+              name="PROMOTION_WEF" [disabled]="mode=='View'">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <label for="">Next Promotion Due Date</label>
+            <input type="date" class="custom-field" class="custom-field" [(ngModel)]="a.PROMOTION_DUE_DATE"
+              #PROMOTION_DUE_DATE="ngModel" name="PROMOTION_DUE_DATE" [disabled]="mode=='View'">
+          </div>
+        </div>
+      </div>
+
+      <br>
+
+      <div class="title themeheading">
+        Base Documents for Promotion
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <td>Sl No.</td>
+              <td> Description of documents</td>
+              <td> Upload</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1.</td>
+              <td><input type="text" class="custom-field" [(ngModel)]="a.UploadDesc" #UploadDesc="ngModel"
+                  name="UploadDesc" [disabled]="mode=='View'"> </td>
+              <td> <input *ngIf="!hide && mode !== 'View'" type="file" #Image accept="application/pdf"
+                  (change)="imageUpload($event.target.files)" id="DOC_UPLOAD_PATH" name="DOC_UPLOAD_PATH">
+                  <a class="" *ngIf="a.DOC_UPLOAD_PATH != null && (hide || mode == 'Edit' || mode == 'View')" target="_blank" href="{{a.DOC_UPLOAD_PATH}}">View</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <br>
+      <div class="text-center">
+        <button class="btn btn-primary" type="submit" [disabled]="mode=='View'">Save</button>
+        <button class="btn btn-primary" [disabled]="mode=='View'">Cancel</button>
+      </div>
+    </div>
+  </form>
+</div>

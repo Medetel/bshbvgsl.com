@@ -1,0 +1,145 @@
+
+    <div class="title themeheading">
+      Biil - Approve for Payment
+      <button class="btn btn-primary float-right">Back</button>
+      <span class="clearfix"></span>
+  </div>
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-6">
+              <div class="input-group">
+                  <select name="" id="" class="custom-field"><option value=""></option></select>
+                  <label for="">Project</label>
+              </div>
+          </div>
+          <div class="col-md-6">
+              <div class="input-group">
+                  <select name="" id="" class="custom-field"><option value=""></option></select>
+                  <label for="">Contractor</label>
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-md-6">
+              <div class="input-group">
+                  <select class="custom-field"></select>
+                  <label for="">Type of Work</label>
+              </div>
+          </div>
+          <div class="col-md-6">
+              <div class="input-group">
+                  <input type="text" class="custom-field">
+                  <label for="">Work Order No.</label>
+              </div>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-md-6">
+              <div class="input-group">
+                  <input type="text" class="custom-field">
+                  <label for="">RA Bill No.</label>
+              </div>
+          </div>
+          <div class="col-md-6">
+              <div class="input-group">
+                  <input type="text" class="custom-field">
+                  <label for="">Amount to be Paid</label>
+              </div>
+          </div>
+      </div>
+      <div class="row">
+            <div class="col-md-6">
+                    <div class="input-group">
+                        <textarea name="" id="" cols="30" rows="10" class="custom-field"></textarea>
+                        <label for="">Notes</label>
+                    </div>
+                </div>
+      </div>
+      <div>
+          <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#bill">View Bill</button>
+      </div>
+      <div class="row" id="bill" class="collapse">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-bordered billdetails-table">
+                        <thead>
+                            <tr>
+                               <td rowspan="2">Sl No.</td>
+                               <td rowspan="2">BOQ No.</td>
+                            <td rowspan="2" style="width: 350px;">Description</td>                               
+                               <td rowspan="2">Unit</td>                               
+                               <td rowspan="2">BOQ Qty</td>                               
+                               <td rowspan="2">BOQ Rate</td>                               
+                               <td rowspan="2">Revised BOQ Qty</td>                               
+                               <td rowspan="2">Revised BOQ Rate</td>                               
+                               <td rowspan="2">Start Date</td>                               
+                               <td colspan="2">Previous Quantity</td>                               
+                               <td colspan="2">Present Quantity</td>                               
+                               <td colspan="2">Upto Date Quantity</td>                             
+                           </tr>
+                            <tr>
+                                <td>Quantity</td>
+                                <td>Amount</td>
+                                <td>Quantity</td>
+                                <td>Amount</td>
+                                <td>Quantity</td>
+                                <td>Amount</td>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            <tr class="orange">
+                                <td>1.</td>
+                                <td>1</td>
+                                <td>KSRRC 200-9: Clearing and grubbing road land including uprooting rank vegetation, grass, brush, shrubs, saplings and trees of girth upto 300mm, by manual means, in area of thorney jungle, removal of stumps,disposal of unserviceable materials, stacking of serviceable materials labour charges complete as per specifications</td>
+                                <td>sqm</td>
+                                <td>233.70</td>
+                                <td>11.08</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>233.70</td>
+                                <td>2589</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
+                                <td>233.70</td>                             
+                                <td>2589.40</td>
+                            </tr>
+                            <tr>
+                                <td>2.</td>
+                                <td>2</td>
+                                <td>KSRB 2-2.2:Eartwork excavation for foundation of building, culverts,water supply, sanitary lines and electrical conduits either in pits or in trenches 1.5m and above in width, in hard soil not exceeding 1.5m in depth including dressing the bottom and sides of pits and trenches,stacking the excavated soil clear from edges of excavation with lead upto 50m after breaking of clods complete as per specifications. Specification No KBS 2.1(a) / 2.3.5</td>
+                                <td>cum</td>
+                                <td>236.10</td>
+                                <td>328.75</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td>236.10</td>
+                                <td>77618</td>
+                                <td>0.00</td>
+                                <td>0.00</td>
+                                <td>236.10</td>
+                                <td>77617.88</td>
+                            </tr>                             
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="9" class="text-right">Total</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+      <br>
+      <div class="text-center">
+          <button class="btn btn-primary">Approve</button><button class="btn btn-primary">Cancel</button>
+      </div>
+  </div>

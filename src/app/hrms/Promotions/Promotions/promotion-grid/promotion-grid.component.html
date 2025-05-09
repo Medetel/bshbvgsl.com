@@ -1,0 +1,130 @@
+<div class="wrapper">
+    <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm,itemsPerPage,1)">
+        <div class="title themeheading">{{title}}
+            <div class="float-right">
+                Items per page:
+                <select name="SearchRows" #SearchRows="ngModel" [(ngModel)]="itemsPerPage" class="noofpage"
+                    (change)="itemsPerPageChanged(itemsPerPage, 1)">
+                    <option [ngValue]="5">5</option>
+                    <option [ngValue]="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    <option value="40">40</option>
+                    <option value="50">50</option>
+                </select>
+                <a class="btn btn-primary " [routerLink]="['/home/promotion/promotion-form']">Add</a>
+            </div>
+            <span class="clearfix"></span>
+        </div>
+        <div class="searchbar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-1">
+                        <label>Search</label>
+                    </div>
+                    <div class="col-md-4">
+                    <select name="SearchCriteria" #SearchCriteria="ngModel" [(ngModel)]="s.SearchCriteria" class="form-control"
+                        required>
+                            <option [ngValue]="undefined" selected>---Select---</option>
+                            <option value="Promotion_No">Promotion No.</option>
+                            <option value="EMP_EMPLOYEE_CODE">Employee Id</option>
+                            <option value="EMP_FIRST_NAME">Employee Name</option>
+                            <option value="PROMOTION_TYPE">Promotion Type</option>
+                        </select>
+                        <div *ngIf="SearchCriteria.invalid && (SearchCriteria.dirty || SearchCriteria.touched)" class="error-msg">
+                            <div *ngIf="SearchCriteria.errors.required">Search criteria is required</div>
+                          </div>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="text" name="SearchText" #SearchText="ngModel" [(ngModel)]="s.SearchText" class="form-control"
+                        placeholder="Search.." required>
+                      <div *ngIf="SearchText.invalid && (SearchText.dirty || SearchText.touched)" class="error-msg">
+                        <div *ngIf="SearchText.errors.required">Search text is required</div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                        <button class="btn btn-default" type="submit">Search</button>
+                        <button class="btn btn-default" type="reset" (click)="GetAllPromotionDetails(itemsPerPage, 1)">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped grid">
+                <thead>
+                    <tr>
+                        <td>Sl No.</td>
+                        <td>Promotion No</td>
+                        <td>Employee Id</td>
+                        <td>Employee Name</td>
+                        <td>Department</td>
+                        <td>Existing Post</td>
+                        <td>Promoted Post</td>
+                        <!-- <td>Promotion Type </td> -->
+                        <td>Status</td>
+                        <td class="text-center">View</td>
+                        <td class="text-center">Edit</td>
+                        <td class="text-center">Delete</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr
+            *ngFor="let PL of PromotionList | paginate: { id: 'pagination',itemsPerPage: itemsPerPage,currentPage: currentPage,totalItems: totalItems }; let i=index"
+            [class.Blue]="PL.DOC_STATUS == 'A'"
+            [class.Red]="PL.DOC_STATUS == 'R'"
+            [class.DGreen]="PL.DOC_STATUS == 'S'">
+            <td>{{((currentPage-1)*itemsPerPage)+(i+1)}}</td>
+                        <td>{{PL.PromotionOrderNo}}</td>
+                        <td>{{PL.EMP_EMPLOYEE_CODE}}</td>
+                        <td>{{PL.EMP_FIRST_NAME}}</td>
+                        <td>{{PL.Department_Name}}</td>
+                        <td>{{PL.crrntpost}}</td>
+                        <td>{{PL.promptpost}}</td>
+
+                        <!-- <td *ngIf="PL.PROMOTION_TYPE=='R'">Regular</td>
+                        <td *ngIf="PL.PROMOTION_TYPE=='T'">Time Bond</td> -->
+                        <td *ngIf="PL.DOC_STATUS=='G' || PL.DOC_STATUS=='g'">Generated</td>
+                        <td *ngIf="PL.DOC_STATUS=='A' || PL.DOC_STATUS=='a'">Approved</td>
+                        <td *ngIf="PL.DOC_STATUS=='S' || PL.DOC_STATUS=='s'">Sanctioned</td>
+                        <td class="text-center">
+                            <a href="#" [routerLink]="['/home/promotion/promotion-form',PL.PROMOTION_LIST_ID,'View']">
+                                <i class="fa fa-lg fa-eye themecolor"></i>
+                            </a>
+                        </td>
+                        <td *ngIf="PL.DOC_STATUS == 'G'" class="text-center">
+                            <a href="#" [routerLink]="['/home/promotion/promotion-form',PL.PROMOTION_LIST_ID,'Edit']">
+                                <i class="fa fa-lg fa-edit themecolor"></i>
+                            </a>
+                        </td>
+                        <td *ngIf="PL.DOC_STATUS != 'G'" class="text-center">
+                            --
+                         </td>
+                        <td *ngIf="PL.DOC_STATUS == 'G'" class="text-center">
+                            <a href="javascript:void(0);" (click)="DeletePromotion(PL.PROMOTION_LIST_ID)">
+                                <i class="fa fa-lg fa-trash themecolor"></i>
+                            </a>
+                        </td>
+                        <td *ngIf="PL.DOC_STATUS != 'G'" class="text-center">
+                            --
+                         </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-11">
+                    <pagination-controls class="my-pagination" id="pagination" (pageChange)="pageChanged($event)" maxSize="9"
+                      directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next"
+                      screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+                      screenReaderCurrentLabel="You're on page">
+                    </pagination-controls>
+                  </div>
+                  <div class="col-md-1">
+                    Total:
+                    <span>{{totalItems}}</span>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </form>
+</div>

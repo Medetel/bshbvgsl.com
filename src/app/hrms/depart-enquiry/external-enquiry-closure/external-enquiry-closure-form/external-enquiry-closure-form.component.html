@@ -1,0 +1,105 @@
+<div class="wrapper">
+  <form (ngSubmit)="mode=='Edit'?UpdateEXM(EXM):SaveExam(EXM)" #EXM="ngForm" name="EXM">
+  <div class="container-fluid">
+    <div class="title rowmarginfix themeheading">
+      Add External Enquiry Closure
+      <button class="btn btn-primary float-right" [routerLink]="['/home/dept-enquiry/ex-enquiry-closure-grid']">Back</button>
+      <span class="clearfix"></span>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <label for=""> Ext.Enq.No : </label> &nbsp;<span> {{e.DOC_CODE}}</span>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group ">
+          <span for="">Date : </span>  &nbsp;<span> {{e.DOC_DATE | date:'dd/MM/yyyy'}}</span>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group ">
+          <span for="" *ngIf="e.DOC_STATUS=='G'">Status : Generated</span>  
+        </div>
+      </div>
+    </div>
+
+    <div class="title themeheading rowmarginfix">
+      External Enquiry Closure Details
+    </div>
+    <div class="row">
+      <div class="col-md-9">
+        <div class="input-group">
+          <label for="">Recommendations </label>
+          <input type="text" name="EEC_RECCOMD" #EEC_RECCOMD="ngModel" [(ngModel)]="e.EEC_RECCOMD" [disabled]="mode=='View'"class="custom-field">
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="input-group">
+          <label for="">Recommended By </label>
+          <input type="text" name="EEC_RECOMM_BY" #EEC_RECOMM_BY="ngModel" [(ngModel)]="e.EEC_RECOMM_BY" [disabled]="mode=='View'"class="custom-field">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-9">
+        <div class="input-group">
+          <label for="">Comments </label>
+          <input type="text" name="EEC_COMMENT" #EEC_COMMENT="ngModel" [(ngModel)]="e.EEC_COMMENT" [disabled]="mode=='View'"class="custom-field">
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="input-group">
+          <label for="">Commented By </label>
+          <input type="text" name="EEC_COMMENT_BY" #EEC_COMMENT_BY="ngModel" [(ngModel)]="e.EEC_COMMENT_BY" [disabled]="mode=='View'"class="custom-field">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for=""> Conclusion </label>
+          <input type="text" name="EEC_CONCLUSION" #EEC_CONCLUSION="ngModel" [(ngModel)]="e.EEC_CONCLUSION" [disabled]="mode=='View'"class="custom-field">
+        </div>
+      </div>
+      <!-- <div class="col-md-6">
+        <label for=""> Conclusion Date: </label>&nbsp;<spn>{{e.EEC_CONCLUSION_DATE}}</spn>
+      </div> -->
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for=""> Recommended Punishment </label>
+          <select name="EEC_RECM_PUNISHMENT" #EEC_RECM_PUNISHMENT ="ngModel" [(ngModel)]="e.EEC_RECM_PUNISHMENT" [disabled]="mode=='View'" class="custom-field">
+            <option value="undefined">--Select--</option>
+            <option value="1">Demotion</option>
+            <option value="2">Suspension</option>
+            <option value="3">Service Termination</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for="">WEF </label>
+          <input type="date" name="EEC_WEF" #EEC_WEF="ngModel" [(ngModel)]="e.EEC_WEF" [disabled]="mode=='View'"class="custom-field">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <label for=""> Remarks </label>
+         <textarea name="EEC_REMARKS" #EEC_REMARKS="ngModel" [(ngModel)]="e.EEC_REMARKS" [disabled]="mode=='View'" cols="30" rows="10" class="custom-field"></textarea>
+        </div>
+      </div>
+      </div>
+
+     
+
+    <br>
+    <div class="d-flex justify-content-center">
+      <button [disabled]="mode=='View'" class="btn btn-primary"type="button" (click)="SaveClosure(e)">Save</button> &nbsp;
+      <button [disabled]="mode=='View'" class="btn btn-primary" type="button" (click)="Cancel()">Cancel</button>&nbsp;
+    </div>
+    <br>
+  </div>
+</form>
+</div>

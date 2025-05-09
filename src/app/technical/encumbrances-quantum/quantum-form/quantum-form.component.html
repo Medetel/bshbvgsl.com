@@ -1,0 +1,111 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary float-right" [routerLink]="['/home/encumbrancequantum']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <form (ngSubmit)="mode=='edit'? UpdateEncumbranceQuantum(EncumbranceQunatumForm):SaveEncumbranceQunatum(EncumbranceQunatumForm)" #EncumbranceQunatumForm="ngForm"
+  autocomplete="off">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <!-- <select class="custom-field" > -->
+          <select class="custom-field" #Project_Code="ngModel" name="Project_Code"
+            [(ngModel)]="i.Project_Code" list="dynmicUserIds" [disabled]="mode=='view'" required >
+          <!-- <datalist id="dynmicUserIds"> -->
+            <option [value]="undefined" selected>---Select Project Name---</option>        
+            <option [value]="c.PD_Id" *ngFor="let c of projectcode;">
+              {{c.PD_Project_Code}} - {{c.PD_Project_Name}}
+            </option>
+          <!-- </datalist> -->
+          </select>
+          <label for="">Project Name
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Project_Code.invalid && (Project_Code.dirty || Project_Code.touched || formInvalid)">
+           <span *ngIf="Project_Code.errors.required">Project Name is required</span>
+          </div> 
+        </div>
+
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="custom-field" #Phase="ngModel" name="Phase" [disabled]="mode=='view'" required
+          [(ngModel)]="i.Phase">
+          <label for="">Phase
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Phase.invalid && (Phase.dirty || Phase.touched || formInvalid)">
+            <span *ngIf="Phase.errors.required">Phase is required</span>
+           </div> 
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <!-- <select class="custom-field" > -->
+          <select class="custom-field" #Contractor="ngModel" name="Contractor"
+            [(ngModel)]="i.Contractor" list="dynmicUserIds" [disabled]="mode=='view'" required >
+          <!-- <datalist id="dynmicUserIds"> -->
+            <option [value]="undefined" selected>---Select Contractor---</option>        
+            <option [value]="c.Contractor_id" *ngFor="let c of contractorcode;">
+              {{c.Contractor_Code}} - {{c.Contractor_name}}
+            </option>
+          <!-- </datalist> -->
+          </select>
+          <label for="">Contractor
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Contractor.invalid && (Contractor.dirty || Contractor.touched || formInvalid)">
+           <span *ngIf="Contractor.errors.required">Contractor is required</span>
+          </div> 
+        </div>
+
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="number" class="custom-field" #Total_Quantum="ngModel" name="Total_Quantum" [disabled]="mode=='view'" (input)="updateTotalQuantumRem()" required
+          [(ngModel)]="i.Total_Quantum">
+          <label for="">Total Quantum
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Total_Quantum.invalid && (Total_Quantum.dirty || Total_Quantum.touched || formInvalid)">
+            <span *ngIf="Total_Quantum.errors.required">Total Quantum is required</span>
+           </div> 
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="number" class="custom-field" #Total_Quantum_Rel="ngModel" name="Total_Quantum_Rel" [disabled]="mode=='view'" (input)="updateTotalQuantumRem()" required
+          [(ngModel)]="i.Total_Quantum_Rel">
+          <label for="">Total Quantum released
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Total_Quantum_Rel.invalid && (Total_Quantum_Rel.dirty || Total_Quantum_Rel.touched || formInvalid)">
+            <span *ngIf="Total_Quantum_Rel.errors.required">Total Quantum Released is required</span>
+           </div> 
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <!-- Total Quantum Remaining Input -->
+          <input type="number" class="custom-field" #totalQuantumRem="ngModel" name="Total_Quantum_Rem" [(ngModel)]="i.Total_Quantum_Rem" [disabled]="mode=='view'" readonly>
+          <label for="totalQuantumRem">Total Quantum remaining</label>
+          <div class="error-msg" *ngIf="!isValidTotalQuantumRem()">
+            <span>Total Quantum should be greater than or equal to Total Quantum Released</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="text-center">
+      <button class="btn btn-primary" [disabled]="mode=='view' || !isValidTotalQuantumRem()" type="submit">Save</button>&nbsp;
+      <button class="btn btn-primary" [disabled]="mode=='view'" type="reset">Cancel</button>
+    </div>
+  </div>
+  </form>
+</div>

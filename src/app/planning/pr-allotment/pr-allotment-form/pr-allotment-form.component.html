@@ -1,0 +1,113 @@
+<div class="wrapper prallotment">
+    <div class="title themeheading">{{title}}
+            <a *ngIf="mode=='Planning'" class="btn btn-primary float-right" routerLink="/home/pre-allotment">Back</a>
+            <a *ngIf="mode!='Planning'" class="btn btn-primary float-right" routerLink="/home/revised-property/pre-allotment-prop/Planning">Back</a>
+        <span class="clearfix"></span>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div>
+                    <!-- <select class="custom-field">
+                      <option value=""></option>
+                      <option value=""></option>
+                      <option value=""></option>
+                    </select> -->
+                    <label> Project: {{projectdetails.PD_Project_Name}}</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div>
+                    <!-- <select class="custom-field">
+                      <option value=""></option>
+                      <option value=""></option>
+                      <option value=""></option>
+                    </select> -->
+                    <label>District : {{projectdetails.DI_District}}</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div>
+                    <!-- <select class="custom-field">
+                      <option value=""></option>
+                      <option value=""></option>
+                      <option value=""></option>
+                    </select> -->
+                    <label> Scheme : {{projectdetails.Sch_Name}}</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div>
+                    <!-- <select class="custom-field">
+                      <option value=""></option>
+                      <option value=""></option>
+                      <option value=""></option>
+                    </select> -->
+                    <label>Phase :{{projectdetails.Phase_Name}} </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <td rowspan="2">Sl No.</td>
+                    <td rowspan="2">Site/House.</td>
+                    <td rowspan="2">Property No.</td>
+                    <td rowspan="2">Category</td>
+                    <td rowspan="2">Intermediate/Corner</td>
+                    <td rowspan="2">Odd/Regular</td>
+                    <td colspan="2" class="text-center">Measurement</td>
+                    <td rowspan="2">Plot Area in Sqmt</td>
+                    <td rowspan="2">Plinth Area in Sqmt</td>
+                    <td colspan="4" class="text-center">Boundary Schedule</td>
+                    <td colspan="2" class="text-center">GPS Data</td>
+                    <td rowspan="2">Status</td>
+                </tr>
+                <tr>
+                    <td>East to west</td>
+                    <td>North to South</td>
+                    <td>North</td>
+                    <td>South</td>
+                    <td>East</td>
+                    <td>West</td>
+                    <td>Longitude</td>
+                    <td>Latitude</td>
+  
+            </thead>
+            <tbody>
+                <tr *ngFor="let prop of propertyall;let i = index">
+                    <td>{{i+1}}</td>
+                    <td>{{prop.PT_Property_Type}}</td>
+                    <td>{{prop.PR_Property_No}}</td>
+                    <td>{{prop.CA_CategoryName}}</td>
+                    <td>{{prop.IC_Name}}</td>
+                    <td>{{prop.OR_Name}}</td>
+                    <td>{{prop.PR_M_East_west}}</td>
+                    <td>{{prop.PR_M_North_South}}</td>
+                    <td>{{prop.PR_Plot_Area}}</td>
+                    <td>{{prop.PR_Plinth_Area}}</td>
+                    <td>{{prop.PR_B_North}}</td>
+                    <td>{{prop.PR_B_South}}</td>
+                    <td>{{prop.PR_B_East}}</td>
+                    <td>{{prop.PR_B_West}}</td>
+                    <td>{{prop.PR_Longitude}}</td>
+                    <td>{{prop.PR_Latitude}}</td>
+                    <td>{{prop.PR_Status}}</td>
+                </tr>
+                
+  
+            </tbody>
+        </table>
+    </div>
+  
+  
+    <!-- <div class="btn-wrapper">
+        <button class="btn btn-primary">Save</button>
+        <button class="btn btn-primary">Cancel</button>
+    </div> -->
+  
+  </div>

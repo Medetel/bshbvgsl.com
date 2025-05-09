@@ -1,0 +1,118 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary float-right" [routerLink]="['/home/contractordoc']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <form (ngSubmit)="mode=='edit'? UpdateContractdoc(ContractDocumentForm):SaveContractDocument(ContractDocumentForm)" #ContractDocumentForm="ngForm"
+  autocomplete="off">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <!-- <select class="custom-field" > -->
+          <select class="custom-field" #Project_Code="ngModel" name="Project_Code"
+            [(ngModel)]="i.Project_Code" list="dynmicUserIds" [disabled]="mode=='view'" required >
+          <!-- <datalist id="dynmicUserIds"> -->
+            <option [value]="undefined" selected>---Select Project Name---</option>        
+            <option [value]="c.PD_Id" *ngFor="let c of projectcode;">
+              {{c.PD_Project_Code}} - {{c.PD_Project_Name}}
+            </option>
+          <!-- </datalist> -->
+          </select>
+          <label for="">Project Name
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Project_Code.invalid && (Project_Code.dirty || Project_Code.touched || formInvalid)">
+           <span *ngIf="Project_Code.errors.required">Project Name is required</span>
+          </div> 
+        </div>
+
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="custom-field"  #Phase="ngModel" name="Phase" [(ngModel)]="i.Phase" pattern="^[a-zA-Z0-9 ]*$" [disabled]="mode=='view'" required>
+          <label for="">Phase
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Phase.invalid && (Phase.dirty || Phase.touched || formInvalid)">
+            <span *ngIf="Phase.errors.required">Phase is required</span>
+            <span *ngIf="Phase.errors?.pattern">AlphaNumeric should enter</span>
+           </div> 
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="input-group">
+          <!-- <select class="custom-field" > -->
+          <select class="custom-field" #Contractor="ngModel" name="Contractor"
+            [(ngModel)]="i.Contractor" list="dynmicUserIds" [disabled]="mode=='view'" required >
+          <!-- <datalist id="dynmicUserIds"> -->
+            <option [value]="undefined" selected>---Select Contractor---</option>        
+            <option [value]="c.Contractor_id" *ngFor="let c of contractorcode;">
+              {{c.Contractor_Code}} - {{c.Contractor_name}}
+            </option>
+          <!-- </datalist> -->
+          </select>
+          <label for="">Contractor
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Contractor.invalid && (Contractor.dirty || Contractor.touched || formInvalid)">
+           <span *ngIf="Contractor.errors.required">Contractor is required</span>
+          </div> 
+        </div>
+
+      </div>
+      
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="custom-field" #ContractorDoc_Type="ngModel" name="ContractorDoc_Type" [(ngModel)]="i.ContractorDoc_Type" pattern="^[a-zA-Z0-9 ]*$" [disabled]="mode=='view'" required>
+          <label for="">Contractor Document Type
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="ContractorDoc_Type.invalid && (ContractorDoc_Type.dirty || ContractorDoc_Type.touched || formInvalid)">
+            <span *ngIf="ContractorDoc_Type.errors.required">Contractor Document Type is required</span>
+            <span *ngIf="ContractorDoc_Type.errors?.pattern">AlphaNumeric should enter</span>
+           </div> 
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <input *ngIf="!hide" type="file" #Image accept="application/pdf"
+        (change)="ContractorDoc($event.target.files)" id="ContractorDoc" [disabled]="mode=='view'" required>
+        <a class="" *ngIf="mode=='view'"  target="_blank" href="{{i.ContractorDoc}}">view</a>
+         <label for="">Contractor Document
+          <span class="mandatory">*</span>
+         </label>
+         <div class="error-msg" *ngIf="ContractorDoc.invalid && (ContractorDoc.dirty || ContractorDoc.touched || formInvalid)">
+          <span *ngIf="ContractorDoc.errors.required">Contractor Document is required</span>
+         </div> 
+      </div>
+     
+      <div class="col-md-6">
+        <div class="input-group">
+          <select class="custom-field" [(ngModel)]="i.Correspondance_Doc" #Correspondance_Doc="ngModel" name="Correspondance_Doc"
+            [disabled]="mode=='view'" required>
+            <option [value]="undefined" selected>---Select---</option>
+            <option value=Y>Yes</option>
+            <option value=N>No</option>
+          </select>
+          <label for="">Correspondance Document
+            <span class="mandatory">*</span>
+          </label>
+          <div class="error-msg" *ngIf="Correspondance_Doc.invalid && (Correspondance_Doc.dirty || Correspondance_Doc.touched || formInvalid)">
+            <span *ngIf="Correspondance_Doc.errors.required">Correspondance Document is required</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="text-center">
+      <button class="btn btn-primary" type="submit"  [disabled]="mode=='view'">Save</button>&nbsp;
+      <button class="btn btn-primary" type="reset"  [disabled]="mode=='view'">Cancel</button>
+    </div>
+  </div>
+  </form>
+</div>

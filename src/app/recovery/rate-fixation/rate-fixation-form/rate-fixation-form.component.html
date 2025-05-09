@@ -1,0 +1,99 @@
+
+<div class="wrapper">
+
+  <div class="title themeheading">
+    Add Rate Fixation 
+    <button class="btn btn-primary float-right" [routerLink]="['/home/rec_ratefixation']" routerLinkActive="active">Back</button>
+    <span class="clearfix"></span>
+  </div> 
+ 
+  <div class="add-click container-fluid">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="input-group">
+          <label> Project Code  </label>
+          <input class="form-control" type="text">
+        </div>            
+      </div>          
+    </div>  
+    <div class="row">
+      <div class="col-md-3">
+        <label> Project Name  </label>       
+      </div>
+      <div class="col-md-3">
+        <label> Scheme  </label>      
+      </div>
+      <div class="col-md-3"> 
+        <label> District  </label>      
+      </div>
+      <div class="col-md-3">
+        <label> Taluk </label>               
+      </div>
+    </div>
+    <div class="row">            
+      <div class="col-md-3">
+        <label> Project Type </label>                
+      </div>   
+      <div class="col-md-3">
+        <label> Office Location </label>
+      </div>  
+      <div class="col-md-3">
+        <label> Property Number  </label>   
+      </div> 
+    </div> 
+   
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-right"><button class="btn btn-primary">Add</button></div>
+            <br>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead class="thead">
+                <tr>          
+                  <td> Name of Building </td>
+                  <td> Block Name </td>
+                  <td> Floor Name </td>
+                  <td> Floor Area </td>
+                  <td> Cost  </td> 
+                  <td> Date </td> 
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <select class="form-control">
+                      <option></option>
+                    </select>
+                  </td>
+                  <td>
+                    <input class="form-control" type="text" />
+                  </td>
+                  <td><input class="form-control" type="text" /></td>
+                  <td><input class="form-control" type="text" /></td>
+                  <td><input class="form-control" type="text" /></td>
+                  <td><input class="form-control" type="date" /></td>
+                </tr>
+                <tr>
+                  <td>
+                    <select class="form-control">
+                      <option></option>
+                    </select>
+                  </td>
+                  <td><input class="form-control" type="text" /></td>
+                  <td><input class="form-control" type="text" /></td>
+                  <td><input class="form-control" type="text" /></td>
+                  <td><input class="form-control" type="text" /></td>
+                  <td><input class="form-control" type="date" /></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div> 
+      <div class="text-center">
+        <button class="btn btn-primary">Save</button> &nbsp; <button class="btn btn-primary">Cancel</button>
+      </div>        
+  </div>
+      
+  
+</div>  

@@ -1,0 +1,21 @@
+
+.row{
+    padding:20px 0px 0px;
+}
+
+.row:nth-child(odd){
+    background: #f3f3f3;
+}
+
+.label-color{
+    color: blue;
+}
+
+.border-view{
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: 1px solid gray;
+}
+span{
+    font-weight: 700;
+}

@@ -1,0 +1,96 @@
+<div class="wrapper">
+  <div class="title themeheading">
+    {{title}}
+    <button class="btn btn-primary float-right" [routerLink]="['/home/payroll/deduction']">Back</button>
+    <span class="clearfix"></span>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3 col-sm-3">
+        <div class="input-group">
+          <label>Employee Id</label>
+          <select class="custom-field"></select>
+        </div>
+      </div>
+      <div class=" col-md-3 col-sm-3">
+        <label for="">Employee Name :
+          <span>Test Employee</span>
+        </label>
+      </div>
+    </div>
+    <div class="title themeheading rowmarginfix">
+      Deduction Details
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-sm-6">
+        <div class="input-group">
+          <label>Deduction code</label>
+          <br>
+          <select class="custom-field">
+          </select>
+        </div>
+      </div>
+      <div class="col-md-6  col-sm-6">
+        <div class="input-group">
+          <label>Description</label>
+          <br>
+          <input class="custom-field" type="text">
+        </div>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-md-6  col-sm-6">
+        <label style="color: blue;"> Fixed variable </label>
+        <input type="radio" name="optradio">Fixed &nbsp;
+        <input type="radio" name="optradio"> variable
+      </div>
+      <div class="col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-6">
+        <div class="input-group">
+          <label>Fixed Amount</label>
+          <br>
+          <input class="custom-field" type="text">
+        </div>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-6">
+        <div class="input-group">
+          <label>Variable Amount </label>
+          <input class="custom-field" type="text">
+        </div>
+      </div>
+      <div class=" col-md-6 col-sm-6">
+        <div class="input-group">
+          <label>Depend Variable</label>
+          <br>
+          <input class="custom-field" type="text">
+        </div>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-sm-6">
+        <div class="input-group">
+          <label>Deduction Code</label>
+          <br>
+          <select class="custom-field">
+          </select>
+        </div>
+      </div>
+      <div class=" col-md-6 col-sm-6">
+        <div class="input-group">
+          <label>Effective date</label>
+          <br>
+          <input class="custom-field" type="date">
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="text-center">
+    <button class="btn btn-primary">Save</button> &nbsp;
+    <button class="btn btn-primary">Cancel</button>
+  </div>
+</div>

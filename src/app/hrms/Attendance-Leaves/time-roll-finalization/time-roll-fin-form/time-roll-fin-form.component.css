@@ -1,0 +1,17 @@
+.row{
+    padding:20px 0px 0px;
+}
+.row:nth-child(odd){
+    background: #f3f3f3;
+}
+.form-control{
+    width:40px;
+    padding: 3px;
+    font-size: 11px;
+    text-align: center;
+}
+td{
+    font-size: 12px;
+    text-align: center;
+    padding:0.5em;
+}
